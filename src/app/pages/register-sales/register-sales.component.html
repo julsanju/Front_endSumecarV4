@@ -1,0 +1,63 @@
+<div class="center-container">
+  <div class="container">
+    <div class="forms">
+      <div class="form login">
+        <span class="title">Registro</span>
+
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+          <div class="input-field">
+            <input type="text" placeholder="Identificación" formControlName="Identificacion" required>
+            <i class="bx bx-user"></i>
+          </div>
+
+          <div class="input-field">
+            <select formControlName="Rol" required>
+              <option value="" disabled selected>Selecciona el rol</option>
+              <option value="cliente">Cliente</option>
+            </select>
+            <i class="bx bx-user-plus"></i>
+          </div>
+
+          <div class="input-field">
+            <input type="text" placeholder="Nombre" formControlName="Nombre" required>
+            <i class="bx bx-user"></i>
+          </div>
+
+          <div class="input-field">
+            <input type="text" placeholder="Ubicación" formControlName="Ubicacion" required>
+            <i class="bx bx-user"></i>
+          </div>
+
+          <div class="input-field">
+            <input type="text" placeholder="Teléfono" formControlName="Telefono" required>
+            <i class="bx bx-user"></i>
+          </div>
+
+          <div class="input-field">
+            <input type="text" placeholder="Correo" formControlName="Correo" required>
+            <i class="bx bx-user"></i>
+          </div>
+
+          <div class="input-field">
+            <input type="text" placeholder="Usuario" formControlName="Usuario" required>
+            <i class="bx bx-user"></i>
+          </div>
+
+          <div class="input-field">
+            <input type="password" placeholder="Contraseña" formControlName="Contrasena" required>
+            <i class="bx bx-shield-alt-2"></i>
+          </div>
+
+          <div class="input-field button">
+            <button type="submit" class="btn-register">Registrar</button>
+          </div>
+
+          <div class="input-field button">
+            <input type="button" routerLink="/login" value="¿Quieres iniciar sesión?">
+        </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

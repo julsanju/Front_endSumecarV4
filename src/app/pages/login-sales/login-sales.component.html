@@ -1,0 +1,66 @@
+<div class="center-container">
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Iniciar Sesión</span>
+
+                <form>
+                    <div class="input-field">
+                        <input type="text" placeholder="Usuario" required>
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" class="password" placeholder="Contraseña" required>
+                        <i class="bx bx-shield-alt-2"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+
+                    <div class="input-field">
+                        <select required>
+                            <option value="" disabled selected>Selecciona un Rol</option>
+                            <option value="rol1">Rol 1</option>
+                            <option value="rol2">Rol 2</option>
+                        </select>
+                        <i class="bx bx-user-plus"></i>
+                    </div>
+
+                    <div class="input-field button">
+                        <input type="button" value="Iniciar Sesión">
+                    </div>
+
+                    <div class="input-field button">
+                        <input type="button" routerLink="/register" value="¿Quieres Registrarte?">
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">
+                        <a href="#" class="text signup-link">¿Se te ha olvidado la contraseña?</a>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Recuperar Contraseña Form -->
+            <div class="form signup">
+                <!-- <span class="title"></span> -->
+
+                <form>
+
+                    <div class="content-password">
+                        <p>Introduce tu nombre de <strong>usuario</strong> de PharmaPA. Te enviaremos un correo electrónico con una <strong>verificación</strong>.</p>
+                    </div>
+
+                    <div class="input-field button">
+                        <input type="button" value="Enviar">
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">¿Quieres inicar sesión?
+                        <a href="#" class="text login-link">Dame clic</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
