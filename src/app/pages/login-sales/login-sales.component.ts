@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginServicesService } from '../../services/login-services.service';
 import { Login } from '../../Interfaces/login';
+import { MensajeError } from '../../Interfaces/mensaje-error';
 @Component({
   selector: 'app-login-sales',
   templateUrl: './login-sales.component.html',
@@ -9,7 +10,7 @@ import { Login } from '../../Interfaces/login';
 })
 
 export class LoginSalesComponent {
-
+  errorMessage: MensajeError | null = null;
   loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private loginService: LoginServicesService) {
@@ -21,22 +22,19 @@ export class LoginSalesComponent {
   }
 
   onSubmit() {
-    //if (this.registrationForm.valid) {
-      
-      const userData: Login = this.loginForm.value;
+    const userData: Login = this.loginForm.value;
 
-      // Llamada al servicio para registrar al usuario
-      this.loginService.LoginValidation(userData).subscribe(
-        response => {
-          console.log(response);
-          console.log("login exitoso");
-          
-        },
-        error => {
-          console.error("Error:", error);
-          console.log("Error en el login");
-        }
-      );
-    //}
+    this.loginService.LoginValidation(userData).subscribe(
+      response => {
+        console.log(response);
+        console.log("Login exitoso");
+        this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
+      },
+      error => {
+        console.error("Error:", error);
+        this.errorMessage = error; // Guardar el mensaje de error en la variable errorMessage
+        console.log(this.errorMessage);
+      }
+    );
   }
 }

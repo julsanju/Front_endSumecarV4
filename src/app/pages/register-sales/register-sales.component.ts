@@ -37,8 +37,10 @@ export class RegisterSalesComponent {
         },
         error => {
           console.error("Error:", error);
+          console.log(error.error)
           console.log("Error en el registro");
-        }
+        },
+        
       );
     //}
   }
