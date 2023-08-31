@@ -1,40 +1,42 @@
-import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
-
+import { Component} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginServicesService } from '../../services/login-services.service';
+import { Login } from '../../Interfaces/login';
 @Component({
   selector: 'app-login-sales',
   templateUrl: './login-sales.component.html',
   styleUrls: ['./login-sales.component.css']
 })
 
-export class LoginSalesComponent implements OnInit {
+export class LoginSalesComponent {
 
-  constructor(private renderer: Renderer2, private el: ElementRef) { }
+  loginForm: FormGroup;
 
-  ngOnInit(): void {
-    const container = this.el.nativeElement.querySelector(".container");
-    const usuarioInput = this.el.nativeElement.querySelector('input[type="text"]');
-    const signUp = this.el.nativeElement.querySelector(".signup-link");
-    const login = this.el.nativeElement.querySelector(".login-link");
-
-    const pwShowHide = this.el.nativeElement.querySelectorAll(".showHidePw");
-    const pwFields = this.el.nativeElement.querySelectorAll(".password");
-
-    pwShowHide.forEach((eyeIcon: any) => {
-      this.renderer.listen(eyeIcon, "click", () => {
-        // ... Tu código para mostrar/ocultar contraseña
-      });
+  constructor(private formBuilder: FormBuilder, private loginService: LoginServicesService) {
+    this.loginForm = this.formBuilder.group({
+      Usuario: ['', Validators.required],
+      Contrasena: ['', Validators.required],
+      Rol: ['', Validators.required]
     });
+  }
 
-    this.renderer.listen(signUp, "click", () => {
-      if (usuarioInput.value.trim() === "") {
-        alert("Por favor coloca tu nombre de usuario.");
-        return;
-      }
-      this.renderer.addClass(container, "active");
-    });
+  onSubmit() {
+    //if (this.registrationForm.valid) {
+      
+      const userData: Login = this.loginForm.value;
 
-    this.renderer.listen(login, "click", () => {
-      this.renderer.removeClass(container, "active");
-    });
+      // Llamada al servicio para registrar al usuario
+      this.loginService.LoginValidation(userData).subscribe(
+        response => {
+          console.log(response);
+          console.log("login exitoso");
+          
+        },
+        error => {
+          console.error("Error:", error);
+          console.log("Error en el login");
+        }
+      );
+    //}
   }
 }

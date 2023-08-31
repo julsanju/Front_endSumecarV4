@@ -4,28 +4,28 @@
             <div class="form login">
                 <span class="title">Iniciar Sesión</span>
 
-                <form>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="input-field">
-                        <input type="text" placeholder="Usuario" required>
+                        <input type="text" placeholder="Usuario" formControlName="Usuario" required>
                         <i class="bx bx-user"></i>
                     </div>
                     <div class="input-field">
-                        <input type="password" class="password" placeholder="Contraseña" required>
+                        <input type="password" class="password" placeholder="Contraseña" formControlName="Contrasena" required>
                         <i class="bx bx-shield-alt-2"></i>
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
 
                     <div class="input-field">
-                        <select required>
+                        <select formControlName="Rol" required>
                             <option value="" disabled selected>Selecciona un Rol</option>
-                            <option value="rol1">Rol 1</option>
-                            <option value="rol2">Rol 2</option>
+                            <option value="cliente">cliente</option>
+                            <option value="empleado">empleado</option>>
                         </select>
                         <i class="bx bx-user-plus"></i>
                     </div>
 
                     <div class="input-field button">
-                        <input type="button" value="Iniciar Sesión">
+                        <button type="submit" class="btn_login">Iniciar sesion</button>
                     </div>
 
                     <div class="input-field button">
