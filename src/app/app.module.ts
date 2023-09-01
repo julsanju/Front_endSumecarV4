@@ -10,9 +10,13 @@ import { HeaderSalesComponent } from './shared/header-sales/header-sales.compone
 import { FooterSalesComponent } from './shared/footer-sales/footer-sales.component';
 import { RegisterSalesComponent } from './pages/register-sales/register-sales.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AjustesComponent } from './pages/ajustes/ajustes.component';
+import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-contrasena.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 const routes: Routes = [
-  {
+/*   {
     path: '',
     component: LoginSalesComponent
   },
@@ -20,7 +24,7 @@ const routes: Routes = [
     path: '',
     redirectTo: '/login',
     pathMatch: 'full'
-  },
+  }, */
   {
     path: 'register',
     component: RegisterSalesComponent
@@ -36,7 +40,11 @@ const routes: Routes = [
     LoginSalesComponent,
     HeaderSalesComponent,
     FooterSalesComponent,
-    RegisterSalesComponent
+    RegisterSalesComponent,
+    AjustesComponent,
+    CambiarContrasenaComponent,
+    DashboardComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
