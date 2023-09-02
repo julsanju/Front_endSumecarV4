@@ -23,7 +23,7 @@ initForms() {
   this.userForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
     firstName: ['', [Validators.required, Validators.minLength(5)]],
-    lastName: ['', [Validators.required, Validators.minLength(5)]]
+    /* lastName: ['', [Validators.required, Validators.minLength(5)]] */
   });
 
   this.doctorForm = this.fb.group({

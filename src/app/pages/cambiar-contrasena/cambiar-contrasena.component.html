@@ -1,92 +1,94 @@
-<div class="p-4 md:p-12">
-  <h1 class="text-3xl mb-4"><span class="font-bold">Hello</span> World Form</h1>
+<div class="form-container">
+  <h1 class="form-title" style="text-align: center;">Cambiar Contraseña</h1>
   <app-stepper linear="true">
     <cdk-step [stepControl]="userForm">
       <ng-template cdkStepLabel>
-        <span class="stepHeader font-weight-bold">Datos personales</span>
+        <span class="stepHeader font-weight-bold">Tus Datos</span>
       </ng-template>
-      <form class="forms-sample" [formGroup]="userForm">
-        <div class="grid grid-cols-6 gap-6">
-          <div class="col-span-6 sm:col-span-3">
-            <label
-              for="first-name"
-              class="block text-sm font-medium text-gray-700"
-              >Nombres *</label
-            >
-            <input
-              [class.border-rose-500]="invalidFirstname"
-              formControlName="firstName"
-              type="text"
-              name="first-name"
-              id="first-name"
-              autocomplete="given-name"
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-            />
-            <small *ngIf="invalidFirstname" class="text-red-500"
-              >Ingrese al menos 5 letras</small
-            >
+      <form class="form-sample" [formGroup]="userForm">
+        <div class="grid-container">
+
+          <div class="grid-item">
+            <label for="email-address" class="form-label">Correo *</label>
+            <input [class.invalid-input]="invalidEmail" class="form-control" formControlName="email" type="text" name="email-address" id="email-address" autocomplete="email" class="form-input" />
+            <small *ngIf="invalidEmail" class="error-text">Ingrese un email correcto</small>
           </div>
 
-          <div class="col-span-6 sm:col-span-3">
-            <label
-              for="last-name"
-              class="block text-sm font-medium text-gray-700"
-              >Apellidos *</label
-            >
-            <input
-              [class.border-rose-500]="invalidLastname"
-              formControlName="lastName"
-              type="text"
-              name="last-name"
-              id="last-name"
-              autocomplete="family-name"
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-            />
-            <small *ngIf="invalidLastname" class="text-red-500"
-              >Ingrese al menos 5 letras</small
-            >
+          <div class="grid-item">
+            <label for="first-name" class="form-label">Nombres *</label>
+            <input [class.invalid-input]="invalidFirstname" formControlName="firstName" type="text" name="first-name" id="first-name" autocomplete="given-name" class="form-input" />
+            <small *ngIf="invalidFirstname" class="error-text">Ingrese al menos 5 letras</small>
           </div>
 
-          <div class="col-span-6 sm:col-span-3">
-            <label
-              for="email-address"
-              class="block text-sm font-medium text-gray-700"
-              >Correo *</label
-            >
-            <input
-              [class.border-rose-500]="invalidEmail"
-              class="form-control"
-              formControlName="email"
-              type="text"
-              name="email-address"
-              id="email-address"
-              autocomplete="email"
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-            />
-            <small *ngIf="invalidEmail" class="text-red-500"
-              >Ingrese un email correcto</small
-            >
-          </div>
+          <!-- <div class="grid-item">
+            <label for="last-name" class="form-label">Apellidos *</label>
+            <input [class.invalid-input]="invalidLastname" formControlName="lastName" type="text" name="last-name" id="last-name" autocomplete="family-name" class="form-input" />
+            <small *ngIf="invalidLastname" class="error-text">Ingrese al menos 5 letras</small>
+          </div> -->
+
+          
         </div>
       </form>
     </cdk-step>
+
     <cdk-step>
       <ng-template cdkStepLabel>
         <span class="stepHeader font-weight-bold">Datos Profesionales</span>
       </ng-template>
-      <p>This is any content of "Step 2"</p>
+      <form class="form-sample" [formGroup]="userForm">
+        <div class="grid-container">
+
+          <div class="grid-item" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1 style="text-align: center;">Por favor revisa tu correo electrónico.</h1>
+            <i class='bx bx-mail-send' style='font-size: 100px;'></i>
+          </div>
+          
+          <div class="grid-item">
+            
+          </div>
+         
+        </div>
+      </form>
     </cdk-step>
+
     <cdk-step>
       <ng-template cdkStepLabel>
-        <span class="stepHeader font-weight-bold">Datos Profesionales II</span>
+        <span class="stepHeader font-weight-bold">Nueva Contraseña</span>
       </ng-template>
-      <p>This is any content of "Step 3"</p>
+      <form class="form-sample" [formGroup]="userForm">
+        <div class="grid-container">
+
+          <div class="grid-item">
+            <label for="first-name" class="form-label">Contraseña</label>
+            <input [class.invalid-input]="invalidFirstname" formControlName="firstName" type="text" name="first-name" id="first-name" autocomplete="given-name" class="form-input" />
+            <small *ngIf="invalidFirstname" class="error-text">Ingrese al menos 5 letras</small>
+          </div>
+
+          <div class="grid-item">
+            <label for="first-name" class="form-label">Repetir Contraseña</label>
+            <input [class.invalid-input]="invalidFirstname" formControlName="firstName" type="text" name="first-name" id="first-name" autocomplete="given-name" class="form-input" />
+            <small *ngIf="invalidFirstname" class="error-text">Ingrese al menos 5 letras</small>
+          </div>
+         
+        </div>
+      </form>
     </cdk-step>
+
     <cdk-step>
       <ng-template cdkStepLabel>
         <span class="stepHeader font-weight-bold">Confirmar</span>
       </ng-template>
-      <p>This is any content of "Step 4"</p>
+      <form class="form-sample" [formGroup]="userForm">
+        <div class="grid-container">
+
+          <div class="grid-item" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1 style="text-align: center;">Contraseña actualizada correctamente! .</h1>
+            <i class='bx bx-happy-alt' style='font-size: 100px; text-align: center; align-items: center;'></i>
+          </div>
+         
+        </div>
+      </form>
     </cdk-step>
+
   </app-stepper>
 </div>
