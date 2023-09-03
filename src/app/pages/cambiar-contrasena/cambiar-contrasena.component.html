@@ -1,12 +1,15 @@
 <div class="form-container">
-  <h1 class="form-title" style="text-align: center;">Cambiar Contraseña</h1>
+  <h1 class="form-title" style="text-align: center; margin-bottom: 50px;">Cambiar Contraseña</h1>
   <app-stepper linear="true">
+
+    <!-- Punto 1 -->
+
     <cdk-step [stepControl]="userForm">
       <ng-template cdkStepLabel>
         <span class="stepHeader font-weight-bold">Tus Datos</span>
       </ng-template>
       <form class="form-sample" [formGroup]="userForm">
-        <div class="grid-container">
+        <div class="grid-container"> <!-- Dentro del grid van los campos -->
 
           <div class="grid-item">
             <label for="email-address" class="form-label">Correo *</label>
@@ -19,17 +22,13 @@
             <input [class.invalid-input]="invalidFirstname" formControlName="firstName" type="text" name="first-name" id="first-name" autocomplete="given-name" class="form-input" />
             <small *ngIf="invalidFirstname" class="error-text">Ingrese al menos 5 letras</small>
           </div>
-
-          <!-- <div class="grid-item">
-            <label for="last-name" class="form-label">Apellidos *</label>
-            <input [class.invalid-input]="invalidLastname" formControlName="lastName" type="text" name="last-name" id="last-name" autocomplete="family-name" class="form-input" />
-            <small *ngIf="invalidLastname" class="error-text">Ingrese al menos 5 letras</small>
-          </div> -->
-
           
         </div>
       </form>
     </cdk-step>
+
+
+    <!-- Punto 2 -->
 
     <cdk-step>
       <ng-template cdkStepLabel>
@@ -43,13 +42,14 @@
             <i class='bx bx-mail-send' style='font-size: 100px;'></i>
           </div>
           
-          <div class="grid-item">
-            
-          </div>
+
          
         </div>
       </form>
     </cdk-step>
+
+
+    <!-- Punto 3 -->
 
     <cdk-step>
       <ng-template cdkStepLabel>
@@ -73,6 +73,8 @@
         </div>
       </form>
     </cdk-step>
+
+    <!-- Punto 4 -->
 
     <cdk-step>
       <ng-template cdkStepLabel>

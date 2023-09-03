@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
   export class CdkStepperComponent extends CdkStepper implements OnInit{
 
-    progress!: number;
+    progress!: number; /* Cambiar cantidad de % de linea */
 
     ngOnInit(): void {
 
@@ -28,7 +28,7 @@ import { Component, OnInit } from '@angular/core';
 
     }
 
-    nextStep() {
+    nextStep() { /* Función para calcular la cantidad de % saldrá al darle clic a siguiente */
 
       if (this.selected?.stepControl?.valid) {
         this.progress +=  this.progress <100 ? 100 / this.steps.length: 0;
