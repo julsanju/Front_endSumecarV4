@@ -135,3 +135,118 @@
 ::ng-deep .mat-progress-bar {
     border-radius: 2px;
 }
+
+/* Estilos para el encabezado */
+header {
+    padding-top: 25px;
+    padding-bottom: 20px;
+  }
+  
+  header div:first-child {
+    margin-bottom: -28px;
+  }
+  
+  /* Estilos para el progreso */
+  .mat-progress-bar {
+    margin-bottom: 1rem;
+  }
+  
+  /* Estilos para los pasos */
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .numberContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-weight: bold;
+  }
+  
+  .number {
+    color: white;
+  }
+  
+  .successColor {
+    background-color: green; /* Cambia el color de fondo para el estado completado */
+  }
+  
+  .inProgressColor {
+    background-color: #0EA5E9; /* Cambia el color de fondo para el estado en progreso */
+  }
+  
+  .pendingColor {
+    background-color: #DB3F29; /* Cambia el color de fondo para el estado pendiente */
+  }
+  
+  .activeText {
+    text-decoration: none;
+    color: black; /* Cambia el color del texto activo */
+  }
+  
+  /* Estilos para los mensajes de estado */
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+  
+  .succes,
+  .inProgress,
+  .pending {
+    text-align: center;
+  }
+  
+  /* Estilos para los botones de navegación */
+  footer {
+    margin-top: 2rem;
+  }
+  
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .text-gray-500 {
+    color: #718096; /* Cambia el color de texto gris */
+  }
+  
+  .text-sm {
+    font-size: 0.875rem; /* Cambia el tamaño de texto pequeño */
+  }
+  
+  /* Estilos para los botones de navegación */
+  button {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  button.bg-green-600 {
+    background-color: #48bb78; /* Cambia el color de fondo del botón verde */
+  }
+  
+  button.bg-green-600:hover {
+    background-color: #38a169; /* Cambia el color de fondo en el estado hover */
+  }
+  
+  button.text-white {
+    color: white; /* Cambia el color del texto a blanco */
+  }
+  
+  button.focus\:shadow-outline:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* Cambia el color del borde en el enfoque */
+  }
+  

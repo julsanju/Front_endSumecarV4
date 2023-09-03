@@ -18,8 +18,9 @@ constructor(private fb: FormBuilder) {
 }
 
 
+/* JS del primer punto, cambiar "Cambiar tus Datos" */
 
-initForms() {
+initForms() { /* Esto es del primer punto, si quieres copiate */
   this.userForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
     firstName: ['', [Validators.required, Validators.minLength(5)]],
