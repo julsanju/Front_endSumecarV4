@@ -1,96 +1,45 @@
-<div class="form-container">
-  <h1 class="form-title" style="text-align: center; margin-bottom: 50px;">Cambiar Contraseña</h1>
-  <app-stepper linear="true">
+<div class="stepper-container">
+  <mat-horizontal-stepper [linear]="true" #stepper class="full-width-stepper">
+    <!-- Paso 1 -->
+    <mat-step label="Paso 1">
+      <ng-template matStepLabel> Paso 1 </ng-template>
+      <p>Contenido del Paso 1</p>
+      <div>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </mat-step>
 
-    <!-- Punto 1 -->
+    <!-- Paso 2 -->
+    <mat-step label="Paso 2">
+      <ng-template matStepLabel> Paso 2 </ng-template>
+      <p>Contenido del Paso 2</p>
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </mat-step>
 
-    <cdk-step [stepControl]="userForm">
-      <ng-template cdkStepLabel>
-        <span class="stepHeader font-weight-bold">Tus Datos</span>
-      </ng-template>
-      <form class="form-sample" [formGroup]="userForm">
-        <div class="grid-container"> <!-- Dentro del grid van los campos -->
+    <!-- Paso 3 -->
+    <mat-step label="Paso 3">
+      <ng-template matStepLabel> Paso 3 </ng-template>
+      <p>Contenido del Paso 3</p>
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Próximo</button>
+      </div>
+    </mat-step>
 
-          <div class="grid-item">
-            <label for="email-address" class="form-label">Correo *</label>
-            <input [class.invalid-input]="invalidEmail" class="form-control" formControlName="email" type="text" name="email-address" id="email-address" autocomplete="email" class="form-input" />
-            <small *ngIf="invalidEmail" class="error-text">Ingrese un email correcto</small>
-          </div>
-
-          <div class="grid-item">
-            <label for="first-name" class="form-label">Nombres *</label>
-            <input [class.invalid-input]="invalidFirstname" formControlName="firstName" type="text" name="first-name" id="first-name" autocomplete="given-name" class="form-input" />
-            <small *ngIf="invalidFirstname" class="error-text">Ingrese al menos 5 letras</small>
-          </div>
-          
-        </div>
-      </form>
-    </cdk-step>
-
-
-    <!-- Punto 2 -->
-
-    <cdk-step>
-      <ng-template cdkStepLabel>
-        <span class="stepHeader font-weight-bold">Datos Profesionales</span>
-      </ng-template>
-      <form class="form-sample" [formGroup]="userForm">
-        <div class="grid-container">
-
-          <div class="grid-item" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <h1 style="text-align: center;">Por favor revisa tu correo electrónico.</h1>
-            <i class='bx bx-mail-send' style='font-size: 100px;'></i>
-          </div>
-          
-
-         
-        </div>
-      </form>
-    </cdk-step>
-
-
-    <!-- Punto 3 -->
-
-    <cdk-step>
-      <ng-template cdkStepLabel>
-        <span class="stepHeader font-weight-bold">Nueva Contraseña</span>
-      </ng-template>
-      <form class="form-sample" [formGroup]="userForm">
-        <div class="grid-container">
-
-          <div class="grid-item">
-            <label for="first-name" class="form-label">Contraseña</label>
-            <input [class.invalid-input]="invalidFirstname" formControlName="firstName" type="text" name="first-name" id="first-name" autocomplete="given-name" class="form-input" />
-            <small *ngIf="invalidFirstname" class="error-text">Ingrese al menos 5 letras</small>
-          </div>
-
-          <div class="grid-item">
-            <label for="first-name" class="form-label">Repetir Contraseña</label>
-            <input [class.invalid-input]="invalidFirstname" formControlName="firstName" type="text" name="first-name" id="first-name" autocomplete="given-name" class="form-input" />
-            <small *ngIf="invalidFirstname" class="error-text">Ingrese al menos 5 letras</small>
-          </div>
-         
-        </div>
-      </form>
-    </cdk-step>
-
-    <!-- Punto 4 -->
-
-    <cdk-step>
-      <ng-template cdkStepLabel>
-        <span class="stepHeader font-weight-bold">Confirmar</span>
-      </ng-template>
-      <form class="form-sample" [formGroup]="userForm">
-        <div class="grid-container">
-
-          <div class="grid-item" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <h1 style="text-align: center;">Contraseña actualizada correctamente! .</h1>
-            <i class='bx bx-happy-alt' style='font-size: 100px; text-align: center; align-items: center;'></i>
-          </div>
-         
-        </div>
-      </form>
-    </cdk-step>
-
-  </app-stepper>
+    <!-- Paso 4 -->
+    <mat-step label="Paso 4">
+      <ng-template matStepLabel> Paso 4 </ng-template>
+      <p>Contenido del Paso 4</p>
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button (click)="stepper.reset()">Reiniciar</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+  
+<button><a routerLink="/prueba-login">XD</a></button>
 </div>
+

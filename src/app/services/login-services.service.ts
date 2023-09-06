@@ -18,13 +18,13 @@ export class LoginServicesService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage: MensajeError = { mensaje: 'An error occurred' };
+    let errorMessage: MensajeError = { Message: 'An error occurred' };
     if (error.error instanceof ErrorEvent) {
       // Client-side errors
-      errorMessage.mensaje = error.error.message;
+      errorMessage.Message = JSON.parse(error.error.message);
     } else {
       // Server-side errors
-      errorMessage.mensaje = `Error Code: ${error.status}\nMessage: ${error.error}`;
+      return throwError(error.error); // Devuelve solo el JSON de la respuesta del backend
     }
     return throwError(errorMessage);
   }

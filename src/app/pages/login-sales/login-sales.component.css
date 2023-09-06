@@ -73,6 +73,17 @@ body {
     font-weight: 600;
 }
 
+/* Estilos para la animación del combobox */
+.select-container {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .select-container.active {
+    max-height: 100px; /* Ajusta la altura máxima deseada */
+  }
+  
 .form .title::before {
     content: '';
     position: absolute;

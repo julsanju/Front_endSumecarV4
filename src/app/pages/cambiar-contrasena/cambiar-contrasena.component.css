@@ -1,54 +1,45 @@
-/* Estilos CSS normales */
-.form-container {
-    padding: 1rem;
-  }
-  
-  .form-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-  }
-  
-/*   .form-sample {
+/* Estilos para el stepper */
+.full-width-stepper {
+  width: 100%; /* Hacer que el stepper ocupe todo el ancho */
+}
 
-  } */
-  
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-    /* Estilos para la cuadrícula */
-  }
-  
-  .grid-item {
-    grid-column: span 6;
-    /* Estilos para cada elemento de la cuadrícula */
-  }
-  
-  .form-label {
-    font-size: 0.875rem;
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-    /* Estilos para las etiquetas de formulario */
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    /* Estilos para los campos de entrada */
-  }
-  
-  .invalid-input {
-    border-color: #e3342f; /* Cambia esto al color de borde deseado */
-  }
-  
-  .error-text {
-    color: #e3342f; /* Cambia esto al color de texto deseado */
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    /* Estilos para los mensajes de error */
-  }
-  
+/* Estilos para el contenedor del stepper */
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0; /* Cambia el color de fondo si lo deseas */
+  font-family: "Arial", sans-serif; /* Cambia la fuente aquí */
+}
+
+/* Estilos para las etiquetas de paso */
+mat-step-header {
+  background-color: #1976D2;
+  font-family: "Tahoma", sans-serif; /* Cambia la fuente aquí */
+}
+
+/* Estilos para la línea de progreso cuando se activa un paso */
+.mat-horizontal-stepper-header-container:after {
+  background-color: #1976D2; /* Cambia el color de la línea de progreso al morado */
+}
+
+/* Estilos para los botones de "Próximo" y "Atrás" */
+button.mat-step-header,
+button.mat-button {
+  background-color: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif; /* Cambia la fuente aquí */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Agregar animaciones de transición */
+}
+
+button.mat-step-header:hover,
+button.mat-button:hover {
+  background-color: #1976D2;
+  transform: scale(1.05); /* Agregar una animación de escala en el hover */
+}

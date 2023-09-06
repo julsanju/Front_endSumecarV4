@@ -1,0 +1,122 @@
+/* Estilos para el formulario */
+/* En SuccesModalComponent.css */
+.success-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ajusta esto según sea necesario */
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  .animation-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 50px;
+  }
+  
+  .animation-container img {
+    max-width: 100%;
+    height: auto;
+    animation: bounce 2s infinite;
+  }
+  
+  .login-form {
+    flex: 1;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-right: 50px;
+    display: flex; /* Añade esto para usar Flexbox en el formulario */
+    flex-direction: column; /* Añade esto para apilar elementos verticalmente */
+    justify-content: center; /* Centra verticalmente los elementos */
+    align-items: center;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'TuFuentePersonalizada', sans-serif; /* Cambia 'TuFuentePersonalizada' por el nombre de tu fuente */
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    padding-right: 30px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: 'TuFuentePersonalizada', sans-serif; /* Cambia 'TuFuentePersonalizada' por el nombre de tu fuente */
+    
+}
+  
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-radius: 5%;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Estilos para la fortaleza de la contraseña */
+.password-strength-indicator {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .weak {
+    color: red;
+  }
+  
+  .medium {
+    color: orange;
+  }
+  
+  .strong {
+    color: green;
+  }
+  
+  

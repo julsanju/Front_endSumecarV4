@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginSalesComponent } from './pages/login-sales/login-sales.component';
@@ -19,26 +20,30 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkStepperComponent } from './components/cdk-stepper/cdk-stepper.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkStepperModule} from '@angular/cdk/stepper';
+import { PruebaLoginComponent } from './pages/prueba-login/prueba-login.component';
+import { SuccesModalComponent } from './pages/succes-modal/succes-modal.component';
+import { ErrorModalComponent } from './pages/error-modal/error-modal.component';
+import { MatStepperModule } from '@angular/material/stepper';
+
 
 
 
 const routes: Routes = [
-/*   {
-    path: '',
-    component: LoginSalesComponent
-  },
   {
     path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  }, */
+    component: PruebaLoginComponent
+  },
+  {
+    path: 'prueba-login',
+    component: PruebaLoginComponent
+  },
   {
     path: 'register',
     component: RegisterSalesComponent
   },
   {
-    path: 'login',
-    component: LoginSalesComponent
+    path: 'cambio-contrasena',
+    component: CambiarContrasenaComponent
   }
 ];
 @NgModule({
@@ -53,6 +58,9 @@ const routes: Routes = [
     DashboardComponent,
     SidebarComponent,
     CdkStepperComponent,
+    PruebaLoginComponent,
+    SuccesModalComponent,
+    ErrorModalComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +71,10 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatProgressBarModule,
     NoopAnimationsModule,
-    CdkStepperModule
+    CdkStepperModule,
+    FormsModule,
+    NgbModule,
+    MatStepperModule
   ],
   providers: [],
   bootstrap: [AppComponent]
