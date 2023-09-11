@@ -1,4 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 declare let particlesJS: any;
 
@@ -24,9 +28,12 @@ import { ErrorModalComponent } from '../error-modal/error-modal.component';
       ]),
     ]),
   ],
+  
 })
 export class PruebaLoginComponent implements AfterViewInit {
   errorMessage: MensajeError | null = null;
+  passwordVisible: boolean = true;
+  disableSelect = new FormControl(false);
   loginForm: FormGroup;
   email: string = '';
   password: string = '';
@@ -34,6 +41,10 @@ export class PruebaLoginComponent implements AfterViewInit {
   isSelectActive: boolean = false; // Variable para controlar la animación del combobox
 
   roles: string[] = ['cliente', 'empleado'];
+
+  togglePasswordVisibility(event: Event) {
+    this.passwordVisible = (event.target as HTMLInputElement).checked;
+  }  
 
   ngAfterViewInit() {
     this.initParticles();

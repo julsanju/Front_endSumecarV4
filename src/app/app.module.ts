@@ -24,6 +24,9 @@ import { PruebaLoginComponent } from './pages/prueba-login/prueba-login.componen
 import { SuccesModalComponent } from './pages/succes-modal/succes-modal.component';
 import { ErrorModalComponent } from './pages/error-modal/error-modal.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
@@ -74,7 +77,10 @@ const routes: Routes = [
     CdkStepperModule,
     FormsModule,
     NgbModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
