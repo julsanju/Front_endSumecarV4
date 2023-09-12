@@ -31,6 +31,10 @@ import { ErrorModalComponent } from '../error-modal/error-modal.component';
   
 })
 export class PruebaLoginComponent implements AfterViewInit {
+  users = [
+    {value: 'cliente', viewValue: 'Cliente'},
+    {value: 'empleado', viewValue: 'Empleado'}
+  ];
   errorMessage: MensajeError | null = null;
   passwordVisible: boolean = true;
   disableSelect = new FormControl(false);

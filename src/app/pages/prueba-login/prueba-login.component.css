@@ -127,6 +127,10 @@
     --input-hovered-color: #4985e01f;
     position: relative;
     width: var(--width-of-input);
+    margin-left: 100px;
+   }
+   .form-select{
+    margin-left: 100px;
    }
    /* styling of Input */
    .input {
@@ -430,27 +434,21 @@
   transform: scale(0.95);
  }
 
- /* Estilo personalizado para el mat-form-field */
-.custom-mat-form-field {
-  width: 100%; /* Ancho personalizado */
-  margin-bottom: 20px; /* Espaciado inferior personalizado */
+/* select-animation.component.css */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
-/* Estilo personalizado para el select */
-.custom-select {
-  border: 1px solid #ccc; /* Borde personalizado */
-  padding: 10px; /* Espaciado interno personalizado */
-  border-radius: 4px; /* Borde redondeado personalizado */
-  background-color: #fff; /* Fondo personalizado */
-  font-size: 16px; /* Tamaño de fuente personalizado */
-  color: #333; /* Color de texto personalizado */
-  width: 100%; /* Ancho personalizado para que se ajuste al mat-form-field */
-  cursor: pointer; /* Cursor personalizado */
+select {
+  padding: 10px;
+  animation: bounce 2s infinite;
 }
 
-/* Estilo personalizado cuando el select está deshabilitado */
-.custom-select:disabled {
-  background-color: #f0f0f0; /* Fondo personalizado para select deshabilitado */
-  color: #888; /* Color de texto personalizado para select deshabilitado */
-  cursor: not-allowed; /* Cursor personalizado para select deshabilitado */
-}

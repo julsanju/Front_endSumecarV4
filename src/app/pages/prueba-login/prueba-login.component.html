@@ -35,7 +35,7 @@
       <!--Correo electrónico-->
       <div class="form-group">
         <div class="form">
-          <input class="input" placeholder="Usuario" required="" type="text">
+          <input class="input" formControlName="usuario" placeholder="Usuario" required="" type="text">
           <span class="input-border"></span>
         </div>
         </div>
@@ -80,7 +80,7 @@
       </div>-->
       
       <!--Tipo de usuario-->
-      <div class="form-group select-container" [ngClass]="{'active': isSelectActive}">
+      <!--<div class="form-group select-container" [ngClass]="{'active': isSelectActive}">
         <label for="role">Rol:</label>
         <select id="role" formControlName="rol" class="form-control" (click)="toggleSelect()">
           <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
@@ -88,17 +88,20 @@
         <div *ngIf="loginForm.get('role')?.hasError('required')" class="error-message">
           Selecciona un rol.
         </div>
+      </div>-->
+
+      <div class="form-select">
+        <mat-form-field>
+          <mat-label> Seleccione:</mat-label>
+          <mat-select formControlName="rol" (click)="toggleSelect()">
+            <mat-option *ngFor="let users of users" [value]="users.value">
+              {{users.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-     
-       
-<label for="underline_select" class="sr-only">Underline select</label>
-<select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-    <option selected>Choose a country</option>
-    <option value="US">United States</option>
-    <option value="CA">Canada</option>
-    <option value="FR">France</option>
-    <option value="DE">Germany</option>
-</select>
+      
+      
 
       
       <div>
