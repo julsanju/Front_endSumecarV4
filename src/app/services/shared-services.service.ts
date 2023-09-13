@@ -7,4 +7,7 @@ export class SharedServicesService {
 
   public usuario : string | null = null;
   constructor() { }
+  enviarDatos(datos: any) {
+    this.usuario = datos;
+  }
 }

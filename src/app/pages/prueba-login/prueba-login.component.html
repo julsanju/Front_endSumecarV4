@@ -1,3 +1,4 @@
+<form [formGroup]="loginForm" >
 <div class="login-container">
   <div class="loader">
     <div class="box box-1">
@@ -22,18 +23,54 @@
     </div>
   </div>
 
+  <div class="container">
+    <div class="card">
+        <a class="singup">Sign Up</a>
+        
+        <div class="inputBox1">
+            <input type="text" formControlName="usuario" type="text" required="required">
+            <span>Username</span>
+        </div>
 
-  
+        <div class="inputBox1">
+            <input type="password" formControlName="contrasena" [type]="passwordVisible ? 'text' : 'password'" required="required">
+            <span>Password</span>
+        </div>
+
+        <div class="form-select">
+          <mat-form-field >
+            <mat-label> Seleccione:</mat-label>
+            <mat-select formControlName="rol" (click)="toggleSelect()">
+              <mat-option *ngFor="let users of users" [value]="users.value">
+                {{users.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button type="submit" class="cta" (click)="onSubmit()">Iniciar Sesion</button>
+        <button routerLink="/register" type="submit" class="cta cta2" (click)="onSubmit()">Registrarse</button>
+        
+        <div class="style-a">
+          <a (click)="EventoEnviar()" routerLink="/cambio-contrasena" >¿Problemas con tu contraseña?</a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</form> 
   <!--<div class="animation-container">
     <img src="assets/muneco-animado.gif" alt="Muñeco animado">
   </div>-->
-  <div class="login-form">
+
+  <!--<div class="login-form">
+    
     <div id="particles-js"></div>
     <h2>Iniciar sesión</h2>
-    <form [formGroup]="loginForm" >
+    
+    <form [formGroup]="loginForm" > -->
       
       <!--Correo electrónico-->
-      <div class="form-group">
+      <!--<div class="form-group">
         <div class="form">
           <input class="input" formControlName="usuario" placeholder="Usuario" required="" type="text">
           <span class="input-border"></span>
@@ -60,7 +97,7 @@
         <!--<div *ngIf="loginForm.get('email')?.hasError('required')" class="error-message">
           El correo electrónico es obligatorio.
         </div>-->
-        <div *ngIf="loginForm.get('email')?.hasError('email')" class="error-message">
+        <!--<div *ngIf="loginForm.get('email')?.hasError('email')" class="error-message">
           Ingresa un correo electrónico válido.
         </div>
       
@@ -90,7 +127,7 @@
         </div>
       </div>-->
 
-      <div class="form-select">
+      <!--<div class="form-select">
         <mat-form-field>
           <mat-label> Seleccione:</mat-label>
           <mat-select formControlName="rol" (click)="toggleSelect()">
@@ -126,5 +163,4 @@
       <a routerLink="/cambio-contrasena" >¿Problemas con tu contraseña? Haz clic AQUI</a>
 
     </form>
-  </div>
-</div>
+  </div>-->

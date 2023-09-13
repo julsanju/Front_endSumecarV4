@@ -3,36 +3,101 @@
     <!-- Paso 1 -->
     <mat-step label="Paso 1">
       <ng-template matStepLabel> Paso 1 </ng-template>
-      <p>Contenido del Paso 1</p>
-      <div>
-        <button mat-button matStepperNext>Próximo</button>
+      <div class="Style-center style-h1">
+        <B><h1>ENVIO DEL CORREO</h1></B>
       </div>
+
+      <div class="Style-center">
+        <h2>Usuario</h2>
+      </div>
+      
+      <div class="Style-center">
+        <div class="card">
+          <div class="style-label"><b><label>{{usuario}}</label></b></div>
+        </div>
+      </div>
+
+      <div class="Style-center">
+        <div>
+          <button class="distancia">Enviar</button>
+          <button mat-button matStepperNext >Proximo</button>
+        </div>
+
+      </div>
+        
     </mat-step>
 
     <!-- Paso 2 -->
     <mat-step label="Paso 2">
       <ng-template matStepLabel> Paso 2 </ng-template>
-      <p>Contenido del Paso 2</p>
-      <div>
+      <div class="Style-center style-h1">
+        <B><h1>Sala de espera</h1></B>
+      </div>
+      <div class="Style-center">
+        <p>Se le ha enviado un link al correo el cual debe ingresarx para validar su correo</p>
+      </div>
+
+      <div class="Style-center">
+        <div class="wrapper">
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+      </div>
+      </div>
+      <div class="Style-center">
         <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext>Próximo</button>
+        <button mat-button matStepperNext >Próximo</button>
       </div>
     </mat-step>
 
     <!-- Paso 3 -->
     <mat-step label="Paso 3">
       <ng-template matStepLabel> Paso 3 </ng-template>
-      <p>Contenido del Paso 3</p>
-      <div>
+      <div class="Style-center style-h1">
+        <B><h1>CAMBIO DE CONTRASEÑA</h1></B>
+      </div>
+
+      <div class="Style-center">
+        <div class="form-control">
+          <input type="password" required="">
+          <label>
+              <span style="transition-delay:0ms">P</span><span style="transition-delay:50ms">A</span><span style="transition-delay:100ms">S</span><span style="transition-delay:150ms">S</span><span style="transition-delay:200ms">W</span><span style="transition-delay:250ms">O</span><span style="transition-delay:300ms">R</span><span style="transition-delay:350ms">D</span>
+          </label>
+        </div>
+
+        <div class="form-control">
+          <input type="value" required="">
+          <label>
+            <span style="transition-delay:0ms">P</span><span style="transition-delay:50ms">A</span><span style="transition-delay:100ms">S</span><span style="transition-delay:150ms">S</span><span style="transition-delay:200ms">W</span><span style="transition-delay:250ms">O</span><span style="transition-delay:300ms">R</span><span style="transition-delay:350ms">D</span>
+          </label>
+        </div>
+      </div>
+      <div class="Style-center">
         <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext>Próximo</button>
+        <button mat-button matStepperNext (click)="activarAnimacion()">Próximo</button>
       </div>
     </mat-step>
 
     <!-- Paso 4 -->
     <mat-step label="Paso 4">
       <ng-template matStepLabel> Paso 4 </ng-template>
-      <p>Contenido del Paso 4</p>
+      <div *ngIf="mostrarAnimacion"  class="Style-center">
+        <div class="loading">
+          <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124">
+            <circle class="circle-loading" cx="62" cy="62" r="59" fill="none" stroke="hsl(271, 76%, 74%)" stroke-width="6px"></circle>
+            <circle class="circle" cx="62" cy="62" r="59" fill="none" stroke="hsl(271, 76%, 53%)" stroke-width="6px" stroke-linecap="round"></circle>
+            <polyline class="check" points="73.56 48.63 57.88 72.69 49.38 62" fill="none" stroke="hsl(271, 76%, 53%)" stroke-width="6px" stroke-linecap="round"></polyline>
+          </svg>
+        </div>
+
+      </div>
+      <div  class="Style-center">
+        <div class="animation">Contraseña actualizada correctamente!</div>
+      </div>
+      
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
         <button mat-button (click)="stepper.reset()">Reiniciar</button>

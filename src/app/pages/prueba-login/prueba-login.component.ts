@@ -13,6 +13,7 @@ import { MensajeError } from '../../Interfaces/mensaje-error';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SuccesModalComponent } from '../succes-modal/succes-modal.component';
 import { ErrorModalComponent } from '../error-modal/error-modal.component';
+import {SharedServicesService} from '../../services/shared-services.service';
 @Component({
   selector: 'app-prueba-login',
   templateUrl: './prueba-login.component.html',
@@ -75,7 +76,7 @@ export class PruebaLoginComponent implements AfterViewInit {
     });
   }
 
-  constructor(private formBuilder: FormBuilder,  private loginService: LoginServicesService, private modalService: NgbModal) {
+  constructor(private formBuilder: FormBuilder,  private loginService: LoginServicesService, private modalService: NgbModal, private data:SharedServicesService) {
     this.loginForm = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.email]],
       contrasena: ['', Validators.required],
@@ -95,7 +96,15 @@ export class PruebaLoginComponent implements AfterViewInit {
     }
   }
 
+  EventoEnviar(){
+      //mensaje
+    const usuario = this.loginForm.get('usuario')?.value;
+    // Enviar datos al servicio
+    this.data.enviarDatos( usuario );
+  }
+  
   onSubmit() {
+    
     //login
     const userData: Login = this.loginForm.value;
 
