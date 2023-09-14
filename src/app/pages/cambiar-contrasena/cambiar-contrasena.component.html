@@ -1,4 +1,4 @@
-<div class="stepper-container">
+<div class="stepper-container no-blur-background" [class.desenfocado]="desenfocarContenido">
   <mat-horizontal-stepper [linear]="true" #stepper class="full-width-stepper">
     <!-- Paso 1 -->
     <mat-step label="Paso 1">
@@ -19,7 +19,7 @@
 
       <div class="Style-center">
         <div>
-          <button class="distancia">Enviar</button>
+          <button class="distancia" (click)="openModal()">Enviar</button>
           <button mat-button matStepperNext >Proximo</button>
         </div>
 
@@ -83,22 +83,22 @@
 
     <!-- Paso 4 -->
     <mat-step label="Paso 4">
-      <ng-template *ngIf="mostrarAnimacion" matStepLabel> Paso 4 </ng-template>
-      <div *ngIf="mostrarAnimacion"  class="Style-center">
+      <ng-template matStepLabel> Paso 4 </ng-template>
+      <div *ngIf="mostrarAnimacion" class="Style-center">
         <div class="loading">
           <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124">
             <circle class="circle-loading" cx="62" cy="62" r="59" fill="none" stroke="hsl(271, 76%, 74%)" stroke-width="6px"></circle>
-            <circle class="circle" cx="62" cy="62" r="59" fill="none" stroke="hsl(271, 76%, 53%)" stroke-width="6px" stroke-linecap="round"></circle>
+            <circle class="circle2" cx="62" cy="62" r="59" fill="none" stroke="hsl(271, 76%, 53%)" stroke-width="6px" stroke-linecap="round"></circle>
             <polyline class="check" points="73.56 48.63 57.88 72.69 49.38 62" fill="none" stroke="hsl(271, 76%, 53%)" stroke-width="6px" stroke-linecap="round"></polyline>
           </svg>
         </div>
 
       </div>
-      <div  *ngIf="mostrarAnimacion" class="Style-center">
+      <div  class="Style-center">
         <div class="animation">Contraseña actualizada correctamente!</div>
       </div>
       
-      <div>
+      <div class="Style-center">
         <button mat-button matStepperPrevious>Atrás</button>
         <button mat-button (click)="stepper.reset()">Reiniciar</button>
       </div>

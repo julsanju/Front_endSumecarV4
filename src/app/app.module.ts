@@ -27,6 +27,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ModalMessageComponent } from './pages/modal-message/modal-message.component';
 
 
 
@@ -63,7 +64,8 @@ const routes: Routes = [
     CdkStepperComponent,
     PruebaLoginComponent,
     SuccesModalComponent,
-    ErrorModalComponent
+    ErrorModalComponent,
+    ModalMessageComponent
   ],
   imports: [
     BrowserModule,

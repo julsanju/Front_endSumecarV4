@@ -1,15 +1,6 @@
 /* Estilos para el formulario */
 /* En SuccesModalComponent.css */
-.success-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000; /* Ajusta esto según sea necesario */
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
+
 
 .login-container {
     display: flex;
@@ -568,4 +559,15 @@ button:hover:before, button:focus:before {
 
 button:active {
   transform: scale(0.9);
+}
+
+.success-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ajusta esto según sea necesario */
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }

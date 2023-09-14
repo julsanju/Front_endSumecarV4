@@ -1,6 +1,20 @@
+/*Estilos del modal*/
+.success-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ajusta esto según sea necesario */
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
 /* Estilos para el stepper */
 .full-width-stepper {
-  width: 100%; /* Hacer que el stepper ocupe todo el ancho */
+  width: 95%; /* Hacer que el stepper ocupe todo el ancho */
+  border-radius: 20px;
+  box-shadow: 15px 15px 30px #8b8b8b, -15px -15px 30px #ffffff;
 }
 
 /* Estilos para el contenedor del stepper */
@@ -309,7 +323,7 @@ if there is 20 put 20 */
   height: 100%;
 }
 
-.circle {
+.circle2 {
   transform: rotate(-90deg);
   transform-origin: center;
   stroke-dasharray: 380;
@@ -432,3 +446,9 @@ if there is 20 put 20 */
   right: 15%;
   animation-delay: .3s;
 }
+
+/* Estilos para el modal de fondo */
+.desenfocado {
+  filter: blur(5px); /* Aplicar un desenfoque al contenido */
+}
+
