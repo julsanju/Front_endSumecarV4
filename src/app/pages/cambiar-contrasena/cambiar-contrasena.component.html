@@ -34,7 +34,7 @@
         <B><h1>Sala de espera</h1></B>
       </div>
       <div class="Style-center">
-        <p>Se le ha enviado un link al correo el cual debe ingresarx para validar su correo</p>
+        <p>Se le ha enviado un link al correo el cual debe ingresar para validar su correo</p>
       </div>
 
       <div class="Style-center">
@@ -83,7 +83,7 @@
 
     <!-- Paso 4 -->
     <mat-step label="Paso 4">
-      <ng-template matStepLabel> Paso 4 </ng-template>
+      <ng-template *ngIf="mostrarAnimacion" matStepLabel> Paso 4 </ng-template>
       <div *ngIf="mostrarAnimacion"  class="Style-center">
         <div class="loading">
           <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124">
@@ -94,7 +94,7 @@
         </div>
 
       </div>
-      <div  class="Style-center">
+      <div  *ngIf="mostrarAnimacion" class="Style-center">
         <div class="animation">Contraseña actualizada correctamente!</div>
       </div>
       
