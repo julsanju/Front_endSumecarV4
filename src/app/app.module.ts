@@ -28,14 +28,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModalMessageComponent } from './pages/modal-message/modal-message.component';
+import { MenuComponent } from './pages/menu/menu.component';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { IconsProviderModule } from './icons-provider.module';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb'; // Importa el módulo de migas de pan
 
-
-
-
+registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
   {
     path: '',
-    component: PruebaLoginComponent
+    redirectTo: '/prueba-login', // Redirige a la página de inicio de sesión
+    pathMatch: 'full',
   },
   {
     path: 'prueba-login',
@@ -48,6 +56,10 @@ const routes: Routes = [
   {
     path: 'cambio-contrasena',
     component: CambiarContrasenaComponent
+  },
+  {
+    path: 'menu',
+    component: MenuComponent
   }
 ];
 @NgModule({
@@ -65,7 +77,8 @@ const routes: Routes = [
     PruebaLoginComponent,
     SuccesModalComponent,
     ErrorModalComponent,
-    ModalMessageComponent
+    ModalMessageComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +87,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
+    NzLayoutModule,
+    NzBreadCrumbModule,
     MatProgressBarModule,
     NoopAnimationsModule,
     CdkStepperModule,
@@ -82,9 +97,13 @@ const routes: Routes = [
     MatStepperModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    IconsProviderModule,
+    NzMenuModule
   ],
-  providers: [],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.1",
+    "ng-zorro-antd": "^16.1.0",
     "node": "^20.5.1",
     "particles.js": "^2.0.0",
     "rxjs": "~7.8.0",
