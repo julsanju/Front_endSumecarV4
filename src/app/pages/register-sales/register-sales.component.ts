@@ -10,7 +10,12 @@ import { Usuarios } from '../../Interfaces/usuarios';
   styleUrls: ['./register-sales.component.css']
 })
 export class RegisterSalesComponent {
+  isSelectActive: boolean = false;
   registrationForm: FormGroup;
+
+  users = [
+    {value: 'cliente', viewValue: 'Cliente'}
+  ];
 
   constructor(private formBuilder: FormBuilder, private registerService: RegisterService) {
     this.registrationForm = this.formBuilder.group({
@@ -43,6 +48,10 @@ export class RegisterSalesComponent {
         
       );
     //}
+  }
+
+  toggleSelect() {
+    this.isSelectActive = !this.isSelectActive;
   }
 }
 

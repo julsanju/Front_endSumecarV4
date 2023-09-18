@@ -37,6 +37,7 @@ import en from '@angular/common/locales/en';
 import { IconsProviderModule } from './icons-provider.module';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb'; // Importa el módulo de migas de pan
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -78,7 +79,8 @@ const routes: Routes = [
     SuccesModalComponent,
     ErrorModalComponent,
     ModalMessageComponent,
-    MenuComponent
+    MenuComponent,
+    NumbersOnlyDirective
   ],
   imports: [
     BrowserModule,
