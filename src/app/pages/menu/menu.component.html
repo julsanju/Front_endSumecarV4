@@ -20,9 +20,9 @@
             </li>
             <li nz-submenu nzTitle="User" nzIcon="user">
                 <ul>
-                  <li nz-menu-item><a routerLink="/menu/register">Registro de usuarios</a></li>
-                  <li nz-menu-item><a routerLink="/menu/cambiar-contrasena">Cambiar Contraseña</a></li>
-                  <li nz-menu-item>Alex</li>
+                  <li nz-menu-item *ngIf="esAdmin()"><a routerLink="/menu/register">Registro de usuarios</a></li>
+                  <li nz-menu-item ><a routerLink="/menu/cambiar-contrasena">Cambiar Contraseña</a></li>
+                  <li nz-menu-item >Alex</li>
                 </ul>
               </li>
           </ul>

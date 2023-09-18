@@ -38,6 +38,7 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb'; // Importa el módulo de migas de pan
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { LocalStorageDirectiveDirective } from './directives/local-storage-directive.directive'
 
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -80,7 +81,8 @@ const routes: Routes = [
     ErrorModalComponent,
     ModalMessageComponent,
     MenuComponent,
-    NumbersOnlyDirective
+    NumbersOnlyDirective,
+    LocalStorageDirectiveDirective
   ],
   imports: [
     BrowserModule,

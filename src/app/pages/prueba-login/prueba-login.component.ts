@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { SuccesModalComponent } from '../succes-modal/succes-modal.component';
 import { ErrorModalComponent } from '../error-modal/error-modal.component';
 import {SharedServicesService} from '../../services/shared-services.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-prueba-login',
   templateUrl: './prueba-login.component.html',
@@ -34,7 +35,8 @@ import {SharedServicesService} from '../../services/shared-services.service';
 export class PruebaLoginComponent implements AfterViewInit {
   users = [
     {value: 'cliente', viewValue: 'Cliente'},
-    {value: 'empleado', viewValue: 'Empleado'}
+    {value: 'empleado', viewValue: 'Empleado'},
+    {value: 'admin', viewValue: 'Admin'}
   ];
   errorMessage: MensajeError | null = null;
   passwordVisible: boolean = true;
@@ -44,7 +46,7 @@ export class PruebaLoginComponent implements AfterViewInit {
   password: string = '';
   passwordStrength: string = '';
   isSelectActive: boolean = false; // Variable para controlar la animación del combobox
-
+  userData : any;
   roles: string[] = ['cliente', 'empleado'];
 
   togglePasswordVisibility(event: Event) {
@@ -76,7 +78,11 @@ export class PruebaLoginComponent implements AfterViewInit {
     });
   }
 
-  constructor(private formBuilder: FormBuilder,  private loginService: LoginServicesService, private modalService: NgbModal, private data:SharedServicesService) {
+  constructor(private formBuilder: FormBuilder,  
+              private loginService: LoginServicesService, 
+              private modalService: NgbModal, 
+              private data:SharedServicesService,
+              private router:Router) {
     this.loginForm = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.email]],
       contrasena: ['', Validators.required],
@@ -119,6 +125,18 @@ export class PruebaLoginComponent implements AfterViewInit {
         modalRef.componentInstance.modalClass = "success-modal"; // Establece la clase CSS del modal
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
         console.log("Login exitoso");
+        this.router.navigate(['/menu']);
+        
+        const userData2 = {
+          usuario : this.loginForm.get('usuario')?.value,
+          contrasena : this.loginForm.get('contrasena')?.value,
+          rol : this.loginForm.get('rol')?.value
+        }
+
+        localStorage.setItem('userData', JSON.stringify(userData2));
+          this.userData = userData2;
+        
+        
       },
       error => {
         //console.error("Error:", error);
