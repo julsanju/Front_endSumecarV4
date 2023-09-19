@@ -10,11 +10,11 @@ import { AppComponent } from './app.component';
 import { LoginSalesComponent } from './pages/login-sales/login-sales.component';
 import { HeaderSalesComponent } from './shared/header-sales/header-sales.component';
 import { FooterSalesComponent } from './shared/footer-sales/footer-sales.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RegisterSalesComponent } from './pages/register-sales/register-sales.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AjustesComponent } from './pages/ajustes/ajustes.component';
 import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-contrasena.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkStepperComponent } from './components/cdk-stepper/cdk-stepper.component';
@@ -74,10 +74,10 @@ const routes: Routes = [
     LoginSalesComponent,
     HeaderSalesComponent,
     FooterSalesComponent,
+    DashboardComponent,
     RegisterSalesComponent,
     AjustesComponent,
     CambiarContrasenaComponent,
-    DashboardComponent,
     SidebarComponent,
     CdkStepperComponent,
     PruebaLoginComponent,
