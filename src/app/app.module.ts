@@ -62,6 +62,10 @@ const routes: Routes = [
   {
     path: 'menu',
     component: MenuComponent
+  },
+  {
+    path : 'dashboard',
+    component : DashboardComponent
   }
 ];
 @NgModule({
