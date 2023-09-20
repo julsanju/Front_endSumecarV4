@@ -11,11 +11,8 @@
         <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
           <div class="logo"></div>
           <ul nz-menu nzTheme="dark" nzMode="inline">
-            <ul>
-              <li nz-menu-item><a routerLink="/menu/dashboard">Dashboard</a></li>
-              <li nz-menu-item>Team 2</li>
-            </ul>
-            <li nz-submenu nzTitle="Productos" nzIcon="team">
+            <span nz-icon nzType="home" nzTheme="outline"></span>
+            <li nz-icon nzType="home" nzTheme="outline" nz-submenu nzTitle="Productos" nzIcon="team">
               <ul>
                 <li nz-menu-item>Team 1</li>
                 <li nz-menu-item>Team 2</li>
