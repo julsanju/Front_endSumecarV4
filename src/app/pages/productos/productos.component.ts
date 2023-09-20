@@ -1,31 +1,22 @@
-import { AsyncPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+
+import { Component, OnInit} from '@angular/core';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import { Productos } from 'src/app/Interfaces/productos';
+import {NgIf, NgFor} from '@angular/common';
+import {MatTableModule} from '@angular/material/table';
 
-import { PaginationProductsDirective, SortEvent } from '../../directives/pagination-products.directive';
-import { FormsModule } from '@angular/forms';
-import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-productos',
-  standalone: true,
-  imports: [
-		NgFor,
-		DecimalPipe,
-		FormsModule,
-		AsyncPipe,
-		NgbTypeaheadModule,
-		NgbdSortableHeader,
-		NgbPaginationModule,
-		NgIf,
-	],
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  providers: [ProductsServicesService, DecimalPipe],
+  standalone: true,
+  imports: [MatTableModule, NgIf, NgFor]
 })
 export class ProductosComponent implements OnInit{
   productos : Productos[] = [];
-  searchTerm: string = '';
+  displayedColumns: string[] = ['codigo', 'articulo', 'laboratorio'];
+  dataSource = this.productos;
+  clickedRows = new Set<Productos>();
   // Aquí debes tener una lista de productos, por ejemplo:
   
   constructor(private servicio: ProductsServicesService){ }

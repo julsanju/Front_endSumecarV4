@@ -1,4 +1,4 @@
-.card {
+/*.card {
     position: relative;
     width: 11.875em;
     height: 16.5em;
@@ -74,4 +74,23 @@
     height: 100%;
     display: grid;
     place-items: center;
+  }*/
+
+  .demo-table {
+    width: 100%;
   }
+  
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+  
+  .demo-row-is-clicked {
+    font-weight: bold;
+  }
+  
