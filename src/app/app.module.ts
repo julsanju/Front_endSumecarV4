@@ -12,6 +12,7 @@ import { HeaderSalesComponent } from './shared/header-sales/header-sales.compone
 import { FooterSalesComponent } from './shared/footer-sales/footer-sales.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RegisterSalesComponent } from './pages/register-sales/register-sales.component';
+import { ProductosComponent } from './pages/productos/productos.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AjustesComponent } from './pages/ajustes/ajustes.component';
 import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-contrasena.component';
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path : 'dashboard',
     component : DashboardComponent
+  },
+  {
+    path : 'productos',
+    component : ProductosComponent
   }
 ];
 @NgModule({
@@ -76,6 +81,7 @@ const routes: Routes = [
     FooterSalesComponent,
     DashboardComponent,
     RegisterSalesComponent,
+    ProductosComponent,
     AjustesComponent,
     CambiarContrasenaComponent,
     SidebarComponent,

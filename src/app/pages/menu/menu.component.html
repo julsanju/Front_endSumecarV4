@@ -10,11 +10,12 @@
     <nz-layout>
         <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
           <div class="logo"></div>
+          
           <ul nz-menu nzTheme="dark" nzMode="inline">
-            <span nz-icon nzType="home" nzTheme="outline"></span>
-            <li nz-icon nzType="home" nzTheme="outline" nz-submenu nzTitle="Productos" nzIcon="team">
+            <li nz-menu-item nzIcon="home"><a routerLink="/menu/dashboard">Home</a></li>
+            <li nz-submenu nzTitle="Productos" nzIcon="disconnect">
               <ul>
-                <li nz-menu-item>Team 1</li>
+                <li nz-menu-item nzTitle="Productos" nzIcon="appstore-add"> <a routerLink="/menu/productos">Add products</a></li>
                 <li nz-menu-item>Team 2</li>
               </ul>
             </li>

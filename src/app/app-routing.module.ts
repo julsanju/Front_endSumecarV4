@@ -5,6 +5,7 @@ import {MenuComponent} from './pages/menu/menu.component' ;
 import {CambiarContrasenaComponent} from './pages/cambiar-contrasena/cambiar-contrasena.component';
 import { RegisterSalesComponent } from './pages/register-sales/register-sales.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ProductosComponent } from './pages/productos/productos.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path : 'dashboard', component: DashboardComponent},
       { path: 'register', component: RegisterSalesComponent }, // Componente RegisterSalesComponent se carga en la vista principal de '/menu'
       { path: 'cambiar-contrasena', component: CambiarContrasenaComponent }, // Componente CambiarContrasenaComponent se carga en la vista principal de '/menu'
+      { path: 'productos', component: ProductosComponent }
     ],
   },
 ]
