@@ -40,7 +40,11 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb'; // Importa el módulo de migas de pan
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { LocalStorageDirectiveDirective } from './directives/local-storage-directive.directive'
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {MatInputModule} from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
   {
@@ -113,7 +117,12 @@ const routes: Routes = [
     MatFormFieldModule,
     MatCheckboxModule,
     IconsProviderModule,
-    NzMenuModule
+    NzMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
+    MatExpansionModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }
