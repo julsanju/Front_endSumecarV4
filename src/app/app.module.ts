@@ -45,6 +45,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { DialogOverviewComponent } from './pages/dialog-overview/dialog-overview.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
+
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
   {
@@ -75,6 +79,10 @@ const routes: Routes = [
   {
     path : 'productos',
     component : ProductosComponent
+  },
+  {
+    path : 'view-products',
+    component : VisualizarProductosComponent 
   }
 ];
 @NgModule({
@@ -94,6 +102,8 @@ const routes: Routes = [
     SuccesModalComponent,
     ErrorModalComponent,
     ModalMessageComponent,
+    DialogOverviewComponent,
+    VisualizarProductosComponent,
     MenuComponent,
     NumbersOnlyDirective,
     LocalStorageDirectiveDirective
@@ -122,7 +132,8 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

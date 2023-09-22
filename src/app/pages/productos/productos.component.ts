@@ -4,10 +4,14 @@ import { Productos } from 'src/app/Interfaces/productos';
 import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {NgIf} from '@angular/common';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import { DataProductsService } from '../../services/data-products.service';
+import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
+//import { DialogData } from 'src/app/Interfaces/dialog-data';
+
+export interface DialogData{
+  cantidad : number;
+}
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -15,6 +19,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
   
 })
 export class ProductosComponent implements OnInit {
+  cantidad:number = 0
   panelOpenState = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -25,7 +30,7 @@ export class ProductosComponent implements OnInit {
 
   clickedRows = new Set<Productos>();
 
-  constructor(private servicio: ProductsServicesService) { 
+  constructor(private servicio: ProductsServicesService, public dialog: MatDialog, private dataServices: DataProductsService) { 
     this.dataSource = new MatTableDataSource<Productos>([]);
     
   }
@@ -60,7 +65,27 @@ export class ProductosComponent implements OnInit {
     }
   }
 
+  openCantidadDialog(producto: Productos): void {
+    const dialogRef = this.dialog.open(DialogOverviewComponent, {
+      
+      width: '250px',
+      
+      data: { cantidad: this.cantidad }
+    });
   
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        // Asigna la cantidad al producto seleccionado
+        producto.cantidad = result; // Asigna la cantidad al producto
+        this.clickedRows.add(producto);
+        //agregar el producto al servicio
+        this.dataServices.selectedData.push(producto);
+      }
+    });
+  }
   
-
 }
+
+
+
+

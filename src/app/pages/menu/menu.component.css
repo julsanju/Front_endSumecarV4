@@ -1,3 +1,29 @@
+html, body {
+  height: 100%;
+}
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+nz-layout {
+  height: 100%;
+  overflow-y: auto;
+}
+
+
+nz-content {
+  flex-grow: 1;
+  overflow-y: auto; 
+}
+
+nz-sider {
+  height: 100%;
+}
+
 .trigger {
     font-size: 18px;
     line-height: 64px;
@@ -39,3 +65,4 @@
     text-align: center;
   }
  
+  

@@ -16,7 +16,7 @@
             <li nz-submenu nzTitle="Productos" nzIcon="disconnect">
               <ul>
                 <li nz-menu-item nzTitle="Productos" nzIcon="home"> <a routerLink="/menu/productos">Add products</a></li>
-                <li nz-menu-item nzTitle="Productos"><a href="">Confirm Products</a></li>
+                <li nz-menu-item nzTitle="Productos"><a routerLink="/menu/view-products">Confirm Products</a></li>
               </ul>
             </li>
             <li nz-submenu nzTitle="User" nzIcon="user">
@@ -52,57 +52,3 @@
 </html>
 
     
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Angular App</title>
-    <!-- Aquí puedes incluir los enlaces a los archivos CSS y JavaScript necesarios -->
-<!--</head>
-<body>
-    <nz-layout>
-        <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-          <div class="logo"></div>
-          <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="User" nzIcon="user">
-              <ul>
-                <li nz-menu-item>Tom</li>
-                <li nz-menu-item>Bill</li>
-                <li nz-menu-item>Alex</li>
-              </ul>
-            </li>
-            <li nz-submenu nzTitle="Team" nzIcon="team">
-              <ul>
-                <li nz-menu-item>Team 1</li>
-                <li nz-menu-item>Team 2</li>
-              </ul>
-            </li>
-            <li nz-menu-item>
-              <span nz-icon nzType="file"></span>
-              <span>File</span>
-            </li>
-          </ul>
-        </nz-sider>
-        <nz-layout>
-          <nz-header>
-            <span
-              class="trigger"
-              nz-icon
-              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-              (click)="isCollapsed = !isCollapsed"
-            ></span>
-          </nz-header>
-          <nz-content>
-            <nz-breadcrumb>
-              <nz-breadcrumb-item>User</nz-breadcrumb-item>
-              <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-            </nz-breadcrumb>
-            <div class="inner-content">Bill is a cat.</div>
-          </nz-content>
-          <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-        </nz-layout>
-      </nz-layout>
-</body>
-</html>-->

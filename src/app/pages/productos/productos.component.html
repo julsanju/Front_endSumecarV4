@@ -70,7 +70,8 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
   </mat-form-field>-->
-  
+
+ <div class="content">
   <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input>
@@ -97,6 +98,7 @@
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr
+    (click)="openCantidadDialog(row)"
       mat-row
       (click)="clickedRows.add(row)"
       [class.demo-row-is-clicked]="clickedRows.has(row)"
@@ -111,7 +113,7 @@
   </div>
   
   
-  <mat-accordion>
+  <!--<mat-accordion>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -131,9 +133,31 @@
         </li>
       </ul>
     </mat-expansion-panel>
-  </mat-accordion>
+  </mat-accordion>-->
 
   
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        PRODUCTOS
+      </mat-panel-title>
+      <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div *ngIf="!clickedRows.size">
+      Por favor seleccione productos
+    </div>
+    
+    <ul>
+      <li *ngFor="let clickedRow of clickedRows">
+        {{clickedRow.articulo}} (Cantidad: {{clickedRow.cantidad}})
+      </li>
+    </ul>
+  </mat-expansion-panel>
+</mat-accordion>
+
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-  
+</div>
