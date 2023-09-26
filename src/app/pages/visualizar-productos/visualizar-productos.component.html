@@ -1,63 +1,39 @@
-<!--<table>
-    <thead>
-      <tr>
-        <th>Código</th>
-        <th>Artículo</th>
-        <th>Laboratorio</th>
-        <th>Cantidad</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of data.selectedData">
-        <td>{{ item.codigo }}</td>
-        <td>{{ item.articulo }}</td>
-        <td>{{ item.laboratorio }}</td>
-        <td>{{ item.cantidad }}</td>
-        
-      </tr>
-    </tbody>
-  </table>-->
+<div class="table-container">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <div class="table-container">
-  <mat-table [dataSource]="data.selectedData" class="mat-elevation-z8">
     <!-- Código Column -->
     <ng-container matColumnDef="codigo">
       <mat-header-cell *matHeaderCellDef>Código</mat-header-cell>
       <mat-cell *matCellDef="let item">{{ item.codigo }}</mat-cell>
     </ng-container>
-  
+
     <!-- Artículo Column -->
     <ng-container matColumnDef="articulo">
       <mat-header-cell *matHeaderCellDef>Artículo</mat-header-cell>
       <mat-cell *matCellDef="let item">{{ item.articulo }}</mat-cell>
     </ng-container>
-  
+
     <!-- Laboratorio Column -->
     <ng-container matColumnDef="laboratorio">
       <mat-header-cell *matHeaderCellDef>Laboratorio</mat-header-cell>
       <mat-cell *matCellDef="let item">{{ item.laboratorio }}</mat-cell>
     </ng-container>
-  
+
     <!-- Cantidad Column -->
     <ng-container matColumnDef="cantidad">
       <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
       <mat-cell *matCellDef="let item">{{ item.cantidad }}</mat-cell>
     </ng-container>
-  
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  
+
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   
 </div>
 
 <div class="confirm-container">
-    <button> Confirmar
-        <span></span>
-      </button>
-      <button class="eliminar"> Cancelar
-        <span></span>
-      </button>
+  <button>Confirmar<span></span></button>
+  <button class="eliminar">Cancelar<span></span></button>
 </div>
