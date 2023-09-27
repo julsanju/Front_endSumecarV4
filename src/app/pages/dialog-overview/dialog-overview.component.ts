@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { Productos } from 'src/app/Interfaces/productos';
 import {NgIf} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
@@ -21,11 +21,36 @@ export class DialogOverviewComponent {
   ) {}
 
   onConfirm(): void {
-    // Envía la cantidad al componente principal
-    this.dialogRef.close(this.cantidad);
+    // Validar que la cantidad sea un número mayor a 0
+    const cantidad = parseFloat(this.data.cantidad);
+
+    if (isNaN(cantidad) || cantidad <= 0) {
+      alert('Por favor, ingrese un número válido y mayor a 0.');
+      return; // Salir de la función si la validación falla
+    }
+
+    // Si la validación es exitosa, puedes cerrar el diálogo y pasar la nueva cantidad de regreso
+    this.dialogRef.close(cantidad);
   }
 
   onCancel(): void {
     this.dialogRef.close();
   }
+
+  validationCantidad(item: Productos): void {
+    // Verificar si la cantidad es un número válido
+    const nuevaCantidad = (item.cantidad);
+    
+    if (isNaN(nuevaCantidad) || nuevaCantidad < 0) {
+      // Si la cantidad no es un número válido o es negativa, muestra una alerta y restaura el valor anterior
+      alert('Por favor ingrese un numero valido para la cantidad');
+      item.cantidad = item.cantidad; // Restaura el valor anterior
+    } else {
+      // Realiza cualquier acción adicional necesaria aquí, por ejemplo, guardar los cambios en el servidor
+      // En este ejemplo, simplemente actualizamos la cantidad en el objeto Productos
+      item.cantidad = nuevaCantidad;
+    }
+  }
 }
+
+

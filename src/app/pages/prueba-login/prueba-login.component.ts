@@ -127,14 +127,20 @@ export class PruebaLoginComponent implements AfterViewInit {
         console.log("Login exitoso");
         this.router.navigate(['/menu']);
         
+
         const userData2 = {
           usuario : this.loginForm.get('usuario')?.value,
           contrasena : this.loginForm.get('contrasena')?.value,
           rol : this.loginForm.get('rol')?.value
         }
 
-        localStorage.setItem('userData', JSON.stringify(userData2));
-          this.userData = userData2;
+        
+
+        const user = localStorage.setItem('userData', this.loginForm.get('usuario')?.value);
+        const user2 = sessionStorage.setItem('userData', this.loginForm.get('usuario')?.value);
+        
+
+          this.userData = user2;
         
         
       },

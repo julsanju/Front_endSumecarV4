@@ -12,6 +12,7 @@ import { MensajeError } from '../../Interfaces/mensaje-error';
 export class CambiarContrasenaComponent {
   errorMessage: MensajeError | null = null;
   usuario: string | null = null;
+  
   step1Form!: FormGroup;
   step2Form!: FormGroup;
   step3Form!: FormGroup;
@@ -25,7 +26,11 @@ export class CambiarContrasenaComponent {
   }
 
   mostrarData() {
-    this.usuario = this.dataShared.usuario; // Obtener el usuario del servicio SharedDataServices
+    const nombre = localStorage.getItem('userData');
+    const nombre2 = sessionStorage.getItem('userData');
+    //this.usuario = this.dataShared.usuario; // Obtener el usuario del servicio SharedDataServices
+    //this.usuario = nombre;
+    this.usuario = nombre2;
   }
   
 

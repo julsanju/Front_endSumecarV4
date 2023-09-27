@@ -22,7 +22,9 @@
     <!-- Cantidad Column -->
     <ng-container matColumnDef="cantidad">
       <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
-      <mat-cell *matCellDef="let item">{{ item.cantidad }}</mat-cell>
+      <!--<mat-cell *matCellDef="let item">{{ item.cantidad }}</mat-cell>-->
+      
+      <mat-cell *matCellDef="let item"><input appNumbersOnly class="input" [(ngModel)]="item.cantidad" (input)="updateCantidad(item)"></mat-cell> 
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

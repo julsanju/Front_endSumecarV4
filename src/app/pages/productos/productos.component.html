@@ -103,6 +103,7 @@
       (click)="clickedRows.add(row)"
       [class.demo-row-is-clicked]="clickedRows.has(row)"
       *matRowDef="let row; columns: displayedColumns;"
+      [class.demo-row-is-clicked]="isSelected(row)"
     ></tr>
   </table>
   
@@ -127,9 +128,12 @@
     </div>
     
     <ul>
-      <li *ngFor="let clickedRow of clickedRows">
-        {{clickedRow.articulo}} (Cantidad: {{clickedRow.cantidad}})
+      <li *ngFor="let clickedRow of data">
+        {{ clickedRow.articulo }} (Cantidad: {{ clickedRow.cantidad }})
       </li>
+      <!--<li *ngFor="let clickedRow of clickedRows">
+        {{clickedRow.articulo}} (Cantidad: {{clickedRow.cantidad}})
+      </li>-->
     </ul>
   </mat-expansion-panel>
 </mat-accordion>

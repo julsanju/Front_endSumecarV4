@@ -9,9 +9,11 @@
 <body>
     <nz-layout>
         <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-          <div class="logo"></div>
+          <div class="logo-sumecar">
+            <img src="https://sumecar.com/img/SumecarLogo.png" alt="No se pudo cargar la imagen" width ="200px">
+          </div>
           
-          <ul nz-menu nzTheme="dark" nzMode="inline">
+          <ul nz-menu nzTheme="dark" nzMode="inline" class="style-home">
             <li nz-menu-item nzIcon="home"><a routerLink="/menu/dashboard">Home</a></li>
             <li nz-submenu nzTitle="Productos" nzIcon="disconnect">
               <ul>

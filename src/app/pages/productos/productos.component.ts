@@ -66,6 +66,33 @@ export class ProductosComponent implements OnInit {
   }
 
   openCantidadDialog(producto: Productos): void {
+    if (this.isSelected(producto)) {
+      alert('Este producto ya ha sido seleccionado');
+    } else {
+      const dialogRef = this.dialog.open(DialogOverviewComponent, {
+        width: '250px',
+        data: { cantidad: producto.cantidad, item: producto}
+        //data: { cantidad: this.cantidad }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== undefined) {
+          // Asigna la cantidad al producto seleccionado
+          producto.cantidad = result;
+          this.data.push(producto);
+          // Agregar el producto al servicio
+          this.dataServices.selectedData.push(producto);
+        }
+      });
+    }
+  }
+  
+  // Validar si el producto ya ha sido seleccionado
+  isSelected(producto: Productos): boolean {
+    return this.data.some(p => p.codigo === producto.codigo);
+  }
+  
+  /*openCantidadDialog(producto: Productos): void {
     const dialogRef = this.dialog.open(DialogOverviewComponent, {
       
       width: '250px',
@@ -83,6 +110,11 @@ export class ProductosComponent implements OnInit {
       }
     });
   }
+
+  //validar producto ya seleccionado
+  isSelected(codigo: string): boolean {
+    return this.clickedRows.has(codigo);
+  }*/
   
 }
 

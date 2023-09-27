@@ -1,7 +1,8 @@
 <div class="container">
   <h1>Cantidad Dialog</h1>
   <mat-form-field>
-    <input matInput [(ngModel)]="cantidad" placeholder="Cantidad">
+    
+    <input matInput appNumbersOnly [(ngModel)]="data.cantidad" placeholder="Cantidad" (input)="validationCantidad(data.item)">
   </mat-form-field>
   <div class="dialog-buttons">
 
