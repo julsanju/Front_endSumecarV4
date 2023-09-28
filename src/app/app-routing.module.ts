@@ -7,6 +7,7 @@ import { RegisterSalesComponent } from './pages/register-sales/register-sales.co
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
+import { AddInformationComponent } from './pages/add-information/add-information.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
@@ -21,7 +22,8 @@ const routes: Routes = [
       { path: 'register', component: RegisterSalesComponent }, // Componente RegisterSalesComponent se carga en la vista principal de '/menu'
       { path: 'cambiar-contrasena', component: CambiarContrasenaComponent }, // Componente CambiarContrasenaComponent se carga en la vista principal de '/menu'
       { path: 'productos', component: ProductosComponent },
-      { path: 'view-products', component: VisualizarProductosComponent}
+      { path: 'view-products', component: VisualizarProductosComponent},
+      { path: 'add-information', component: AddInformationComponent}
     ],
   },
 ]

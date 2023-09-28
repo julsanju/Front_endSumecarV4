@@ -134,15 +134,10 @@ export class PruebaLoginComponent implements AfterViewInit {
           rol : this.loginForm.get('rol')?.value
         }
 
-        
-
-        const user = localStorage.setItem('userData', this.loginForm.get('usuario')?.value);
-        const user2 = sessionStorage.setItem('userData', this.loginForm.get('usuario')?.value);
-        
-
-          this.userData = user2;
-        
-        
+        localStorage.setItem('userData', JSON.stringify(userData2));
+          this.userData = userData2;
+        //const user2 = sessionStorage.setItem('userData', this.loginForm.get('usuario')?.value);
+         
       },
       error => {
         //console.error("Error:", error);

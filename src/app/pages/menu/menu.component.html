@@ -14,20 +14,68 @@
           </div>
           
           <ul nz-menu nzTheme="dark" nzMode="inline" class="style-home">
-            <li nz-menu-item nzIcon="home"><a routerLink="/menu/dashboard">Home</a></li>
+
+            <!--Dashboard-->
+            <li nz-menu-item nzIcon="home">
+              <a routerLink="/menu/dashboard">
+                <span nz-icon nzType="home" nzTheme="outline"></span>
+                Home
+              </a>
+            </li>
+
+            <!--Productos-->
             <li nz-submenu nzTitle="Productos" nzIcon="disconnect">
               <ul>
-                <li nz-menu-item nzTitle="Productos" nzIcon="home"> <a routerLink="/menu/productos">Add products</a></li>
-                <li nz-menu-item nzTitle="Productos"><a routerLink="/menu/view-products">Confirm Products</a></li>
+                <!--Agregar productos-->
+                <li nz-menu-item  nzIcon="plus-circle">
+                  <a routerLink="/menu/productos">
+                    <span nz-icon nzType="plus-circle" nzTheme="outline" nzTitle="Productos"></span>
+                    Add products
+                  </a>
+                </li>
+                <!--Confirmar productos-->
+                <li nz-menu-item  nzIcon="plus-circle" nzTitle="Productos">
+                  <a routerLink="/menu/view-products">
+                    <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+                    Confirm Products
+                  </a>
+                </li>
+                <!--Peticiones-->
+                <ul nz-submenu nzTitle="Peticiones" nzIcon="question-circle">
+                  <!--Agregar peticion-->
+                  <li nz-menu-item  nzIcon="plus-circle">
+                    <a routerLink="/menu/add-information">
+                      <span nz-icon nzType="plus" nzTheme="outline"></span>
+                      Add peticion
+                    </a>
+                  </li>
+                  <!--peticiones Pendientes-->
+                  <li nz-menu-item  nzIcon="plus-circle">
+                    <a routerLink="/menu/add-information">
+                      <span nz-icon nzType="sync" nzTheme="outline"></span>
+                      Pendientes
+                    </a>
+                  </li>
+                  <!--Historial de peticiones-->
+                  <li nz-menu-item  nzIcon="plus-circle">
+                    <a routerLink="/menu/add-information">
+                      <span nz-icon nzType="solution" nzTheme="outline"></span>
+                      Historial
+                    </a>
+                  </li>
+                </ul>  
               </ul>
             </li>
+
+            <!--Usuarios-->
             <li nz-submenu nzTitle="User" nzIcon="user">
                 <ul>
+                  <!--Registro de usuarios-->
                   <li nz-menu-item *ngIf="esAdmin()"><a routerLink="/menu/register">Registro de usuarios</a></li>
+                  <!--Cambiar contraseña de usuario-->
                   <li nz-menu-item ><a routerLink="/menu/cambiar-contrasena">Cambiar Contraseña</a></li>
-                  <li nz-menu-item >Alex</li>
                 </ul>
-              </li>
+            </li>
           </ul>
         </nz-sider>
         <nz-layout>

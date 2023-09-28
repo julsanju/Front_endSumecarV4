@@ -4,6 +4,7 @@ import { SharedServicesService } from '../../services/shared-services.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalMessageComponent } from '../modal-message/modal-message.component';
 import { MensajeError } from '../../Interfaces/mensaje-error';
+import { Login } from 'src/app/Interfaces/login';
 @Component({
   selector: 'app-cambiar-contrasena',
   templateUrl: './cambiar-contrasena.component.html',
@@ -12,7 +13,7 @@ import { MensajeError } from '../../Interfaces/mensaje-error';
 export class CambiarContrasenaComponent {
   errorMessage: MensajeError | null = null;
   usuario: string | null = null;
-  
+  datos : Login [] = [];
   step1Form!: FormGroup;
   step2Form!: FormGroup;
   step3Form!: FormGroup;
@@ -27,11 +28,27 @@ export class CambiarContrasenaComponent {
 
   mostrarData() {
     const nombre = localStorage.getItem('userData');
-    const nombre2 = sessionStorage.getItem('userData');
+    
+    //const nombre2 = sessionStorage.getItem('userData');
     //this.usuario = this.dataShared.usuario; // Obtener el usuario del servicio SharedDataServices
-    //this.usuario = nombre;
-    this.usuario = nombre2;
+    //this.usuario = nombre
+    
+   
+
+    if (nombre!== null) {
+      const dato = JSON.parse(nombre); // Parse the JSON string into an object
+      this.usuario = dato.usuario; // Set to null if the object or Usuario property is missing
+        console.log(dato.usuario + '2');
+      
+    } else {
+      this.usuario = null; // Handle the case where 'userData' is not found in localStorage
+      
+    }
+
+    
   }
+
+  
   
 
   initForms() {

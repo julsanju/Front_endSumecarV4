@@ -48,6 +48,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { DialogOverviewComponent } from './pages/dialog-overview/dialog-overview.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
+import { AddInformationComponent } from './pages/add-information/add-information.component';
 
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -83,6 +84,10 @@ const routes: Routes = [
   {
     path : 'view-products',
     component : VisualizarProductosComponent 
+  },
+  {
+    path : 'add-information',
+    component : AddInformationComponent 
   }
 ];
 @NgModule({
@@ -106,7 +111,8 @@ const routes: Routes = [
     VisualizarProductosComponent,
     MenuComponent,
     NumbersOnlyDirective,
-    LocalStorageDirectiveDirective
+    LocalStorageDirectiveDirective,
+    AddInformationComponent
   ],
   imports: [
     BrowserModule,
