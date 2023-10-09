@@ -39,8 +39,10 @@ mat-step-header {
   background-color: #1976D2; /* Cambia el color de la línea de progreso al morado */
 }
 
+
+
 /* Estilos para los botones de "Próximo" y "Atrás" */
-button.mat-step-header,
+/*button.mat-step-header,
 button.mat-button {
   background-color: #2196F3;
   color: #fff;
@@ -49,14 +51,14 @@ button.mat-button {
   padding: 10px 20px;
   cursor: pointer;
   font-family: "Roboto", sans-serif; /* Cambia la fuente aquí */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Agregar animaciones de transición */
-}
+  /*transition: background-color 0.3s ease, transform 0.3s ease; /* Agregar animaciones de transición */
+/*}
 
 button.mat-step-header:hover,
 button.mat-button:hover {
   background-color: #1976D2;
   transform: scale(1.05); /* Agregar una animación de escala en el hover */
-}
+/*}
 
 .btn-53,
 .btn-53 *,
@@ -168,7 +170,7 @@ button.mat-button:hover {
 }
 
 /*xdd*/
-button {
+/*button {
   position: relative;
   background-color: #85C1E9;
   border-radius: 5px;
@@ -205,8 +207,82 @@ button::before {
 button:hover::before {
   width: 100%;
   
+}*/
+
+/*nuevo boton*/
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  
 }
 
+.distancia {
+  margin-right: 10px;
+}
+
+button {
+  --primary-color: #001529;
+  --secondary-color: #fff;
+  --hover-color: #002A51;
+  --arrow-width: 10px;
+  --arrow-stroke: 2px;
+  position: relative;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: 1em 1.8em;
+  background: var(--primary-color);
+  display: flex;
+  
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+}
+
+button .arrow-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button .arrow {
+  margin-top: 1px;
+  width: var(--arrow-width);
+  background: var(--primary-color);
+  height: var(--arrow-stroke);
+  position: relative;
+  transition: 0.2s;
+}
+
+button .arrow::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+button:hover .arrow {
+  background: var(--secondary-color);
+}
+
+button:hover .arrow:before {
+  right: 0;
+}
 /*label*/
 .card {
   width: 190px;
@@ -245,9 +321,11 @@ button:hover::before {
   position: relative;
   margin: 20px 0 40px;
   width: 190px;
+  padding: 15px 0;
+  margin-right: 20px;
 }
 
-.form-control input {
+/*.form-control input {
   background-color: transparent;
   border: 0;
   border-bottom: 2px #000 solid;
@@ -256,19 +334,44 @@ button:hover::before {
   padding: 15px 0;
   font-size: 18px;
   color: #000;
+}*/
+
+.input {
+  width: 100%;
+  max-width: 220px;
+  height: 45px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
 }
 
-.form-control input:focus,
+.input:hover {
+  border: 2px solid lightgrey;
+  box-shadow: 0px 0px 20px -17px;
+}
+
+.input:active {
+  transform: scale(0.95);
+}
+
+.input:focus {
+  border: 2px solid grey;
+}
+/*.form-control input:focus,
 .form-control input:valid {
   outline: 0;
   border-bottom-color: lightblue;
-}
+}*/
 
 .form-control label {
   position: absolute;
   top: 15px;
   left: 0;
   pointer-events: none;
+  
 }
 
 .form-control label span {
@@ -279,11 +382,11 @@ button:hover::before {
   transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.form-control input:focus+label span,
+/*.form-control input:focus+label span,
 .form-control input:valid+label span {
   color: lightblue;
   transform: translateY(-30px);
-}
+}*/
 
 /*contraseña actualizada correctamente*/
 @keyframes typing {

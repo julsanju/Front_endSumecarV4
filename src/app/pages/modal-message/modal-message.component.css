@@ -9,8 +9,7 @@
     background-color: rgba(255,255,255,1);
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 15px 15px 30px #8b8b8b, -15px -15px 30px #ffffff;
-    color: #fff;
+    color: #212F3D;
     font-size: 20px;
   }
   
@@ -19,9 +18,8 @@
     /* Estilos adicionales para el contenido del modal */
   }
 .modal-content {
-    background-color: rgba(0,65,155,0.65); /* Color de fondo del modal */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Sombra del modal */
+    background-color: rgba(255,255,255,1); /* Color de fondo del modal */
+    border-radius: 10px;
     position: relative;
   }
   
@@ -97,6 +95,7 @@
     border-width: 40px 60px 30px 60px;
     border-color: #3760C9 #96DDFC #96DDFC #36BBF7;
     animation: envFloating 1s ease-in infinite alternate;
+    margin-top: 50px;
   }
   
   .loader:after {
@@ -106,13 +105,14 @@
     top: -40px;
     height: 70px;
     width: 50px;
-    background-image: linear-gradient(#fff 45px, transparent 0),
-              linear-gradient(#fff 45px, transparent 0),
-              linear-gradient(#fff 45px, transparent 0);
+    background-image: linear-gradient(#000 45px, transparent 0),
+              linear-gradient(#000 45px, transparent 0),
+              linear-gradient(#000 45px, transparent 0);
     background-repeat: no-repeat;
     background-size: 30px 4px;
     background-position: 0px 11px , 8px 35px, 0px 60px;
     animation: envDropping 0.75s linear infinite;
+
   }
   
   @keyframes envFloating {

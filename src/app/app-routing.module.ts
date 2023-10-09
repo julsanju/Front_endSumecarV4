@@ -8,6 +8,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
 import { AddInformationComponent } from './pages/add-information/add-information.component';
+import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensajes-pendientes.component';
+import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
@@ -23,7 +25,11 @@ const routes: Routes = [
       { path: 'cambiar-contrasena', component: CambiarContrasenaComponent }, // Componente CambiarContrasenaComponent se carga en la vista principal de '/menu'
       { path: 'productos', component: ProductosComponent },
       { path: 'view-products', component: VisualizarProductosComponent},
-      { path: 'add-information', component: AddInformationComponent}
+      { path: 'add-information', component: AddInformationComponent},
+      { path: 'add-information', component: AddInformationComponent},
+      { path: 'add-information', component: AddInformationComponent},
+      {path : 'mensajes-pendientes', component : MensajesPendientesComponent },
+      {path : 'historial-mensajes', component : HistorialMensajesComponent }
     ],
   },
 ]

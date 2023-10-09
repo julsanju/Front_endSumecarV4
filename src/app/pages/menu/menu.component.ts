@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRouteSnapshot, UrlSegment   } from '@angular/router';
 import { LoginServicesService } from 'src/app/services/login-services.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class MenuComponent {
   username: string = '';
 
   constructor(private login: LoginServicesService, private router: Router) {}
-
+  breadcrumbs: string[] = [];
   ngOnInit() {
     // Recupera la información del usuario desde localStorage
     const userDataString = localStorage.getItem('userData');
@@ -28,6 +28,12 @@ export class MenuComponent {
         console.error('Error al analizar JSON:', error);
       }
     }
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.breadcrumbs = this.createBreadcrumbs(this.router.routerState.snapshot.root); // Usa routerState.snapshot.root
+      }
+    });
   }
 
   esAdmin(): boolean {
@@ -45,5 +51,26 @@ export class MenuComponent {
       }
     }
     return false; // Retorna false si no se encuentra información del usuario
+  }
+
+  //parte del breadcump
+  private createBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: string[] = []): string[] {
+    const children: ActivatedRouteSnapshot[] = route.children;
+
+    if (children.length === 0) {
+      return breadcrumbs;
+    }
+
+    for (const child of children) {
+      const routeURL: string = child.url.map(segment => segment.path).join('/');
+      if (routeURL !== '') {
+        url += `${routeURL}`;
+      }
+
+      breadcrumbs.push(url);
+      return this.createBreadcrumbs(child, url, breadcrumbs);
+    }
+
+    return breadcrumbs;
   }
 }

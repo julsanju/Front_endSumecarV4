@@ -51,14 +51,14 @@
                   </li>
                   <!--peticiones Pendientes-->
                   <li nz-menu-item  nzIcon="plus-circle">
-                    <a routerLink="/menu/add-information">
+                    <a routerLink="/menu/mensajes-pendientes">
                       <span nz-icon nzType="sync" nzTheme="outline"></span>
                       Pendientes
                     </a>
                   </li>
                   <!--Historial de peticiones-->
                   <li nz-menu-item  nzIcon="plus-circle">
-                    <a routerLink="/menu/add-information">
+                    <a routerLink="/menu/historial-mensajes">
                       <span nz-icon nzType="solution" nzTheme="outline"></span>
                       Historial
                     </a>
@@ -90,6 +90,9 @@
           <nz-content>
             <nz-breadcrumb>
               <nz-breadcrumb-item>User</nz-breadcrumb-item>
+              <ng-container *ngFor="let breadcrumb of breadcrumbs">
+                <nz-breadcrumb-item>{{ breadcrumb }}</nz-breadcrumb-item>
+              </ng-container>
               <nz-breadcrumb-item>
                 <router-outlet></router-outlet> <!-- Componentes se cargarán aquí -->
               </nz-breadcrumb-item>

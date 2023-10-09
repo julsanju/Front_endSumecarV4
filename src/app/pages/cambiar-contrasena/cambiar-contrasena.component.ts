@@ -11,6 +11,7 @@ import { Login } from 'src/app/Interfaces/login';
   styleUrls: ['./cambiar-contrasena.component.css']
 })
 export class CambiarContrasenaComponent {
+  isEditable = false;
   errorMessage: MensajeError | null = null;
   usuario: string | null = null;
   datos : Login [] = [];
@@ -29,12 +30,6 @@ export class CambiarContrasenaComponent {
   mostrarData() {
     const nombre = localStorage.getItem('userData');
     
-    //const nombre2 = sessionStorage.getItem('userData');
-    //this.usuario = this.dataShared.usuario; // Obtener el usuario del servicio SharedDataServices
-    //this.usuario = nombre
-    
-   
-
     if (nombre!== null) {
       const dato = JSON.parse(nombre); // Parse the JSON string into an object
       this.usuario = dato.usuario; // Set to null if the object or Usuario property is missing
@@ -118,5 +113,6 @@ export class CambiarContrasenaComponent {
   }
   
   
-  // Agregar getters similares para los otros formularios si es necesario
+  
+  
 }

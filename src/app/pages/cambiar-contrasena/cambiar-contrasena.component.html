@@ -17,10 +17,19 @@
         </div>
       </div>
 
+      <!--paso 1-->
       <div class="Style-center">
-        <div>
+        <div class = "button-container">
+
           <button class="distancia" (click)="openModal()">Enviar</button>
-          <button mat-button matStepperNext >Proximo</button>
+          <button matStepperNext >
+            Proximo
+            <div class="arrow-wrapper">
+                <div class="arrow"></div>
+        
+            </div>
+          </button>
+          <!--<button mat-button matStepperNext>Proximo</button>-->
         </div>
 
       </div>
@@ -28,7 +37,7 @@
     </mat-step>
 
     <!-- Paso 2 -->
-    <mat-step label="Paso 2">
+    <mat-step label="Paso 2" [editable]="isEditable">
       <ng-template matStepLabel> Paso 2 </ng-template>
       <div class="Style-center style-h1">
         <B><h1>Sala de espera</h1></B>
@@ -48,8 +57,16 @@
       </div>
       </div>
       <div class="Style-center">
-        <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext >Próximo</button>
+        <div class = "button-container">
+        <button class="distancia" matStepperPrevious>Atrás</button>
+        <button matStepperNext >
+          Proximo
+          <div class="arrow-wrapper">
+              <div class="arrow"></div>
+      
+          </div>
+        </button>
+      </div>
       </div>
     </mat-step>
 
@@ -61,35 +78,40 @@
       </div>
 
       <div class="Style-center">
-        <div class="form-control">
-          <input type="password" required="">
-          <label>
-              <span style="transition-delay:0ms">P</span><span style="transition-delay:50ms">A</span><span style="transition-delay:100ms">S</span><span style="transition-delay:150ms">S</span><span style="transition-delay:200ms">W</span><span style="transition-delay:250ms">O</span><span style="transition-delay:300ms">R</span><span style="transition-delay:350ms">D</span>
-          </label>
+        <div class="form-control distancia">
+          <input placeholder="Password" type="text" name="text" class="input">
+          
         </div>
 
         <div class="form-control">
-          <input type="value" required="">
-          <label>
-            <span style="transition-delay:0ms">P</span><span style="transition-delay:50ms">A</span><span style="transition-delay:100ms">S</span><span style="transition-delay:150ms">S</span><span style="transition-delay:200ms">W</span><span style="transition-delay:250ms">O</span><span style="transition-delay:300ms">R</span><span style="transition-delay:350ms">D</span>
-          </label>
+          <input placeholder="Password" type="text" name="text" class="input">
+          
+          
         </div>
       </div>
       <div class="Style-center">
-        <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext (click)="activarAnimacion()">Próximo</button>
+        <div class = "button-container">
+          <button class="distancia" matStepperPrevious>Atrás</button>
+          <button matStepperNext (click)="activarAnimacion()">
+            Proximo
+            <div class="arrow-wrapper">
+                <div class="arrow"></div>
+        
+            </div>
+          </button>
+        </div>
       </div>
     </mat-step>
 
     <!-- Paso 4 -->
-    <mat-step label="Paso 4">
+    <mat-step label="Paso 4" >
       <ng-template matStepLabel> Paso 4 </ng-template>
       <div *ngIf="mostrarAnimacion" class="Style-center">
         <div class="loading">
           <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124">
-            <circle class="circle-loading" cx="62" cy="62" r="59" fill="none" stroke="hsl(271, 76%, 74%)" stroke-width="6px"></circle>
-            <circle class="circle2" cx="62" cy="62" r="59" fill="none" stroke="hsl(271, 76%, 53%)" stroke-width="6px" stroke-linecap="round"></circle>
-            <polyline class="check" points="73.56 48.63 57.88 72.69 49.38 62" fill="none" stroke="hsl(271, 76%, 53%)" stroke-width="6px" stroke-linecap="round"></polyline>
+            <circle class="circle-loading" cx="62" cy="62" r="59" fill="none" stroke="#001529" stroke-width="6px"></circle>
+            <circle class="circle2" cx="62" cy="62" r="59" fill="none" stroke="#60B25E" stroke-width="6px" stroke-linecap="round"></circle>
+            <polyline class="check" points="73.56 48.63 57.88 72.69 49.38 62" fill="none" stroke="#60B25E" stroke-width="6px" stroke-linecap="round"></polyline>
           </svg>
         </div>
 
@@ -99,8 +121,10 @@
       </div>
       
       <div class="Style-center">
-        <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button (click)="stepper.reset()">Reiniciar</button>
+        <div class = "button-container">
+          <button class="distancia" mat-button matStepperPrevious>Atrás</button>
+          <button mat-button (click)="stepper.reset()">Reiniciar</button>
+        </div>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
@@ -111,6 +135,6 @@
     </svg>
     
 </div>
-<button><a routerLink="/prueba-login">XD</a></button>
+<!--<button><a routerLink="/prueba-login">XD</a></button>-->
 </div>
 

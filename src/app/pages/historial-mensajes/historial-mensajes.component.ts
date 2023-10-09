@@ -7,25 +7,21 @@ import { MatSort } from '@angular/material/sort';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
-//import { DialogData } from 'src/app/Interfaces/dialog-data';
 
-export interface DialogData{
-  cantidad : number;
-}
 @Component({
-  selector: 'app-productos',
-  templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css']
-  
+  selector: 'app-historial-mensajes',
+  templateUrl: './historial-mensajes.component.html',
+  styleUrls: ['./historial-mensajes.component.css']
 })
-export class ProductosComponent implements OnInit {
+export class HistorialMensajesComponent implements OnInit {
+  dataUser : string = '';
   cantidad:number = 0
   panelOpenState = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   data: Productos[] = [];
-  displayedColumns: string[] = ['codigo', 'articulo', 'laboratorio'];
+  displayedColumns: string[] = ['# Orden','codigo', 'articulo', 'laboratorio'];
   dataSource: MatTableDataSource<Productos>; // Usa MatTableDataSource
 
   clickedRows = new Set<Productos>();
@@ -40,8 +36,27 @@ export class ProductosComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  //metodo para poder obtener el dato del usuario
+  private obtener_usuario(username : string){
+    //obtener username
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+      }
+    }
+    return username;
+  }
+
   ngOnInit() {
-    this.servicio.obtenerProductos().subscribe(
+     var data = this.obtener_usuario(this.dataUser);
+
+    this.servicio.obtenerFinalizado(data).subscribe(
       (response) => {
         this.dataSource.data = response;
         this.dataSource = new MatTableDataSource<Productos>(response); // Inicializa con MatTableDataSource
@@ -65,37 +80,5 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  openCantidadDialog(producto: Productos): void {
-    if (this.isSelected(producto)) {
-      alert('Este producto ya ha sido seleccionado');
-    } else {
-      const dialogRef = this.dialog.open(DialogOverviewComponent, {
-        width: '250px',
-        data: { cantidad: producto.cantidad, item: producto}
-        //data: { cantidad: this.cantidad }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result !== undefined) {
-          // Asigna la cantidad al producto seleccionado
-          producto.cantidad = result;
-          this.data.push(producto);
-          // Agregar el producto al servicio
-          this.dataServices.selectedData.push(producto);
-        }
-      });
-    }
-  }
-  
-  // Validar si el producto ya ha sido seleccionado
-  isSelected(producto: Productos): boolean {
-    return this.data.some(p => p.codigo === producto.codigo);
-  }
-  
-  
   
 }
-
-
-
-

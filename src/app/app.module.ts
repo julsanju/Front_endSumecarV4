@@ -49,6 +49,8 @@ import { DialogOverviewComponent } from './pages/dialog-overview/dialog-overview
 import { MatDialogModule } from '@angular/material/dialog';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
 import { AddInformationComponent } from './pages/add-information/add-information.component';
+import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensajes-pendientes.component';
+import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
 
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -88,6 +90,14 @@ const routes: Routes = [
   {
     path : 'add-information',
     component : AddInformationComponent 
+  },
+  {
+    path : 'mensajes-pendientes',
+    component : MensajesPendientesComponent 
+  },
+  {
+    path : 'historial-mensajes',
+    component : HistorialMensajesComponent 
   }
 ];
 @NgModule({
@@ -112,7 +122,9 @@ const routes: Routes = [
     MenuComponent,
     NumbersOnlyDirective,
     LocalStorageDirectiveDirective,
-    AddInformationComponent
+    AddInformationComponent,
+    MensajesPendientesComponent,
+    HistorialMensajesComponent
   ],
   imports: [
     BrowserModule,

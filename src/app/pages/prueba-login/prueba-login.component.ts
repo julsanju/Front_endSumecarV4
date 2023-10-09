@@ -15,6 +15,8 @@ import { SuccesModalComponent } from '../succes-modal/succes-modal.component';
 import { ErrorModalComponent } from '../error-modal/error-modal.component';
 import {SharedServicesService} from '../../services/shared-services.service';
 import { Router } from '@angular/router';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { LockOutline } from '@ant-design/icons-angular/icons'; // Importa el ícono de candado
 @Component({
   selector: 'app-prueba-login',
   templateUrl: './prueba-login.component.html',
@@ -88,6 +90,8 @@ export class PruebaLoginComponent implements AfterViewInit {
       contrasena: ['', Validators.required],
       rol: ['Usuario', Validators.required],
     });
+
+    NzIconModule.forRoot([LockOutline]);
   }
 
   onPasswordChange() {
