@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -51,6 +52,8 @@ import { VisualizarProductosComponent } from './pages/visualizar-productos/visua
 import { AddInformationComponent } from './pages/add-information/add-information.component';
 import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensajes-pendientes.component';
 import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import '@dotlottie/player-component'; // Agregar esta importación
 
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -151,8 +154,11 @@ const routes: Routes = [
     MatSortModule,
     MatInputModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
+    
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: NZ_I18N, useValue: en_US }
   ],

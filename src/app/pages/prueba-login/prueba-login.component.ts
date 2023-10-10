@@ -1,4 +1,8 @@
+
 import { Component, AfterViewInit } from '@angular/core';
+
+
+import '@dotlottie/player-component'; // Agregar esta importación
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -17,6 +21,8 @@ import {SharedServicesService} from '../../services/shared-services.service';
 import { Router } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { LockOutline } from '@ant-design/icons-angular/icons'; // Importa el ícono de candado
+
+
 @Component({
   selector: 'app-prueba-login',
   templateUrl: './prueba-login.component.html',
