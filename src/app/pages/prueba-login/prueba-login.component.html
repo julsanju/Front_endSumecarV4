@@ -10,14 +10,14 @@
 
   <mat-grid-list class="content-principal"cols="2" rowHeight="2:1">
     <!--contenido principal-->
-      
+      <div class="content-principal1">
         <mat-grid-tile class="content-1">
           <!--login-->
           <div class="card">
             
             <div class="style-logo">
               <b><h1 class="style-sign">SIGN IN</h1></b>
-              <p>Si ya eres miembro, inicia sesión facilmente :)</p>
+              <p class="style-p">Si ya eres miembro, inicia sesión facilmente :)</p>
             </div>
             
 
@@ -32,9 +32,12 @@
                 </svg>
               </div>
             <!--password-->
+              <div class="style-forgot">
+                <a style="color: #8a8a8a;">forgot Password?</a>
+              </div>
                 <div class="inputContainer style-password ">
-                  <input required="required" id="inputField" placeholder="Username" type="password">
-                  <label class="usernameLabel" for="inputField">Username</label>
+                  <input required="required" id="inputField" placeholder="Password" type="password">
+                  <label class="usernameLabel" for="inputField">Password</label>
                   <span nz-icon nzType="lock" nzTheme="outline"></span>
                   <svg viewBox="0 0 448 912" class="userIcon">
         
@@ -44,19 +47,7 @@
                   </svg>
                 </div>
 
-                <div class="button">
-                  <button class="button">
-                    <div class="group-3">
-                      <div class="sing-in">SING IN</div>
-                      <img
-                        class="ant-design-swap-left"
-                        src="https://c.animaapp.com/RNzTRMLE/img/ant-design-swap-left-outlined.svg"
-                      />
-                    </div>
-                  </button>
-                  <img class="img" src="https://c.animaapp.com/RNzTRMLE/img/rectangle-1041.png" />
-                </div>
-
+                <!--boton-->
                 <div class="box">
                   <button class="button">
                     <div class="group">
@@ -65,7 +56,10 @@
                     </div>
                   </button>
                 </div>
-                
+                <!--Sign up-->
+                <div class="style-forgot">
+                  <a class="style-a"> Sign up</a>
+                </div>
           </div>
       </mat-grid-tile>
       <mat-grid-tile class="content-2">
@@ -87,7 +81,7 @@
       
     
     
-    
+    </div>
   </mat-grid-list>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>

@@ -706,6 +706,10 @@ button:active {
   height: 1080px;
 }*/
 
+html, body{
+  background-color: white;
+  background-color: #EEE;
+}
 
 
 .login {
@@ -715,14 +719,15 @@ button:active {
   height: 100%;
 }
 .content-principal{
-  margin-top: 40px;
-  margin-left: 55px;
+  margin-top: 150px;
+  margin-left: 400px;
   margin-right: 200px;
-  width: 90%;
+  width: 60%;
   height: 700px;
-  border-radius: 50px;
-  background: #f6f6f6;
+  border-radius: 20px;
+  background: #fdfdfd;
 }
+
 
 .content-1{
   height: 800px;
@@ -760,7 +765,7 @@ button:active {
   flex-direction: column;
   gap: 35px;
   background-color: #CFF1FF;
-  border-radius: 50px;
+  border-radius: 5%;
   margin-right: 50px;
 }
 .inputContainer {
@@ -773,6 +778,7 @@ button:active {
 
 .style-user{
   margin-top: 150px;
+  margin-bottom: 25px;
 }
 .style-password{
   margin-top: 35px;
@@ -782,15 +788,37 @@ button:active {
 }
 .style-sign{
   color: #56c1ff;
+  font-family: "Poppins", Helvetica;
+  font-size: 50px;
+  font-weight: bolder;
+  margin-top: 15px;
+  margin-bottom: -25px;
 }
-
-
+.style-p{
+  margin-bottom: -65px; 
+  margin-top: 55px; 
+  font-family: Poppins-SemiBold, 
+  Helvetica; 
+  font-size: 15px;
+}
+.style-forgot{
+  margin-right: 50px;
+  margin-bottom: -30px;
+  margin-left: 245px;
+  color: #8a8a8a;
+}
+.style-a{
+  color: #8a8a8a;
+  font-family: "Poppins", Helvetica;
+  font-size:18px;
+  margin-left: 42px;
+}
 #inputField {
-  border: 2px solid black;
+  border: 2px solid #8a8a8a;
   background-color: transparent;
   border-radius: 10px;
   padding: 12px 15px;
-  color: black;
+  color: #8a8a8a;
   font-weight: 500;
   outline: none;
   caret-color: rgb(155, 78, 255);
@@ -887,6 +915,10 @@ left: 75px;
 .box {
   width: 150px;
   height: 46px;
+  margin-top: 15px;
+  margin-left: 207px;
+  border-radius: 5%;
+  background-color: #56c1ff;
 }
 
 .box .button {
@@ -895,10 +927,11 @@ left: 75px;
   height: 46px;
   top: 0;
   left: 0;
-  background-color: #56c1ff;
   border-radius: 23px;
   all: unset;
+  border-radius: 30%;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .box .group {
