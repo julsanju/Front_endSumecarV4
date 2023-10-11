@@ -156,7 +156,7 @@
                
                   <!--boton-->
                   <div class="box">
-                    <button class="button">
+                    <button class="button" (click)="onSubmit()">
                       <div class="group">
                         <div class="sing-in">SING IN</div>
                         <img class="ant-design-swap-left" src="https://c.animaapp.com/RNzTRMLE/img/ant-design-swap-left-outlined.svg" />
@@ -165,7 +165,7 @@
                   </div>
                   <!--Sign up-->
                   <div class="style-forgot">
-                    <a class="style-a">I don't have an account? <b>Sign up</b></a>
+                    <a routerLink="/register" class="style-a">I don't have an account? <b>Sign up</b></a>
                   </div>
             </div>
         </mat-grid-tile>

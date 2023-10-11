@@ -3,13 +3,15 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
 import { Usuarios } from '../../Interfaces/usuarios';
-
+import {MatButtonModule} from '@angular/material/button';
+import {MatStepperModule} from '@angular/material/stepper';
 @Component({
   selector: 'app-register-sales',
   templateUrl: './register-sales.component.html',
   styleUrls: ['./register-sales.component.css']
 })
 export class RegisterSalesComponent {
+  datosCompletos: boolean = false;
   isSelectActive: boolean = false;
   registrationForm: FormGroup;
 

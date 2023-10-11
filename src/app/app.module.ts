@@ -53,6 +53,7 @@ import { AddInformationComponent } from './pages/add-information/add-information
 import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensajes-pendientes.component';
 import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import '@dotlottie/player-component'; // Agregar esta importación
 
 registerLocaleData(en); // Importa el módulo de layout
@@ -155,8 +156,8 @@ const routes: Routes = [
     MatInputModule,
     MatExpansionModule,
     MatDialogModule,
-    MatGridListModule
-    
+    MatGridListModule,
+    NzStepsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
