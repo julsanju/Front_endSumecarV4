@@ -1,7 +1,5 @@
 
 import { Component, AfterViewInit } from '@angular/core';
-
-
 import '@dotlottie/player-component'; // Agregar esta importación
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
@@ -41,6 +39,7 @@ import { LockOutline } from '@ant-design/icons-angular/icons'; // Importa el íc
   
 })
 export class PruebaLoginComponent implements AfterViewInit {
+
   users = [
     {value: 'cliente', viewValue: 'Cliente'},
     {value: 'empleado', viewValue: 'Empleado'},
