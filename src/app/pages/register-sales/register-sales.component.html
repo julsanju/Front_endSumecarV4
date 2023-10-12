@@ -143,8 +143,8 @@
                   <label class="style-important">*All fields required unless noted.</label>
                     <!--identificacion y rol-->
                   <div class="inputGroup">
-                    <input autocomplete="off" required="" type="text">
-                    <label for="name">Name</label>
+                    <input autocomplete="off" appNumbersOnly required="" type="text">
+                    <label for="name">Identificacion</label>
                 </div>
 
                   <!--<div>
@@ -169,7 +169,7 @@
                   <button class="button-siguiente">
                     <div class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
                       <label class="label-button">
-                        Download
+                        Siguiente
                       </label>
                     </div>
                   </button>
@@ -198,22 +198,46 @@
                   </mat-expansion-panel-header>
                   <div class="container-acordeon">
                     <!-- nombre y ubicacion-->
+                    <p class="style-information">Por favor, le solicitamos ingresar su número de cédula y 
+                      seleccionar el rol que corresponde a su perfil de usuario. Le agradecemos por 
+                      tomarse un momento para proporcionar esta información.</p>
+  
+                    <label class="style-important">*All fields required unless noted.</label>
+                      <!--identificacion y rol-->
+                    <div class="inputGroup">
+                      <input autocomplete="off" required="" type="text">
+                      <label for="name">Nombre</label>
+                    </div>
 
-                    <label>
-                      <input class="input" formControlName="Nombre" type="text" placeholder="" required="">
-                      <span>Nombre</span>
-                    </label>
+                    <div class="inputGroup">
+                      <input autocomplete="off" required="" type="text">
+                      <label for="Ubicacion">Ubicacion</label>
+                    </div>
 
-                    <label>
-                      <input class="input" formControlName="Ubicacion" type="texr" placeholder="" required="">
-                      <span>Ubicacion</span>
-                    </label>
+                    <div class="inputGroup">
+                      <input autocomplete="off" appNumbersOnly required="" type="text">
+                      <label for="Ubicacion">Telefono</label>
+                    </div>
+
+                    <div class="inputGroup">
+                      <input autocomplete="off" required="" type="text">
+                      <label for="Ubicacion">Correo</label>
+                    </div>
+                    
+                    <button class="button-siguiente">
+                      <div class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+                        <label class="label-button">
+                          Siguiente
+                        </label>
+                      </div>
+                    </button>
+
                   </div>
 
 
                   <!--telefono y correo-->
 
-                  <label>
+                  <!--<label>
                     <input class="input" formControlName="Telefono" appNumbersOnly type="email" placeholder=""
                       required="">
                     <span>Telefono</span>
@@ -222,7 +246,7 @@
                   <label>
                     <input class="input" formControlName="Correo" type="email" placeholder="" required="">
                     <span>Correo</span>
-                  </label>
+                  </label>-->
 
 
                 </mat-expansion-panel>
@@ -246,23 +270,51 @@
                     </mat-panel-description>
                   </mat-expansion-panel-header>
 
+                  <p class="style-information">Por favor, le solicitamos ingresar su número de cédula y 
+                    seleccionar el rol que corresponde a su perfil de usuario. Le agradecemos por 
+                    tomarse un momento para proporcionar esta información.</p>
+
+                  <label class="style-important">*All fields required unless noted.</label>
+                  <div class="inputGroup">
+                    <input autocomplete="off" required="" type="text">
+                    <label for="Ubicacion">Usuario</label>
+                  </div>
+
+                  <div class="inputGroup">
+                    <input autocomplete="off" appNumbersOnly required="" type="text">
+                    <label for="Ubicacion">Contraseña</label>
+                  </div>
+
+                  <div class="inputGroup">
+                    <input autocomplete="off" required="" type="text">
+                    <label for="Ubicacion">Contraseña</label>
+                  </div>
+                  
+                  <button class="button-siguiente">
+                    <div class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+                      <label class="label-button">
+                        Siguiente
+                      </label>
+                    </div>
+                  </button>
+
                   <!--usuario-->
-                  <label>
+                  <!--<label>
                     <input class="input" formControlName="Usuario" type="email" placeholder="" required="">
                     <span>Usuario</span>
-                  </label>
+                  </label>-->
 
                   <!--contrasena-->
-                  <label>
+                  <!--<label>
                     <input class="input" formControlName="Contrasena" type="text" placeholder="" required="">
                     <span>Contraseña</span>
-                  </label>
+                  </label>-->
 
                   <!--nueva contrasena-->
-                  <label>
+                  <!--<label>
                     <input class="input" type="password" placeholder="" required="">
                     <span>Confirmar contraseña</span>
-                  </label>
+                  </label>-->
 
                 </mat-expansion-panel>
               </mat-accordion>
