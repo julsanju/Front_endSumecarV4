@@ -11,7 +11,7 @@
           <p class="message">Signup now and get full access to our app. </p>
           
           <!--identificacion y rol-->
-          <!--<div class="flex">
+<!--<div class="flex">
               <label>
                   <input class="input style-identificacion" formControlName="Identificacion" type="text" appNumbersOnly placeholder="" required="">
                   <span>Identificacion</span>
@@ -30,7 +30,7 @@
           </div>  
 
           <!-- nombre y ubicacion-->
-          <!--<div class="flex">
+<!--<div class="flex">
             <label>
               <input class="input" formControlName="Nombre" type="text" placeholder="" required="">
               <span>Nombre</span>
@@ -43,7 +43,7 @@
           </div>
           
           <!--telefono y correo-->
-          <!--<div class="flex">
+<!--<div class="flex">
             <label>
               <input class="input" formControlName="Telefono" appNumbersOnly type="email" placeholder="" required="">
               <span>Telefono</span>
@@ -56,19 +56,19 @@
           </div>
 
           <!--usuario-->
-          <!--<label>
+<!--<label>
             <input class="input" formControlName="Usuario" type="email" placeholder="" required="">
             <span>Usuario</span>
           </label> 
 
           <!--contrasena-->
-          <!--<label>
+<!--<label>
               <input class="input" formControlName="Contrasena" type="text" placeholder="" required="">
               <span>Contraseña</span>
           </label>
 
           <!--nueva contrasena-->
-          <!--<label>
+<!--<label>
               <input class="input" type="password" placeholder="" required="">
               <span>Confirmar contraseña</span>
           </label>
@@ -84,154 +84,196 @@
 </div>-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  
+    
+    
+    
 </head>
+
 <body>
 
   <div class="container text-center">
     <div class="row">
-      <div class="col-6 col-sm-4">
-        <div class="title">
-          <h1>SIGN UP</h1>
-        </div>
+      <div class="contenedor col-6 col-sm-4">
+        <div class="box-description">
+          <div class="title">
+            <h1>SIGN UP</h1>
+          </div>
 
-        <div class="description">
-          <p>En Esta seccion Puede registrarse llenando su informacion </p> 
-          <p>personal para ser logueado posteriormente, o podria hacerlo </p>
-          <p>mas rapido mediante a su cuenta de google o github</p>
+          <div class="description">
+            <p>En Esta seccion Puede registrarse llenando su informacion </p>
+            <p>personal para ser logueado posteriormente, o podria hacerlo </p>
+            <p>mas rapido mediante a su cuenta de google o github</p>
+          </div>
         </div>
-        
-        <nz-steps>
-          <nz-step nzTitle="Identificacion" nzStatus="process" nzIcon="solution"></nz-step>
-          <nz-step nzTitle="Information" [nzStatus]="datosCompletos ? 'finish' : 'wait'" nzIcon="user">dx</nz-step>
-          <nz-step nzTitle="Credentials" [nzStatus]="datosCompletos ? 'finish' : 'wait'" nzIcon="lock"></nz-step>
-          <nz-step nzTitle="Done" [nzStatus]="datosCompletos ? 'finish' : 'wait'" [nzIcon]="iconTemplate"></nz-step>
-          <ng-template #iconTemplate><span nz-icon nzType="smile"></span></ng-template>
-        </nz-steps>
+        <div class="content-step">
+          <nz-steps>
+            <nz-step nzTitle="Identificacion" nzStatus="process" nzIcon="solution"></nz-step>
+            <nz-step nzTitle="Information" [nzStatus]="datosCompletos ? 'finish' : 'wait'" nzIcon="user">dx</nz-step>
+            <nz-step nzTitle="Credentials" [nzStatus]="datosCompletos ? 'finish' : 'wait'" nzIcon="lock"></nz-step>
+            <nz-step nzTitle="Done" [nzStatus]="datosCompletos ? 'finish' : 'wait'" [nzIcon]="iconTemplate"></nz-step>
+            <ng-template #iconTemplate><span nz-icon nzType="smile"></span></ng-template>
+          </nz-steps>
+        </div>
         <!--acordeon 1-->
+
         <div class="content-principal">
-          <div class="acordeon">
-            <mat-accordion>
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    IDENTIFICACION
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    This is a summary of the content
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                
-                <!--identificacion y rol-->
-              <div class="flex">
+          <div class="box-acordeon">
+            <div class="acordeon">
+              <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <span nz-icon  nzType="solution"  nzTheme="outline"></span>
+                      IDENTIFICACION
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Identificacion y rol de usuario
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  
+                  <p class="style-information">Por favor, le solicitamos ingresar su número de cédula y 
+                    seleccionar el rol que corresponde a su perfil de usuario. Le agradecemos por 
+                    tomarse un momento para proporcionar esta información.</p>
+
+                  <label class="style-important">*All fields required unless noted.</label>
+                    <!--identificacion y rol-->
+                  <div class="inputGroup">
+                    <input autocomplete="off" required="" type="text">
+                    <label for="name">Name</label>
+                </div>
+
+                  <!--<div>
                   <label>
-                      <input class="input style-identificacion" formControlName="Identificacion" type="text" appNumbersOnly placeholder="" required="">
-                      <span>Identificacion</span>
+                    <input class="input style-identificacion" formControlName="Identificacion" type="text"
+                      appNumbersOnly placeholder="" required="">
+                    <span>Identificacion</span>
                   </label>
-          
+                </div>-->
                   <div class="form-select ">
-                    <mat-form-field>
-                      <mat-label> Seleccione:</mat-label>
+                    
+                      
+                    <nz-select [FormControl]="registrationForm.controls['rol']">
+                      <nz-option *ngFor="let user of users" [nzValue]="user.value">{{ user.viewValue }}</nz-option>
+                    </nz-select>
+                    
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>Seleccione:</option>
+                      <option value="cliente">Cliente</option>
+                    </select>
+
+                      <!--<mat-label> Seleccione:</mat-label>
                       <mat-select formControlName="rol" (click)="toggleSelect()">
                         <mat-option *ngFor="let users of users" [value]="users.value">
                           {{users.viewValue}}
                         </mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                      </mat-select>-->
+                    
                   </div>
-              </div>  
-                
-              </mat-expansion-panel>
-            </mat-accordion>
-          </div>
 
-          <div class="acordeon2">
-            <mat-accordion>
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    INFORMATION
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    This is a summary of the content
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-principal">
+
+          <div class="box-acordeon">
+            <div class="acordeon2">
+              <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <span nz-icon nzType="user" nzTheme="outline"></span>
+                      INFORMATION
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Informacion perosnal del usuario
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
                   <div class="container-acordeon">
                     <!-- nombre y ubicacion-->
-                    <div class="flex">
-                      <label>
-                        <input class="input" formControlName="Nombre" type="text" placeholder="" required="">
-                        <span>Nombre</span>
-                      </label>
-                      
-                      <label>
-                        <input class="input"  formControlName="Ubicacion" type="texr" placeholder="" required="">
-                        <span>Ubicacion</span>
-                      </label> 
-                    </div>
+
+                    <label>
+                      <input class="input" formControlName="Nombre" type="text" placeholder="" required="">
+                      <span>Nombre</span>
+                    </label>
+
+                    <label>
+                      <input class="input" formControlName="Ubicacion" type="texr" placeholder="" required="">
+                      <span>Ubicacion</span>
+                    </label>
                   </div>
 
-                    <!--telefono y correo-->
-                    <div class="flex">
-                      <label>
-                        <input class="input" formControlName="Telefono" appNumbersOnly type="email" placeholder="" required="">
-                        <span>Telefono</span>
-                      </label> 
 
-                      <label>
-                        <input class="input" formControlName="Correo" type="email" placeholder="" required="">
-                        <span>Correo</span>
-                      </label> 
-                    </div>
-                          
-                        </mat-expansion-panel>
-                      </mat-accordion>
+                  <!--telefono y correo-->
+
+                  <label>
+                    <input class="input" formControlName="Telefono" appNumbersOnly type="email" placeholder=""
+                      required="">
+                    <span>Telefono</span>
+                  </label>
+
+                  <label>
+                    <input class="input" formControlName="Correo" type="email" placeholder="" required="">
+                    <span>Correo</span>
+                  </label>
+
+
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
           </div>
+        </div>
 
-          <div class="acordeon3">
-            <mat-accordion>
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    CREDENTIALS
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    This is a summary of the content
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                
+        <div class="content-principal">
+          <div class="box-acordeon">
+            <div class="acordeon3">
+              <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <span nz-icon nzType="lock" nzTheme="outline"></span>
+                      CREDENTIALS
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Credenciales del usuario
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
                   <!--usuario-->
                   <label>
                     <input class="input" formControlName="Usuario" type="email" placeholder="" required="">
                     <span>Usuario</span>
-                  </label> 
+                  </label>
 
                   <!--contrasena-->
                   <label>
-                      <input class="input" formControlName="Contrasena" type="text" placeholder="" required="">
-                      <span>Contraseña</span>
+                    <input class="input" formControlName="Contrasena" type="text" placeholder="" required="">
+                    <span>Contraseña</span>
                   </label>
 
                   <!--nueva contrasena-->
                   <label>
-                      <input class="input" type="password" placeholder="" required="">
-                      <span>Confirmar contraseña</span>
+                    <input class="input" type="password" placeholder="" required="">
+                    <span>Confirmar contraseña</span>
                   </label>
-                
-              </mat-expansion-panel>
-            </mat-accordion>
-          </div>
 
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
 </body>
+
 </html>
-
-
-
-

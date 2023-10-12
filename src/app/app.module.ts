@@ -54,6 +54,8 @@ import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensaje
 import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { DropdownModule } from 'primeng/dropdown';
 import '@dotlottie/player-component'; // Agregar esta importación
 
 registerLocaleData(en); // Importa el módulo de layout
@@ -157,7 +159,10 @@ const routes: Routes = [
     MatExpansionModule,
     MatDialogModule,
     MatGridListModule,
-    NzStepsModule
+    NzStepsModule,
+    NzSelectModule,
+    DropdownModule
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

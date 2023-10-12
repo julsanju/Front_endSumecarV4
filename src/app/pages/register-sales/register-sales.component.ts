@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
 import { Usuarios } from '../../Interfaces/usuarios';
 import {MatButtonModule} from '@angular/material/button';
@@ -14,10 +14,12 @@ export class RegisterSalesComponent {
   datosCompletos: boolean = false;
   isSelectActive: boolean = false;
   registrationForm: FormGroup;
-
+  selectedValue: Usuarios[] | undefined;
   users = [
     {value: 'cliente', viewValue: 'Cliente'}
   ];
+
+  
 
   constructor(private formBuilder: FormBuilder, private registerService: RegisterService) {
     this.registrationForm = this.formBuilder.group({
@@ -32,6 +34,7 @@ export class RegisterSalesComponent {
     });
   }
 
+  
   onSubmit() {
     //if (this.registrationForm.valid) {
       const userData: Usuarios = this.registrationForm.value;
