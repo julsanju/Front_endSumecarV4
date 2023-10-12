@@ -89,7 +89,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  
     
     
     
@@ -155,26 +154,26 @@
                     <span>Identificacion</span>
                   </label>
                 </div>-->
+                
                   <div class="form-select ">
-                    
-                      
-                    <nz-select [FormControl]="registrationForm.controls['rol']">
-                      <nz-option *ngFor="let user of users" [nzValue]="user.value">{{ user.viewValue }}</nz-option>
-                    </nz-select>
-                    
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>Seleccione:</option>
-                      <option value="cliente">Cliente</option>
-                    </select>
 
-                      <!--<mat-label> Seleccione:</mat-label>
-                      <mat-select formControlName="rol" (click)="toggleSelect()">
+                      <mat-label> Seleccione:</mat-label>
+                      <mat-select formControlName="rol" (click)="toggleSelect()" placeholder="Porfavor seleccione una opcion">
                         <mat-option *ngFor="let users of users" [value]="users.value">
                           {{users.viewValue}}
                         </mat-option>
-                      </mat-select>-->
+                      </mat-select>
                     
                   </div>
+
+                  <button class="button-siguiente">
+                    <div class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+                      <label class="label-button">
+                        Download
+                      </label>
+                    </div>
+                  </button>
+                  
 
                 </mat-expansion-panel>
               </mat-accordion>
