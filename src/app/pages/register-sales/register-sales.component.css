@@ -187,8 +187,22 @@
                -15px -15px 30px #ffffff;*/
   }
 
+  .content-principal2{
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 23%;
+    margin-right: 200px;
+    width: 60vh;
+    height: auto;
+    background: #f5f5f5;
+  }
+  .title h1{
+    color: #56c1ff;
+    font-weight: bold;
+  }
   .title, .description{
-    text-align: center;
+    text-align: start;
   }
   
   .flex {
@@ -351,4 +365,13 @@
   .label-button{
     text-align: center;
     cursor: pointer;
+  }
+
+  .succesfully{
+    font-weight: #666;
+    font-family: "Poppins-SemiBold", Helvetica;
+    margin-right: -11px;
+    text-align: center;
+    font-weight: bold;
+    color: #666;
   }
