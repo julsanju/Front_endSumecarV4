@@ -1,7 +1,6 @@
 /* Estilos para el formulario */
 /* En SuccesModalComponent.css */
 
-
 /*.login-container {
     display: flex;
     justify-content: center;
@@ -33,18 +32,18 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-left: 120px;
     display: flex; /* Añade esto para usar Flexbox en el formulario */
-    /*flex-direction: column; /* Añade esto para apilar elementos verticalmente */
-    /*justify-content: center; /* Centra verticalmente los elementos */
-    /*align-items: center;
+/*flex-direction: column; /* Añade esto para apilar elementos verticalmente */
+/*justify-content: center; /* Centra verticalmente los elementos */
+/*align-items: center;
   }
   
   h2 {
     text-align: center;
     margin-bottom: 20px;
     font-family: 'TuFuentePersonalizada', sans-serif; /* Cambia 'TuFuentePersonalizada' por el nombre de tu fuente */
-  /*}*/
-  
-  /*.form-group {
+/*}*/
+
+/*.form-group {
     margin-bottom: 15px;
     padding-right: 30px;
   }
@@ -59,7 +58,7 @@
     border: 1px solid #ccc;
     border-radius: 3px;
     font-family: 'TuFuentePersonalizada', sans-serif; /* Cambia 'TuFuentePersonalizada' por el nombre de tu fuente */
-    
+
 /*}
   
   .btn-primary {
@@ -271,21 +270,21 @@
 
 .style-a {
   text-align: center; /* Centra el contenido horizontalmente */
-  /*margin-bottom: 40px; /* Añade un margen superior para separarlo de otros elementos */
-  /*margin-top: -50px;
+/*margin-bottom: 40px; /* Añade un margen superior para separarlo de otros elementos */
+/*margin-top: -50px;
 }
 
 /* Estilo para el enlace */
 /*.style-a a {
   text-decoration: none; /* Elimina la subrayado predeterminado del enlace */
-  /*background-color: #e3e3e3; /* Color de fondo del enlace */
-  /*color: #000; /* Color del texto del enlace */
-  /*padding: 10px 20px; /* Espaciado interno del enlace (arriba/abajo y izquierda/derecha) */
-  /*border-radius: 5px; /* Borde redondeado */
-  /*transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
-  
-  /* Cambiar el color de fondo al pasar el mouse sobre el enlace */
-  /*&:hover {
+/*background-color: #e3e3e3; /* Color de fondo del enlace */
+/*color: #000; /* Color del texto del enlace */
+/*padding: 10px 20px; /* Espaciado interno del enlace (arriba/abajo y izquierda/derecha) */
+/*border-radius: 5px; /* Borde redondeado */
+/*transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
+
+/* Cambiar el color de fondo al pasar el mouse sobre el enlace */
+/*&:hover {
     background-color: #e3e3e3;
   }
 }
@@ -303,8 +302,6 @@ select {
   font-size: x-large;
   margin-top: 1.5em;
 }*/
-
-
 
 /*.inputBox,
 .inputBox1 {
@@ -427,21 +424,16 @@ button:active {
   box-shadow: none;
 }*/
 
-
-
-
-
 /*.success-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000; /* Ajusta esto según sea necesario */
-  /*background-color: #fff;
+/*background-color: #fff;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }*/
-
 
 /*
 .login {
@@ -716,15 +708,16 @@ button:active {
   background: #fdfdfd;
 }*/
 
-html, body{
+html,
+body {
   background-color: white;
   background-color: #fff;
 }
 
-b{
+b {
   color: #56c1ff;
 }
-mat-form-field{
+mat-form-field {
   width: 44vh;
   border-radius: 20%;
 }
@@ -734,43 +727,57 @@ mat-form-field{
   justify-content: center;
   height: 100%;
 }
-.content-principal{
-  margin-top: 150px;
+.content-principal {
+  /* margin-top: 150px;
   margin-left: 100px;
-  margin-right: 200px;
-  width: 110vh;
-  height: 70vh;
+  margin-right: 200px; */
+  /* margin-top: 50%;
+  margin-left: 50%;
+  margin-right: 50%; */
+  width: 100%;
+  /* height: 70vh; */
+  height: auto;
   border-radius: 20px;
   background: #fdfdfd;
-  box-shadow: 15px 15px 30px #bebebe,
-             -15px -15px 30px #ffffff;
+  box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
 }
 
-.style-p2{
+body {
+  position: absolute; /* Posiciona el formulario de forma absoluta */
+  left: 50%; /* Mueve el formulario al 50% de la izquierda del elemento padre */
+  top: 50%; /* Mueve el formulario al 50% de la parte superior del elemento padre */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Desplaza el formulario hacia atrás en un 50% de su propio ancho y alto */
+}
+
+.style-p2 {
   color: #56c1ff;
   margin-top: 25px;
 }
-.content-1{
-  height: 800px;
+.content-1 {
+  /* height: 800px; */
+
+  height: auto;
   width: 100%;
-  
 }
 
-.content-2{
+.content-2 {
   margin-bottom: -50px;
-  
-  height: 100%;
+  height: auto;
+  /* height: 100%; */
 }
 
-.form-select{
+.form-select {
   margin-left: 0px;
   padding-right: 50px;
   margin-top: 25px;
   margin-left: 3vh;
- }
- .input-general{
+}
+.input-general {
   margin-bottom: -50px;
- }
+}
 /*.card {
   width: 100%;
   height: 100%;
@@ -786,16 +793,15 @@ mat-form-field{
 /*estilos unicos*/
 /*estilos de los input*/
 
-
-.card2{
+.card2 {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 60vh;
-  width:500px;
+  width: 500px;
   flex-direction: column;
   gap: 35px;
-  background-color: #CFF1FF;
+  background-color: #cff1ff;
   border-radius: 5%;
   margin-right: 50px;
 }
@@ -807,45 +813,45 @@ mat-form-field{
   width: 80%;
 }
 
-.style-user{
+.style-user {
   margin-top: 150px;
   margin-bottom: 25px;
   margin-left: 3vh;
 }
-.style-password{
+.style-password {
   margin-top: 35px;
   margin-left: 3vh;
 }
-.style-logo{
+.style-logo {
   margin-top: -200px;
   margin-left: 8vh;
 }
-.style-sign{
+.style-sign {
   color: #56c1ff;
   font-family: "Poppins", Helvetica;
   font-size: 50px;
   font-weight: bolder;
-  margin-top: 15px;
+  margin-top: 20%;
   margin-bottom: -25px;
 }
-.style-p{
-  margin-bottom: -65px; 
-  margin-top: 55px; 
-  font-family: Poppins-SemiBold, 
-  Helvetica; 
+.style-p {
+  margin-bottom: -65px;
+  margin-top: 55px;
+  font-family: Poppins-SemiBold, Helvetica;
   font-size: 15px;
 }
-.style-forgot{
+.style-forgot {
   margin-right: 50px;
   margin-bottom: -30px;
   margin-left: 245px;
   color: #8a8a8a;
 }
-.style-a{
+.style-a {
   color: #8a8a8a;
   font-family: "Poppins", Helvetica;
-  font-size:15px;
-  margin-left: 0px;
+  font-size: 15px;
+  /* margin-left: 0px; */
+  float: right;
 }
 #inputField {
   border: 2px solid #8a8a8a;
@@ -856,8 +862,9 @@ mat-form-field{
   font-weight: 500;
   outline: none;
   caret-color: rgb(155, 78, 255);
-  transition-duration: .3s;
-  font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  transition-duration: 0.3s;
+  font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
 }
 
 #selectField {
@@ -869,8 +876,9 @@ mat-form-field{
   font-weight: 500;
   outline: none;
   caret-color: rgb(155, 78, 255);
-  transition-duration: .3s;
-  font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  transition-duration: 0.3s;
+  font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
 }
 .userIcon {
   position: absolute;
@@ -879,10 +887,8 @@ mat-form-field{
   top: -23px;
   left: -15px;
   opacity: 0;
-  transition: .2s linear;
+  transition: 0.2s linear;
 }
-
-
 
 .usernameLabel {
   position: absolute;
@@ -891,9 +897,10 @@ mat-form-field{
   color: #56c1ff;
   font-size: 14px;
   font-weight: 400;
-  font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: Whitney, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
   overflow: hidden;
-  transition: .2s linear;
+  transition: 0.2s linear;
   opacity: 0;
 }
 
@@ -913,9 +920,8 @@ mat-form-field{
 #inputField:valid {
   border: 2px solid #56c1ff;
   background-color: white;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 }
-
 
 .button {
   position: absolute;
@@ -935,9 +941,8 @@ mat-form-field{
   height: 24px;
   top: 11px;
   left: 22px;
-  
 }
-.sing-in{
+.sing-in {
   position: absolute;
   top: 0;
   left: 0;
@@ -947,23 +952,22 @@ mat-form-field{
   font-size: 16px;
   letter-spacing: 0;
   line-height: normal;
-  
 }
 
-.ant-design-swap-left{
+.ant-design-swap-left {
   position: absolute;
-width: 24px;
-height: 24px;
-top: 0;
-left: 75px;
+  width: 24px;
+  height: 24px;
+  top: 0;
+  left: 75px;
 }
 
 .box {
-  width: 150px;
+  width: 30%;
   height: 46px;
   margin-top: 50px;
-  margin-left: 30.5vh;
-  border-radius: 5%;
+  margin-left: 64%;
+  border-radius: 6%;
   background-color: #56c1ff;
 }
 
@@ -1008,7 +1012,6 @@ left: 75px;
   left: 75px;
 }
 
-
 @media (max-width: 620.633px) and (max-height: 1170.33px) {
   /* Oculta la imagen de LottieFiles */
   .card2 {
@@ -1046,5 +1049,3 @@ left: 75px;
     margin: 10px 0; /* Añade margen superior e inferior para separar el botón */
   }
 }
-
-

@@ -57,6 +57,8 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { DropdownModule } from 'primeng/dropdown';
 import '@dotlottie/player-component'; // Agregar esta importación
+import {MatCardModule} from '@angular/material/card';
+
 
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -161,7 +163,8 @@ const routes: Routes = [
     MatGridListModule,
     NzStepsModule,
     NzSelectModule,
-    DropdownModule
+    DropdownModule,
+    MatCardModule
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

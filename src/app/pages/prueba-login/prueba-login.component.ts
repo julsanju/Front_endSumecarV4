@@ -38,7 +38,7 @@ import { LockOutline } from '@ant-design/icons-angular/icons'; // Importa el íc
   ],
   
 })
-export class PruebaLoginComponent implements AfterViewInit {
+export class PruebaLoginComponent {
 
   users = [
     {value: 'cliente', viewValue: 'Cliente'},
@@ -60,30 +60,30 @@ export class PruebaLoginComponent implements AfterViewInit {
     this.passwordVisible = (event.target as HTMLInputElement).checked;
   }  
 
-  ngAfterViewInit() {
-    this.initParticles();
-  }
+  // ngAfterViewInit() {
+  //   this.initParticles();
+  // }
 
-  initParticles() {
-    particlesJS('particles-js', {
-      particles: {
-        number: {
-          value: 100,
-        },
-        size: {
-          value: 3,
-        },
-      },
-      interactivity: {
-        events: {
-          onhover: {
-            enable: true,
-            mode: 'repulse',
-          },
-        },
-      },
-    });
-  }
+  // initParticles() {
+  //   particlesJS('particles-js', {
+  //     particles: {
+  //       number: {
+  //         value: 100,
+  //       },
+  //       size: {
+  //         value: 3,
+  //       },
+  //     },
+  //     interactivity: {
+  //       events: {
+  //         onhover: {
+  //           enable: true,
+  //           mode: 'repulse',
+  //         },
+  //       },
+  //     },
+  //   });
+  // }
 
   constructor(private formBuilder: FormBuilder,  
               private loginService: LoginServicesService, 
