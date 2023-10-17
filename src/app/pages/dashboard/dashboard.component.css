@@ -1,0 +1,14 @@
+.style-user{
+    color: #369FFF;
+    font-family: "Poppins-SemiBold", helvetica;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.9px;
+  }
+
+  .content-principal{
+    display: flex;
+    flex-direction: column;
+}

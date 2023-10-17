@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Angular App</title>
-    <!-- Aquí puedes incluir los enlaces a los archivos CSS y JavaScript necesarios -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Angular App</title>
+  <!-- Aquí puedes incluir los enlaces a los archivos CSS y JavaScript necesarios -->
 </head>
+
 <body>
-    <nz-layout>
+  <!--<nz-layout>
         <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
           <div class="logo-sumecar">
             <img src="https://sumecar.com/img/SumecarLogo.png" alt="No se pudo cargar la imagen" width ="200px">
@@ -16,7 +18,7 @@
           <ul nz-menu nzTheme="dark" nzMode="inline" class="style-home">
 
             <!--Dashboard-->
-            <li nz-menu-item nzIcon="home">
+  <!--<li nz-menu-item nzIcon="home">
               <a routerLink="/menu/dashboard">
                 <span nz-icon nzType="home" nzTheme="outline"></span>
                 Home
@@ -24,40 +26,40 @@
             </li>
 
             <!--Productos-->
-            <li nz-submenu nzTitle="Productos" nzIcon="disconnect">
+  <!--<li nz-submenu nzTitle="Productos" nzIcon="disconnect">
               <ul>
                 <!--Agregar productos-->
-                <li nz-menu-item  nzIcon="plus-circle">
+  <!--<li nz-menu-item  nzIcon="plus-circle">
                   <a routerLink="/menu/productos">
                     <span nz-icon nzType="plus-circle" nzTheme="outline" nzTitle="Productos"></span>
                     Add products
                   </a>
                 </li>
                 <!--Confirmar productos-->
-                <li nz-menu-item  nzIcon="plus-circle" nzTitle="Productos">
+  <!--<li nz-menu-item  nzIcon="plus-circle" nzTitle="Productos">
                   <a routerLink="/menu/view-products">
                     <span nz-icon nzType="check-circle" nzTheme="outline"></span>
                     Confirm Products
                   </a>
                 </li>
                 <!--Peticiones-->
-                <ul nz-submenu nzTitle="Peticiones" nzIcon="question-circle">
+  <!--<ul nz-submenu nzTitle="Peticiones" nzIcon="question-circle">
                   <!--Agregar peticion-->
-                  <li nz-menu-item  nzIcon="plus-circle">
+  <!--<li nz-menu-item  nzIcon="plus-circle">
                     <a routerLink="/menu/add-information">
                       <span nz-icon nzType="plus" nzTheme="outline"></span>
                       Add peticion
                     </a>
                   </li>
                   <!--peticiones Pendientes-->
-                  <li nz-menu-item  nzIcon="plus-circle">
+  <!--<li nz-menu-item  nzIcon="plus-circle">
                     <a routerLink="/menu/mensajes-pendientes">
                       <span nz-icon nzType="sync" nzTheme="outline"></span>
                       Pendientes
                     </a>
                   </li>
                   <!--Historial de peticiones-->
-                  <li nz-menu-item  nzIcon="plus-circle">
+  <!--<li nz-menu-item  nzIcon="plus-circle">
                     <a routerLink="/menu/historial-mensajes">
                       <span nz-icon nzType="solution" nzTheme="outline"></span>
                       Historial
@@ -68,12 +70,12 @@
             </li>
 
             <!--Usuarios-->
-            <li nz-submenu nzTitle="User" nzIcon="user">
+  <!--<li nz-submenu nzTitle="User" nzIcon="user">
                 <ul>
                   <!--Registro de usuarios-->
-                  <li nz-menu-item *ngIf="esAdmin()"><a routerLink="/menu/register">Registro de usuarios</a></li>
+  <!--<li nz-menu-item *ngIf="esAdmin()"><a routerLink="/menu/register">Registro de usuarios</a></li>
                   <!--Cambiar contraseña de usuario-->
-                  <li nz-menu-item ><a routerLink="/menu/cambiar-contrasena">Cambiar Contraseña</a></li>
+  <!--<li nz-menu-item ><a routerLink="/menu/cambiar-contrasena">Cambiar Contraseña</a></li>
                 </ul>
             </li>
           </ul>
@@ -95,13 +97,80 @@
               </ng-container>
               <nz-breadcrumb-item>
                 <router-outlet></router-outlet> <!-- Componentes se cargarán aquí -->
-              </nz-breadcrumb-item>
+  <!--</nz-breadcrumb-item>
             </nz-breadcrumb>
           </nz-content>
           <nz-footer>Ant Design ©2020 Implementado por Angular</nz-footer>
         </nz-layout>
-      </nz-layout>
-</body>
-</html>
+      </nz-layout>-->
+  <nz-layout>
+    <nz-sider class="border-line" [(nzCollapsed)]="isCollapsed"  nzWidth="250px" nzTheme="light">
+      <div class="logo-sumecar">
+        <img src="https://sumecar.com/img/SumecarLogo.png" alt="No se pudo cargar la imagen" width="200px">
+      </div>
+      <div class="content-side">
+      <ul nz-menu nzMode="inline" class="sider-menu">
+        <li nz-submenu nzOpen nzIcon="user" nzTitle="subnav 1">
+          <ul>
+            <li nz-menu-item nzSelected>option1</li>
+            <li nz-menu-item>option2</li>
+            <li nz-menu-item>option3</li>
+            <li nz-menu-item>option4</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="subnav 2" nzIcon="laptop">
+          <ul>
+            <li nz-menu-item>option5</li>
+            <li nz-menu-item>option6</li>
+            <li nz-menu-item>option7</li>
+            <li nz-menu-item>option8</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
+          <ul>
+            <li nz-menu-item>option9</li>
+            <li nz-menu-item>option10</li>
+            <li nz-menu-item>option11</li>
+            <li nz-menu-item>option12</li>
+          </ul>
+        </li>
+      </ul>
+      <div class="logo-waiting">
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
 
+    <dotlottie-player src="https://lottie.host/67a1a8bd-0ac8-4f88-8901-091bcc6d03e9/qb45sRUMdg.json" 
+    background="transparent" 
+    speed="1" 
+    style="width: 250px; 
+    height: 250px;" 
+    loop autoplay></dotlottie-player>
+      </div>
+    </div> 
+    </nz-sider>
     
+    <!--<nz-layout class="inner-layout">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+        <nz-breadcrumb-item>List</nz-breadcrumb-item>
+        <nz-breadcrumb-item>App</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-content>Content</nz-content>
+    </nz-layout>
+  </nz-layout>-->
+  <nz-layout class="inner-layout">
+    <nz-content>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>User</nz-breadcrumb-item>
+        <ng-container *ngFor="let breadcrumb of breadcrumbs">
+          <nz-breadcrumb-item>{{ breadcrumb }}</nz-breadcrumb-item>
+        </ng-container>
+        <nz-breadcrumb-item>
+          <router-outlet></router-outlet> <!-- Componentes se cargarán aquí -->
+    </nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </nz-content>
+  </nz-layout>
+</nz-layout>
+</body>
+
+</html>
