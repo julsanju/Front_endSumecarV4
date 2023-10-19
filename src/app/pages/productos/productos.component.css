@@ -1,13 +1,14 @@
 
   .content{
-    margin: 10vh 0 0 10vh;
-    width: 70%;
+    margin: 5vh 0 0 0;
+    width: 100%;
     background-color: #fdfdfd;
   }
   
   mat-card{
-    margin: 10vh 0 0 10vh;
-    width: 70%;
+    margin: 10vh 0 0 5vh;
+    width: 90%;
+    box-shadow: none;
   }
   .demo-table {
     width: 100%;
