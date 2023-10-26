@@ -12,7 +12,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 })
 export class RegisterSalesComponent {
   currentStep:number = 0;
-
+  
   datosCompletos: boolean = false;
   isSelectActive: boolean = false;
   registrationForm: FormGroup;
@@ -97,5 +97,9 @@ export class RegisterSalesComponent {
   toggleSelect() {
     this.isSelectActive = !this.isSelectActive;
   }
+
+  
+  
+  
 }
 

@@ -1,12 +1,18 @@
 
   .content{
-    margin: 30px;
+    margin: 10vh;
   }
+  
 
   .demo-table {
     width: 100%;
   }
   
+  
+  .rounded-table {
+    border-radius: 20px; /* Ajusta el valor según el nivel de redondeo que desees */
+    overflow: hidden; /* Para asegurarte de que el contenido esté dentro de los bordes redondeados */
+  }
   .mat-mdc-row .mat-mdc-cell {
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
@@ -35,8 +41,21 @@
     width: 25%;
   }
   
-  .mat-mdc-form-field + .mat-mdc-form-field {
-    margin-left: 8px;
+  .xd{
+    width: 20%;
+    margin-bottom: 15px;
   }
-  
+ 
+  .mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8{
+    box-shadow: none;
+  }
+  .style-ProductsCar h3{
+    margin: 45px 0 16px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+  }
+
+  .custom-data {
+    color: #737272; /* Cambia #ff0000 al color deseado (código hexadecimal, RGB, o nombre del color) */
+  }
   

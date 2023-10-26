@@ -176,8 +176,9 @@
                   <!--identificacion y rol-->
                   <form [formGroup]="registrationForm">
                     <div class="inputGroup">
-                      <input autocomplete="off" appNumbersOnly required="" type="text">
-                      <label for="name">Identificacion</label>
+                      <input autocomplete="off" formControlName="Identificacion" appNumbersOnly type="text" >
+                      <label for="Identificacion">Identificacion</label>
+                      
                     </div>
 
 
@@ -261,7 +262,7 @@
                       </div>
 
                       <div class="inputGroup">
-                        <input autocomplete="off" required="" type="text">
+                        <input autocomplete="off"  type="text" required>
                         <label for="Ubicacion">Correo</label>
                       </div>
 

@@ -56,9 +56,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { DropdownModule } from 'primeng/dropdown';
+import { NzInputModule } from 'ng-zorro-antd/input'
 import '@dotlottie/player-component'; // Agregar esta importación
 import {MatCardModule} from '@angular/material/card';
-
+import { initFlowbite } from 'flowbite';
 
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -133,6 +134,7 @@ const routes: Routes = [
     AddInformationComponent,
     MensajesPendientesComponent,
     HistorialMensajesComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -164,8 +166,9 @@ const routes: Routes = [
     NzStepsModule,
     NzSelectModule,
     DropdownModule,
-    MatCardModule
-    
+    MatCardModule,
+    NzInputModule,
+        
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
