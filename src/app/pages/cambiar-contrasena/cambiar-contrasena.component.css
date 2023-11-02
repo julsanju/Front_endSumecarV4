@@ -410,8 +410,7 @@ if there is 20 put 20 */
   margin: 2em 2em;
   white-space: nowrap;
   overflow: hidden;
-  -webkit-animation: typing 5s steps(13, end),
-	           blink-caret .5s step-end infinite alternate;
+  
 }
 
 /*cambio de contraseña*/

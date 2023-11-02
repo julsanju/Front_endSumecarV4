@@ -193,7 +193,7 @@
                     <div class="form-select ">
 
                       <mat-label> Seleccione:</mat-label>
-                      <mat-select formControlName="rol" (click)="toggleSelect()"
+                      <mat-select formControlName="Rol" (click)="toggleSelect()"
                         placeholder="Porfavor seleccione una opcion">
                         <mat-option *ngFor="let users of users" [value]="users.value">
                           {{users.viewValue}}
@@ -218,6 +218,7 @@
           </div>
         </div>
 
+        <!--acordeon 2-->
         <div class="content-principal" *ngIf="currentStep === 1 && cardStates.card2 ">
 
           <div class="box-acordeon">
@@ -247,22 +248,22 @@
                     <!--identificacion y rol-->
                     <form [formGroup]="registrationForm">
                       <div class="inputGroup">
-                        <input autocomplete="off" required="" type="text">
+                        <input autocomplete="off" formControlName="Nombre" required="" type="text">
                         <label for="name">Nombre</label>
                       </div>
 
                       <div class="inputGroup">
-                        <input autocomplete="off" required="" type="text">
+                        <input autocomplete="off" formControlName="Ubicacion" required="" type="text">
                         <label for="Ubicacion">Ubicacion</label>
                       </div>
 
                       <div class="inputGroup">
-                        <input autocomplete="off" appNumbersOnly required="" type="text">
+                        <input autocomplete="off" formControlName="Telefono" appNumbersOnly required="" type="text">
                         <label for="Ubicacion">Telefono</label>
                       </div>
 
                       <div class="inputGroup">
-                        <input autocomplete="off"  type="text" required>
+                        <input autocomplete="off" formControlName="Correo" type="text" required>
                         <label for="Ubicacion">Correo</label>
                       </div>
 
@@ -298,6 +299,7 @@
           </div>
         </div>
 
+        <!--acordeon 3-->
         <div class="content-principal" *ngIf="currentStep === 2 && cardStates.card3">
           <div class="box-acordeon">
             <div class="acordeon3">
@@ -324,12 +326,12 @@
                   <label class="style-important">*All fields required unless noted.</label>
                   <form [formGroup]="registrationForm">
                     <div class="inputGroup">
-                      <input autocomplete="off" required="" type="text">
+                      <input autocomplete="off" formControlName="Usuario" required="" type="text">
                       <label for="Ubicacion">Usuario</label>
                     </div>
 
                     <div class="inputGroup">
-                      <input autocomplete="off" appNumbersOnly required="" type="text">
+                      <input autocomplete="off" formControlName="Contrasena" appNumbersOnly required="" type="text">
                       <label for="Ubicacion">Contraseña</label>
                     </div>
 
@@ -338,7 +340,7 @@
                       <label for="Ubicacion">Contraseña</label>
                     </div>
 
-                    <button class="button-siguiente" (click)="nextStep()">
+                    <button class="button-siguiente" (click)=" onSubmit(); nextStep()">
                       <div
                         class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
                         <label class="label-button">
