@@ -60,7 +60,6 @@ import { NzInputModule } from 'ng-zorro-antd/input'
 import '@dotlottie/player-component'; // Agregar esta importación
 import {MatCardModule} from '@angular/material/card';
 import { initFlowbite } from 'flowbite';
-
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
   {
@@ -135,6 +134,7 @@ const routes: Routes = [
     MensajesPendientesComponent,
     HistorialMensajesComponent
     
+
   ],
   imports: [
     BrowserModule,
@@ -168,7 +168,7 @@ const routes: Routes = [
     DropdownModule,
     MatCardModule,
     NzInputModule,
-        
+       
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

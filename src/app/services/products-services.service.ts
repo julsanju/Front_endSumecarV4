@@ -8,7 +8,7 @@ import { Productos } from '../Interfaces/productos';
 export class ProductsServicesService {
   
   //mostrar todos los productos
-  private apiUrl = 'http://localhost:5106/api/productos/obtener';
+  private apiUrl = 'http://localhost:5107/api/productos/obtener';
   private UrlPendientes = 'http://localhost:5106/api/productos/filtrar/'; 
   private UrlFinalizados = 'http://localhost:5106/api/productos/filtrar_finalizados/'; 
   private UrlProductosFinalizados = 'http://localhost:5106/api/productos/insertar/';
