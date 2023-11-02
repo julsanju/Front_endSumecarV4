@@ -26,8 +26,11 @@ nz-sider {
 }
 
 .logo-sumecar{
-  margin-top: 6vh;
+  margin: 6vh 10vh 0 5vh;
   text-align: center;
+  text-align: start;
+  margin-left: 5vh;
+  border-bottom: 1px solid #ebebeb;
 }
  .logo-waiting{
   margin-top: 100px;

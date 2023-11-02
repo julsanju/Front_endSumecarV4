@@ -1,9 +1,14 @@
 
   .content{
-    margin: 10vh;
+    margin: 10vh 0 0 10vh;
+    width: 70%;
+    background-color: #fdfdfd;
   }
   
-
+  mat-card{
+    margin: 10vh 0 0 10vh;
+    width: 70%;
+  }
   .demo-table {
     width: 100%;
   }
@@ -12,6 +17,7 @@
   .rounded-table {
     border-radius: 20px; /* Ajusta el valor según el nivel de redondeo que desees */
     overflow: hidden; /* Para asegurarte de que el contenido esté dentro de los bordes redondeados */
+    background-color: #fdfdfd;
   }
   .mat-mdc-row .mat-mdc-cell {
     border-bottom: 1px solid transparent;
@@ -50,7 +56,7 @@
     box-shadow: none;
   }
   .style-ProductsCar h3{
-    margin: 45px 0 16px;
+    margin: 35px 16px 0 0;
     font-family: 'Manrope', sans-serif;
     font-weight: 900;
   }

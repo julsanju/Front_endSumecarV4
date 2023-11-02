@@ -57,6 +57,7 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { DropdownModule } from 'primeng/dropdown';
 import { NzInputModule } from 'ng-zorro-antd/input'
+import {MatCardModule} from '@angular/material/card';
 import '@dotlottie/player-component'; // Agregar esta importación
 import {MatCardModule} from '@angular/material/card';
 import { initFlowbite } from 'flowbite';
@@ -166,9 +167,15 @@ const routes: Routes = [
     NzStepsModule,
     NzSelectModule,
     DropdownModule,
+<<<<<<< HEAD
     MatCardModule,
     NzInputModule,
        
+=======
+    NzInputModule,
+    MatCardModule
+    
+>>>>>>> c21fcb5 (nuevo cambio a la tabla)
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
