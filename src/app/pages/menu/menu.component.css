@@ -57,11 +57,6 @@ nz-sider {
 a{
   font-family: 'Manrope', sans-serif;
 }
-<<<<<<< HEAD
-
-.style-userProfile{
-  margin-top: auto;
-=======
 .style-sumecar{
   color: #525252;
   font-weight: 900;
@@ -70,7 +65,6 @@ a{
 }
 .style-userProfile{
   margin-top: 27vh;
->>>>>>> 7a90452 (nuevo cambio para sidebar y dashboard)
   background: #e6f7ff;
   font-family: 'Manrope', sans-serif;
   white-space: nowrap; /* Evita saltos de línea */
@@ -99,13 +93,6 @@ a{
   height: 100%;
   object-fit: cover; /* Ajusta el tamaño de la imagen para llenar el círculo */
 }
-<<<<<<< HEAD
-
-.contentProfile-1{
-  width: calc(60% - 0.5px) !important;
-}
-=======
 mat-grid-list{
   width: 100%;
 }
->>>>>>> 7a90452 (nuevo cambio para sidebar y dashboard)
