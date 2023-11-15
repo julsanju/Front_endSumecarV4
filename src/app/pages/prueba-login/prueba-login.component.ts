@@ -19,6 +19,7 @@ import {SharedServicesService} from '../../services/shared-services.service';
 import { Router } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { LockOutline } from '@ant-design/icons-angular/icons'; // Importa el ícono de candado
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class PruebaLoginComponent {
   isSelectActive: boolean = false; // Variable para controlar la animación del combobox
   userData : any;
   roles: string[] = ['cliente', 'empleado'];
+  spinner: boolean = false;
 
   togglePasswordVisibility(event: Event) {
     this.passwordVisible = (event.target as HTMLInputElement).checked;
@@ -119,6 +121,72 @@ export class PruebaLoginComponent {
   }
   
   onSubmit() {
+    //login
+    const userData: Login = this.loginForm.value;
+
+    this.spinner = true;
+
+    this.loginService.LoginValidation(userData).subscribe(
+      (response) => {
+        console.log(response);
+
+        // const modalRef = this.modalService.open(SuccesModalComponent, {
+        //   size: "sm", // Puedes ajustar el tamaño del modal aquí según tus necesidades
+        // });
+        // modalRef.componentInstance.modalClass = "success-modal"; // Establece la clase CSS del modal
+
+        this.spinner = false;
+
+        Swal.fire('Login Exitoso', '', 'success');
+
+        this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
+        console.log('Login exitoso');
+        this.router.navigate(['/menu']);
+
+        const userData2 = {
+          usuario: this.loginForm.get('usuario')?.value,
+          contrasena: this.loginForm.get('contrasena')?.value,
+          rol: this.loginForm.get('rol')?.value,
+        };
+
+        localStorage.setItem('userData', JSON.stringify(userData2));
+        this.userData = userData2;
+
+        localStorage.setItem('userData', JSON.stringify(userData2));
+        this.userData = userData2;
+        const user2 = sessionStorage.setItem(
+          'userData',
+          this.loginForm.get('usuario')?.value
+        );
+      },
+      (error) => {
+        console.error('Error:', error);
+
+        this.spinner = false;
+
+        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+        console.log(this.errorMessage);
+
+        Swal.fire({
+          title: 'ERROR',
+          html: `${this.errorMessage}`,
+          icon: 'error',
+        });
+      }
+    );
+    if (this.loginForm.valid) {
+      console.log('Formulario válido');
+      console.log('Email:', this.loginForm.value.email);
+      console.log('Contraseña:', this.loginForm.value.password);
+      console.log('Rol:', this.loginForm.value.role);
+    }
+  }
+
+  toggleSelect() {
+    this.isSelectActive = !this.isSelectActive;
+  }
+}
+  /*onSubmit() {
     
     //login
     const userData: Login = this.loginForm.value;
@@ -168,5 +236,5 @@ export class PruebaLoginComponent {
 
   toggleSelect() {
     this.isSelectActive = !this.isSelectActive;
-  }
-}
+  }*/
+
