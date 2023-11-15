@@ -339,8 +339,42 @@
                       <input autocomplete="off" required="" type="text">
                       <label for="Ubicacion">Contraseña</label>
                     </div>
+                  </form>
+                    
+                  <!--formulario de imagenes-->
+                  <form [formGroup]="imagenForm" enctype="multipart/form-data">
+                    <div class="inputGroup">
+                      <input type="file" (change)="onFileSelected($event)" accept="image/*">
+                      <!--<button (click)="openFileExplorer()" class="button-upload">
+                        <input #fileInput type="file"  name="image" (change)="onFileSelected($event)" formControlName="image" style="display: none">
+                        <div class="container-upload">
+                          <div class="folder folder_one"></div>
+                          <div class="folder folder_two"></div>
+                          <div class ="folder folder_three"></div>
+                          <div class="folder folder_four"></div>
+                        </div>
+                        <div class="active_line"></div>
+                        <span class="text-upload">File Explorer</span>
+                      </button>-->
+                    </div>
+                  
+                    <!--<div class="inputGroup">
 
-                    <button class="button-siguiente" (click)=" onSubmit(); nextStep()">
+                      <button (click)="openFileExplorer()" class="button-upload" >
+                        <input #fileInput type="file" (change)="onFileChange($event)" formControlName="imagen" style="display: none">
+                        <div class="container-upload">
+                          <div class="folder folder_one"></div>
+                          <div class="folder folder_two"></div>
+                          <div class="folder folder_three"></div>
+                          <div class="folder folder_four"></div>
+                        </div>
+                        <div class="active_line"></div>
+                        <span class="text-upload">File Explorer</span>
+                      </button>
+                      
+                    </div>-->
+
+                    <button class="button-siguiente" (click)="uploadImage()">
                       <div
                         class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
                         <label class="label-button">

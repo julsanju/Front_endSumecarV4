@@ -1,16 +1,20 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedServicesService } from '../../services/shared-services.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalMessageComponent } from '../modal-message/modal-message.component';
 import { MensajeError } from '../../Interfaces/mensaje-error';
 import { Login } from 'src/app/Interfaces/login';
+import { LoginServicesService } from 'src/app/services/login-services.service';
+import { MatStepper } from '@angular/material/stepper';
+import { Contrasena } from 'src/app/Interfaces/contrasena';
 @Component({
   selector: 'app-cambiar-contrasena',
   templateUrl: './cambiar-contrasena.component.html',
   styleUrls: ['./cambiar-contrasena.component.css']
 })
 export class CambiarContrasenaComponent {
+  username = '';
   isEditable = false;
   errorMessage: MensajeError | null = null;
   usuario: string | null = null;
@@ -19,12 +23,25 @@ export class CambiarContrasenaComponent {
   step2Form!: FormGroup;
   step3Form!: FormGroup;
   step4Form!: FormGroup;
+  contrasenaForm !: FormGroup;
   mostrarAnimacion: boolean = false;
   desenfocarContenido: boolean = false;
+  @ViewChild('stepper') stepper!: MatStepper;
 
-  constructor(private fb: FormBuilder, private dataShared:SharedServicesService, private modalService: NgbModal, private renderer: Renderer2) {
+  constructor(private fb: FormBuilder, 
+    private dataShared:SharedServicesService, 
+    private modalService: NgbModal,
+    private  login:LoginServicesService,
+    private renderer: Renderer2
+    ) {
     this.initForms();
     this.mostrarData();
+
+    this.contrasenaForm = this.fb.group({
+      contrasena: ['', Validators.required],
+      password: ['', Validators.required],
+
+    });
   }
 
   mostrarData() {
@@ -42,6 +59,8 @@ export class CambiarContrasenaComponent {
 
     
   }
+
+
 
   
   
@@ -112,7 +131,100 @@ export class CambiarContrasenaComponent {
     
   }
   
+
+  //metodo para poder enviar peticion al correo 
+  peticionCorreo(){
+    const userDataString = localStorage.getItem('userData');
+
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+      }
+    }
+
+    this.login.peticionCorreo(this.username).subscribe(
+      response => {
+        console.log(response);
+        console.log("Registro exitoso");
+      },
+      error => {
+        console.error("Error:", error);
+        console.log(error.error)
+        console.log("Error en el registro");
+      },
+    )
+  }
   
+//metodo para poder validar el estado de la peticion
+  validarEstado(){
+    const data = localStorage.getItem('userData');
+
+    if (data) {
+          try {
+            // Intenta analizar la cadena como JSON
+            const userData = JSON.parse(data);
+            this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+
+          } catch (error) {
+            // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+            console.error('Error al analizar JSON:', error);
+          }
+        }
+
+        this.login.ValidarEstado(this.username).subscribe(
+          response => {
+            console.log(response);
+            console.log("Registro exitoso");
+            this.avanzarPaso();
+          },
+          error => {
+            console.error("Error:", error);
+            console.log(error.error)
+            console.log("Error en el registro");
+          },
+        )
+
+  }
+
+  //metodo para avanzar si el paso fue exitoso
+  avanzarPaso() {
+    // Avanza al siguiente paso del stepper
+    this.stepper.next();
+  }
   
+  //metodo para poder cambiar contraseña
+  Cambiarcontrasena(){
+    const username = localStorage.getItem('userData');
+    const data: Contrasena = this.contrasenaForm.value;
+
+    if (username) {
+          try {
+            // Intenta analizar la cadena como JSON
+            const userData = JSON.parse(username);
+            this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+
+          } catch (error) {
+            // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+            console.error('Error al analizar JSON:', error);
+          }
+        }
+
+    this.login.CambiarContrasena(data, this.username).subscribe(
+      response => {
+        console.log(response)
+        this.avanzarPaso();
+      },
+      error => {
+        console.log(error)
+      }
+    )
+
+  }
   
 }

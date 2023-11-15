@@ -21,8 +21,8 @@
       <div class="Style-center">
         <div class = "button-container">
 
-          <button class="distancia" (click)="openModal()">Enviar</button>
-          <button matStepperNext >
+          <button class="distancia" (click)="openModal(); peticionCorreo()">Enviar</button>
+          <button matStepperNext>
             Proximo
             <div class="arrow-wrapper">
                 <div class="arrow"></div>
@@ -59,7 +59,7 @@
       <div class="Style-center">
         <div class = "button-container">
         <button class="distancia" matStepperPrevious>Atrás</button>
-        <button matStepperNext >
+        <button (click)="validarEstado()" >
           Proximo
           <div class="arrow-wrapper">
               <div class="arrow"></div>
@@ -73,18 +73,19 @@
     <!-- Paso 3 -->
     <mat-step label="Paso 3">
       <ng-template matStepLabel> Paso 3 </ng-template>
+      <form [formGroup]="contrasenaForm">
       <div class="Style-center style-h1">
         <B><h1>CAMBIO DE CONTRASEÑA</h1></B>
       </div>
-
+      
       <div class="Style-center">
         <div class="form-control distancia">
-          <input placeholder="Password" type="text" name="text" class="input">
+          <input placeholder="Password" formControlName="contrasena" type="text" name="text" class="input">
           
         </div>
 
         <div class="form-control">
-          <input placeholder="Password" type="text" name="text" class="input">
+          <input placeholder="Password" formControlName="password" type="text" name="text" class="input">
           
           
         </div>
@@ -92,7 +93,7 @@
       <div class="Style-center">
         <div class = "button-container">
           <button class="distancia" matStepperPrevious>Atrás</button>
-          <button matStepperNext (click)="activarAnimacion()">
+          <button (click)="Cambiarcontrasena(); activarAnimacion()">
             Proximo
             <div class="arrow-wrapper">
                 <div class="arrow"></div>
@@ -101,6 +102,7 @@
           </button>
         </div>
       </div>
+    </form>
     </mat-step>
 
     <!-- Paso 4 -->

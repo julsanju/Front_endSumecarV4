@@ -24,6 +24,10 @@ nz-content {
 nz-sider {
   
   height: 100%;
+  overflow-y: auto; /* Desplazamiento vertical */
+  overflow-x: hidden; /* Ejemplo de altura máxima, ajusta según tus necesidades */
+  border: 1px solid #ccc; /* Borde para resaltar el contenedor */
+  padding: 2px;
 }
 
 .logo-sumecar{
@@ -83,11 +87,11 @@ a{
   padding-top: 3vh;
 }
 .profile-image {
-  width: 50px; /* Ajusta el tamaño de la imagen según tus necesidades */
+  width: 100px; /* Ajusta el tamaño de la imagen según tus necesidades */
   height: 50px; /* Ajusta el tamaño de la imagen según tus necesidades */
   border-radius: 20%; /* Hace que la imagen sea redonda */
   overflow: hidden; /* Oculta el contenido desbordante (por si la imagen no es cuadrada) */
-  margin-left: 5vh; /* Agrega espacio entre la imagen y los detalles del usuario */
+  margin-left: 2vh; /* Agrega espacio entre la imagen y los detalles del usuario */
 }
 
 .profile-image img {

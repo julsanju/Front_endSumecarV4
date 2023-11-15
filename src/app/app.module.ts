@@ -59,7 +59,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { NzInputModule } from 'ng-zorro-antd/input'
 import {MatCardModule} from '@angular/material/card';
 import '@dotlottie/player-component'; // Agregar esta importación
-import {MatCardModule} from '@angular/material/card';
 import { initFlowbite } from 'flowbite';
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
@@ -167,15 +166,9 @@ const routes: Routes = [
     NzStepsModule,
     NzSelectModule,
     DropdownModule,
-<<<<<<< HEAD
     MatCardModule,
     NzInputModule,
        
-=======
-    NzInputModule,
-    MatCardModule
-    
->>>>>>> c21fcb5 (nuevo cambio a la tabla)
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

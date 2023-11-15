@@ -91,7 +91,6 @@ export class VisualizarProductosComponent implements OnInit {
     );
   }
 
-
   generateTableHTML() {
     const tableContainer = document.querySelector('.table-container');
     if (tableContainer) {

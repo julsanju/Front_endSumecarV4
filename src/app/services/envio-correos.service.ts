@@ -1,0 +1,18 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
+import { Correo } from '../Interfaces/correo';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EnvioCorreosService {
+
+  private apiUrl = 'http://localhost:5107/api/agregar_peticion/'
+  constructor(private http: HttpClient) {}
+
+  addPeticion(data : Correo, usuario:string): Observable<any>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.apiUrl + usuario, data, { headers });
+  }
+}

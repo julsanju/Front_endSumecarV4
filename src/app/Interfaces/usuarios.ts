@@ -7,4 +7,5 @@ export interface Usuarios {
     Ubicacion: string,
     Telefono: string, 
     Correo: string
+    
 }

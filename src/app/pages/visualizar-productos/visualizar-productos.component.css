@@ -92,7 +92,10 @@ button {
     color: #05060fc2;
   }
 
+<<<<<<< Updated upstream
   /*estilos del boton*/
+=======
+>>>>>>> Stashed changes
   .button-siguiente {
     border: none;
     display: flex;

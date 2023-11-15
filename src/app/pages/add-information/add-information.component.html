@@ -1,6 +1,6 @@
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+<form [formGroup]="formulario">
 
-    <div class="container">
+    <div class="container_addInformation">
         <div class="modal">
             <div class="modal__header">
                 
@@ -13,19 +13,22 @@
                 </button>
             </div>
             <div class="modal__body">
-                <div class="input" [ngClass]="{'input--invalid': formularioEnviado && formulario.get('email')?.invalid}">
+
+                <div class="input"><!--[ngClass]="{'input--invalid': formularioEnviado && formulario.get('email')?.invalid}">-->
                     <label class="input__label" for="email">Email</label>
-                    <input class="input__field" type="text" id="email" formControlName="email">
+                    <input class="input__field" type="text" id="email" formControlName="correo">
                     <p class="input__description">Por favor, ingrese su dirección de correo electrónico y nos comunicaremos con usted lo más pronto posible.</p>
                 </div>
-                <div class="input" [ngClass]="{'input--invalid': formularioEnviado && formulario.get('email')?.invalid}">
+
+                <div class="input"><!-- [ngClass]="{'input--invalid': formularioEnviado && formulario.get('email')?.invalid}">-->
                     <label class="input__label" for="mensaje">Mensaje</label>
                     <textarea class="input__field input__field--textarea" id="mensaje" formControlName="mensaje"></textarea>
                     <p class="input__description">Por favor, describa el producto adicional que desea cotizar o cualquier pregunta o problema que haya experimentado.</p>
                 </div>
+                
             </div>
             <div class="modal__footer">
-                <button class="button button--primary" type="submit">Send</button>
+                <button class="button button--primary" type="submit" (click)="onSubmit()">Send</button>
             </div>
         </div>
     </div>
