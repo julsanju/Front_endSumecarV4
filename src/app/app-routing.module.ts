@@ -10,6 +10,8 @@ import { VisualizarProductosComponent } from './pages/visualizar-productos/visua
 import { AddInformationComponent } from './pages/add-information/add-information.component';
 import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensajes-pendientes.component';
 import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
+import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
+import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
@@ -29,7 +31,9 @@ const routes: Routes = [
       { path: 'add-information', component: AddInformationComponent},
       { path: 'add-information', component: AddInformationComponent},
       {path : 'mensajes-pendientes', component : MensajesPendientesComponent },
-      {path : 'historial-mensajes', component : HistorialMensajesComponent }
+      {path : 'historial-mensajes', component : HistorialMensajesComponent },
+      {path : 'confirmed-products', component : ConfirmedProductsComponent },
+      {path : 'finished-products', component : FinishedProductsComponent }
     ],
   },
 ]

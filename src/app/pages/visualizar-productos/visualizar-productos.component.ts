@@ -9,6 +9,10 @@ import { PdfServicesService } from 'src/app/services/pdf-services.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { PdfInterface } from 'src/app/Interfaces/pdf-interface';
+import Swal from 'sweetalert2';
+import { MensajeError } from 'src/app/Interfaces/mensaje-error';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-visualizar-productos',
   templateUrl: './visualizar-productos.component.html',
@@ -19,7 +23,13 @@ export class VisualizarProductosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   datosPdf: (string | URL)[][] = [];
-  constructor(public data: DataProductsService, private productService: ProductsServicesService, private pdfService: PdfServicesService) { }
+  spinner: boolean = false;
+  errorMessage: MensajeError | null = null;
+  
+  constructor(public data: DataProductsService, 
+    private productService: ProductsServicesService, 
+    private pdfService: PdfServicesService,
+    private router:Router) { }
 
   displayedColumns: string[] = ['codigo', 'articulo', 'laboratorio', 'cantidad'];
 
@@ -64,6 +74,7 @@ export class VisualizarProductosComponent implements OnInit {
   confirmar() {
     const userDataString = localStorage.getItem('userData');
 
+    this.spinner = true;
     if (userDataString) {
       try {
         // Intenta analizar la cadena como JSON
@@ -80,17 +91,61 @@ export class VisualizarProductosComponent implements OnInit {
     this.productService.confirmarProductos(this.dataSource.data, this.username).subscribe(
       response => {
         console.log(response);
-        console.log("Registro exitoso");
+        this.spinner = false;
+
+        Swal.fire('Su producto ha sido confirmado exitosamente!', '', 'success');
+
+        this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
+        console.log('Login exitoso');
+        this.router.navigate(['menu/productos']);
       },
       error => {
         console.error("Error:", error);
         console.log(error.error)
+        this.spinner = false;
+
+        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+        console.log(this.errorMessage);
+
+        Swal.fire({
+          title: 'ERROR',
+          html: `${this.errorMessage}`,
+          icon: 'error',
+        });
         console.log("Error en el registro");
       },
 
     );
   }
 
+  //metodo para cancelar productos
+  onClickButton() {
+    //salir el spínner
+    
+      // Recargar la página después del tiempo de espera
+      this.spinner = false;
+        Swal.fire('Su producto ha sido cancelado exitosamente!', '', 'success');
+
+        this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
+        
+    // Navegar a la nueva página
+      this.router.navigate(['/menu/productos']);
+    
+    
+  
+    // Recargar la página actual
+    
+  }
+
+  refrescar(){
+    // Esperar 2 segundos (ajusta el tiempo según tus necesidades)
+    const tiempoEspera = 1000; // en milisegundos (2 segundos en este ejemplo)
+    
+    setTimeout(() => {
+      // Recargar la página después del tiempo de espera
+      location.reload();
+    }, tiempoEspera);
+  }
   generateTableHTML() {
     const tableContainer = document.querySelector('.table-container');
     if (tableContainer) {

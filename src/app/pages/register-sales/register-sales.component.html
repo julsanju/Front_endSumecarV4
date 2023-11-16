@@ -342,7 +342,7 @@
                   </form>
                     
                   <!--formulario de imagenes-->
-                  <form [formGroup]="imagenForm" enctype="multipart/form-data">
+                  
                     <div class="inputGroup">
                       <input type="file" (change)="onFileSelected($event)" accept="image/*">
                       <!--<button (click)="openFileExplorer()" class="button-upload">
@@ -374,15 +374,15 @@
                       
                     </div>-->
 
-                    <button class="button-siguiente" (click)="uploadImage()">
-                      <div
-                        class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
-                        <label class="label-button">
-                          Siguiente
-                        </label>
-                      </div>
-                    </button>
-                  </form>
+                    
+                  <button class="button-siguiente" (click)="onSubmit();nextStep()">
+                    <div
+                      class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+                      <label class="label-button">
+                        Siguiente
+                      </label>
+                    </div>
+                  </button>
                   <!--usuario-->
                   <!--<label>
                     <input class="input" formControlName="Usuario" type="email" placeholder="" required="">

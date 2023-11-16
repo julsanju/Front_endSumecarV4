@@ -58,6 +58,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { DropdownModule } from 'primeng/dropdown';
 import { NzInputModule } from 'ng-zorro-antd/input'
 import {MatCardModule} from '@angular/material/card';
+import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
+import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
 import '@dotlottie/player-component'; // Agregar esta importación
 import { initFlowbite } from 'flowbite';
 registerLocaleData(en); // Importa el módulo de layout
@@ -96,6 +98,14 @@ const routes: Routes = [
     component : VisualizarProductosComponent 
   },
   {
+    path : 'confirmed-products',
+    component : ConfirmedProductsComponent 
+  },
+  {
+    path : 'finished-products',
+    component : FinishedProductsComponent 
+  },
+  {
     path : 'add-information',
     component : AddInformationComponent 
   },
@@ -132,8 +142,9 @@ const routes: Routes = [
     LocalStorageDirectiveDirective,
     AddInformationComponent,
     MensajesPendientesComponent,
-    HistorialMensajesComponent
-    
+    HistorialMensajesComponent,
+    ConfirmedProductsComponent,
+    FinishedProductsComponent
 
   ],
   imports: [

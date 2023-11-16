@@ -12,100 +12,7 @@
 </head>
 
 <body>
-  <!--<nz-layout>
-        <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-          <div class="logo-sumecar">
-            <img src="https://sumecar.com/img/SumecarLogo.png" alt="No se pudo cargar la imagen" width ="200px">
-          </div>
-          
-          <ul nz-menu nzTheme="dark" nzMode="inline" class="style-home">
-
-            <!--Dashboard-->
-  <!--<li nz-menu-item nzIcon="home">
-              <a routerLink="/menu/dashboard">
-                <span nz-icon nzType="home" nzTheme="outline"></span>
-                Home
-              </a>
-            </li>
-
-            <!--Productos-->
-  <!--<li nz-submenu nzTitle="Productos" nzIcon="disconnect">
-              <ul>
-                <!--Agregar productos-->
-  <!--<li nz-menu-item  nzIcon="plus-circle">
-                  <a routerLink="/menu/productos">
-                    <span nz-icon nzType="plus-circle" nzTheme="outline" nzTitle="Productos"></span>
-                    Add products
-                  </a>
-                </li>
-                <!--Confirmar productos-->
-  <!--<li nz-menu-item  nzIcon="plus-circle" nzTitle="Productos">
-                  <a routerLink="/menu/view-products">
-                    <span nz-icon nzType="check-circle" nzTheme="outline"></span>
-                    Confirm Products
-                  </a>
-                </li>
-                <!--Peticiones-->
-  <!--<ul nz-submenu nzTitle="Peticiones" nzIcon="question-circle">
-                  <!--Agregar peticion-->
-  <!--<li nz-menu-item  nzIcon="plus-circle">
-                    <a routerLink="/menu/add-information">
-                      <span nz-icon nzType="plus" nzTheme="outline"></span>
-                      Add peticion
-                    </a>
-                  </li>
-                  <!--peticiones Pendientes-->
-  <!--<li nz-menu-item  nzIcon="plus-circle">
-                    <a routerLink="/menu/mensajes-pendientes">
-                      <span nz-icon nzType="sync" nzTheme="outline"></span>
-                      Pendientes
-                    </a>
-                  </li>
-                  <!--Historial de peticiones-->
-  <!--<li nz-menu-item  nzIcon="plus-circle">
-                    <a routerLink="/menu/historial-mensajes">
-                      <span nz-icon nzType="solution" nzTheme="outline"></span>
-                      Historial
-                    </a>
-                  </li>
-                </ul>  
-              </ul>
-            </li>
-
-            <!--Usuarios-->
-  <!--<li nz-submenu nzTitle="User" nzIcon="user">
-                <ul>
-                  <!--Registro de usuarios-->
-  <!--<li nz-menu-item *ngIf="esAdmin()"><a routerLink="/menu/register">Registro de usuarios</a></li>
-                  <!--Cambiar contraseña de usuario-->
-  <!--<li nz-menu-item ><a routerLink="/menu/cambiar-contrasena">Cambiar Contraseña</a></li>
-                </ul>
-            </li>
-          </ul>
-        </nz-sider>
-        <nz-layout>
-          <nz-header>
-            <span
-              class="trigger"
-              nz-icon
-              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-              (click)="isCollapsed = !isCollapsed"
-            ></span>
-          </nz-header>
-          <nz-content>
-            <nz-breadcrumb>
-              <nz-breadcrumb-item>User</nz-breadcrumb-item>
-              <ng-container *ngFor="let breadcrumb of breadcrumbs">
-                <nz-breadcrumb-item>{{ breadcrumb }}</nz-breadcrumb-item>
-              </ng-container>
-              <nz-breadcrumb-item>
-                <router-outlet></router-outlet> <!-- Componentes se cargarán aquí -->
-  <!--</nz-breadcrumb-item>
-            </nz-breadcrumb>
-          </nz-content>
-          <nz-footer>Ant Design ©2020 Implementado por Angular</nz-footer>
-        </nz-layout>
-      </nz-layout>-->
+  
   <nz-layout>
     <nz-sider class="border-line" [(nzCollapsed)]="isCollapsed" nzWidth="250px" nzTheme="light">
       <div class="logo-sumecar">
@@ -114,7 +21,7 @@
       </div>
       <div class="content-side">
         <ul nz-menu nzMode="inline" class="sider-menu">
-          <li nz-menu-item nzSelected>
+          <li style="font-size: large;" nz-menu-item nzSelected>
             <a routerLink="/menu/dashboard"></a>
             <!--<span nz-icon nzType="home" nzTheme="outline"></span>-->
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -124,33 +31,49 @@
             </svg>
             Home
           </li>
-          <li nz-submenu nzTitle="Productos" nzIcon="appstore">
+          <li style="font-size: large;" nz-submenu nzTitle="Productos" nzIcon="appstore">
             <ul>
               <!--agregar productos-->
-              <li nz-menu-item nzIcon="plus-circle">
+              <li  nz-menu-item nzIcon="plus-circle" >
                 <a routerLink="/menu/productos">
-                  <span nz-icon nzType="plus-circle" nzTheme="outline" nzTitle="Productos"></span>
+                  <span nz-icon nzType="minus" nzTheme="outline"></span>
                   Add products
                 </a>
               </li>
               <!--confirmar productos-->
               <li nz-menu-item nzIcon="plus-circle" nzTitle="Productos">
                 <a routerLink="/menu/view-products">
-                  <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+                  <span nz-icon nzType="minus" nzTheme="outline"></span>
                   Confirm Products
+                </a>
+              </li>
+
+              <!--Productos Pendientes Por revisar-->
+              <li nz-menu-item nzIcon="plus-circle" nzTitle="Productos">
+                <a routerLink="/menu/confirmed-products">
+                  <span nz-icon nzType="minus" nzTheme="outline"></span>
+                  Confirmed Products
+                </a>
+              </li>
+
+              <!--Productos Finalizados-->
+              <li nz-menu-item nzIcon="plus-circle" nzTitle="Productos">
+                <a routerLink="/menu/finished-products">
+                  <span nz-icon nzType="minus" nzTheme="outline"></span>
+                  Finished Products
                 </a>
               </li>
 
               <!--peticiones-->
               <ul nz-submenu nzTitle="Peticiones" nzIcon="question-circle">
-                <li nz-menu-item nzIcon="plus-circle">
+                <li nz-menu-item nzIcon="plus-circle" *ngIf="esCliente() || esAdmin()">
                   <a routerLink="/menu/add-information">
                     <span nz-icon nzType="plus" nzTheme="outline"></span>
                     Add peticion
                   </a>
                 </li>
                 <!--peticiones Pendientes-->
-                <li nz-menu-item nzIcon="plus-circle" *ngIf="esEmpleado() || esAdmin()">
+                <li nz-menu-item nzIcon="plus-circle" *ngIf="esCliente()|| esEmpleado() || esAdmin()">
                   <a routerLink="/menu/mensajes-pendientes">
                     <span nz-icon nzType="sync" nzTheme="outline"></span>
                     Pendientes
@@ -164,10 +87,20 @@
                   </a>
                 </li>
               </ul>
+
+              <!--PDF-->
+              <ul nz-submenu nzTitle="PDF" nzIcon="file-pdf">
+                <li nz-menu-item nzIcon="plus-circle">
+                  <a routerLink="/menu/add-information">
+                    <span nz-icon nzType="minus" nzTheme="outline"></span>
+                    Search PDF
+                  </a>
+                </li>
+              </ul>
             </ul>
           </li>
           <!--usuarios-->
-          <li nz-submenu nzTitle="Settings" nzIcon="setting">
+          <li style="font-size: large;" nz-submenu nzTitle="Settings" nzIcon="setting">
             <ul>
               <!--Registro de usuarios-->
               <li nz-menu-item *ngIf="esAdmin()">

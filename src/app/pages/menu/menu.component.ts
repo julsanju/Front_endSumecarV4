@@ -12,6 +12,7 @@ export class MenuComponent {
   isCollapsed = false;
   isAdmin = false;
   isEmpleado = false;
+  isCliente = false;
   username: string = '';
   rol: string = '';
   constructor(private login: LoginServicesService, private router: Router) {}
@@ -72,6 +73,21 @@ export class MenuComponent {
     return false;
 
   }
+
+  esCliente(): boolean{
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try{
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'cliente';
+      }catch (error) {
+        console.error('Error al aalizar JSON:' , error)
+        return false;
+      }
+    }
+    return false;
+  }
+  
   //parte del breadcump
   private createBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: string[] = []): string[] {
     const children: ActivatedRouteSnapshot[] = route.children;

@@ -39,7 +39,7 @@
 
 <div class="confirm-container">
   <!--boton para confirmar-->
-  <button class="button-siguiente" (click)="confirmar()">
+  <button class="button-siguiente" (click)="confirmar();refrescar();generatePDF(); generateTableHTML()">
     <div
       class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
       <label class="label-button">
@@ -49,7 +49,7 @@
   </button>
   
   <!--boton para cancelar-->
-  <button class="button-siguiente" >
+  <button class="button-siguiente" (click)="onClickButton();refrescar()">
     <div
       class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
       <label class="label-button">

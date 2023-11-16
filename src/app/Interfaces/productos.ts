@@ -3,6 +3,8 @@ export interface Productos {
     codigo : string,
     articulo : string,
     laboratorio : string,
-    cantidad : number 
-    usuario : string
+    cantidad : number, 
+    usuario : string,
+    telefono :string,
+    correo : string
 }
