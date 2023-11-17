@@ -102,7 +102,7 @@
 
           <!--usuarios-->
 
-          <li style="font-size: large;" nz-submenu nzTitle="Users" nzIcon="user">
+          <li style="font-size: large;" nz-submenu nzTitle="Users" nzIcon="user" *ngIf="esAdmin()">
             <ul>
               <!--Registro de usuarios-->
 

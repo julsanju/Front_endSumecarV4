@@ -185,6 +185,10 @@ export class PruebaLoginComponent {
   toggleSelect() {
     this.isSelectActive = !this.isSelectActive;
   }
+
+  direccionCambio(){
+    this.router.navigate(['/cambiar-contrasena']);
+  }
 }
   /*onSubmit() {
     
