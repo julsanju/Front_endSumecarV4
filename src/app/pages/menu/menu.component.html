@@ -31,7 +31,7 @@
             </svg>
             Home
           </li>
-          <li style="font-size: large;" nz-submenu nzTitle="Productos" nzIcon="appstore">
+          <li style="font-size: large;" nz-submenu nzTitle="Products" nzIcon="appstore">
             <ul>
               <!--agregar productos-->
               <li  nz-menu-item nzIcon="plus-circle" >
@@ -99,16 +99,33 @@
               </ul>
             </ul>
           </li>
+
           <!--usuarios-->
-          <li style="font-size: large;" nz-submenu nzTitle="Settings" nzIcon="setting">
+
+          <li style="font-size: large;" nz-submenu nzTitle="Users" nzIcon="user">
             <ul>
               <!--Registro de usuarios-->
+
+              <li nz-menu-item *ngIf="esAdmin()">
+                <a routerLink="/menu/userList">
+                  <span nz-icon nzType="user-add" nzTheme="outline"></span>
+                  Users List
+                </a>
+              </li>
+
               <li nz-menu-item *ngIf="esAdmin()">
                 <a routerLink="/menu/register">
                   <span nz-icon nzType="user-add" nzTheme="outline"></span>
-                  Registro de usuarios
+                  Add Users
                 </a>
               </li>
+              
+            </ul>
+          </li>
+
+          <!--settings-->
+          <li style="font-size: large;" nz-submenu nzTitle="Settings" nzIcon="setting">
+            <ul>
               <!--Cambiar contraseña de usuario-->
               <li nz-menu-item>
                 <a routerLink="/menu/cambiar-contrasena">

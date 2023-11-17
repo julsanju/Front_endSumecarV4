@@ -12,6 +12,7 @@ import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensaje
 import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
+import { UserListComponent } from './pages/user-list/user-list.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
@@ -33,7 +34,8 @@ const routes: Routes = [
       {path : 'mensajes-pendientes', component : MensajesPendientesComponent },
       {path : 'historial-mensajes', component : HistorialMensajesComponent },
       {path : 'confirmed-products', component : ConfirmedProductsComponent },
-      {path : 'finished-products', component : FinishedProductsComponent }
+      {path : 'finished-products', component : FinishedProductsComponent },
+      {path : 'userList', component : UserListComponent }
     ],
   },
 ]

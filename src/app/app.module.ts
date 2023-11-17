@@ -60,6 +60,7 @@ import { NzInputModule } from 'ng-zorro-antd/input'
 import {MatCardModule} from '@angular/material/card';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
+import { UserListComponent } from './pages/user-list/user-list.component';
 import '@dotlottie/player-component'; // Agregar esta importación
 import { initFlowbite } from 'flowbite';
 registerLocaleData(en); // Importa el módulo de layout
@@ -116,6 +117,10 @@ const routes: Routes = [
   {
     path : 'historial-mensajes',
     component : HistorialMensajesComponent 
+  },
+  {
+    path : 'userList',
+    component : UserListComponent 
   }
 ];
 @NgModule({
@@ -144,7 +149,8 @@ const routes: Routes = [
     MensajesPendientesComponent,
     HistorialMensajesComponent,
     ConfirmedProductsComponent,
-    FinishedProductsComponent
+    FinishedProductsComponent,
+    UserListComponent
 
   ],
   imports: [
