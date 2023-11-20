@@ -1,0 +1,6 @@
+/* home-pharma.component.css */
+body {
+    /* Asegúrate de proporcionar la ruta correcta a tu imagen */
+    background-image: url('../../../app/assets/img/lading/fondo.png');
+    background-size: cover; /* Otras propiedades de estilo según tus necesidades */
+  }
