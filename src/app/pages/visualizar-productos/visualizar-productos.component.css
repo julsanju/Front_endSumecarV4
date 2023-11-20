@@ -2,7 +2,100 @@
     height: 100%; /* Establece la altura al 100% de su contenedor */
 }
 
-.confirm-container{
+
+
+  /*estilos del input*/
+  .input {
+    max-width: 190px;
+    height: 44px;
+    background-color: #05060f0a;
+    border-radius: .5rem;
+    padding: 0 1rem;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
+  }
+
+  .input:hover, .input:focus, .input-group:hover .input {
+    outline: none;
+    border-color: #05060f;
+  }
+  
+  .input-group:hover, .input:focus {
+    color: #05060fc2;
+  }
+
+  
+
+  .content{
+    margin: 5vh 0 0 0;
+    width: 100%;
+    background-color: #fdfdfd;
+  }
+  
+  mat-card{
+    margin: 10vh 0 0 5vh;
+    width: 90%;
+    box-shadow: none;
+  }
+  
+  .demo-table {
+    width: 100%;
+  }
+  
+  
+  .rounded-table {
+    border-radius: 20px; /* Ajusta el valor según el nivel de redondeo que desees */
+    overflow: hidden; /* Para asegurarte de que el contenido esté dentro de los bordes redondeados */
+    background-color: #fdfdfd;
+  }
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+  
+  .demo-row-is-clicked {
+    font-weight: bold;
+  }
+  
+
+  table {
+    width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 25%;
+  }
+  
+  .xd{
+    width: 20%;
+    margin-bottom: 15px;
+  }
+ 
+  .mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8{
+    box-shadow: none;
+  }
+  .style-ProductsCar h3{
+    margin: 35px 16px 0 0;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+  }
+
+  .custom-data {
+    color: #737272; /* Cambia #ff0000 al color deseado (código hexadecimal, RGB, o nombre del color) */
+  }
+
+  .confirm-container{
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -27,75 +120,9 @@ button {
     color: #C0392B;
   }
 
-  button span {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: -1;
-    border: 4px solid royalblue;
-  }
   
-  .eliminar span{
-    border: 4px solid #C0392B;
-  }
-  button span::before {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 8%;
-    height: 500%;
-    background: var(--lightgray);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-60deg);
-    transition: all 0.3s;
-  }
-  
-  button:hover span::before {
-    transform: translate(-50%, -50%) rotate(-90deg);
-    width: 100%;
-    background: royalblue;
-  }
-  
-  .eliminar:hover span::before {
-    background: #C0392B;
-  }
-  button:hover {
-    color: white;
-  }
-  
-  button:active span::before {
-    background: #2751cd;
-  }
 
-  /*estilos del input*/
-  .input {
-    max-width: 190px;
-    height: 44px;
-    background-color: #05060f0a;
-    border-radius: .5rem;
-    padding: 0 1rem;
-    border: 2px solid transparent;
-    font-size: 1rem;
-    transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
-  }
-
-  .input:hover, .input:focus, .input-group:hover .input {
-    outline: none;
-    border-color: #05060f;
-  }
-  
-  .input-group:hover, .input:focus {
-    color: #05060fc2;
-  }
-
-<<<<<<< Updated upstream
   /*estilos del boton*/
-=======
->>>>>>> Stashed changes
   .button-siguiente {
     border: none;
     display: flex;
@@ -104,7 +131,7 @@ button {
     gap: 1.5rem;
     padding: 1rem 2rem;
     background-color: #ccc;
-    color: #fdfdfd;
+    color: #000;
     border-radius: 3rem;
     font-weight: bold;
     transition: background-color 0.4s ease;
@@ -142,4 +169,8 @@ button {
   .button-siguiente:hover .download-label {
     display: block;
     opacity: 1;
+  }
+
+  .label-button{
+    color:#f1f1f1
   }

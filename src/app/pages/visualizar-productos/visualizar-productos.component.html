@@ -1,28 +1,36 @@
-<div class="table-container">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap"
+  rel="stylesheet"
+/>
+<mat-card >
+  <mat-card-content>
+<div class=" content">
   
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table rounded-table">
 
     <!-- Código Column -->
     <ng-container matColumnDef="codigo">
       <mat-header-cell *matHeaderCellDef>Código</mat-header-cell>
-      <mat-cell *matCellDef="let item">{{ item.codigo }}</mat-cell>
+      <mat-cell *matCellDef="let item" class="custom-data">{{ item.codigo }}</mat-cell>
     </ng-container>
 
     <!-- Artículo Column -->
     <ng-container matColumnDef="articulo">
       <mat-header-cell *matHeaderCellDef>Artículo</mat-header-cell>
-      <mat-cell *matCellDef="let item">{{ item.articulo }}</mat-cell>
+      <mat-cell *matCellDef="let item" class="custom-data">{{ item.articulo }}</mat-cell>
     </ng-container>
 
     <!-- Laboratorio Column -->
     <ng-container matColumnDef="laboratorio">
       <mat-header-cell *matHeaderCellDef>Laboratorio</mat-header-cell>
-      <mat-cell *matCellDef="let item">{{ item.laboratorio }}</mat-cell>
+      <mat-cell *matCellDef="let item" class="custom-data">{{ item.laboratorio }}</mat-cell>
     </ng-container>
 
     <!-- Cantidad Column -->
     <ng-container matColumnDef="cantidad">
-      <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef class="custom-data">Cantidad</mat-header-cell>
       <!--<mat-cell *matCellDef="let item">{{ item.cantidad }}</mat-cell>-->
 
       <mat-cell *matCellDef="let item"><input appNumbersOnly class="input" [(ngModel)]="item.cantidad"
@@ -40,8 +48,7 @@
 <div class="confirm-container">
   <!--boton para confirmar-->
   <button class="button-siguiente" (click)="confirmar();refrescar();generatePDF(); generateTableHTML()">
-    <div
-      class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+    <div>
       <label class="label-button">
         Confirmar
       </label>
@@ -50,8 +57,7 @@
   
   <!--boton para cancelar-->
   <button class="button-siguiente" (click)="onClickButton();refrescar()">
-    <div
-      class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+    <div>
       <label class="label-button">
         Cancelar
       </label>
@@ -60,11 +66,13 @@
 
   <!--boton para generar pdf-->
   <button class="button-siguiente" (click)="generatePDF(); generateTableHTML()">
-    <div
-      class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+    <div>
       <label class="label-button">
         Generar PDF
       </label>
     </div>
   </button>
 </div>
+
+</mat-card-content>
+</mat-card>

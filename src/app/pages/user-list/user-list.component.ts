@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
-import { Usuarios } from 'src/app/Interfaces/usuarios';
+import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -20,14 +20,14 @@ export class UserListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  data: Usuarios[] = [];
+  data: UsuariosView[] = [];
   displayedColumns: string[] = ['Identificacion', 'Nombre', 'Telefono', 'Correo', 'Rol'];
-  dataSource: MatTableDataSource<Usuarios>; // Usa MatTableDataSource
+  dataSource: MatTableDataSource<UsuariosView>; // Usa MatTableDataSource
 
-  clickedRows = new Set<Usuarios>();
+  clickedRows = new Set<UsuariosView>();
 
   constructor(private servicio: UsuariosServicesService, public dialog: MatDialog, private dataServices: DataProductsService) { 
-    this.dataSource = new MatTableDataSource<Usuarios>([]);
+    this.dataSource = new MatTableDataSource<UsuariosView>([]);
     
   }
 
@@ -40,9 +40,10 @@ export class UserListComponent {
     this.servicio.obtenerUsuarios().subscribe(
       (response) => {
         this.dataSource.data = response;
-        this.dataSource = new MatTableDataSource<Usuarios>(response); // Inicializa con MatTableDataSource
+        this.dataSource = new MatTableDataSource<UsuariosView>(response); // Inicializa con MatTableDataSource
         this.dataSource.paginator = this.paginator; // Asigna el paginador después de inicializarlo
         this.dataSource.sort = this.sort;
+        console.log(response)
       },
       (error) => {
         console.error('Error al obtener los productos: ', error);
