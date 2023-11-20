@@ -61,6 +61,7 @@ import {MatCardModule} from '@angular/material/card';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
+
 import '@dotlottie/player-component'; // Agregar esta importación
 import { initFlowbite } from 'flowbite';
 registerLocaleData(en); // Importa el módulo de layout

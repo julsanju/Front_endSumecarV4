@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import { Productos } from 'src/app/Interfaces/productos';
 import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
-
+declare var Grid: any;
 //import { DialogData } from 'src/app/Interfaces/dialog-data';
 
 export interface DialogData{
@@ -22,10 +22,12 @@ export interface DialogData{
 export class ProductosComponent implements OnInit {
   cantidad:number = 0
   panelOpenState = false;
+  @ViewChild('gridContainer') gridContainer!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   data: Productos[] = [];
+  loading: boolean = true;
   displayedColumns: string[] = ['codigo', 'articulo', 'laboratorio'];
   dataSource: MatTableDataSource<Productos>; // Usa MatTableDataSource
 
@@ -42,7 +44,43 @@ export class ProductosComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    setTimeout(() => {
+      this.loading = false;
+      this.initializeGrid();
+    }, 2000);
+
     this.servicio.obtenerProductos().subscribe(
+      (response) => {
+        this.dataSource.data = response;
+        this.initializeGrid();
+      },
+      (error) => {
+        console.error('Error al obtener los productos: ', error);
+        this.loading = false; // Asegúrate de desactivar el loading en caso de error
+      }
+    );
+    }
+
+    initializeGrid() {
+      const grid = new Grid({
+        columns: ['codigo', 'articulo', 'laboratorio'],
+        data: () => {
+          return new Promise((resolve) => {
+            setTimeout(() => resolve(this.getData()), 2000);
+          });
+        },
+      });
+  
+      // Renderiza Grid.js en el contenedor
+      grid.render(this.gridContainer.nativeElement);
+    }
+    getData() {
+      // Convierte los datos a un formato compatible con Grid.js
+      return this.data.map(item => [item.codigo, item.articulo, item.laboratorio]);
+    }
+    
+    /*this.servicio.obtenerProductos().subscribe(
       (response) => {
         this.dataSource.data = response;
         this.dataSource = new MatTableDataSource<Productos>(response); // Inicializa con MatTableDataSource
@@ -52,10 +90,10 @@ export class ProductosComponent implements OnInit {
       (error) => {
         console.error('Error al obtener los productos: ', error);
       }
-    );
+    );*/
 
      
-  }
+  
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -93,7 +131,17 @@ export class ProductosComponent implements OnInit {
     return this.data.some(p => p.codigo === producto.codigo);
   }
   
-  
+  //evento para loading de tabla: 
+  initGrid(productos: Productos[]): void {
+    const grid = new Grid({
+      columns: Object.keys(productos[0]), // Asumiendo que todos los productos tienen las mismas propiedades
+      data: productos.map(producto => Object.values(producto)),
+      sort: true,
+      search: true,
+    });
+
+    grid.render(this.gridContainer.nativeElement);
+  }
   
 }
 
