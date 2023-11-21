@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'menu', component: MenuComponent },
   /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'home', component: HomePharmaComponent },*/
-
+  {path: 'home', component: HomePharmaComponent },
   
   {
     path: 'menu',
@@ -40,7 +40,8 @@ const routes: Routes = [
       {path : 'historial-mensajes', component : HistorialMensajesComponent },
       {path : 'confirmed-products', component : ConfirmedProductsComponent },
       {path : 'finished-products', component : FinishedProductsComponent },
-      {path : 'userList', component : UserListComponent }
+      {path : 'userList', component : UserListComponent },
+      
     ],
   },
 ]

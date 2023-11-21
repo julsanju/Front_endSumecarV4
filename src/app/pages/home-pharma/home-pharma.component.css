@@ -8,3 +8,8 @@ body {
 .servicios{
   background-image: url('../../../app/assets/img/lading/fondo_servicios.png');
 }
+
+.nosotros {
+  background-image: url('../../../app/assets/img/lading/fondo.png');
+  background-size: cover; 
+}
