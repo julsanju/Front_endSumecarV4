@@ -19,6 +19,7 @@ body {
   margin: 0px;
   height: 100%;
   background-color: #fff;
+  font-family: 'Quicksand', sans-serif;
 }
 /* a blue color as a generic focus style */
 button:focus-visible {
@@ -28,8 +29,8 @@ button:focus-visible {
 a {
   text-decoration: none;
 }
-@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,600");
-/*@import "~ng-zorro-antd/ng-zorro-antd.css";*/
+
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;

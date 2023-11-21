@@ -4,3 +4,7 @@ body {
     background-image: url('../../../app/assets/img/lading/fondo.png');
     background-size: cover; /* Otras propiedades de estilo según tus necesidades */
   }
+
+.servicios{
+  background-image: url('../../../app/assets/img/lading/fondo_servicios.png');
+}
