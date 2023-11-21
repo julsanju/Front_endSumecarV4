@@ -16,8 +16,10 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { HomePharmaComponent } from './pages/home-pharma/home-pharma.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/home' },
-  { path: 'home', component: HomePharmaComponent },
+  { path: '', pathMatch: 'full', redirectTo: '/menu' },
+  { path: 'menu', component: MenuComponent },
+  /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
+  { path: 'home', component: HomePharmaComponent },*/
 
   
   {
