@@ -118,7 +118,7 @@ export class PruebaLoginComponent {
 
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
         console.log('Login exitoso');
-        this.router.navigate(['/menu']);
+        this.router.navigate(['/menu/dashboard']);
 
         const userData2 = {
           usuario: this.loginForm.get('usuario')?.value,
