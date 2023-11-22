@@ -6,7 +6,7 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angu
 import { PeticioneServicesService } from 'src/app/services/peticione-services.service';
 import { Peticiones } from 'src/app/Interfaces/peticiones';
 import { Empleado } from 'src/app/Interfaces/empleado';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class ViewPeticionesComponent implements OnInit {
   dataUser : string = '';
   correo : string = '';
+  private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
   loading: boolean = true;
@@ -39,12 +40,27 @@ export class ViewPeticionesComponent implements OnInit {
     }, 2000);
   
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
+    this.validacionRol();
+    console.log(this.validacionRol())
+    this.rolSubject.subscribe((esEmpleado: boolean) => {
+      if (esEmpleado) {
+
+        this.handleEmpleadoCase();
+      } else {
+        
+        this.handleClienteCase();
+      }
+    });
+  }
+
+
+  //metodos para poder saber si es empleado o cliente
+  //empleado
+  private handleEmpleadoCase() {
     this.obtenerCorreo().subscribe(
       (correo) => {
-        // Cuando se obtenga el correo, lo asignamos a this.correo y llamamos a obtenerPendientes
         this.correo = correo;
   
-        // Verificamos si la variable correo se ha asignado antes de llamar a obtenerPendientes
         if (this.correo) {
           this.servicio.obtenerPendientes(this.correo).subscribe(
             (response) => {
@@ -60,6 +76,26 @@ export class ViewPeticionesComponent implements OnInit {
       (error) => {
         console.error('Error al obtener el correo: ', error);
         this.loading = false;
+      }
+    );
+  }
+  //cliente
+  private handleClienteCase() {
+    this.obtener_usuarioToClientes().subscribe(
+      (usuario) => {
+        this.dataUser = usuario;
+  
+        if (this.dataUser) {
+          this.servicio.obtenerPendientesCliente(this.dataUser).subscribe(
+            (response) => {
+              this.data = response;
+            },
+            (error) => {
+              console.error('Error al obtener los productos: ', error);
+              this.loading = false;
+            }
+          );
+        }
       }
     );
   }
@@ -80,6 +116,25 @@ export class ViewPeticionesComponent implements OnInit {
     return username;
   }
 
+  private obtener_usuarioToClientes(): Observable<string> {
+    return new Observable((observer) => {
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        try {
+          const userData = JSON.parse(userDataString);
+          const username = userData.usuario;
+          observer.next(username);
+          observer.complete();
+        } catch (error) {
+          observer.error('Error al analizar JSON:');
+        }
+      } else {
+        observer.error('No se encontró userData en localStorage.');
+      }
+    });
+  }
+
+
   obtenerCorreo(): Observable<string>{
     var name = this.obtener_usuario(this.dataUser);
 
@@ -90,6 +145,23 @@ export class ViewPeticionesComponent implements OnInit {
       })
     );
       
+  }
+
+  validacionRol(): void {
+    var name = this.obtener_usuario(this.dataUser);
+  
+    this.servicio.obtenerCorreo(name).subscribe(
+      (response) => {
+        this.data2 = response;
+        const esEmpleado = this.data2[0].rol === 'empleado';
+        this.rolSubject.next(esEmpleado);
+      },
+      (error) => {
+        // Manejar errores si es necesario
+        console.error(error);
+        this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
+      }
+    );
   }
 
   finalizarPeticion(id: number): void {

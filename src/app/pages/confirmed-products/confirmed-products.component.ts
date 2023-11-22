@@ -1,6 +1,13 @@
 import { Component,  OnInit, ViewChild } from '@angular/core';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import { Productos } from 'src/app/Interfaces/productos';
+import { Empleado } from 'src/app/Interfaces/empleado';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { MensajeError } from 'src/app/Interfaces/mensaje-error';
+import { Router } from '@angular/router';
+import { PeticioneServicesService } from 'src/app/services/peticione-services.service';
 import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,27 +22,87 @@ import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.comp
 })
 export class ConfirmedProductsComponent implements OnInit{
   dataUser : string = '';
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
+  correo : string = '';
+  private rolSubject = new Subject<boolean>();
+  errorMessage: MensajeError | null = null;
+  spinner: boolean = false;
+  loading: boolean = true;
   data: Productos[] = [];
-  displayedColumns: string[] = ['# Orden','codigo', 'articulo', 'laboratorio'];
-  dataSource: MatTableDataSource<Productos>; // Usa MatTableDataSource
+  data2: Empleado[] = [];
+  displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
 
-  clickedRows = new Set<Productos>();
+  // Variables de paginación
+  pageSize: number = 5;
+  currentPage: number = 1;
 
-  constructor(private servicio: ProductsServicesService, public dialog: MatDialog, private dataServices: DataProductsService) { 
-    this.dataSource = new MatTableDataSource<Productos>([]);
-    
+  constructor(private servicio: ProductsServicesService, private router:Router, private peticion: PeticioneServicesService) {}
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+  
+    // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
+    this.validacionRol();
+    console.log(this.validacionRol())
+    this.rolSubject.subscribe((esEmpleado: boolean) => {
+      if (esEmpleado) {
+
+        this.handleEmpleadoCase();
+      } else {
+        
+        this.handleClienteCase();
+      }
+    });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
+  //metodos para poder saber si es empleado o cliente
+  //empleado
+  private handleEmpleadoCase() {
+    this.obtenerCorreo().subscribe(
+      (correo) => {
+        this.correo = correo;
+  
+        if (this.correo) {
+          this.servicio.obtenerFiltrado(this.correo).subscribe(
+            (response) => {
+              this.data = response;
+            },
+            (error) => {
+              console.error('Error al obtener los productos: ', error);
+              this.loading = false;
+            }
+          );
+        }
+      },
+      (error) => {
+        console.error('Error al obtener el correo: ', error);
+        this.loading = false;
+      }
+    );
+  }
+  //cliente
+  private handleClienteCase() {
+    this.obtener_usuarioToClientes().subscribe(
+      (usuario) => {
+        this.dataUser = usuario;
+  
+        if (this.dataUser) {
+          this.servicio.obtenerFiltrado(this.dataUser).subscribe(
+            (response) => {
+              this.data = response;
+            },
+            (error) => {
+              console.error('Error al obtener los productos: ', error);
+              this.loading = false;
+            }
+          );
+        }
+      }
+    );
   }
 
-  //metodo para poder obtener el dato del usuario
   private obtener_usuario(username : string){
     //obtener username
     const userDataString = localStorage.getItem('userData');
@@ -52,31 +119,92 @@ export class ConfirmedProductsComponent implements OnInit{
     return username;
   }
 
-  ngOnInit() {
-    
-    var data = this.obtener_usuario(this.dataUser);
-
-    this.servicio.obtenerFiltrado(data).subscribe(
-      (response) => {
-        this.dataSource.data = response;
-        this.dataSource = new MatTableDataSource<Productos>(response); // Inicializa con MatTableDataSource
-        this.dataSource.paginator = this.paginator; // Asigna el paginador después de inicializarlo
-        this.dataSource.sort = this.sort;
-      },
-      (error) => {
-        console.error('Error al obtener los productos: ', error);
+  private obtener_usuarioToClientes(): Observable<string> {
+    return new Observable((observer) => {
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        try {
+          const userData = JSON.parse(userDataString);
+          const username = userData.usuario;
+          observer.next(username);
+          observer.complete();
+        } catch (error) {
+          observer.error('Error al analizar JSON:');
+        }
+      } else {
+        observer.error('No se encontró userData en localStorage.');
       }
-    );
-
-     
+    });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  obtenerCorreo(): Observable<string>{
+    var name = this.obtener_usuario(this.dataUser);
+
+    return this.peticion.obtenerCorreo(name).pipe(
+      map((response) => {
+        this.data2 = response;
+        return this.data2[0].correo;
+      })
+    );
+      
+  }
+
+  validacionRol(): void {
+    var name = this.obtener_usuario(this.dataUser);
+  
+    this.peticion.obtenerCorreo(name).subscribe(
+      (response) => {
+        this.data2 = response;
+        const esEmpleado = this.data2[0].rol === 'empleado';
+        this.rolSubject.next(esEmpleado);
+      },
+      (error) => {
+        // Manejar errores si es necesario
+        console.error(error);
+        this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
+      }
+    );
+  }
+
+  finalizarPeticion(id: number): void {
+    this.peticion.FinalizarPeticion(id).subscribe(
+      () => {
+        this.spinner = true;
+        this.spinner = false;
+
+        Swal.fire('La peticion ha sido finalizada correctamente!', '', 'success');
+
+        this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
+        console.log('Login exitoso');
+        this.router.navigate(['/menu/historial-peticiones']);
+      },
+      (error) => {
+        this.spinner = false;
+
+        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+        
+
+        Swal.fire({
+          title: 'ERROR',
+          html: `${this.errorMessage}`,
+          icon: 'error',
+        });
+      }
+    );
+  }
+
+  getPaginatedData(): Productos[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.data.slice(startIndex, endIndex);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+  }
+
+  getEndIndex(): number {
+    return Math.min(this.currentPage * this.pageSize, this.data.length);
   }
 }
