@@ -10,7 +10,8 @@ module.exports = {
     
     colors:{
       azul:{
-        200: '#7688B5',
+        100:'#CFFAFE',
+        200:'#7688B5',
         500:'#009EFA'
       }
     },

@@ -1,273 +1,231 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
 
-  <mat-grid-list class="content-principal"cols="2" rowHeight="2:1">
-    <!--contenido principal-->
-      <!--<div class="content-principal1">
-        <mat-grid-tile class="content-1">
-          <!--login-->
-          <!--<div class="card">
-            
-            <div class="style-logo">
-              <b><h1 class="style-sign">SIGN IN</h1></b>
-              <p class="style-p">Si ya eres miembro, inicia sesión facilmente :)</p>
+<section class="bg-gray-100 min-h-screen flex items-center
+justify-center">
+    <!-- LOTTIE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+
+
+    <!--Contenido del login-->
+    <div class="bg-azul-100 flex rounded-2xl shadow-lg max-w-3xl
+    p-5">
+        
+        <!--FORMULARIO-->
+        <div class="md:w-1/2 px-16">
+            <x-validation-errors class="mb-4" />
+            <h2 class="font-bold text-2xl text-blue-500">Login</h2>
+            <span class="text-sm mt-4"> Si ya eres miembro, inicia sesión fácilmente.</span>
+
+            <form method="POST" action="" class="flex flex-col gap-4">
+              
+                <input class="p-2 mt-8 rounded-xl text-sm  border-gray-400" type="email" name="email" placeholder="Correo" required autofocus autocomplete="username" >
+
+                <input class="p-2 rounded-xl border-gray-400 text-sm " type="password" name="password" placeholder="Contraseña" required autocomplete="current-password">
+
+                <button class="bg-blue-500 rounded-xl text-white py-2 hover:scale-105 duration-300">Entrar</button>
+            </form>
+
+            <div class=" mt-10 grid grid-cols-3 items-center text-gray-400">
+                <hr class="border-gray-400 ">
+                <p class="text-center">O</p>
+                <hr class="border-gray-400">
+            </div>
+    
+            <a href="" type="submit" class=" flex justify-center items-center bg-white border py-2 w-full rounded-xl mt-5 text-sm hover:scale-105 duration-300">
+                
+                Olvido su contraseña?
+            </a>
+
+             
+                    <p  class=" text-xs border-b border-gray-400 py-6">
+                        <a href="">
+                            Reegresar...
+                        </a> 
+                    </p>
+              
+               
+
+
+                <div class=" mt-3 text-xs flex justify-between items-center">
+                    <p>
+                        Si no tienes cuenta...
+                    </p>
+
+                    <a href="" class="py-2 px-5 bg-white border rounded-xl hover:scale-105 duration-300">
+                        Registrate
+                    </a >
+                </div>
+        </div>
+
+        <!--IMAGEN -->
+        <div class="w-1/2 p-5 radius md:block hidden max-h-96" >
+            <div class="bg-white rounded-2xl flex justify-center items-center h-[462px] ">
+                <div id="image_login">
+                  <script
+                  src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+                  type="module"
+                ></script>
+
+                <dotlottie-player
+                  src="https://lottie.host/39c8e65f-9c8c-4ae9-a046-dc3febcbeb12/eKYeuv22gF.json"
+                  background="transparent"
+                  speed="1"
+                  style="width: 300px; height: 300px"
+                  loop
+                  autoplay
+                >
+                </dotlottie-player>
+                </div>
             </div>
             
+           
+        </div>
 
-            <!--username-->
-            <!--<div class="inputContainer style-user text-wrapper">
-                <input required="required" id="inputField" placeholder="Username" type="text">
-                <label class="usernameLabel" for="inputField">Username</label>
-                <svg viewBox="0 0 448 512" class="userIcon">
-                  <path
-                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z">
-                  </path>
-                </svg>
-              </div>
-            <!--password-->
-              <!--<div class="style-forgot">
-                <a style="color: #8a8a8a;">forgot Password?</a>
-              </div>
-                <div class="inputContainer style-password ">
-                  <input required="required" id="inputField" placeholder="Password" type="password">
-                  <label class="usernameLabel" for="inputField">Password</label>
-                  <span nz-icon nzType="lock" nzTheme="outline"></span>
-                  <svg viewBox="0 0 448 912" class="userIcon">
-        
-        
-                    <path
-                      d="M224 0c-123.5 0-224 100.5-224 224v208c0 44.1 35.9 80 80 80h288c44.1 0 80-35.9 80-80V224C448 100.5 347.5 0 224 0zm-45.7 304H178.3c-98.5 0-178.3 79.8-178.3 178.3 0 16.4 13.3 29.7 29.7 29.7h388.6c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3zm141.7 168h-96a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h96a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8zm-24-40a8 8 0 0 0-8-8h-72a8 8 0 0 0-8 8v104a8 8 0 0 0 8 8h72a8 8 0 0 0 8-8z" />
-                  </svg>
-                </div>
-
-                <!--boton-->
-                <!--<div class="box">
-                  <button class="button">
-                    <div class="group">
-                      <div class="sing-in">SING IN</div>
-                      <img class="ant-design-swap-left" src="https://c.animaapp.com/RNzTRMLE/img/ant-design-swap-left-outlined.svg" />
-                    </div>
-                  </button>
-                </div>
-                <!--Sign up-->
-                <!--<div class="style-forgot">
-                  <a class="style-a"> Sign up</a>
-                </div>
-          </div>
-      </mat-grid-tile>
-      <mat-grid-tile class="content-2">
-        <div class="card2">
-          
-            <div id="animacion_1">
-              <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-
-            <dotlottie-player src="https://lottie.host/39c8e65f-9c8c-4ae9-a046-dc3febcbeb12/eKYeuv22gF.json" 
-              background="transparent" 
-              speed="1" 
-              style="width: 500px; height: 500px;" 
-              loop autoplay>
-          </dotlottie-player>
-            </div>
-          </div>
-        
-      </mat-grid-tile>
-      
-    
-    
     </div>
-  </mat-grid-list>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  
-</body>
-</html>-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <form [formGroup]="loginForm" >
-    <mat-grid-list class="content-principal"cols="2" rowHeight="2:1">
-      <!--contenido principal-->
-        <div class="content-principal1">
-          <mat-grid-tile class="content-1">
-            <!--login-->
-            <div class="card">
-              
-              <div class="style-logo">
-                <a><b><h1 class="style-sign">SIGN IN</h1></b></a>
-                <p class="style-p">Si ya eres miembro, inicia sesión facilmente :)</p>
-              </div>
-              
-
-              <!--username-->
-              <div class="input-general">
-                <div class="inputContainer style-user text-wrapper">
-                  <input required="required" id="inputField" placeholder="Username" formControlName="usuario" type="text" required="required">
-                  <label class="usernameLabel" for="inputField">Username</label>
-                  <svg viewBox="0 0 448 512" class="userIcon">
-                    <path
-                      d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z">
-                    </path>
-                  </svg>
+<div style="display: none;">
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+    </head>
+    <body>
+      <form [formGroup]="loginForm">
+        <mat-grid-list class="content-principal" cols="2" rowHeight="2:1">
+          <!--contenido principal-->
+          <div class="content-principal1">
+            <mat-grid-tile class="content-1">
+              <!--login-->
+              <div class="card">
+                <div class="style-logo">
+                  <a
+                    ><b><h1 class="style-sign">SIGN IN</h1></b></a
+                  >
+                  <p class="style-p">
+                    Si ya eres miembro, inicia sesión facilmente :)
+                  </p>
                 </div>
-              <!--password-->
-                <div class="style-forgot">
-                  <a routerLink="../cambio-contrasena" style="color: #8a8a8a; margin-left: 10.5vh;" >forgot Password?</a>
-                </div>
-                  <div class="inputContainer style-password ">
-                    <input required="required" id="inputField" placeholder="Password" formControlName="contrasena"  type="password" required="required">
-                    <label  class="usernameLabel" for="inputField">Password</label>
-                    
+
+                <!--username-->
+                <div class="input-general">
+                  <div class="inputContainer style-user text-wrapper">
+                    <input
+                      required="required"
+                      id="inputField"
+                      placeholder="Username"
+                      formControlName="usuario"
+                      type="text"
+                      required="required"
+                    />
+                    <label class="usernameLabel" for="inputField"
+                      >Username</label
+                    >
+                    <svg viewBox="0 0 448 512" class="userIcon">
+                      <path
+                        d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <!--password-->
+                  <div class="style-forgot">
+                    <a
+                      routerLink="../cambio-contrasena"
+                      style="color: #8a8a8a; margin-left: 10.5vh"
+                      >forgot Password?</a
+                    >
+                  </div>
+                  <div class="inputContainer style-password">
+                    <input
+                      required="required"
+                      id="inputField"
+                      placeholder="Password"
+                      formControlName="contrasena"
+                      type="password"
+                      required="required"
+                    />
+                    <label class="usernameLabel" for="inputField"
+                      >Password</label
+                    >
+
                     <svg viewBox="0 0 448 912" class="userIcon">
                       <path
-                        d="M224 0c-123.5 0-224 100.5-224 224v208c0 44.1 35.9 80 80 80h288c44.1 0 80-35.9 80-80V224C448 100.5 347.5 0 224 0zm-45.7 304H178.3c-98.5 0-178.3 79.8-178.3 178.3 0 16.4 13.3 29.7 29.7 29.7h388.6c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3zm141.7 168h-96a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h96a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8zm-24-40a8 8 0 0 0-8-8h-72a8 8 0 0 0-8 8v104a8 8 0 0 0 8 8h72a8 8 0 0 0 8-8z" />
+                        d="M224 0c-123.5 0-224 100.5-224 224v208c0 44.1 35.9 80 80 80h288c44.1 0 80-35.9 80-80V224C448 100.5 347.5 0 224 0zm-45.7 304H178.3c-98.5 0-178.3 79.8-178.3 178.3 0 16.4 13.3 29.7 29.7 29.7h388.6c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3zm141.7 168h-96a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h96a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8zm-24-40a8 8 0 0 0-8-8h-72a8 8 0 0 0-8 8v104a8 8 0 0 0 8 8h72a8 8 0 0 0 8-8z"
+                      />
                     </svg>
                   </div>
 
                   <div class="form-select">
                     <label class="style-p2">Tipo de usuario</label>
-                    <mat-form-field >
+                    <mat-form-field>
                       <mat-label> Seleccione:</mat-label>
-                      <mat-select formControlName="rol" (click)="toggleSelect()">
-                        <mat-option *ngFor="let users of users" [value]="users.value">
-                          {{users.viewValue}}
+                      <mat-select
+                        formControlName="rol"
+                        (click)="toggleSelect()"
+                      >
+                        <mat-option
+                          *ngFor="let users of users"
+                          [value]="users.value"
+                        >
+                          {{ users.viewValue }}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
+                </div>
+
+                <!--boton-->
+                <div class="box">
+                  <button class="button" (click)="onSubmit()">
+                    <div class="group">
+                      <div class="sing-in">SING IN</div>
+                      <img
+                        class="ant-design-swap-left"
+                        src="https://c.animaapp.com/RNzTRMLE/img/ant-design-swap-left-outlined.svg"
+                      />
+                    </div>
+                  </button>
+                </div>
+                <!--Sign up-->
+                <div class="style-forgot">
+                  <a routerLink="/register" class="style-a"
+                    >I don't have an account? <b>Sign up</b></a
+                  >
+                </div>
               </div>
-                
+            </mat-grid-tile>
+            <!--content 2-->
+            <mat-grid-tile class="content-2">
+              <div class="card2">
+                <div id="animacion_1">
+                  <script
+                    src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+                    type="module"
+                  ></script>
 
-                                  
-                
-               
-                  <!--boton-->
-                  <div class="box">
-                    <button class="button" (click)="onSubmit()">
-                      <div class="group">
-                        <div class="sing-in">SING IN</div>
-                        <img class="ant-design-swap-left" src="https://c.animaapp.com/RNzTRMLE/img/ant-design-swap-left-outlined.svg" />
-                      </div>
-                    </button>
-                  </div>
-                  <!--Sign up-->
-                  <div class="style-forgot">
-                    <a routerLink="/register" class="style-a">I don't have an account? <b>Sign up</b></a>
-                  </div>
-            </div>
-        </mat-grid-tile>
-        <!--content 2-->
-        <mat-grid-tile class="content-2">
-          <div class="card2">
-            
-              <div id="animacion_1">
-                <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-
-              <dotlottie-player src="https://lottie.host/39c8e65f-9c8c-4ae9-a046-dc3febcbeb12/eKYeuv22gF.json" 
-                background="transparent" 
-                speed="1" 
-                style="width: 500px; height: 500px;" 
-                loop autoplay>
-            </dotlottie-player>
+                  <dotlottie-player
+                    src="https://lottie.host/39c8e65f-9c8c-4ae9-a046-dc3febcbeb12/eKYeuv22gF.json"
+                    background="transparent"
+                    speed="1"
+                    style="width: 500px; height: 500px"
+                    loop
+                    autoplay
+                  >
+                  </dotlottie-player>
+                </div>
               </div>
-            </div>
-          
-        </mat-grid-tile>
-        
-      
-      
-      </div>
-    </mat-grid-list>
+            </mat-grid-tile>
+          </div>
+        </mat-grid-list>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-</form>
-</body>
-</html>
-
-<!-- LOTTIE -->
-
-<!--<form [formGroup]="loginForm" >
-<div class="login-container">
-  <div class="loader">
-    <div class="box box-1">
-      <div class="side-left"></div>
-      <div class="side-right"></div>
-      <div class="side-top"></div>
-    </div>
-    <div class="box box-2">
-      <div class="side-left"></div>
-      <div class="side-right"></div>
-      <div class="side-top"></div>
-    </div>
-    <div class="box box-3">
-      <div class="side-left"></div>
-      <div class="side-right"></div>
-      <div class="side-top"></div>
-    </div>
-    <div class="box box-4">
-      <div class="side-left"></div>
-      <div class="side-right"></div>
-      <div class="side-top"></div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="card">
-        <a class="singup">Sign Up</a>
-        
-        <div class="inputBox1">
-            <input type="text" formControlName="usuario" type="text" required="required">
-            <span>Username</span>
-        </div>
-
-        <div class="inputBox1">
-            <input type="password" formControlName="contrasena"   required="required">
-            <span>Password</span>
-        </div>
-
-        <div class="form-select">
-          <mat-form-field >
-            <mat-label> Seleccione:</mat-label>
-            <mat-select formControlName="rol" (click)="toggleSelect()">
-              <mat-option *ngFor="let users of users" [value]="users.value">
-                {{users.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <button type="submit" class="cta" (click)="onSubmit()">Iniciar Sesion</button>
-        <button>
-          <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke-width="2" stroke="currentColor" height="24" width="24" viewBox="0 0 24 24">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
-          Click me
-        </button>
-        <button routerLink="/register" type="submit" class="cta cta2" >Registrarse</button>
-        
-        <div class="style-a">
-          <a (click)="EventoEnviar()" routerLink="/cambio-contrasena" >¿Problemas con tu contraseña?</a>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-</form> 
-<div appLocalStorageDirective [appLocalStorageKey]="'userData'" [appLocalStorageValue]="userData"></div>-->
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      </form>
+    </body>
+  </html>
+</div>
 
 
 
