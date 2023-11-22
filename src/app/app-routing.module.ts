@@ -14,6 +14,9 @@ import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { HomePharmaComponent } from './pages/home-pharma/home-pharma.component';
+import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones.component';
+import { HistorialPeticionesComponent } from './pages/historial-peticiones/historial-peticiones.component';
+import { Page404Component } from './pages/page404/page404.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -41,7 +44,9 @@ const routes: Routes = [
       { path : 'confirmed-products', component : ConfirmedProductsComponent },
       { path : 'finished-products', component : FinishedProductsComponent },
       { path : 'userList', component : UserListComponent },
-      
+      { path : 'view-peticiones',component : ViewPeticionesComponent},
+      {path : 'historial-peticiones',component : HistorialPeticionesComponent},
+      //{ path: '**', component: Page404Component },
     ],
   },
 ]

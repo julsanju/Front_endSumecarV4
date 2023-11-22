@@ -101,7 +101,7 @@
     position: absolute;
     gap: 6px;
 }
-button {
+/*button {
     border: none;
     position: relative;
     padding: 0.7em 2.4em;
@@ -114,7 +114,7 @@ button {
     z-index: 1;
     font-family: inherit;
     font-weight: 500;
-  }
+  }*/
   
  .eliminar{
     color: #C0392B;

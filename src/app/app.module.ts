@@ -61,9 +61,10 @@ import {MatCardModule} from '@angular/material/card';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
+import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones.component';
+import { HistorialPeticionesComponent } from './pages/historial-peticiones/historial-peticiones.component';
+//import '@dotlottie/player-component'; // Agregar esta importación
 
-import '@dotlottie/player-component'; // Agregar esta importación
-import { initFlowbite } from 'flowbite';
 registerLocaleData(en); // Importa el módulo de layout
 const routes: Routes = [
   {
@@ -122,7 +123,15 @@ const routes: Routes = [
   {
     path : 'userList',
     component : UserListComponent 
-  }
+  },
+  {
+    path : 'view-peticiones',
+    component : ViewPeticionesComponent 
+  },
+  {
+    path : 'historial-peticiones',
+    component : HistorialPeticionesComponent 
+  },
 ];
 @NgModule({
   declarations: [
@@ -151,7 +160,9 @@ const routes: Routes = [
     HistorialMensajesComponent,
     ConfirmedProductsComponent,
     FinishedProductsComponent,
-    UserListComponent
+    UserListComponent,
+    ViewPeticionesComponent,
+    HistorialPeticionesComponent
 
   ],
   imports: [

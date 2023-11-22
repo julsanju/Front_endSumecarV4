@@ -9,7 +9,7 @@ import { Empleado } from '../Interfaces/empleado';
 export class UsuariosServicesService {
 
   private ApiUrl = 'http://localhost:5171/api/usuarios/obtener'
-  private ApiUrlEmpleado = 'http://localhost:5171/api/usuarios/obtener_empleado';  
+  private ApiUrlEmpleado = 'http://localhost:5171/api/usuarios/obtener_todosEmpleado';  
   constructor(private http : HttpClient) { }
 
   obtenerUsuarios(): Observable<UsuariosView[]>{
