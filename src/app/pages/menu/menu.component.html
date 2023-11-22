@@ -112,11 +112,11 @@
                   class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Realizar peticiones</a>
               </li>
               <li>
-                <a routerLink="/menu/mensajes-pendientes"
+                <a routerLink="/menu/view-peticiones"
                   class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Peticiones realizadas</a>
               </li>
               <li>
-                <a routerLink="/menu/historial-mensajes"
+                <a routerLink="/menu/historial-peticiones"
                   class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Historial de peticiones</a>
               </li>
               
@@ -214,10 +214,7 @@
     <nz-layout class="inner-layout  sm:ml-64">
       <nz-content>
         <nz-breadcrumb>
-          <!--<nz-breadcrumb-item>User</nz-breadcrumb-item>
-          <ng-container *ngFor="let breadcrumb of breadcrumbs">
-            <nz-breadcrumb-item>{{ breadcrumb }}</nz-breadcrumb-item>
-          </ng-container>-->
+          
           <nz-breadcrumb-item>
             <router-outlet></router-outlet> <!-- Componentes se cargarán aquí -->
           </nz-breadcrumb-item>

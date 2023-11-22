@@ -80,19 +80,7 @@ export class ProductosComponent implements OnInit {
       return this.data.map(item => [item.codigo, item.articulo, item.laboratorio]);
     }
     
-    /*this.servicio.obtenerProductos().subscribe(
-      (response) => {
-        this.dataSource.data = response;
-        this.dataSource = new MatTableDataSource<Productos>(response); // Inicializa con MatTableDataSource
-        this.dataSource.paginator = this.paginator; // Asigna el paginador después de inicializarlo
-        this.dataSource.sort = this.sort;
-      },
-      (error) => {
-        console.error('Error al obtener los productos: ', error);
-      }
-    );*/
-
-     
+    
   
 
   applyFilter(event: Event) {
