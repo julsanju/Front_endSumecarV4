@@ -65,7 +65,7 @@ export class ConfirmedProductsComponent implements OnInit{
         this.correo = correo;
   
         if (this.correo) {
-          this.servicio.obtenerFiltrado(this.correo).subscribe(
+          this.servicio.obtenerFiltradoEmpleado().subscribe(
             (response) => {
               this.data = response;
             },
@@ -82,6 +82,7 @@ export class ConfirmedProductsComponent implements OnInit{
       }
     );
   }
+
   //cliente
   private handleClienteCase() {
     this.obtener_usuarioToClientes().subscribe(
@@ -206,5 +207,52 @@ export class ConfirmedProductsComponent implements OnInit{
 
   getEndIndex(): number {
     return Math.min(this.currentPage * this.pageSize, this.data.length);
+  }
+
+  //metodo para filtrar roles de usuario
+  esAdmin(): boolean {
+    // Recupera la información del usuario desde localStorage
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'admin'; // Verifica la propiedad correcta 'rol'
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+        return false;
+      }
+    }
+    return false; // Retorna false si no se encuentra información del usuario
+  }
+
+  esEmpleado(): boolean{
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try{
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'empleado';
+      }catch (error) {
+        console.error('Error al aalizar JSON:' , error)
+        return false;
+      }
+    }
+    return false;
+
+  }
+
+  esCliente(): boolean{
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try{
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'cliente';
+      }catch (error) {
+        console.error('Error al aalizar JSON:' , error)
+        return false;
+      }
+    }
+    return false;
   }
 }

@@ -1,8 +1,5 @@
 
-
-
-
-<div style="height: 100vh !important; " class="relative overflow-x-auto shadow-md sm:rounded-lg space-table">
+<div style="height: 100vh !important; " class="relative overflow-x-auto shadow-md sm:rounded-lg space-table space-table ">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -10,7 +7,7 @@
         <th scope="col" class="px-6 py-3"> CODIGO </th>
         <th scope="col" class="px-6 py-3"> ARTICULO </th>
         <th scope="col" class="px-6 py-3"> LABORATORIO </th>
-        <th scope="col" class="px-6 py-3">
+        <th *ngIf="esAdmin() || esEmpleado()" scope="col" class="px-6 py-3">
           <span class="sr-only">Finalizar</span>
         </th>
       </tr>
@@ -21,7 +18,7 @@
         <td class="px-6 py-4">{{ row.codigo }}</td>
         <td class="px-6 py-4">{{ row.articulo }}</td>
         <td class="px-6 py-4">{{ row.laboratorio }}</td>
-        <td class="px-6 py-4 text-right">
+        <td *ngIf="esAdmin() || esEmpleado()"  class="px-6 py-4 text-right">
           <button type="button" class="focus:outline-none text-white bg-green-700 
           hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-small 
           rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 
