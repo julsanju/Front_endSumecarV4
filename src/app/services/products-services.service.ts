@@ -12,6 +12,8 @@ export class ProductsServicesService {
   private UrlPendientes = 'http://localhost:5107/api/productos/filtrar/'; 
   private UrlFinalizados = 'http://localhost:5107/api/productos/filtrar_finalizados/'; 
   private UrlProductosFinalizados = 'http://localhost:5107/api/productos/insertar/';
+  private UrlPendientesEmpleado = 'http://localhost:5107/api/productos/filtrar_empleado';
+  private UrlFinalizadosEmpleado = 'http://localhost:5107/api/productos/filtrar_finalizadosEmpleado';
 
   constructor(private http : HttpClient) { }
   //obtener todos los productos
@@ -24,9 +26,18 @@ export class ProductsServicesService {
     return this.http.get<Productos[]>(this.UrlPendientes + username);
   }
 
+  //obtener productos confirmados como empleado
+  obtenerFiltradoEmpleado() : Observable<Productos[]>{
+    return this.http.get<Productos[]>(this.UrlPendientesEmpleado);
+  }
   //obtener productos finalizados
   obtenerFinalizado(username : string) : Observable<Productos[]>{
     return this.http.get<Productos[]>(this.UrlFinalizados + username);
+  }
+
+  //metodo para obtener finalizado como empleado
+  obtenerFinalizadoEmpleado() : Observable<Productos[]>{
+    return this.http.get<Productos[]>(this.UrlFinalizadosEmpleado);
   }
 
   //confirmar productos
