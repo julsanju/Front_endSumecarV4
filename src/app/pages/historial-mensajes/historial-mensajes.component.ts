@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import { Productos } from 'src/app/Interfaces/productos';
+import '@dotlottie/player-component'; // Agregar esta importación
 import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
