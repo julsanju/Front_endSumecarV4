@@ -13,3 +13,16 @@ body {
   background-image: url('../../../app/assets/img/lading/fondo.png');
   background-size: cover; 
 }
+
+.info {
+  background-image: url("../../../app/assets/img/lading/bg.png");
+  background-size: cover;
+}
+
+/* .footer{
+  background-image: url('../../../app/assets/img/lading/FooterLogo_1.png');   
+} */
+
+.footer{
+  background-image: url('../../../app/assets/img/lading/bg.png');
+}
