@@ -13,8 +13,6 @@ import { LoginServicesService } from '../../services/login-services.service';
 import { Login } from '../../Interfaces/login';
 import { MensajeError } from '../../Interfaces/mensaje-error';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { SuccesModalComponent } from '../succes-modal/succes-modal.component';
-import { ErrorModalComponent } from '../error-modal/error-modal.component';
 import {SharedServicesService} from '../../services/shared-services.service';
 import { Router } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';

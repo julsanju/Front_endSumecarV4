@@ -8,7 +8,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginSalesComponent } from './pages/login-sales/login-sales.component';
 import { HeaderSalesComponent } from './shared/header-sales/header-sales.component';
 import { FooterSalesComponent } from './shared/footer-sales/footer-sales.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -23,8 +22,6 @@ import { CdkStepperComponent } from './components/cdk-stepper/cdk-stepper.compon
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkStepperModule} from '@angular/cdk/stepper';
 import { PruebaLoginComponent } from './pages/prueba-login/prueba-login.component';
-import { SuccesModalComponent } from './pages/succes-modal/succes-modal.component';
-import { ErrorModalComponent } from './pages/error-modal/error-modal.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -50,8 +47,6 @@ import { DialogOverviewComponent } from './pages/dialog-overview/dialog-overview
 import { MatDialogModule } from '@angular/material/dialog';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
 import { AddInformationComponent } from './pages/add-information/add-information.component';
-import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensajes-pendientes.component';
-import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -60,7 +55,6 @@ import { NzInputModule } from 'ng-zorro-antd/input'
 import {MatCardModule} from '@angular/material/card';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
-import { UserListComponent } from './pages/user-list/user-list.component';
 import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones.component';
 import { HistorialPeticionesComponent } from './pages/historial-peticiones/historial-peticiones.component';
 //import '@dotlottie/player-component'; // Agregar esta importación
@@ -113,18 +107,6 @@ const routes: Routes = [
     component : AddInformationComponent 
   },
   {
-    path : 'mensajes-pendientes',
-    component : MensajesPendientesComponent 
-  },
-  {
-    path : 'historial-mensajes',
-    component : HistorialMensajesComponent 
-  },
-  {
-    path : 'userList',
-    component : UserListComponent 
-  },
-  {
     path : 'view-peticiones',
     component : ViewPeticionesComponent 
   },
@@ -136,7 +118,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginSalesComponent,
     HeaderSalesComponent,
     FooterSalesComponent,
     DashboardComponent,
@@ -147,8 +128,6 @@ const routes: Routes = [
     SidebarComponent,
     CdkStepperComponent,
     PruebaLoginComponent,
-    SuccesModalComponent,
-    ErrorModalComponent,
     ModalMessageComponent,
     DialogOverviewComponent,
     VisualizarProductosComponent,
@@ -156,11 +135,8 @@ const routes: Routes = [
     NumbersOnlyDirective,
     LocalStorageDirectiveDirective,
     AddInformationComponent,
-    MensajesPendientesComponent,
-    HistorialMensajesComponent,
     ConfirmedProductsComponent,
     FinishedProductsComponent,
-    UserListComponent,
     ViewPeticionesComponent,
     HistorialPeticionesComponent
 

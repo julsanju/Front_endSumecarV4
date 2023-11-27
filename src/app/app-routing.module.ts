@@ -8,18 +8,15 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
 import { AddInformationComponent } from './pages/add-information/add-information.component';
-import { MensajesPendientesComponent } from './pages/mensajes-pendientes/mensajes-pendientes.component';
-import { HistorialMensajesComponent } from './pages/historial-mensajes/historial-mensajes.component';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
-import { UserListComponent } from './pages/user-list/user-list.component';
 import { HomePharmaComponent } from './pages/home-pharma/home-pharma.component';
 import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones.component';
 import { HistorialPeticionesComponent } from './pages/historial-peticiones/historial-peticiones.component';
 import { Page404Component } from './pages/page404/page404.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/home' },
+  { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
   { path: 'menu', component: MenuComponent },
   /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: 'home', component: HomePharmaComponent },*/
@@ -39,11 +36,8 @@ const routes: Routes = [
       { path: 'add-information', component: AddInformationComponent},
       { path: 'add-information', component: AddInformationComponent},
       { path: 'add-information', component: AddInformationComponent},
-      { path : 'mensajes-pendientes', component : MensajesPendientesComponent },
-      { path : 'historial-mensajes', component : HistorialMensajesComponent },
       { path : 'confirmed-products', component : ConfirmedProductsComponent },
       { path : 'finished-products', component : FinishedProductsComponent },
-      { path : 'userList', component : UserListComponent },
       { path : 'view-peticiones',component : ViewPeticionesComponent},
       {path : 'historial-peticiones',component : HistorialPeticionesComponent},
       //{ path: '**', component: Page404Component },
