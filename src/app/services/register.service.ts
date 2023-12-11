@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Usuarios } from '../Interfaces/usuarios'; // Asegúrate de importar correctamente la interfaz
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class RegisterService {
   private apiUrl = 'http://localhost:5171/api/usuarios/insertar'; // Reemplaza con la URL correcta

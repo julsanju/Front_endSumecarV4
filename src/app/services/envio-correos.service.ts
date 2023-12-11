@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Correo } from '../Interfaces/correo';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class EnvioCorreosService {
 

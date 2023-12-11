@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Peticiones } from '../Interfaces/peticiones';
 import { Empleado } from '../Interfaces/empleado';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class PeticioneServicesService {
 

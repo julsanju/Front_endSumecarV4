@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { UsuariosView } from '../Interfaces/usuarios-view';
 import { Empleado } from '../Interfaces/empleado';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class UsuariosServicesService {
 

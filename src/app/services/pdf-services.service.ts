@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { PdfInterface } from '../Interfaces/pdf-interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class PdfServicesService {
 

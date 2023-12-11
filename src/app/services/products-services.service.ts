@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Productos } from '../Interfaces/productos';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class ProductsServicesService {
   

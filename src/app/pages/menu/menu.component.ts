@@ -1,10 +1,25 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRouteSnapshot, UrlSegment   } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRouteSnapshot, UrlSegment, RouterModule   } from '@angular/router';
 //import { json } from 'node:stream/consumers';
 import { LoginServicesService } from 'src/app/services/login-services.service';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzInputModule } from 'ng-zorro-antd/input'
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-menu',
+  standalone: true,
+  imports : [ HttpClientModule,RouterModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzBreadCrumbModule,
+    NzStepsModule,
+    NzSelectModule,
+    NzInputModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })

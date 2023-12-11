@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Correo } from 'src/app/Interfaces/correo';
 import { EnvioCorreosService } from 'src/app/services/envio-correos.service';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Empleado } from 'src/app/Interfaces/empleado';
 import Swal from 'sweetalert2';
+import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-add-information',
+  standalone: true,
+  imports: [RouterOutlet, ReactiveFormsModule], 
   templateUrl: './add-information.component.html',
   styleUrls: ['./add-information.component.css']
 })

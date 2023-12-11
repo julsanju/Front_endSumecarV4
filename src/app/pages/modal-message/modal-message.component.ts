@@ -1,7 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, Renderer2 } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-modal-message',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './modal-message.component.html',
   styleUrls: ['./modal-message.component.css']
 })

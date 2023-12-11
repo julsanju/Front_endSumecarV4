@@ -1,16 +1,66 @@
 
 import { Component,  ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule  } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
 import { Usuarios } from '../../Interfaces/usuarios';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Imagen } from 'src/app/Interfaces/imagen';
 import {MatButtonModule} from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
+import { ModuloRegisterModule } from './modulo-register/modulo-register.module';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzInputModule } from 'ng-zorro-antd/input'
+
 @Component({
   selector: 'app-register-sales',
+  standalone: true,
+  imports: [ReactiveFormsModule, 
+    RouterModule, 
+    HttpClientModule, 
+    MatPaginatorModule, 
+    MatTableModule, 
+    MatProgressBarModule, 
+    MatStepperModule, 
+    MatSelectModule, 
+    MatFormFieldModule,
+     MatCheckboxModule, 
+     MatSortModule, 
+     MatInputModule, 
+     MatExpansionModule,
+      MatDialogModule, 
+      MatGridListModule,
+       MatCardModule, 
+       RouterOutlet,
+       NzLayoutModule,
+       NzMenuModule,
+       NzBreadCrumbModule,
+       NzStepsModule,
+       NzSelectModule,
+       NzInputModule],
   templateUrl: './register-sales.component.html',
-  styleUrls: ['./register-sales.component.css']
+  styleUrls: ['./register-sales.component.css'],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US }
+  ],
 })
 export class RegisterSalesComponent {
   currentStep:number = 0;

@@ -1,54 +1,47 @@
 <form [formGroup]="formulario" style="height: 100vh !important; ">
-
-    <div class="container_addInformation" >
-        <div class="modal">
-            <div class="modal__header">
-
-                <span class="modal__title">Information Additional</span>
-                <button class="button button--icon">
-                    <svg width="24" viewBox="0 0 24 24" height="24" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="none" d="M0 0h24v24H0V0z"></path>
-                        <path
-                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z">
-                        </path>
-                    </svg>
-                </button>
-            </div>
-            <div class="modal__body">
-
-                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona
-                    una opción:</label>
-                <select id="countries" class="bg-gray-50 border border-gray-300 
-                text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" (change)="onUserSelect($event)">
-                    <option selected>Selecciona un usuario:</option>
-                    <option *ngFor="let user of users" [value]="user.value">{{user.viewValue}}</option>
-                </select>
-                <!-- ... Tu código existente ... -->
-
-
-                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo
-                    Asignado:</label>
-
-                <input formControlName="correo" type="text" id="disabled-input-2" aria-label="disabled input 2"
-                    class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="example@gmail.com" [readonly]="true" />
-
-
-                <div class="input">
-                    <!-- [ngClass]="{'input--invalid': formularioEnviado && formulario.get('email')?.invalid}">-->
-                    <label class="input__label" for="mensaje">Mensaje</label>
-                    <textarea formControlName="mensaje" class="input__field input__field--textarea" id="mensaje"
-                        formControlName="mensaje"></textarea>
-                    <p class="input__description">Por favor, describa el producto adicional que desea cotizar o
-                        cualquier pregunta o problema que haya experimentado.</p>
-                </div>
-
-            </div>
-            <div class="modal__footer">
-                <button class="button button--primary" type="submit" (click)="onSubmit()">Send</button>
-            </div>
+  <div class="container_addInformation" >
+    <div class="modal">
+      <div class="modal__header">
+        <span class="modal__title">Information Additional</span>
+        <button class="button button--icon">
+          <svg width="24" viewBox="0 0 24 24" height="24" xmlns="http://www.w3.org/2000/svg">
+            <path fill="none" d="M0 0h24v24H0V0z"></path>
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z">
+            </path>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecciona
+        una opción:</label>
+        <select id="countries" class="bg-gray-50 border border-gray-300
+          text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+          block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+          dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" (change)="onUserSelect($event)">
+          <option selected>Selecciona un usuario:</option>
+          @for (user of users; track user) {
+            <option [value]="user.value">{{user.viewValue}}</option>
+          }
+        </select>
+        <!-- ... Tu código existente ... -->
+        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo
+        Asignado:</label>
+        <input formControlName="correo" type="text" id="disabled-input-2" aria-label="disabled input 2"
+          class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="example@gmail.com" [readonly]="true" />
+          <div class="input">
+            <!-- [ngClass]="{'input--invalid': formularioEnviado && formulario.get('email')?.invalid}">-->
+            <label class="input__label" for="mensaje">Mensaje</label>
+            <textarea formControlName="mensaje" class="input__field input__field--textarea" id="mensaje"
+            formControlName="mensaje"></textarea>
+            <p class="input__description">Por favor, describa el producto adicional que desea cotizar o
+            cualquier pregunta o problema que haya experimentado.</p>
+          </div>
         </div>
+        <div class="modal__footer">
+          <button class="button button--primary" type="submit" (click)="onSubmit()">Send</button>
+        </div>
+      </div>
     </div>
-</form>
+  </form>

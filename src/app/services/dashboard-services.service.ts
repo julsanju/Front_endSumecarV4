@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Dashboard } from '../Interfaces/dashboard';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class DashboardServicesService {
 

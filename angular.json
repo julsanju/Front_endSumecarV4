@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "PharmaSALES.PA:build:production"
+              "buildTarget": "PharmaSALES.PA:build:production"
             },
             "development": {
-              "browserTarget": "PharmaSALES.PA:build:development"
+              "buildTarget": "PharmaSALES.PA:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "PharmaSALES.PA:build"
+            "buildTarget": "PharmaSALES.PA:build"
           }
         },
         "test": {

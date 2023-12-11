@@ -12,9 +12,35 @@ import { PdfInterface } from 'src/app/Interfaces/pdf-interface';
 import Swal from 'sweetalert2';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-visualizar-productos',
+  standalone: true,
+  imports : [ReactiveFormsModule,MatPaginatorModule, MatTableModule,
+    MatProgressBarModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatGridListModule,
+    MatCardModule, FormsModule],
   templateUrl: './visualizar-productos.component.html',
   styleUrls: ['./visualizar-productos.component.css']
 })

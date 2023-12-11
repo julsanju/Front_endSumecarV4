@@ -6,36 +6,28 @@
       <div class="Style-center style-h1">
         <B><h1>ENVIO DEL CORREO</h1></B>
       </div>
-
       <div class="Style-center">
         <h2>Usuario</h2>
       </div>
-      
       <div class="Style-center">
         <div class="card">
           <div class="style-label"><b><label>{{usuario}}</label></b></div>
         </div>
       </div>
-
       <!--paso 1-->
       <div class="Style-center">
         <div class = "button-container">
-
           <button class="distancia" (click)="openModal(); peticionCorreo()">Enviar</button>
           <button matStepperNext>
             Proximo
             <div class="arrow-wrapper">
-                <div class="arrow"></div>
-        
+              <div class="arrow"></div>
             </div>
           </button>
           <!--<button mat-button matStepperNext>Proximo</button>-->
         </div>
-
       </div>
-        
     </mat-step>
-
     <!-- Paso 2 -->
     <mat-step label="Paso 2" [editable]="isEditable">
       <ng-template matStepLabel> Paso 2 </ng-template>
@@ -45,7 +37,6 @@
       <div class="Style-center">
         <p>Se le ha enviado un link al correo el cual debe ingresar para validar su correo</p>
       </div>
-
       <div class="Style-center">
         <div class="wrapper">
           <div class="circle"></div>
@@ -54,74 +45,65 @@
           <div class="shadow"></div>
           <div class="shadow"></div>
           <div class="shadow"></div>
-      </div>
-      </div>
-      <div class="Style-center">
-        <div class = "button-container">
-        <button class="distancia" matStepperPrevious>Atrás</button>
-        <button (click)="validarEstado()" >
-          Proximo
-          <div class="arrow-wrapper">
-              <div class="arrow"></div>
-      
-          </div>
-        </button>
-      </div>
-      </div>
-    </mat-step>
-
-    <!-- Paso 3 -->
-    <mat-step label="Paso 3">
-      <ng-template matStepLabel> Paso 3 </ng-template>
-      <form [formGroup]="contrasenaForm">
-      <div class="Style-center style-h1">
-        <B><h1>CAMBIO DE CONTRASEÑA</h1></B>
-      </div>
-      
-      <div class="Style-center">
-        <div class="form-control distancia">
-          <input placeholder="Password" formControlName="contrasena" type="text" name="text" class="input">
-          
-        </div>
-
-        <div class="form-control">
-          <input placeholder="Password" formControlName="password" type="text" name="text" class="input">
-          
-          
         </div>
       </div>
       <div class="Style-center">
         <div class = "button-container">
           <button class="distancia" matStepperPrevious>Atrás</button>
-          <button (click)="Cambiarcontrasena(); activarAnimacion()">
+          <button (click)="validarEstado()" >
             Proximo
             <div class="arrow-wrapper">
-                <div class="arrow"></div>
-        
+              <div class="arrow"></div>
             </div>
           </button>
         </div>
       </div>
-    </form>
     </mat-step>
-
+    <!-- Paso 3 -->
+    <mat-step label="Paso 3">
+      <ng-template matStepLabel> Paso 3 </ng-template>
+      <form [formGroup]="contrasenaForm">
+        <div class="Style-center style-h1">
+          <B><h1>CAMBIO DE CONTRASEÑA</h1></B>
+        </div>
+        <div class="Style-center">
+          <div class="form-control distancia">
+            <input placeholder="Password" formControlName="contrasena" type="text" name="text" class="input">
+          </div>
+          <div class="form-control">
+            <input placeholder="Password" formControlName="password" type="text" name="text" class="input">
+          </div>
+        </div>
+        <div class="Style-center">
+          <div class = "button-container">
+            <button class="distancia" matStepperPrevious>Atrás</button>
+            <button (click)="Cambiarcontrasena(); activarAnimacion()">
+              Proximo
+              <div class="arrow-wrapper">
+                <div class="arrow"></div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
     <!-- Paso 4 -->
     <mat-step label="Paso 4" >
       <ng-template matStepLabel> Paso 4 </ng-template>
-      <div *ngIf="mostrarAnimacion" class="Style-center">
-        <div class="loading">
-          <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124">
-            <circle class="circle-loading" cx="62" cy="62" r="59" fill="none" stroke="#001529" stroke-width="6px"></circle>
-            <circle class="circle2" cx="62" cy="62" r="59" fill="none" stroke="#60B25E" stroke-width="6px" stroke-linecap="round"></circle>
-            <polyline class="check" points="73.56 48.63 57.88 72.69 49.38 62" fill="none" stroke="#60B25E" stroke-width="6px" stroke-linecap="round"></polyline>
-          </svg>
+      @if (mostrarAnimacion) {
+        <div class="Style-center">
+          <div class="loading">
+            <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124">
+              <circle class="circle-loading" cx="62" cy="62" r="59" fill="none" stroke="#001529" stroke-width="6px"></circle>
+              <circle class="circle2" cx="62" cy="62" r="59" fill="none" stroke="#60B25E" stroke-width="6px" stroke-linecap="round"></circle>
+              <polyline class="check" points="73.56 48.63 57.88 72.69 49.38 62" fill="none" stroke="#60B25E" stroke-width="6px" stroke-linecap="round"></polyline>
+            </svg>
+          </div>
         </div>
-
-      </div>
+      }
       <div  class="Style-center">
         <div class="animation">Contraseña actualizada correctamente!</div>
       </div>
-      
       <div class="Style-center">
         <div class = "button-container">
           <button class="distancia" mat-button matStepperPrevious>Atrás</button>
@@ -130,13 +112,9 @@
       </div>
     </mat-step>
   </mat-horizontal-stepper>
-  
   <div class="sign">
-    
-      <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
-    </svg>
-    
+    <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+  </svg>
 </div>
 <!--<button><a routerLink="/prueba-login">XD</a></button>-->
 </div>
-
