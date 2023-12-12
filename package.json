@@ -23,7 +23,7 @@
     "@dotlottie/common": "^0.7.3",
     "@dotlottie/player-component": "^2.7.0",
     "@lottiefiles/lottie-types": "^1.4.1",
-    "@ng-bootstrap/ng-bootstrap": "^15.1.1",
+    "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "flowbite": "^1.8.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.7.0",
