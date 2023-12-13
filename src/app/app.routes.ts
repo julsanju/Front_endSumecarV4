@@ -8,7 +8,6 @@ import { VisualizarProductosComponent } from './pages/visualizar-productos/visua
 import { AddInformationComponent } from './pages/add-information/add-information.component';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
-import { HomePharmaComponent } from './pages/home-pharma/home-pharma.component';
 import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones.component';
 import { HistorialPeticionesComponent } from './pages/historial-peticiones/historial-peticiones.component';
 import { PruebaLoginComponent } from './pages/prueba-login/prueba-login.component';
@@ -19,7 +18,6 @@ export const routes: Routes = [
     { path: 'menu', component: MenuComponent },
     /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
     { path: 'home', component: HomePharmaComponent },*/
-    {path: 'home', component: HomePharmaComponent },
     { path: 'prueba-login', component: PruebaLoginComponent },
     
     {
@@ -33,8 +31,6 @@ export const routes: Routes = [
         { path: 'cambiar-contrasena', component: CambiarContrasenaComponent }, // Componente CambiarContrasenaComponent se carga en la vista principal de '/menu'
         { path: 'productos', component: ProductosComponent },
         { path: 'view-products', component: VisualizarProductosComponent},
-        { path: 'add-information', component: AddInformationComponent},
-        { path: 'add-information', component: AddInformationComponent},
         { path: 'add-information', component: AddInformationComponent},
         { path : 'confirmed-products', component : ConfirmedProductsComponent },
         { path : 'finished-products', component : FinishedProductsComponent },

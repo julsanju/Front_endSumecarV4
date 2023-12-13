@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProductosComponent } from '../productos.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -14,14 +15,18 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { RouterOutlet } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,MatPaginatorModule, MatTableModule,
+  declarations: [ProductosComponent],
+  imports: [CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule, MatTableModule,
     MatProgressBarModule,
     MatStepperModule,
     MatSelectModule,
@@ -32,7 +37,8 @@ import { MatCardModule } from '@angular/material/card';
     MatExpansionModule,
     MatDialogModule,
     MatGridListModule,
-    MatCardModule, FormsModule
-  ]
+    MatCardModule,NzInputModule,RouterOutlet
+  ],
+  exports : [ProductosComponent]
 })
-export class ModuloVisualizarModule { }
+export class ModuloProductosModule { }

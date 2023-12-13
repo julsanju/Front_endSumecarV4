@@ -7,7 +7,6 @@ import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Imagen } from 'src/app/Interfaces/imagen';
 import {MatButtonModule} from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
-import { ModuloRegisterModule } from './modulo-register/modulo-register.module';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -35,7 +34,7 @@ import { NzInputModule } from 'ng-zorro-antd/input'
   standalone: true,
   imports: [ReactiveFormsModule, 
     RouterModule, 
-    HttpClientModule, 
+    //HttpClientModule, 
     MatPaginatorModule, 
     MatTableModule, 
     MatProgressBarModule, 

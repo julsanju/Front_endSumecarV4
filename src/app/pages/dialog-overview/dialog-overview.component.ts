@@ -18,11 +18,29 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-overview',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatPaginatorModule, MatTableModule, MatProgressBarModule, MatStepperModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatSortModule, MatInputModule, MatExpansionModule, MatDialogModule, MatGridListModule, MatCardModule, RouterOutlet],
+  imports: [
+            CommonModule, 
+            FormsModule, 
+            ReactiveFormsModule, 
+            MatPaginatorModule, 
+            MatTableModule, 
+            MatProgressBarModule, 
+            MatStepperModule, 
+            MatSelectModule, 
+            MatFormFieldModule, 
+            MatCheckboxModule, 
+            MatSortModule, 
+            MatInputModule, 
+            MatExpansionModule, 
+            MatDialogModule, 
+            MatGridListModule, 
+            MatCardModule, 
+            RouterOutlet],
   templateUrl: './dialog-overview.component.html',
   styleUrls: ['./dialog-overview.component.css']
 })

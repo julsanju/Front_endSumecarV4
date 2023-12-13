@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Dashboard } from 'src/app/Interfaces/dashboard';
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
+import { ModuloDashboardModule } from './modulo-dashboard/modulo-dashboard.module';
 
 @Component({
   selector: 'app-dashboard',
+  //imports:[ModuloDashboardModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css', '../../../app/assets/css/sb-admin-2.min.css', '../../assets/vendor/fontawesome-free/css/all.min.css']
 })

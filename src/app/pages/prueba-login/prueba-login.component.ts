@@ -18,7 +18,6 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 //import { LockOutline } from '@ant-design/icons-angular/icons'; // Importa el ícono de candado
 import Swal from 'sweetalert2';
-import { ModuloLoginModule } from './modulo-login/modulo-login.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -29,11 +28,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
-
 @Component({
   selector: 'app-prueba-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterModule, HttpClientModule, MatPaginatorModule, MatTableModule, MatProgressBarModule, MatStepperModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatSortModule, MatInputModule, MatExpansionModule, MatDialogModule, MatGridListModule, MatCardModule, RouterOutlet],
+  imports: [ReactiveFormsModule, 
+    RouterModule, 
+    //HttpClient,
+    HttpClientModule, 
+    MatPaginatorModule, MatTableModule, MatProgressBarModule, MatStepperModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatSortModule, MatInputModule, MatExpansionModule, MatDialogModule, MatGridListModule, MatCardModule, RouterOutlet],
   templateUrl: './prueba-login.component.html',
   styleUrls: ['./prueba-login.component.css'],
   /*animations: [

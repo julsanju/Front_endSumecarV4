@@ -1,71 +1,4 @@
-<!--<div class="center-container">
-<div class="container">
-  <div class="forms">
-    <div class="form login">
-      <form class="form" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-        <p class="title">Register </p>
-        <p class="message">Signup now and get full access to our app. </p>
-        <!--identificacion y rol-->
-        <!--<div class="flex">
-        <label>
-          <input class="input style-identificacion" formControlName="Identificacion" type="text" appNumbersOnly placeholder="" required="">
-          <span>Identificacion</span>
-        </label>
-        <div class="form-select ">
-          <mat-form-field>
-            <mat-label> Seleccione:</mat-label>
-            <mat-select formControlName="rol" (click)="toggleSelect()">
-              <mat-option *ngFor="let users of users" [value]="users.value">
-                {{users.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <!-- nombre y ubicacion-->
-      <!--<div class="flex">
-      <label>
-        <input class="input" formControlName="Nombre" type="text" placeholder="" required="">
-        <span>Nombre</span>
-      </label>
-      <label>
-        <input class="input"  formControlName="Ubicacion" type="texr" placeholder="" required="">
-        <span>Ubicacion</span>
-      </label>
-    </div>
-    <!--telefono y correo-->
-    <!--<div class="flex">
-    <label>
-      <input class="input" formControlName="Telefono" appNumbersOnly type="email" placeholder="" required="">
-      <span>Telefono</span>
-    </label>
-    <label>
-      <input class="input" formControlName="Correo" type="email" placeholder="" required="">
-      <span>Correo</span>
-    </label>
-  </div>
-  <!--usuario-->
-  <!--<label>
-  <input class="input" formControlName="Usuario" type="email" placeholder="" required="">
-  <span>Usuario</span>
-</label>
-<!--contrasena-->
-<!--<label>
-<input class="input" formControlName="Contrasena" type="text" placeholder="" required="">
-<span>Contraseña</span>
-</label>
-<!--nueva contrasena-->
-<!--<label>
-<input class="input" type="password" placeholder="" required="">
-<span>Confirmar contraseña</span>
-</label>
-<button class="submit">Submit</button>
-<p class="signin" routerLink="/login">Already have an acount ? <a href="#">Signin</a> </p>
-</form>
-</div>
-</div>
-</div>
-</div>-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -99,15 +32,7 @@
               </mat-grid-tile>
             </mat-grid-list>
           </div>
-          <!--<div class="content-step">
-          <nz-steps >
-            <nz-step nzTitle="Identificacion" nzStatus="process" nzIcon="solution"></nz-step>
-            <nz-step nzTitle="Information" [nzStatus]="datosCompletos ? 'finish' : 'wait'" nzIcon="user">dx</nz-step>
-            <nz-step nzTitle="Credentials" [nzStatus]="datosCompletos ? 'finish' : 'wait'" nzIcon="lock"></nz-step>
-            <nz-step nzTitle="Done" [nzStatus]="datosCompletos ? 'finish' : 'wait'" [nzIcon]="iconTemplate"></nz-step>
-            <ng-template #iconTemplate><span nz-icon nzType="smile"></span></ng-template>
-          </nz-steps>
-        </div>-->
+
         <div class="content-step">
           <nz-steps [nzCurrent]="currentStep" nzDirection="horizontal">
             <nz-step nzTitle="Identificacion"></nz-step>
@@ -286,31 +211,9 @@
                     <!--formulario de imagenes-->
                     <div class="inputGroup">
                       <input type="file" (change)="onFileSelected($event)" accept="image/*">
-                      <!--<button (click)="openFileExplorer()" class="button-upload">
-                      <input #fileInput type="file"  name="image" (change)="onFileSelected($event)" formControlName="image" style="display: none">
-                      <div class="container-upload">
-                        <div class="folder folder_one"></div>
-                        <div class="folder folder_two"></div>
-                        <div class ="folder folder_three"></div>
-                        <div class="folder folder_four"></div>
-                      </div>
-                      <div class="active_line"></div>
-                      <span class="text-upload">File Explorer</span>
-                    </button>-->
+                      
                   </div>
-                  <!--<div class="inputGroup">
-                  <button (click)="openFileExplorer()" class="button-upload" >
-                    <input #fileInput type="file" (change)="onFileChange($event)" formControlName="imagen" style="display: none">
-                    <div class="container-upload">
-                      <div class="folder folder_one"></div>
-                      <div class="folder folder_two"></div>
-                      <div class="folder folder_three"></div>
-                      <div class="folder folder_four"></div>
-                    </div>
-                    <div class="active_line"></div>
-                    <span class="text-upload">File Explorer</span>
-                  </button>
-                </div>-->
+                  
                 <button class="button-siguiente" (click)="onSubmit();nextStep()">
                   <div
                     class="absolute opacity-0 -bottom-full rounded-md py-2 px-2  left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">

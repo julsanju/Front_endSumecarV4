@@ -5,7 +5,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-modal-message',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet,
+    CommonModule
+  ],
   templateUrl: './modal-message.component.html',
   styleUrls: ['./modal-message.component.css']
 })

@@ -28,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-cambiar-contrasena',
   standalone: true,
   imports: [
-    HttpClientModule,
+    //HttpClientModule,
     RouterModule,
     MatPaginatorModule,
     ReactiveFormsModule,

@@ -1,14 +1,5 @@
 /*Estilos del modal*/
-.success-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000; /* Ajusta esto según sea necesario */
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
+
 
 /* Estilos para el stepper */
 .full-width-stepper {
@@ -39,175 +30,6 @@ mat-step-header {
   background-color: #1976D2; /* Cambia el color de la línea de progreso al morado */
 }
 
-
-
-/* Estilos para los botones de "Próximo" y "Atrás" */
-/*button.mat-step-header,
-button.mat-button {
-  background-color: #2196F3;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-family: "Roboto", sans-serif; /* Cambia la fuente aquí */
-  /*transition: background-color 0.3s ease, transform 0.3s ease; /* Agregar animaciones de transición */
-/*}
-
-button.mat-step-header:hover,
-button.mat-button:hover {
-  background-color: #1976D2;
-  transform: scale(1.05); /* Agregar una animación de escala en el hover */
-/*}
-
-.btn-53,
-.btn-53 *,
-.btn-53 :after,
-.btn-53 :before,
-.btn-53:after,
-.btn-53:before {
-  border: 0 solid;
-  box-sizing: border-box;
-}
-
-.btn-53 {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-appearance: button;
-  background-color: #000;
-  background-image: none;
-  color: #fff;
-  cursor: pointer;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
-    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  font-size: 100%;
-  line-height: 1.5;
-  margin: 0;
-  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
-  padding: 0;
-}
-
-.btn-53:disabled {
-  cursor: default;
-}
-
-.btn-53:-moz-focusring {
-  outline: auto;
-}
-
-.btn-53 svg {
-  display: block;
-  vertical-align: middle;
-}
-
-.btn-53 [hidden] {
-  display: none;
-}
-
-.btn-53 {
-  border: 1px solid;
-  border-radius: 999px;
-  box-sizing: border-box;
-  display: block;
-  font-weight: 900;
-  overflow: hidden;
-  padding: 1.2rem 3rem;
-  position: relative;
-  text-transform: uppercase;
-}
-
-.btn-53 .original {
-  background: #fff;
-  color: #000;
-  display: grid;
-  inset: 0;
-  place-content: center;
-  position: absolute;
-  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1);
-}
-
-.btn-53:hover .original {
-  transform: translateY(100%);
-}
-
-.btn-53 .letters {
-  display: inline-flex;
-}
-
-.btn-53 span {
-  opacity: 0;
-  transform: translateY(-15px);
-  transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.2s;
-}
-
-.btn-53 span:nth-child(2n) {
-  transform: translateY(15px);
-}
-
-.btn-53:hover span {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.btn-53:hover span:nth-child(2) {
-  transition-delay: 0.1s;
-}
-
-.btn-53:hover span:nth-child(3) {
-  transition-delay: 0.2s;
-}
-
-.btn-53:hover span:nth-child(4) {
-  transition-delay: 0.3s;
-}
-
-.btn-53:hover span:nth-child(5) {
-  transition-delay: 0.4s;
-}
-
-.btn-53:hover span:nth-child(6) {
-  transition-delay: 0.5s;
-}
-
-/*xdd*/
-/*button {
-  position: relative;
-  background-color: #85C1E9;
-  border-radius: 5px;
-  box-shadow: #fff 0px 4px 0px 0px;
-  padding: 15px;
-  background-repeat: no-repeat;
-  box-sizing: border-box;
-  width: 154px;
-  height: 49px;
-  color: #fff;
-  border: none;
-  font-size: 20px;
-  transition: all .3s ease-in-out;
-  z-index: 1;
-  overflow: hidden;
-  cursor: pointer;
-  margin: 10px;
-}
-
-button::before {
-  content: "";
-  background-color: #3498DB ;
-  
-  width: 0;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: width 700ms ease-in-out;
-  display: inline-block;
-}
-
-button:hover::before {
-  width: 100%;
-  
-}*/
 
 /*nuevo boton*/
 .button-container {
@@ -325,17 +147,6 @@ button:hover .arrow:before {
   margin-right: 20px;
 }
 
-/*.form-control input {
-  background-color: transparent;
-  border: 0;
-  border-bottom: 2px #000 solid;
-  display: block;
-  width: 100%;
-  padding: 15px 0;
-  font-size: 18px;
-  color: #000;
-}*/
-
 .input {
   width: 100%;
   max-width: 220px;
@@ -360,11 +171,6 @@ button:hover .arrow:before {
 .input:focus {
   border: 2px solid grey;
 }
-/*.form-control input:focus,
-.form-control input:valid {
-  outline: 0;
-  border-bottom-color: lightblue;
-}*/
 
 .form-control label {
   position: absolute;
@@ -382,12 +188,6 @@ button:hover .arrow:before {
   transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/*.form-control input:focus+label span,
-.form-control input:valid+label span {
-  color: lightblue;
-  transform: translateY(-30px);
-}*/
-
 /*contraseña actualizada correctamente*/
 @keyframes typing {
   from {
@@ -400,18 +200,7 @@ button:hover .arrow:before {
     border-color: transparent;
   }
 }
-/* When you change the amount of characters in the h1, you have to change 
-the with: 14ch and  steps(14, end), if there is 14 characters, put 14, 
-if there is 20 put 20 */
-.animation {
-  font: bold 200% Consolas, Monaco, monospace;
-  border-right: .1em solid black;
-  width: 38ch;
-  margin: 2em 2em;
-  white-space: nowrap;
-  overflow: hidden;
-  
-}
+
 
 /*cambio de contraseña*/
 .loading {
