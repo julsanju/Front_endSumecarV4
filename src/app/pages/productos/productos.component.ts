@@ -9,6 +9,25 @@ import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
 import { ModuloProductosModule } from './modulo-productos/modulo-productos.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+//import { MatPaginatorModule } from '@angular/material/paginator';
+//import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+//import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+//import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { ModuloSharedModule } from 'src/app/modules/modulo-shared/modulo-shared.module';
 
 declare var Grid: any;
 //import { DialogData } from 'src/app/Interfaces/dialog-data';
@@ -18,17 +37,23 @@ export interface DialogData{
 }
 @Component({
   selector: 'app-productos',
-  //imports : [ModuloProductosModule],
+  standalone: true,
+  imports : [CommonModule,BrowserModule,MatPaginatorModule, MatTableModule,
+    MatProgressBarModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatGridListModule,
+    MatCardModule,NzInputModule,RouterOutlet,ModuloSharedModule 
+    ],
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  animations: [
-    trigger('bodyExpansion', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4,0.0,0.2,1)')),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4,0.0,0.2,1)'), {params: {startHeight: 0, endHeight: '*'}})
-    ]),
-  ]
+  
   
 })
 export class ProductosComponent implements OnInit {

@@ -19,11 +19,12 @@ import {MatCardModule} from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-dialog-overview',
   standalone: true,
-  imports: [
+  imports: [HttpClientModule,
             CommonModule, 
             FormsModule, 
             ReactiveFormsModule, 
@@ -56,10 +57,10 @@ export class DialogOverviewComponent {
     // Validar que la cantidad sea un número mayor a 0
     const cantidad = parseFloat(this.data.cantidad);
 
-    if (isNaN(cantidad) || cantidad <= 0) {
+    /*if (isNaN(cantidad) || cantidad <= 0) {
       alert('Por favor, ingrese un número válido y mayor a 0.');
       return; // Salir de la función si la validación falla
-    }
+    }*/
 
     // Si la validación es exitosa, puedes cerrar el diálogo y pasar la nueva cantidad de regreso
     this.dialogRef.close(cantidad);

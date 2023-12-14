@@ -12,6 +12,7 @@ import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones
 import { HistorialPeticionesComponent } from './pages/historial-peticiones/historial-peticiones.component';
 import { PruebaLoginComponent } from './pages/prueba-login/prueba-login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DialogOverviewComponent } from './pages/dialog-overview/dialog-overview.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
@@ -19,6 +20,7 @@ export const routes: Routes = [
     /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
     { path: 'home', component: HomePharmaComponent },*/
     { path: 'prueba-login', component: PruebaLoginComponent },
+    {path: 'dialog', component: DialogOverviewComponent},
     
     {
       path: 'menu',
@@ -36,6 +38,7 @@ export const routes: Routes = [
         { path : 'finished-products', component : FinishedProductsComponent },
         { path : 'view-peticiones',component : ViewPeticionesComponent},
         {path : 'historial-peticiones',component : HistorialPeticionesComponent},
+        
         //{ path: '**', component: Page404Component },
       ],
     },

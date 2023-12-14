@@ -4,7 +4,7 @@
 }
 
 /*Estilos del boton*/
-button {
+.style-button {
     font-family: inherit;
     font-size: 18px;
     background: linear-gradient(to bottom, #4dc7d9 0%,#66a6ff 100%);
@@ -20,30 +20,30 @@ button {
     cursor: pointer;
   }
   
-  button:hover {
+  .style-button:hover {
     transform: translateY(-3px);
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
   
-  button:active {
+  .style-button:active {
     transform: scale(0.95);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   }
   
-  button span {
+  .style-button span {
     display: block;
     margin-left: 0.4em;
     transition: all 0.3s;
   }
   
-  button svg {
+  .style-button svg {
     width: 18px;
     height: 18px;
     fill: white;
     transition: all 0.3s;
   }
   
-  button .svg-wrapper {
+  .style-button .svg-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,11 +55,11 @@ button {
     transition: all 0.3s;
   }
   
-  button:hover .svg-wrapper {
+  .style-button:hover .svg-wrapper {
     background-color: rgba(255, 255, 255, 0.5);
   }
   
-  button:hover svg {
+  .style-button:hover svg {
     transform: rotate(45deg);
   }
   

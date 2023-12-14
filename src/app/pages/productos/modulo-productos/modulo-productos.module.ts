@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductosComponent } from '../productos.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
@@ -22,10 +22,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
-  declarations: [ProductosComponent],
+  declarations: [],
   imports: [CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    NoopAnimationsModule,
     MatPaginatorModule, MatTableModule,
     MatProgressBarModule,
     MatStepperModule,
@@ -39,6 +40,6 @@ import { BrowserModule } from '@angular/platform-browser';
     MatGridListModule,
     MatCardModule,NzInputModule,RouterOutlet
   ],
-  exports : [ProductosComponent]
+  exports : []
 })
 export class ModuloProductosModule { }
