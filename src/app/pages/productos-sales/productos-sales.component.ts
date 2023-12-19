@@ -19,7 +19,7 @@ export class ProductosSalesComponent implements OnInit {
   //modal
   selectedProduct!: Productos;
   assignedQuantity!: number;
-
+  showModal : boolean = false;
   //paginacion
   pageSize: number = 8;
   currentPage: number = 1;
@@ -49,7 +49,8 @@ export class ProductosSalesComponent implements OnInit {
     );
   }
 
-
+  
+  
   //seleccionar dato de la tabla
   openQuantityModal(row: any): void {
     this.selectedRow = row;
@@ -68,7 +69,7 @@ export class ProductosSalesComponent implements OnInit {
     // Guardar la cadena JSON en LocalStorage
     localStorage.setItem(`productoAsignado_${producto.id}`, productoAsignadoJson);
   }
-    
+
   assignQuantity() {
     this.selectedProduct.cantidad = this.assignedQuantity;
     this.guardarProductoAsignado(this.selectedProduct);
