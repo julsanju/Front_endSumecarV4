@@ -25,7 +25,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { ModuloSharedModule } from 'src/app/modules/modulo-shared/modulo-shared.module';
 
@@ -38,19 +38,7 @@ export interface DialogData{
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports : [CommonModule,BrowserModule,MatPaginatorModule, MatTableModule,
-    MatProgressBarModule,
-    MatStepperModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    MatSortModule,
-    MatInputModule,
-    MatExpansionModule,
-    MatDialogModule,
-    MatGridListModule,
-    MatCardModule,NzInputModule,RouterOutlet,ModuloSharedModule 
-    ],
+  imports: [BrowserModule, MatPaginatorModule, MatTableModule, MatProgressBarModule, MatStepperModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatSortModule, MatInputModule, MatExpansionModule, MatDialogModule, MatGridListModule, MatCardModule, NzInputModule, RouterOutlet, ModuloSharedModule],
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
   

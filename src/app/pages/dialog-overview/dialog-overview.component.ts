@@ -18,7 +18,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { HttpClientModule } from '@angular/common/http';
 import { DialogData } from 'src/app/Interfaces/dialog-data';
 

@@ -9,22 +9,13 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input'
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+
 import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports : [ CommonModule,
-    HttpClientModule,
-    RouterModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzBreadCrumbModule,
-    MatDialogModule,
-    NzStepsModule,
-    NzSelectModule,
-    NzInputModule],
+  imports: [HttpClientModule, RouterModule, NzLayoutModule, NzMenuModule, NzBreadCrumbModule, MatDialogModule, NzStepsModule, NzSelectModule, NzInputModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
