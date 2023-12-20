@@ -33,7 +33,7 @@ export class ProductosSalesComponent implements OnInit {
   constructor(private dataServices: DataProductsService,private servicio: ProductsServicesService, private formBuilder: FormBuilder) { 
     
     this.cantidadForm = this.formBuilder.group({
-      cantidad : ['', Validators.required]
+      cantidad : ['', Validators.required, Validators.pattern('^[0-9]*$')]
     });
     
     this.cantidadForm.get('cantidad')!.valueChanges.subscribe(value => {
