@@ -19,9 +19,11 @@ export class ProductosSalesComponent implements OnInit {
   clickedRows = new Set<Productos>();
   cantidadForm : FormGroup;
   cantidadValue !: number;
-  producto_seleccionado !: Productos
+  producto_seleccionado :Productos[] = [];
+  productoActual: Productos | null = null;
   //modal
-  
+  showAlert: boolean = false;
+  anchoBarra: number = 0;
   assignedQuantity!: number;
   showModal : boolean = false;
   //paginacion
@@ -34,6 +36,12 @@ export class ProductosSalesComponent implements OnInit {
       cantidad : ['', Validators.required]
     });
     
+    this.cantidadForm.get('cantidad')!.valueChanges.subscribe(value => {
+      if (this.productoActual) {
+        // Actualiza la cantidad del producto actual
+        this.productoActual.cantidad = value;
+      }
+    });
     
   }
 
@@ -62,28 +70,51 @@ export class ProductosSalesComponent implements OnInit {
   }
 
   productoSeleccionado(producto : Productos) {
-    this.producto_seleccionado = producto;
+    // Crea una copia del producto
+    this.productoActual = Object.assign({}, producto);
+    this.producto_seleccionado.push(this.productoActual);
+    this.cantidadForm.reset();
   }
+
+  mostrarAlerta() {
+    this.showAlert = true;
+
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 100000);
+
+  }
+
+  /*mostrarAlerta() { 
+    this.showAlert = true;
+
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 5000);
+  }*/
   
   guardarProductoAsignado() {
     // Obtén el valor actual del campo 'cantidad'
-     this.cantidadValue = this.cantidadForm.get('cantidad')!.value;
+    this.cantidadValue = this.cantidadForm.get('cantidad')!.value;
   
     // Asegúrate de que haya un producto seleccionado y la cantidad no sea undefined
     if (this.producto_seleccionado && this.cantidadValue !== undefined) {
-      // Agrega el producto y la cantidad a las listas
-      this.dataSource.push(this.producto_seleccionado);
-      this.dataServices.selectedData.push({
-        producto: this.producto_seleccionado,
-        cantidad: this.cantidadValue
-      });
+      // Itera sobre cada producto en producto_seleccionado
+      for (let producto of this.producto_seleccionado) {
+        // Asigna la cantidad al producto
+        producto.cantidad = this.cantidadValue;
+  
+        // Agrega el producto a las listas
+        this.dataSource.push(producto);
+        this.dataServices.selectedData.push({
+          producto: producto,
+          cantidad: this.cantidadValue
+        });
+      }
     }
   }
 
-  asignarCantidad() {
-    
-    
-  }
+  
 
   //paginacion
   getPaginatedData(): Productos[] {
