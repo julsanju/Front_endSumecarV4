@@ -23,6 +23,7 @@
 </div>
 }
 
+<!--contenido-->
 <div style="height: 100vh !important; "
     class="relative overflow-x-auto shadow-md sm:rounded-lg space-table space-table ">
     <!--input para filtro-->
@@ -41,7 +42,7 @@
     </div>
     <!--boton para modal-->
     <div class="flex">
-        <button type="button" [disabled]="!cantidadForm.controls['cantidad'].valid" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
+        <button data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
             data-drawer-placement="right" aria-controls="drawer-right-example"
             class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -77,7 +78,7 @@
                 <td class="px-6 py-4">{{ row.articulo }}</td>
                 <td class="px-6 py-4">{{ row.laboratorio }}</td>
                 <td>
-                    <button (click)="productoSeleccionado(row)" data-modal-target="crud-modal"
+                    <button data-modal-target="crud-modal" (click)="productoSeleccionado(row)"
                         data-modal-toggle="crud-modal"
                         class="text-blue-400 hover:text-white border border-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-500"
                         type="button">
@@ -144,11 +145,11 @@
             </div>
         </div>
     </div>
-    <!--
-    @if (!clickedRows.size) {
+
+    <!--@if (!clickedRows.size) {
     <div>Por favor seleccione productos</div>
     }
-     
+
     @if(producto_seleccionado){
     <ul>
         @for (producto of producto_seleccionado; track producto_seleccionado) {
@@ -189,25 +190,36 @@
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad</label>
                             <input type="text" formControlName="cantidad" required="" name="cantidad" id="name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Cantidad de productos" required="">
-                                <!--onkeypress="return event.charCode >= 48 && event.charCode <= 57">-->
+                                placeholder="Cantidad de productos" required=""
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
                     </div>
+
+                    <!--cancelar-->
+                    <button (click)="cancelarSeleccion()" type="button" data-modal-toggle="crud-modal"
+                        class="style-icon py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-500 focus:outline-none bg-white rounded-lg border border-gray-300 hover:bg-red-800 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-red-800">
+                        <div class="line">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="margin: 2px 3px 0 0" width="15" height="15"
+                                viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M12 13V8M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                                    stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                            Cancelar
+                        </div>
+
+                    </button>
+
+                    <!--confirmar-->
                     <button data-modal-target="alert-sucessful" data-modal-toggle="alert-sucessful"
                         data-modal-toggle="crud-modal" (click)="mostrarAlerta()"
-                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
-                        </svg>
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+
                         Confirmar
                     </button>
+
+
                 </form>
             </div>
         </div>
@@ -218,13 +230,13 @@
     <div id="drawer-right-example"
         class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
         tabindex="-1" aria-labelledby="drawer-right-label">
-        <h5 id="drawer-right-label"
+        <h4 id="drawer-right-label"
             class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"><svg
                 class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                 viewBox="0 0 20 20">
                 <path
                     d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>Right drawer</h5>
+            </svg> <strong>Productos Seleccionados</strong></h4>
         <button type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -234,16 +246,13 @@
             <span class="sr-only">Close menu</span>
         </button>
         <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
-            @if (!clickedRows.size) {
-        <div><span>Productos seleccionados:</span></div>
-        }
 
-        @if(producto_seleccionado){
+            @if(producto_seleccionado){
         <ul>
             @for (producto of producto_seleccionado; track producto_seleccionado) {
             <li>
                 <label class="font-black text-gray-900"> <span>PRODUCTO:</span> </label> {{producto.articulo}} <br>
-                <label class="text-blue-500 font-black"> <span>CANTIDAD:</span> </label> {{ producto.cantidad }}
+                <label class="text-blue-500 font-black"> <span>CANTIDAD:</span> </label> {{producto.cantidad }}
                 <div class=" mt-10 grid grid-cols-3 items-center text-gray-400">
                     <hr class="border-gray-400 ">
                     <p class="text-center">O</p>
@@ -254,6 +263,47 @@
         </ul>
         }
         </p>
+        <div class="line">
+            <!--pdf-->
+            <button type="button" (click) = "generatePDF()"
+                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M6.5 13H6V14H6.5C6.63261 14 6.75979 13.9473 6.85355 13.8536C6.94732 13.7598 7 13.6326 7 13.5C7 13.3674 6.94732 13.2402 6.85355 13.1464C6.75979 13.0527 6.63261 13 6.5 13Z"
+                        fill="azure" />
+                    <path
+                        d="M9 7V2.13C8.51204 2.26498 8.06685 2.52286 7.707 2.879L4.879 5.707C4.52286 6.06685 4.26498 6.51204 4.13 7H9Z"
+                        fill="azure" />
+                    <path
+                        d="M12.375 13H12V16H12.375C12.5408 16 12.6997 15.9342 12.8169 15.8169C12.9342 15.6997 13 15.5408 13 15.375V13.625C13 13.4592 12.9342 13.3003 12.8169 13.1831C12.6997 13.0658 12.5408 13 12.375 13Z"
+                        fill="azure" />
+                    <path
+                        d="M21 9H20V4C20.0083 3.47862 19.8094 2.97524 19.4471 2.6003C19.0847 2.22536 18.5884 2.00947 18.067 2H11V7C11 7.53043 10.7893 8.03914 10.4142 8.41421C10.0391 8.78929 9.53043 9 9 9H3C2.73478 9 2.48043 9.10536 2.29289 9.29289C2.10536 9.48043 2 9.73478 2 10V19C2 19.2652 2.10536 19.5196 2.29289 19.7071C2.48043 19.8946 2.73478 20 3 20H4C3.9917 20.5214 4.19056 21.0248 4.55294 21.3997C4.91533 21.7746 5.41164 21.9905 5.933 22H18.067C19.167 22 19.767 20.764 19.923 20.386C19.9719 20.2633 19.9957 20.132 19.993 20H21C21.2652 20 21.5196 19.8946 21.7071 19.7071C21.8946 19.5196 22 19.2652 22 19V10C22 9.73478 21.8946 9.48043 21.7071 9.29289C21.5196 9.10536 21.2652 9 21 9ZM6.5 16H6V17C6 17.2652 5.89464 17.5196 5.70711 17.7071C5.51957 17.8946 5.26522 18 5 18C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V12C4 11.7348 4.10536 11.4804 4.29289 11.2929C4.48043 11.1054 4.73478 11 5 11H6.5C7.16304 11 7.79893 11.2634 8.26777 11.7322C8.73661 12.2011 9 12.837 9 13.5C9 14.163 8.73661 14.7989 8.26777 15.2678C7.79893 15.7366 7.16304 16 6.5 16ZM15 15.375C14.9989 16.0709 14.722 16.7379 14.23 17.23C13.7379 17.722 13.0709 17.9989 12.375 18H11C10.7348 18 10.4804 17.8946 10.2929 17.7071C10.1054 17.5196 10 17.2652 10 17V12C10 11.7348 10.1054 11.4804 10.2929 11.2929C10.4804 11.1054 10.7348 11 11 11H12.375C13.0709 11.0011 13.7379 11.278 14.23 11.77C14.722 12.2621 14.9989 12.9291 15 13.625V15.375ZM19 14C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15C20 15.2652 19.8946 15.5196 19.7071 15.7071C19.5196 15.8946 19.2652 16 19 16H18V17C18 17.2652 17.8946 17.5196 17.7071 17.7071C17.5196 17.8946 17.2652 18 17 18C16.7348 18 16.4804 17.8946 16.2929 17.7071C16.1054 17.5196 16 17.2652 16 17V12C16 11.7348 16.1054 11.4804 16.2929 11.2929C16.4804 11.1054 16.7348 11 17 11H19C19.2652 11 19.5196 11.1054 19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071C19.5196 12.8946 19.2652 13 19 13H18V14H19Z"
+                        fill="azure" />
+                </svg>
 
+            </button>
+            <!--Excel-->
+            <button type="button" (click) = "generarExcel()"
+                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M9 7V2.13C8.51204 2.26498 8.06685 2.52286 7.707 2.879L4.879 5.707C4.52286 6.06685 4.26498 6.51204 4.13 7H9Z"
+                        fill="azure" />
+                    <path
+                        d="M21 9H19.928C19.9744 8.88523 19.9988 8.76278 20 8.639V4C20.0083 3.47862 19.8094 2.97524 19.4471 2.6003C19.0847 2.22536 18.5884 2.00947 18.067 2H11V7C11 7.53043 10.7893 8.03914 10.4142 8.41421C10.0391 8.78929 9.53043 9 9 9H3C2.73478 9 2.48043 9.10536 2.29289 9.29289C2.10536 9.48043 2 9.73478 2 10V19C2 19.2652 2.10536 19.5196 2.29289 19.7071C2.48043 19.8946 2.73478 20 3 20H4C3.9917 20.5214 4.19056 21.0248 4.55294 21.3997C4.91533 21.7746 5.41164 21.9905 5.933 22H18.067C18.5884 21.9905 19.0847 21.7746 19.4471 21.3997C19.8094 21.0248 20.0083 20.5214 20 20H21C21.2652 20 21.5196 19.8946 21.7071 19.7071C21.8946 19.5196 22 19.2652 22 19V10C22 9.73478 21.8946 9.48043 21.7071 9.29289C21.5196 9.10536 21.2652 9 21 9ZM12 10.828L12.961 10.848C13.0923 10.8508 13.2218 10.8794 13.3421 10.9322C13.4624 10.985 13.571 11.0609 13.662 11.1557C13.7529 11.2506 13.8242 11.3623 13.8719 11.4847C13.9196 11.6071 13.9428 11.7377 13.94 11.869C13.9372 12.0003 13.9086 12.1298 13.8558 12.2501C13.803 12.3704 13.7271 12.479 13.6323 12.57C13.5374 12.6609 13.4257 12.7322 13.3033 12.7799C13.1809 12.8276 13.0503 12.8508 12.919 12.848L11.973 12.828C11.8893 12.827 11.8083 12.8572 11.7456 12.9126C11.683 12.9681 11.6432 13.0448 11.634 13.128C11.6265 13.211 11.6519 13.2937 11.7049 13.3581C11.7579 13.4225 11.8341 13.4634 11.917 13.472L12.454 13.531C12.8305 13.5627 13.1952 13.6779 13.5216 13.8682C13.848 14.0585 14.1279 14.319 14.341 14.631C14.5167 14.9196 14.6238 15.2447 14.654 15.5812C14.6841 15.9178 14.6366 16.2567 14.515 16.572C14.3538 17.0337 14.0401 17.4266 13.6256 17.6862C13.2112 17.9458 12.7207 18.0564 12.235 18H11.108C10.8428 18 10.5884 17.8946 10.4009 17.7071C10.2134 17.5196 10.108 17.2652 10.108 17C10.108 16.7348 10.2134 16.4804 10.4009 16.2929C10.5884 16.1054 10.8428 16 11.108 16H12.235C12.3665 16.012 12.4991 15.9959 12.624 15.953C12.6574 15.8738 12.6668 15.7865 12.651 15.702C12.5408 15.5923 12.3934 15.528 12.238 15.522L11.701 15.463C11.0981 15.4005 10.5441 15.1032 10.1587 14.6353C9.77341 14.1674 9.58778 13.5667 9.642 12.963C9.70115 12.3784 9.97499 11.8365 10.4105 11.4422C10.8461 11.0478 11.4124 10.829 12 10.828ZM4 15.353V13.647C4.00106 12.9453 4.28028 12.2726 4.77646 11.7765C5.27264 11.2803 5.9453 11.0011 6.647 11H7.665C7.93022 11 8.18457 11.1054 8.37211 11.2929C8.55964 11.4804 8.665 11.7348 8.665 12C8.665 12.2652 8.55964 12.5196 8.37211 12.7071C8.18457 12.8946 7.93022 13 7.665 13H6.647C6.4754 13 6.31084 13.0682 6.1895 13.1895C6.06817 13.3108 6 13.4754 6 13.647V15.353C6 15.5246 6.06817 15.6892 6.1895 15.8105C6.31084 15.9318 6.4754 16 6.647 16H7.665C7.93022 16 8.18457 16.1054 8.37211 16.2929C8.55964 16.4804 8.665 16.7348 8.665 17C8.665 17.2652 8.55964 17.5196 8.37211 17.7071C8.18457 17.8946 7.93022 18 7.665 18H6.647C5.94522 17.9992 5.2724 17.7201 4.77617 17.2238C4.27993 16.7276 4.00079 16.0548 4 15.353ZM19.951 12.31L18.394 17.083C18.3284 17.2835 18.2011 17.4581 18.0303 17.5818C17.8595 17.7056 17.6539 17.7721 17.443 17.772H17.432C17.2193 17.7696 17.0129 17.6995 16.8428 17.5719C16.6727 17.4442 16.5477 17.2656 16.486 17.062L15.043 12.29C14.9683 12.0368 14.9966 11.7644 15.122 11.532C15.2473 11.2997 15.4594 11.1264 15.7121 11.0498C15.9647 10.9733 16.2374 10.9997 16.4706 11.1234C16.7038 11.247 16.8786 11.4579 16.957 11.71L17.479 13.437L18.049 11.69C18.0859 11.5607 18.1485 11.4402 18.2331 11.3356C18.3176 11.231 18.4224 11.1446 18.5411 11.0815C18.6599 11.0183 18.7901 10.9798 18.9241 10.9682C19.058 10.9565 19.193 10.972 19.3208 11.0138C19.4487 11.0555 19.5668 11.1225 19.6681 11.211C19.7694 11.2994 19.8519 11.4073 19.9105 11.5283C19.9691 11.6493 20.0028 11.7809 20.0094 11.9152C20.016 12.0495 19.9955 12.1838 19.949 12.31H19.951Z"
+                        fill="azure" />
+                </svg>
+
+            </button>
+            <!--confirmar pedido-->
+            <button type="button" (click)="confirmar();refrescar();generatePDF();"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M9.66705 17.875H9.65205C9.51807 17.8732 9.38582 17.8444 9.26317 17.7905C9.14051 17.7366 9.02995 17.6585 8.93805 17.561L4.27205 12.6C4.18196 12.5044 4.11158 12.392 4.06494 12.2692C4.0183 12.1464 3.9963 12.0156 4.0002 11.8843C4.00807 11.6191 4.12097 11.368 4.31405 11.186C4.50712 11.0041 4.76457 10.9063 5.02974 10.9142C5.16105 10.9181 5.29029 10.9478 5.41011 11.0016C5.52992 11.0555 5.63796 11.1324 5.72805 11.228L9.68705 15.435L18.287 6.79202C18.379 6.69629 18.4892 6.61983 18.611 6.5671C18.7329 6.51438 18.864 6.48644 18.9967 6.48493C19.1295 6.48341 19.2612 6.50835 19.3842 6.55828C19.5073 6.60822 19.6191 6.68215 19.7132 6.77576C19.8074 6.86937 19.8819 6.98079 19.9326 7.10353C19.9832 7.22626 20.0089 7.35785 20.0081 7.49061C20.0074 7.62337 19.9802 7.75465 19.9281 7.8768C19.8761 7.99894 19.8003 8.1095 19.705 8.20202L10.375 17.58C10.2825 17.6737 10.1722 17.748 10.0507 17.7986C9.92913 17.8493 9.79872 17.8752 9.66705 17.875Z" fill="azure"/>
+                    </svg>
+                
+            </button>
+        </div>
     </div>
 </div>

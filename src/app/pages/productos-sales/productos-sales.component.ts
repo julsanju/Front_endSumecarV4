@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { Productos } from 'src/app/Interfaces/productos';
 import { DataProductsService } from 'src/app/services/data-products.service';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
+import Swal from 'sweetalert2';
+import * as FileSaver from 'file-saver';
+import { MensajeError } from 'src/app/Interfaces/mensaje-error';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-productos-sales',
@@ -17,32 +23,39 @@ export class ProductosSalesComponent implements OnInit {
   originalDataSource: Productos[] = [];
   selectedRow: any;
   clickedRows = new Set<Productos>();
-  cantidadForm : FormGroup;
+  cantidadForm: FormGroup;
   cantidadValue !: number;
-  producto_seleccionado :Productos[] = [];
+  producto_seleccionado: Productos[] = [];
   productoActual: Productos | null = null;
   //modal
   showAlert: boolean = false;
   anchoBarra: number = 0;
   assignedQuantity!: number;
-  showModal : boolean = false;
+  showModal: boolean = false;
   //paginacion
   pageSize: number = 8;
   currentPage: number = 1;
+  //sweet Alert
+  spinner: boolean = false;
+  username = '';
+  errorMessage: MensajeError | null = null;
 
-  constructor(private dataServices: DataProductsService,private servicio: ProductsServicesService, private formBuilder: FormBuilder) { 
-    
+  constructor(private dataServices: DataProductsService,
+    private servicio: ProductsServicesService,
+    private formBuilder: FormBuilder,
+    private router: Router) {
+
     this.cantidadForm = this.formBuilder.group({
-      cantidad : ['', Validators.required, Validators.pattern('^[0-9]*$')]
+      cantidad: ['', Validators.required]
     });
-    
+
     this.cantidadForm.get('cantidad')!.valueChanges.subscribe(value => {
       if (this.productoActual) {
         // Actualiza la cantidad del producto actual
         this.productoActual.cantidad = value;
       }
     });
-    
+
   }
 
   ngOnInit(): void {
@@ -56,7 +69,7 @@ export class ProductosSalesComponent implements OnInit {
         console.error('Error obteniendo datos', error);
       }
     );
-   
+
   }
 
   //filtro de productos
@@ -69,41 +82,194 @@ export class ProductosSalesComponent implements OnInit {
     );
   }
 
-  productoSeleccionado(producto : Productos) {
+  productoSeleccionado(producto: Productos) {
     // Crea una copia del producto
     this.productoActual = Object.assign({}, producto);
     this.producto_seleccionado.push(this.productoActual);
     this.cantidadForm.reset();
   }
 
+  guardarProducto() {
+    // Verifica si productoActual no es null y si se ha ingresado algún número en el campo de cantidad
+    if (this.productoActual && this.cantidadForm.value && !isNaN(this.cantidadForm.value)) {
+      this.producto_seleccionado.push(this.productoActual);
+      this.cantidadForm.reset();
+    } else {
+      alert('Por favor, selecciona un producto e ingresa un número en el campo de cantidad antes de guardar el producto seleccionado.');
+    }
+  }
+
+  cancelarSeleccion() {
+    // Verifica si productoActual no es null
+    if (this.productoActual) {
+      // Encuentra el índice del producto actual en el array
+      const index = this.producto_seleccionado.indexOf(this.productoActual);
+
+      // Si el producto actual está en el array, lo elimina
+      if (index > -1) {
+        this.producto_seleccionado.splice(index, 1);
+      }
+    }
+
+    // Resetea el producto actual
+    this.productoActual = null;
+  }
+
+
   mostrarAlerta() {
     this.showAlert = true;
 
     setTimeout(() => {
       this.showAlert = false;
-    }, 100000);
+    }, 1000);
 
   }
 
-  /*mostrarAlerta() { 
-    this.showAlert = true;
 
+  //confirmar productos
+  confirmar() {
+    const userDataString = localStorage.getItem('userData');
+
+    this.spinner = true;
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+      }
+    }
+
+
+    this.servicio.confirmarProductos(this.producto_seleccionado, this.username).subscribe(
+      response => {
+        console.log(response);
+        this.spinner = false;
+
+        Swal.fire('Su producto ha sido confirmado exitosamente!', '', 'success');
+
+        this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
+        console.log('Login exitoso');
+        this.router.navigate(['menu/productos']);
+      },
+      error => {
+        console.error("Error:", error);
+        console.log(error.error)
+        this.spinner = false;
+
+        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+        console.log(this.errorMessage);
+
+        Swal.fire({
+          title: 'ERROR',
+          html: `${this.errorMessage}`,
+          icon: 'error',
+        });
+        console.log("Error en el registro");
+      },
+
+    );
+  }
+
+  //pagina para refrescar la pagina
+  refrescar(){
+    // Esperar 2 segundos (ajusta el tiempo según tus necesidades)
+    const tiempoEspera = 1000; // en milisegundos (2 segundos en este ejemplo)
+    
     setTimeout(() => {
-      this.showAlert = false;
-    }, 5000);
-  }*/
-  
-  guardarProductoAsignado() {
+      // Recargar la página después del tiempo de espera
+      location.reload();
+    }, tiempoEspera);
+  }
+  generateTableHTML() {
+    const tableContainer = document.querySelector('.table-container');
+    if (tableContainer) {
+      // Obtén el contenido HTML de la tabla
+      const tableHTML = tableContainer.innerHTML;
+      return tableHTML;
+    }
+    return '';
+  }
+
+  //generar PDF
+  generatePDF() {
+    const doc = new jsPDF();
+
+    const imgPath = 'assets/img/SumecarLogo.png';
+
+    // Leer el archivo PNG como una imagen
+    const img = new Image();
+    img.src = imgPath;
+
+    // Cuando la imagen se haya cargado, agregarla al PDF
+    img.onload = function () {
+      doc.addImage(img, 'PNG', 10, 20, 50, 50);
+
+      // Resto de tu código...
+    };
+
+    doc.text('PRODUCTOS CONFIRMADOS', 10, 10); // Título del PDF
+
+    const columns = ['Código', 'Artículo', 'Laboratorio', 'Cantidad'];
+    const rows: (string | number)[][] = [];
+
+    this.producto_seleccionado.forEach(item => {
+      rows.push([item.codigo, item.articulo, item.laboratorio, item.cantidad.toString()]);
+    });
+
+    autoTable(doc, {
+      head: [columns],
+      body: rows,
+      margin: { top: 30, bottom: 20 },
+      // ...
+    })
+
+    doc.save('table.pdf')
+  }
+
+
+  //generar Excel
+  generarExcel() {
+    import('xlsx').then((xlsx) => {
+      const data = this.producto_seleccionado.map(item => ({
+        'Código': item.codigo,
+        'Artículo': item.articulo,
+        'Laboratorio': item.laboratorio,
+        'Cantidad': item.cantidad
+      }));
+
+      const worksheet = xlsx.utils.json_to_sheet(data);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, 'productos');
+    });
+  }
+
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
+
+
+  /*guardarProductoAsignado() {
     // Obtén el valor actual del campo 'cantidad'
     this.cantidadValue = this.cantidadForm.get('cantidad')!.value;
-  
+
     // Asegúrate de que haya un producto seleccionado y la cantidad no sea undefined
     if (this.producto_seleccionado && this.cantidadValue !== undefined) {
       // Itera sobre cada producto en producto_seleccionado
       for (let producto of this.producto_seleccionado) {
         // Asigna la cantidad al producto
         producto.cantidad = this.cantidadValue;
-  
+
         // Agrega el producto a las listas
         this.dataSource.push(producto);
         this.dataServices.selectedData.push({
@@ -112,9 +278,9 @@ export class ProductosSalesComponent implements OnInit {
         });
       }
     }
-  }
+  }*/
 
-  
+
 
   //paginacion
   getPaginatedData(): Productos[] {

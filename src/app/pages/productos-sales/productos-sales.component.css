@@ -18,3 +18,13 @@
   flex-direction: initial;
   justify-content: flex-start;
 }
+
+.line{
+  display: flex;
+  flex-direction: row;
+}
+
+.style-icon:hover svg path{
+  stroke: azure;
+
+}
