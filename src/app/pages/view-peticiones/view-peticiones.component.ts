@@ -204,40 +204,57 @@ export class ViewPeticionesComponent implements OnInit {
   getEndIndex(): number {
     return Math.min(this.currentPage * this.pageSize, this.data.length);
   }
+
+  //permisos de roles
+  //admin
+  esAdmin(): boolean {
+    // Recupera la información del usuario desde localStorage
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'admin'; // Verifica la propiedad correcta 'rol'
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+        return false;
+      }
+    }
+    return false; // Retorna false si no se encuentra información del usuario
+  }
+  
+  //empleado
+  esEmpleado(): boolean{
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try{
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'empleado';
+      }catch (error) {
+        console.error('Error al aalizar JSON:' , error)
+        return false;
+      }
+    }
+    return false;
+  
+  }
+  
+  //cliente
+  esCliente(): boolean{
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try{
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'cliente';
+      }catch (error) {
+        console.error('Error al aalizar JSON:' , error)
+        return false;
+      }
+    }
+    return false;
+  }
 }
 
-  /*cantidad: number = 0;
-  panelOpenState = false;
-  @ViewChild('gridContainer') gridContainer!: ElementRef;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
-  data!: MatTableDataSource<Peticiones>; 
-  loading: boolean = true;
-  displayedColumns: string[] = ['id', 'correo', 'mensaje', 'fecha', 'estado'];
-  clickedRows = new Set<Peticiones>();
-
-  constructor(
-    private servicio: PeticioneServicesService,
-    @Inject(MatDialog) public dialog: MatDialog // Agrega el decorador @Inject
-  ) {}
-
-   name = 'julsanju2004@gmail.com';
-  ngOnInit() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
-
-    this.servicio.obtenerPendientes(this.name).subscribe(
-      (response) => {
-        this.data = new MatTableDataSource(response);
-        this.data.paginator = this.paginator;
-        this.data.sort = this.sort;
-      },
-      (error) => {
-        console.error('Error al obtener los productos: ', error);
-        this.loading = false;
-      }
-    );
-  }*/
 

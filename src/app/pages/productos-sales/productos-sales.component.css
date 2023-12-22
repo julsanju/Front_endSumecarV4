@@ -23,8 +23,16 @@
   display: flex;
   flex-direction: row;
 }
+.line-justify{
+  display: flex;
+  flex-direction: initial;
+  justify-content: center;
+}
 
 .style-icon:hover svg path{
-  stroke: azure;
+  fill: #E9E9E9;
+}
 
+.style-icon-pdf:hover svg path{
+  stroke: #E9E9E9;
 }

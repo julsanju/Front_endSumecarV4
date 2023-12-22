@@ -39,7 +39,7 @@ export class ConfirmedProductsComponent implements OnInit{
 
   ngOnInit() {
     setTimeout(() => {
-      this.loading = false;
+      this.loading = true;
     }, 2000);
   
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
@@ -168,8 +168,8 @@ export class ConfirmedProductsComponent implements OnInit{
     );
   }
 
-  finalizarPeticion(id: number): void {
-    this.peticion.FinalizarPeticion(id).subscribe(
+  finalizarPeticionProducto(id: number): void {
+    this.servicio.FinalizarPeticionProducto(id).subscribe(
       () => {
         this.spinner = true;
         this.spinner = false;
@@ -178,7 +178,7 @@ export class ConfirmedProductsComponent implements OnInit{
 
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
         console.log('Login exitoso');
-        this.router.navigate(['/menu/historial-peticiones']);
+        this.router.navigate(['/menu/finished-products']);
       },
       (error) => {
         this.spinner = false;

@@ -14,7 +14,7 @@ export class ProductsServicesService {
   private UrlProductosFinalizados = 'http://localhost:5107/api/productos/insertar/';
   private UrlPendientesEmpleado = 'http://localhost:5107/api/productos/filtrar_empleado';
   private UrlFinalizadosEmpleado = 'http://localhost:5107/api/productos/filtrar_finalizadosEmpleado';
-
+  private ApiUrlFinalizarPeticionProducto = 'http://localhost:5107/api/productos/finalizar_peticion_productos/';
   constructor(private http : HttpClient) { }
   //obtener todos los productos
   obtenerProductos(): Observable<Productos[]>{
@@ -47,5 +47,8 @@ export class ProductsServicesService {
       return this.http.post(this.UrlProductosFinalizados + username, productos, { headers });
     }
     
-  
+    FinalizarPeticionProducto(id:number): Observable<any>{
+      const headers = new HttpHeaders ({'Content-Type': 'application/json'})
+      return this.http.put(this.ApiUrlFinalizarPeticionProducto + id, {headers});
+    }
 }

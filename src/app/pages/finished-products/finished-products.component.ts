@@ -45,8 +45,8 @@ export class FinishedProductsComponent implements OnInit{
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
     this.validacionRol();
     console.log(this.validacionRol())
-    this.rolSubject.subscribe((esEmpleado: boolean) => {
-      if (esEmpleado) {
+    this.rolSubject.subscribe((esEmpleadoOesAdmin: boolean) => {
+      if (esEmpleadoOesAdmin) {
 
         this.handleEmpleadoCase();
       } else {
@@ -58,7 +58,8 @@ export class FinishedProductsComponent implements OnInit{
 
 
   //metodos para poder saber si es empleado o cliente
-  //empleado
+  
+  //Admin o empleado
   private handleEmpleadoCase() {
     this.obtenerCorreo().subscribe(
       (correo) => {
@@ -157,8 +158,11 @@ export class FinishedProductsComponent implements OnInit{
     this.peticion.obtenerCorreo(name).subscribe(
       (response) => {
         this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado';
-        this.rolSubject.next(esEmpleado);
+        const esEmpleadoOesAdmin = this.data2[0].rol === 'empleado' || this.data2[0].rol !== 'admin';
+        
+          this.rolSubject.next(esEmpleadoOesAdmin);
+        
+        
       },
       (error) => {
         // Manejar errores si es necesario

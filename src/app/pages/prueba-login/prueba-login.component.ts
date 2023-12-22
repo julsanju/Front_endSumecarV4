@@ -38,17 +38,6 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule, MatTableModule, MatProgressBarModule, MatStepperModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatSortModule, MatInputModule, MatExpansionModule, MatDialogModule, MatGridListModule, MatCardModule, RouterOutlet],
   templateUrl: './prueba-login.component.html',
   styleUrls: ['./prueba-login.component.css'],
-  /*animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('300ms ease-out', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],*/
   
 })
 export class PruebaLoginComponent {
@@ -73,8 +62,6 @@ export class PruebaLoginComponent {
   togglePasswordVisibility(event: Event) {
     this.passwordVisible = (event.target as HTMLInputElement).checked;
   }  
-
- 
 
   constructor(private formBuilder: FormBuilder,  
               private loginService: LoginServicesService, 
@@ -118,11 +105,6 @@ export class PruebaLoginComponent {
     this.loginService.LoginValidation(userData).subscribe(
       (response) => {
         console.log(response);
-
-        // const modalRef = this.modalService.open(SuccesModalComponent, {
-        //   size: "sm", // Puedes ajustar el tamaño del modal aquí según tus necesidades
-        // });
-        // modalRef.componentInstance.modalClass = "success-modal"; // Establece la clase CSS del modal
 
         this.spinner = false;
 
