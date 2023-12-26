@@ -8,7 +8,7 @@ import { PdfInterface } from '../Interfaces/pdf-interface';
 })
 export class PdfServicesService {
 
-  private apiUrl = 'http://localhost:5107/api/descargar_archivo';
+  private apiUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/descargar_archivo';
 
   constructor(private http: HttpClient) { }
 

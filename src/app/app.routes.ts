@@ -22,7 +22,6 @@ export const routes: Routes = [
     /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
     { path: 'home', component: HomePharmaComponent },*/
     { path: 'prueba-login', component: PruebaLoginComponent },
-    { path: '**', component: Page404Component},
     
     {
       path: 'menu',
@@ -43,4 +42,6 @@ export const routes: Routes = [
         //{ path: '**', component: Page404Component },
       ],
     },
+    
+    { path: '**', pathMatch : 'full', component: Page404Component},
   ];

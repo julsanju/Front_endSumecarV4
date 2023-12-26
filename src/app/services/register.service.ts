@@ -7,8 +7,8 @@ import { Usuarios } from '../Interfaces/usuarios'; // Asegúrate de importar cor
   providedIn: 'any'
 })
 export class RegisterService {
-  private apiUrl = 'http://localhost:5171/api/usuarios/insertar'; // Reemplaza con la URL correcta
-  private imagenUrl = 'http://localhost:5107/api/guardar_imagen';
+  private apiUrl = 'https://sumecar-ventas.azurewebsites.net/api/usuarios/insertar'; // Reemplaza con la URL correcta
+  private imagenUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/guardar_imagen';
 
   //headers
   

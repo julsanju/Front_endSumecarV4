@@ -8,12 +8,12 @@ import { Empleado } from '../Interfaces/empleado';
 })
 export class PeticioneServicesService {
 
-  private ApiUrl = 'http://localhost:5107/api/mostrar_peticiones_pendientes/';
-  private ApiUrlFinalizados = 'http://localhost:5107/api/mostrar_peticiones_finalizados/';
-  private ApiUrlFinalizarPeticion = 'http://localhost:5107/api/finalizar_peticion/';
-  private ApiurlObtenerCorreo = 'http://localhost:5171/api/usuarios/obtener_empleado/';
-  private APiUrlObtenerPendienteCliente = 'http://localhost:5107/api/mostrar_peticiones_pendientesC/';
-  private APiUrlObtenerFinalizadoCliente = 'http://localhost:5107/api/mostrar_peticiones_finalizadosC/';
+  private ApiUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/mostrar_peticiones_pendientes/';
+  private ApiUrlFinalizados = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/mostrar_peticiones_finalizados/';
+  private ApiUrlFinalizarPeticion = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/finalizar_peticion/';
+  private ApiurlObtenerCorreo = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/usuarios/obtener_empleado/';
+  private APiUrlObtenerPendienteCliente = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/mostrar_peticiones_pendientesC/';
+  private APiUrlObtenerFinalizadoCliente = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/mostrar_peticiones_finalizadosC/';
   constructor(private http : HttpClient) { }
 
   obtenerPendientes(correo:string): Observable<Peticiones[]>{

@@ -10,7 +10,7 @@ import { MensajeError } from '../Interfaces/mensaje-error';
 })
 export class ValidationService {
   
-  private apiUrl = 'http://localhost:5171/api/login/iniciar_sesion';
+  private apiUrl = 'https://sumecar-ventas.azurewebsites.net/api/login/iniciar_sesion';
   constructor(private http: HttpClient) { }
 
   LoginValidation(userData: Login): Observable<any> {
