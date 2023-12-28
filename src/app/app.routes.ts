@@ -15,6 +15,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DialogOverviewComponent } from './pages/dialog-overview/dialog-overview.component';
 import { ProductosSalesComponent } from './pages/productos-sales/productos-sales.component';
 import { Page404Component } from './pages/page404/page404.component';
+import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
@@ -39,6 +40,7 @@ export const routes: Routes = [
         { path : 'view-peticiones',component : ViewPeticionesComponent},
         {path : 'historial-peticiones',component : HistorialPeticionesComponent},
         {path: 'productos', component: ProductosSalesComponent},
+        {path: 'usuarios', component: CrearUsuarioComponent}
         //{ path: '**', component: Page404Component },
       ],
     },

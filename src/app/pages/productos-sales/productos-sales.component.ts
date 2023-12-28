@@ -9,15 +9,17 @@ import Swal from 'sweetalert2';
 import * as FileSaver from 'file-saver';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-productos-sales',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, NzModalModule ],
   templateUrl: './productos-sales.component.html',
   styleUrl: './productos-sales.component.css'
 })
 export class ProductosSalesComponent implements OnInit {
+
   displayedColumns: string[] = ['codigo', 'articulo', 'laboratorio'];
   dataSource: Productos[] = [];
   originalDataSource: Productos[] = [];
@@ -31,7 +33,6 @@ export class ProductosSalesComponent implements OnInit {
   showAlert: boolean = false;
   anchoBarra: number = 0;
   assignedQuantity!: number;
-  showModal: boolean = false;
   //paginacion
   pageSize: number = 8;
   currentPage: number = 1;
@@ -39,6 +40,8 @@ export class ProductosSalesComponent implements OnInit {
   spinner: boolean = false;
   username = '';
   errorMessage: MensajeError | null = null;
+  //dawner
+  estadoBotones:boolean = false;
 
   constructor(private dataServices: DataProductsService,
     private servicio: ProductsServicesService,
@@ -60,6 +63,7 @@ export class ProductosSalesComponent implements OnInit {
 
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos
+    
     this.servicio.obtenerProductos().subscribe(
       (response) => {
         this.dataSource = response;
@@ -70,8 +74,10 @@ export class ProductosSalesComponent implements OnInit {
       }
     );
 
+    
   }
 
+  
   //filtro de productos
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
@@ -154,6 +160,7 @@ export class ProductosSalesComponent implements OnInit {
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
         console.log('Login exitoso');
         this.router.navigate(['menu/productos']);
+        this.producto_seleccionado = [];
       },
       error => {
         console.error("Error:", error);
@@ -172,6 +179,7 @@ export class ProductosSalesComponent implements OnInit {
       },
 
     );
+    this.estadoBotones = true;
   }
 
   //pagina para refrescar la pagina
@@ -246,6 +254,7 @@ export class ProductosSalesComponent implements OnInit {
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, 'productos');
     });
+    
   }
 
 

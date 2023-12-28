@@ -36,3 +36,11 @@
 .style-icon-pdf:hover svg path{
   stroke: #E9E9E9;
 }
+
+/* En tu archivo CSS */
+button.disabled {
+  background-color: #fff; /* Color de fondo gris */
+  border-color: #cccccc;
+  color: #ccc; /* Color de texto gris oscuro */
+  cursor: not-allowed; /* Cambia el cursor a un signo de 'no permitido' */
+}
