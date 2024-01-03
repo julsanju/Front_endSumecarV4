@@ -10,7 +10,6 @@ import * as FileSaver from 'file-saver';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { ModalCantidadComponent } from '../modal-cantidad/modal-cantidad.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRef } from '@angular/cdk/dialog';
 
@@ -281,25 +280,6 @@ export class ProductosSalesComponent implements OnInit {
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
-
-
-  openCantidadDialog(producto: Productos): void {
-    /*if (this.isSelected(producto)) {
-      alert('Este producto ya ha sido seleccionado');
-    } else {*/
-    const dialogRef = this.dialog.open(ModalCantidadComponent, {
-      width: '250px',
-      data: { cantidad: producto.cantidad, item: producto }
-      //data: { cantidad: this.cantidad }
-    });
-
-    
-    
-  }
-
-  
-
-
 
   //paginacion
   getPaginatedData(): Productos[] {
