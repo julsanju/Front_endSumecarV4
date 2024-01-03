@@ -77,8 +77,8 @@
                 <td class="px-6 py-4">{{ row.articulo }}</td>
                 <td class="px-6 py-4">{{ row.laboratorio }}</td>
                 <td>
-                    <button data-modal-target="crud-modal" (click)="productoSeleccionado(row)"
-                        data-modal-toggle="crud-modal"
+                    <button  (click)="mostrarModal();productoSeleccionado(row)"
+                        
                         class="text-blue-400 hover:text-white border border-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-500"
                         type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -88,73 +88,7 @@
                     </button>
                 </td>
 
-
-                <div id="crud-modal" tabindex="-1" aria-hidden="true"
-                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                    <div class="relative p-4 max-w-md max-h-full mx-auto">
-                        <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <!-- Modal header -->
-                            <div
-                                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                    Cantidad de productos
-                                </h3>
-                                <button type="button"
-                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                    data-modal-toggle="crud-modal">
-                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                    </svg>
-                                    <span class="sr-only">Close modal</span>
-                                </button>
-                            </div>
-                            <!-- Modal body -->
-                            <form [formGroup]="cantidadForm" class="p-4 md:p-5">
-                                <div class="grid gap-4 mb-4 grid-cols-2">
-                                    <div class="col-span-2">
-                                        <label for="cantidad"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad</label>
-                                        <input type="text" formControlName="cantidad" required="" name="cantidad"
-                                            id="name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Cantidad de productos" required=""
-                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                    </div>
-                                </div>
-
-                                <!--cancelar-->
-                                <button (click)="cancelarSeleccion()" type="button" data-modal-toggle="crud-modal"
-                                    class="style-icon-pdf py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-500 focus:outline-none bg-white rounded-lg border border-gray-300 hover:bg-red-800 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-red-800">
-                                    <div class="line">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin: 2px 3px 0 0" width="15"
-                                            height="15" viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M12 13V8M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-                                                stroke="#6b7280" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-
-                                        Cancelar
-                                    </div>
-
-                                </button>
-
-                                <!--confirmar-->
-                                <button data-modal-target="alert-sucessful" data-modal-toggle="alert-sucessful"
-                                    data-modal-toggle="crud-modal" (click)="mostrarAlerta()"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-
-                                    Confirmar
-                                </button>
-
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
 
             </tr>
             }
@@ -214,6 +148,77 @@
         </div>
     </div>
 
+
+    <!--modal para cantidad-->
+    @if(showModal){
+        <div id="crud-modal" tabindex="-1" 
+            class=" overflow-y-auto overflow-x-hidden fixed top-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 max-w-md max-h-full mx-auto">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div
+                        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                            Cantidad de productos
+                        </h3>
+                        <button type="button" (click)="cancelarSeleccion(); cerrar_modal()"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="crud-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form [formGroup]="cantidadForm" class="p-4 md:p-5">
+                        <div class="grid gap-4 mb-4 grid-cols-2">
+                            <div class="col-span-2">
+                                <label for="cantidad"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad</label>
+                                <input type="text" formControlName="cantidad" required="" name="cantidad"
+                                    id="name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Cantidad de productos" required=""
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                            </div>
+                        </div>
+
+                        <!--cancelar-->
+                        <button (click)="cancelarSeleccion(); cerrar_modal()" type="button" data-modal-toggle="crud-modal"
+                            class="style-icon-pdf py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-500 focus:outline-none bg-white rounded-lg border border-gray-300 hover:bg-red-800 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-red-800">
+                            <div class="line">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin: 2px 3px 0 0" width="15"
+                                    height="15" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M12 13V8M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                                        stroke="#6b7280" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+
+                                Cancelar
+                            </div>
+
+                        </button>
+
+                        <!--confirmar-->
+                        <button data-modal-target="alert-sucessful" data-modal-toggle="alert-sucessful"
+                            data-modal-toggle="crud-modal" (click)="mostrarAlerta(); cerrar_modal()"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+
+                            Confirmar
+                        </button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+    
     <!--@if (!clickedRows.size) {
     <div>Por favor seleccione productos</div>
     }
