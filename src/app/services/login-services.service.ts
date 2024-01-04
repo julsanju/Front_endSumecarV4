@@ -9,11 +9,11 @@ import { Contrasena } from '../Interfaces/contrasena';
   providedIn: 'any'
 })
 export class LoginServicesService {
-  private apiUrl = 'https://sumecar-ventas.azurewebsites.net/api/login/iniciar_sesion'
+  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/login/iniciar_sesion'
   
-  private peticionUrl = 'https://sumecar-ventas.azurewebsites.net/api/login/peticion_cambio_contrasena/';
-  private validarUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/login/obtener_usuario/'
-  private CambiarCoUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/login/actualizar_contrasena/'
+  private peticionUrl = 'https://sumecarventas.azurewebsites.net/api/login/peticion_cambio_contrasena/';
+  private validarUrl = 'https://sumecarventas.azurewebsites.net/api/login/obtener_usuario/'
+  private CambiarCoUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/login/actualizar_contrasena/'
   constructor(private http: HttpClient) { }
 
   LoginValidation(userData: Login): Observable<any> {

@@ -8,9 +8,9 @@ import { Dashboard } from '../Interfaces/dashboard';
 })
 export class DashboardServicesService {
 
-  private apiUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/Dashboard/Pedidos_montados';
-  private apiUrlPendintes = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/Dashboard/Pedidos_pendientes';
-  private apiurlFinalizados = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/Dashboard/Pedidos_finalizados';
+  private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_montados';
+  private apiUrlPendintes = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_pendientes';
+  private apiurlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_finalizados';
   
   constructor(private http : HttpClient) { }
 

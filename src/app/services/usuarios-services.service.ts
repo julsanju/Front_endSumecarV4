@@ -8,8 +8,8 @@ import { Empleado } from '../Interfaces/empleado';
 })
 export class UsuariosServicesService {
 
-  private ApiUrl = 'https://sumecar-ventas.azurewebsites.net/api/usuarios/obtener'
-  private ApiUrlEmpleado = 'https://sumecar-ventas.azurewebsites.net/api/usuarios/obtener_todosEmpleado';  
+  private ApiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener'
+  private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosEmpleado';  
   constructor(private http : HttpClient) { }
 
   obtenerUsuarios(): Observable<UsuariosView[]>{

@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Dashboard } from 'src/app/Interfaces/dashboard';
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
 import { ModuloDashboardModule } from './modulo-dashboard/modulo-dashboard.module';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-dashboard',
