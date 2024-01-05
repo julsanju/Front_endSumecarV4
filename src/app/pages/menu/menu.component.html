@@ -64,19 +64,11 @@
                   Pedido</a>
               </li>
               }
-              <!--Confirmar pedidos-->
-              @if (esCliente() || esAdmin()) {
-              <li>
-                <a routerLink="/menu/view-products"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Confirmar
-                  Pedidos</a>
-              </li>
-              }
               <!--pedidos confirmados-->
-              <!--<li>
+              <li>
                           <a routerLink="/menu/confirmed-products"
                           class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Pedidos Confirmados</a>
-                        </li>-->
+                        </li>
               <!--Pedidos finalizados-->
               <li>
                 <a routerLink="/menu/finished-products"
@@ -142,16 +134,11 @@
             <ul id="dropdown-historial" class="hidden py-2 space-y-2">
 
               <li>
-                <a routerLink="/menu/add-information"
+                <a routerLink="**"
                   class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                  historial PDF</a>
+                  Historial documentos</a>
               </li>
 
-              <li>
-                <a routerLink="/menu/view-peticiones"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                  historial Excel</a>
-              </li>
             </ul>
           </li>
           <!--Configuraciones-->
