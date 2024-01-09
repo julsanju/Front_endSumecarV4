@@ -58,6 +58,8 @@ export class PruebaLoginComponent {
   userData : any;
   roles: string[] = ['cliente', 'empleado'];
   spinner: boolean = false;
+  //loading
+  cargando = false;
 
   togglePasswordVisibility(event: Event) {
     this.passwordVisible = (event.target as HTMLInputElement).checked;
@@ -97,6 +99,8 @@ export class PruebaLoginComponent {
   }
   
   onSubmit() {
+    //activar loading
+    this.cargando = true;
     //login
     const userData: Login = this.loginForm.value;
 
@@ -134,7 +138,7 @@ export class PruebaLoginComponent {
         console.error('Error:', error);
 
         this.spinner = false;
-
+        this.cargando = false;
         this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
         console.log(this.errorMessage);
 
