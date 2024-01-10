@@ -109,15 +109,6 @@ export class ProductosSalesComponent implements OnInit {
     // Otras acciones que necesitas realizar al cancelar la selección
   }
 
-  /*guardarProducto() {
-    // Verifica si productoActual no es null y si se ha ingresado algún número en el campo de cantidad
-    if (this.productoActual && this.cantidadForm.value && !isNaN(this.cantidadForm.value)) {
-      this.producto_seleccionado.push(this.productoActual);
-      this.cantidadForm.reset();
-    } else {
-      alert('Por favor, selecciona un producto e ingresa un número en el campo de cantidad antes de guardar el producto seleccionado.');
-    }
-  }*/
 
   cancelarSeleccion() {
     // Verifica si productoActual no es null

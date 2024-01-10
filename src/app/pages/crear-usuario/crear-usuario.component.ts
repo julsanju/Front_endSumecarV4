@@ -8,17 +8,24 @@ import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 import { NumbersOnlyDirective } from 'src/app/directives/numbers-only.directive';
 import { RegisterService } from 'src/app/services/register.service';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { importProvidersFrom } from '@angular/core';
 
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [HttpClientModule ,ReactiveFormsModule, CommonModule,BrowserAnimationsModule, ToastModule],
+  providers : [MessageService, provideAnimations()],
   templateUrl: './crear-usuario.component.html',
   styleUrl: './crear-usuario.component.css'
 })
 export class CrearUsuarioComponent implements OnInit {
   registrationForm: FormGroup;
   dataSource: Empleado[] = [];
+
   originalDataSource: Empleado[] = [];
   currentPage: number = 1;
   pageSize: number = 8;
@@ -29,7 +36,11 @@ export class CrearUsuarioComponent implements OnInit {
   showAlertDanger: boolean = false;
   showModal: boolean = false;
   errorMessage: MensajeError | null = null;
-  constructor(private servicioUsuarios: UsuariosServicesService, private formBuilder: FormBuilder, private registerService: RegisterService) {
+  //variables para los empleados y edicion de ellos
+  empleadoSeleccionado: Empleado[] = [];
+  empleadoActual: Empleado | null = null;
+
+  constructor(private servicioUsuarios: UsuariosServicesService, private formBuilder: FormBuilder, private registerService: RegisterService, private messageService: MessageService) {
     this.registrationForm = this.formBuilder.group({
       Identificacion: ['', Validators.required],
       Rol: ['', Validators.required],
@@ -122,27 +133,27 @@ export class CrearUsuarioComponent implements OnInit {
         this.cargando = false
       }
       else {
-        
 
-          console.log(userData);
-          this.registerService.registerUser(userData).subscribe(
-            response => {
-              console.log(response)
-              this.mostrarAlerta();
-              this.cerrar_modal();
-              this.cargando = false
-              this.registrationForm.reset();
-            },
-            error => {
-              console.error("Error:", error);
-              console.log(error.error)
-              this.errorMessage = error.error;
-              this.mostrarDanger();
-              console.log(this.errorMessage?.Message);
-              this.cargando = false;
-            },
 
-          );
+        console.log(userData);
+        this.registerService.registerUser(userData).subscribe(
+          response => {
+            console.log(response)
+            this.mostrarAlerta();
+            this.cerrar_modal();
+            this.cargando = false
+            this.registrationForm.reset();
+          },
+          error => {
+            console.error("Error:", error);
+            console.log(error.error)
+            this.errorMessage = error.error;
+            this.mostrarDanger();
+            console.log(this.errorMessage?.Message);
+            this.cargando = false;
+          },
+
+        );
       }
     }
     else {
@@ -150,6 +161,13 @@ export class CrearUsuarioComponent implements OnInit {
       this.mostrarDanger();
       this.cargando = false
     }
+
+  }
+
+  EmpleadoSeleccionado(empleado: Empleado) {
+    this.empleadoActual = Object.assign({}, empleado);
+    this.empleadoSeleccionado.push(this.empleadoActual);
+    this.messageService.add({ severity: 'success', summary: 'Empleado seleccionado', detail: "xd"/*this.empleadoActual.nombre*/ });
 
   }
 

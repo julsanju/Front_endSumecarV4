@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 import {MenuComponent} from './pages/menu/menu.component' ;
 import {CambiarContrasenaComponent} from './pages/cambiar-contrasena/cambiar-contrasena.component';
 import { RegisterSalesComponent } from './pages/register-sales/register-sales.component';
-import { ProductosComponent } from './pages/productos/productos.component';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
 import { AddInformationComponent } from './pages/add-information/add-information.component';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
