@@ -32,6 +32,7 @@
             "styles": [
               "src/theme.less",
               "@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/animate.css/animate.css",
               "src/styles.css"
             ],
             "scripts": []

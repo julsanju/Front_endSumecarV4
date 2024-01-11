@@ -6,4 +6,5 @@ export interface Empleado {
     usuario: string,
     ubicacion: string,
     telefono: string
+    contrasena: string
 }

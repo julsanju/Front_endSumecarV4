@@ -9,21 +9,22 @@ import { NumbersOnlyDirective } from 'src/app/directives/numbers-only.directive'
 import { RegisterService } from 'src/app/services/register.service';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { Toast, ToastModule } from 'primeng/toast';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { importProvidersFrom } from '@angular/core';
+
 
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
-  imports: [HttpClientModule ,ReactiveFormsModule, CommonModule,BrowserAnimationsModule, ToastModule],
-  providers : [MessageService, provideAnimations()],
+  imports: [HttpClientModule ,ReactiveFormsModule, CommonModule],
+  providers : [MessageService],
   templateUrl: './crear-usuario.component.html',
   styleUrl: './crear-usuario.component.css'
 })
+
 export class CrearUsuarioComponent implements OnInit {
   registrationForm: FormGroup;
+  UpdateForm: FormGroup;
   dataSource: Empleado[] = [];
 
   originalDataSource: Empleado[] = [];
@@ -38,7 +39,10 @@ export class CrearUsuarioComponent implements OnInit {
   errorMessage: MensajeError | null = null;
   //variables para los empleados y edicion de ellos
   empleadoSeleccionado: Empleado[] = [];
+  empleadoEditar: Empleado[] = [];
   empleadoActual: Empleado | null = null;
+  showToast = false;
+  showEditar = false;
 
   constructor(private servicioUsuarios: UsuariosServicesService, private formBuilder: FormBuilder, private registerService: RegisterService, private messageService: MessageService) {
     this.registrationForm = this.formBuilder.group({
@@ -51,6 +55,17 @@ export class CrearUsuarioComponent implements OnInit {
       Usuario: ['', Validators.required],
       Contrasena: ['', Validators.required]
     });
+
+    this.UpdateForm = this.formBuilder.group({
+      Identificacion: ['', Validators.required],
+      Rol: ['', Validators.required],
+      Nombre: ['', Validators.required],
+      Ubicacion: ['', Validators.required],
+      Telefono: ['', Validators.required],
+      Correo: ['', [Validators.required, Validators.email]],
+      Usuario: ['', Validators.required],
+      Contrasena: ['', Validators.required]
+    })
   }
 
   ngOnInit(): void {
@@ -164,11 +179,39 @@ export class CrearUsuarioComponent implements OnInit {
 
   }
 
+  show() {
+    this.showToast = true;
+  }
+
   EmpleadoSeleccionado(empleado: Empleado) {
     this.empleadoActual = Object.assign({}, empleado);
     this.empleadoSeleccionado.push(this.empleadoActual);
-    this.messageService.add({ severity: 'success', summary: 'Empleado seleccionado', detail: "xd"/*this.empleadoActual.nombre*/ });
+    this.showToast = true;
+    
+  setTimeout(() => {
+    this.showToast = false; 
+  }, 3000);
 
   }
 
+  
+  
+  getAlertClasses() {
+    return {
+      'opacity-0': !this.showToast,
+      'opacity-100': this.showToast,
+      'transform translate-y-full': !this.showToast, // Desplazamiento desde la izquierda
+      'transition-transform ease-in-out duration-500': true,
+      'transition-opacity ease-out duration-500': true
+    };
+  }
+
+  EditarEmpleado(){
+    this.showEditar = true;
+  }
+  
+
+cerrarDrawer() {
+    this.showEditar = false;
+}
 }

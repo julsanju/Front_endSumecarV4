@@ -19,6 +19,11 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "paths": {
+      "tailwindcss/lib/utils": [
+        "node_modules/tailwindcss/lib/utils"  
+      ]
+    },
     "lib": [
       "ES2022",
       "dom"
