@@ -19,4 +19,6 @@ export class UsuariosServicesService {
   obtenerEmpleado(): Observable<Empleado[]>{
     return this.http.get<Empleado[]>(this.ApiUrlEmpleado);
   }
+
+  
 }

@@ -135,7 +135,7 @@ export class CrearUsuarioComponent implements OnInit {
     // Otras acciones que necesitas realizar al cancelar la selección
   }
 
-
+//metodo para crear un nuevo usuario
   crearUsuario() {
     this.cargando = true;
     const userData: Usuarios = this.registrationForm.value;
@@ -179,6 +179,61 @@ export class CrearUsuarioComponent implements OnInit {
 
   }
 
+  //metodo para abrir el drawer que modificara los usuarios
+  abrirModificarEmpleado(){
+    this.showEditar = true;
+  }
+  //metodo para editar usuarios existentes
+  EditarEmpleado(){
+    
+    this.cargando = true;
+    const userData: Empleado = this.UpdateForm.value;
+
+    // Llamada al servicio para registrar al usuario
+    if (this.UpdateForm.valid) {
+      if (this.UpdateForm.get('Correo')?.hasError('invalidEmail')) {
+        this.errorMessage = { Message: "Formato incorrecto para el correo electronico." };
+        this.mostrarDanger();
+        this.cargando = false
+      }
+      else {
+
+        this.registerService.ModificarEmpleado(userData)
+    .subscribe({
+      next: () => {
+        // Aquí resetear 
+        this.UpdateForm.reset(); 
+      }
+    });
+        /*console.log(userData);
+        this.registerService.ModificarEmpleado(userData).subscribe(
+          response => {
+            console.log(response)
+            this.mostrarAlerta();
+            this.cerrar_modal();
+            this.cargando = false
+            this.registrationForm.reset();
+          },
+          error => {
+            console.error("Error:", error);
+            console.log(error.error)
+            this.errorMessage = error.error;
+            this.mostrarDanger();
+            console.log(this.errorMessage?.Message);
+            this.cargando = false;
+          },
+
+        );*/
+      }
+    }
+    else {
+      this.errorMessage = { Message: "Por favor, Asegúrese Completar todos los campos para finalizar el registro." };
+      this.mostrarDanger();
+      this.cargando = false
+    }
+
+  }
+
   show() {
     this.showToast = true;
   }
@@ -188,14 +243,23 @@ export class CrearUsuarioComponent implements OnInit {
     this.empleadoSeleccionado.push(this.empleadoActual);
     this.showToast = true;
     
+    this.UpdateForm.patchValue({
+      Identificacion: this.empleadoActual.identificacion,
+      Rol: this.empleadoActual.rol,
+      Nombre: this.empleadoActual.nombre,
+      Ubicacion: this.empleadoActual.ubicacion,
+      Telefono: this.empleadoActual.telefono,
+      Correo: this.empleadoActual.correo,
+      Usuario: this.empleadoActual.usuario,
+      Contrasena: this.empleadoActual.contrasena
+    });
+
   setTimeout(() => {
     this.showToast = false; 
   }, 3000);
 
   }
 
-  
-  
   getAlertClasses() {
     return {
       'opacity-0': !this.showToast,
@@ -206,9 +270,7 @@ export class CrearUsuarioComponent implements OnInit {
     };
   }
 
-  EditarEmpleado(){
-    this.showEditar = true;
-  }
+  
   
 
 cerrarDrawer() {

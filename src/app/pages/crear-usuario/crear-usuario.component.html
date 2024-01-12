@@ -151,6 +151,10 @@
 
                                 <th scope="col"
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Contraseña</th>
+
+                                <th scope="col"
+                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Identificacion
                                 </th>
 
@@ -161,6 +165,7 @@
                                 <th scope="col"
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Direccion</th>
+
                                 <th scope="col"
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Rol</th>
@@ -186,6 +191,14 @@
                                         {{row.usuario}}
                                     </div>
                                 </td>
+
+                                <td class="px-4 py-4 text-sm whitespace-nowrap uppercase">
+                                    <div
+                                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                        {{row.contrasena}}
+                                    </div>
+                                </td>
+
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                                     <div
                                         class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
@@ -216,7 +229,7 @@
                                 <td class="px-4 py-4 text-sm whitespace-nowrap">
 
                                     <div class="group relative">
-                                        <button (click)="EmpleadoSeleccionado(row); EditarEmpleado()"
+                                        <button (click)="EmpleadoSeleccionado(row); abrirModificarEmpleado()"
                                             class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
                                             data-drawer-target="drawer-contact" data-drawer-show="drawer-contact"
                                             aria-controls="drawer-contact">
@@ -285,6 +298,14 @@
         </div>
     </div>
 
+     <!--drawer para editar informacion del usuario-->
+     <ul>
+        @for (empleado of empleadoSeleccionado; track empleadoSeleccionado) {
+        <li>
+            (nombre: {{empleado.nombre}} Correo: {{ empleado.correo }})
+        </li>
+        }
+    </ul>
     <!--drawner para el formulario de la creacion de usuario-->
     @for (empleado of empleadoSeleccionado; track empleadoSeleccionado) {
     <div id="drawer-contact"
@@ -327,8 +348,8 @@
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
                 <p class="mt-2 text-sm"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor,
-                        introduce tu identificación.' : registrationForm.controls['Identificacion'].invalid ? 'Oops!' :
+                    <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor' +
+                        'introduce tu identificación.' : registrationForm.controls['Identificacion'].invalid ? 'Oops!' :
                         '¡Excelente! '}}</span> {{registrationForm.controls['Identificacion'].pristine ? '' :
                     registrationForm.controls['Identificacion'].invalid ? 'Identificacion incorrecta :(' :
                     'Identificación correcta :)'}}
@@ -345,8 +366,9 @@
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
                 <p class="mt-2 text-sm"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Nombre'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Nombre'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Nombre'].pristine ? 'Por favor, introduce tu
-                        Nombre.' : registrationForm.controls['Nombre'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
+                    <span class="font-medium">{{registrationForm.controls['Nombre'].pristine ? 'Por favor, introduce tu'
+                        +
+                        'Nombre.' : registrationForm.controls['Nombre'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
                     {{registrationForm.controls['Nombre'].pristine ? '' : registrationForm.controls['Nombre'].invalid ?
                     'Nombre incorrecto :(' : 'Nombre correcto :)'}}
                 </p>
@@ -373,8 +395,9 @@
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" required>
                 <p class="mt-2 text-sm"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Telefono'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Telefono'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce
-                        tu telefono.' : registrationForm.controls['Telefono'].invalid ? 'Oops!' :
+                    <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce '
+                        +
+                        'tu telefono.' : registrationForm.controls['Telefono'].invalid ? 'Oops!' :
                         '¡Excelente!'}}</span> {{registrationForm.controls['Telefono'].pristine ? '' :
                     registrationForm.controls['Telefono'].invalid ? 'Telefono incorrecto :(' : 'Telefono correcto :)'}}
                 </p>
@@ -390,8 +413,9 @@
                 <p class="mt-2 text-sm"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Ubicacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}">
 
-                    <span class="font-medium">{{registrationForm.controls['Ubicacion'].pristine ? 'Por favor, introduce
-                        tu ubicacion.' : registrationForm.controls['Ubicacion'].invalid ? 'Oops!' :
+                    <span class="font-medium">{{registrationForm.controls['Ubicacion'].pristine ? 'Por favor, introduce'
+                        +
+                        'tu ubicacion.' : registrationForm.controls['Ubicacion'].invalid ? 'Oops!' :
                         '¡Excelente!'}}</span> {{registrationForm.controls['Ubicacion'].pristine ? '' :
                     registrationForm.controls['Ubicacion'].invalid ? 'Ubicacion incorrecta :(' : 'Ubicacion correcta
                     :)'}}
@@ -526,15 +550,9 @@
 
     </div>
     }
-    <!--drawer para editar informacion del usuario-->
-    <ul>
-        @for (empleado of empleadoSeleccionado; track empleadoSeleccionado) {
-        <li>
-            (nombre: {{empleado.nombre}} Correo: {{ empleado.correo }})
-        </li>
-        }
-    </ul>
 
+
+    <!--drawer para editar informacion del usuario-->
     @if(showEditar){
     <!-- Fondo desvanecido -->
     <div id="drawer-overlay" class="fixed top-0 left-0 z-30 w-screen h-screen bg-black opacity-50"
@@ -567,17 +585,17 @@
                 <div>
                     <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Nombre</label>
 
-                    <input type="text" placeholder="John Doe"
+                    <input type="text" placeholder="John Doe" 
                         class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                        value="{{empleado.nombre}}" />
+                         formControlName="Nombre"/>
                 </div>
 
                 <div>
                     <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Correo</label>
 
-                    <input type="text" placeholder="John Doe"
+                    <input type="text" placeholder="John Doe" formControlName="Correo"
                         class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                        value="{{empleado.correo}}" />
+                        />
                 </div>
             </div>
 
@@ -585,16 +603,23 @@
                 <div>
                     <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Usuario</label>
 
-                    <input type="text" placeholder="John Doe"
+                    <input type="text" placeholder="John Doe" formControlName="Usuario"
                         class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                        value="{{empleado.usuario}}" />
+                         />
+                </div>
+                <div>
+                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Contraseña</label>
+
+                    <input type="text" placeholder="John Doe" formControlName="Contrasena"
+                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                         />
                 </div>
                 <div>
                     <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Identificacion</label>
 
-                    <input type="text" placeholder="John Doe"
+                    <input type="text" placeholder="John Doe" formControlName="Identificacion"
                         class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                        value="{{empleado.identificacion}}" />
+                         />
                 </div>
             </div>
 
@@ -603,25 +628,25 @@
                 <div>
                     <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Telefono</label>
 
-                    <input type="text" placeholder="John Doe"
+                    <input type="text" placeholder="John Doe" formControlName="Telefono"
                         class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                        value="{{empleado.telefono}}" />
+                         />
                 </div>
                 <div>
                     <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Direccion</label>
 
-                    <input type="text" placeholder="John Doe"
+                    <input type="text" placeholder="John Doe" formControlName="Ubicacion"
                         class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                        value="{{empleado.ubicacion}}" />
+                         />
                 </div>
             </div>
 
 
             <div class="mb-6">
-                
+
                 <div>
                     <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Rol</label>
-                    <select id="countries" value="{{empleado.rol}}"
+                    <select id="countries"  formControlName="Rol"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected disabled class="capitalize">{{empleado.rol}}</option>
                         <option value="admin">Admin</option>
@@ -630,7 +655,7 @@
                 </div>
             </div>
 
-            <button type="button" [disabled]="cargando"
+            <button type="button" (click)="EditarEmpleado()" [disabled]="cargando"
                 class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
                 @if(!cargando){
 
