@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Empleado } from 'src/app/Interfaces/empleado';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
@@ -11,13 +11,12 @@ import { UsuariosServicesService } from 'src/app/services/usuarios-services.serv
 import { MessageService } from 'primeng/api';
 import { Toast, ToastModule } from 'primeng/toast';
 import { HttpClientModule } from '@angular/common/http';
-
-
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
-  imports: [HttpClientModule ,ReactiveFormsModule, CommonModule],
-  providers : [MessageService],
+  imports: [HttpClientModule, ReactiveFormsModule, CommonModule],
+  providers: [MessageService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './crear-usuario.component.html',
   styleUrl: './crear-usuario.component.css'
 })
@@ -29,7 +28,7 @@ export class CrearUsuarioComponent implements OnInit {
 
   originalDataSource: Empleado[] = [];
   currentPage: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 4;
   //loading
   cargando = false;
   //modal
@@ -105,7 +104,7 @@ export class CrearUsuarioComponent implements OnInit {
 
     setTimeout(() => {
       this.showAlert = false;
-    }, 1000);
+    }, 3000);
 
   }
 
@@ -114,28 +113,19 @@ export class CrearUsuarioComponent implements OnInit {
 
     setTimeout(() => {
       this.showAlertDanger = false;
-    }, 4000);
+    }, 3000);
   }
 
-  mostrarModalDanger() {
-    this.showModal = true;
+  mostrarEditAlerta() {
+    this.showToast = true;
+
+    setTimeout(() => {
+      this.showToast = false;
+    }, 3000);
   }
 
-  cerrar_modalDanger() {
-    this.showModal = false;
-    // Otras acciones que necesitas realizar al cancelar la selección
-  }
 
-  mostrarModal() {
-    this.showModal = true;
-  }
-
-  cerrar_modal() {
-    this.showModal = false;
-    // Otras acciones que necesitas realizar al cancelar la selección
-  }
-
-//metodo para crear un nuevo usuario
+  //metodo para crear un nuevo usuario
   crearUsuario() {
     this.cargando = true;
     const userData: Usuarios = this.registrationForm.value;
@@ -155,7 +145,6 @@ export class CrearUsuarioComponent implements OnInit {
           response => {
             console.log(response)
             this.mostrarAlerta();
-            this.cerrar_modal();
             this.cargando = false
             this.registrationForm.reset();
           },
@@ -180,12 +169,18 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   //metodo para abrir el drawer que modificara los usuarios
-  abrirModificarEmpleado(){
+  abrirModificarEmpleado() {
     this.showEditar = true;
   }
+
+  //metodo para cerrar drawner de usuarios modificados
+  cerrarModificarEmpleado() {
+    this.showEditar = false;
+  }
+
   //metodo para editar usuarios existentes
-  EditarEmpleado(){
-    
+  EditarEmpleado() {
+
     this.cargando = true;
     const userData: Empleado = this.UpdateForm.value;
 
@@ -199,12 +194,31 @@ export class CrearUsuarioComponent implements OnInit {
       else {
 
         this.registerService.ModificarEmpleado(userData)
-    .subscribe({
+          .subscribe(/*{
       next: () => {
         // Aquí resetear 
         this.UpdateForm.reset(); 
-      }
-    });
+        this.mostrarAlerta();
+        this.cerrar_modal();
+        this.cargando = false;
+      },*/
+            response => {
+              console.log(response)
+              this.mostrarEditAlerta();
+              this.cargando = false
+              this.UpdateForm.reset();
+              this.cerrarModificarEmpleado();
+            },
+            error => {
+              console.error("Error:", error);
+              console.log(error.error)
+              this.errorMessage = error.error;
+              this.mostrarDanger();
+              console.log(this.errorMessage?.Message);
+              this.cargando = false;
+            },
+
+          );
         /*console.log(userData);
         this.registerService.ModificarEmpleado(userData).subscribe(
           response => {
@@ -241,8 +255,7 @@ export class CrearUsuarioComponent implements OnInit {
   EmpleadoSeleccionado(empleado: Empleado) {
     this.empleadoActual = Object.assign({}, empleado);
     this.empleadoSeleccionado.push(this.empleadoActual);
-    this.showToast = true;
-    
+
     this.UpdateForm.patchValue({
       Identificacion: this.empleadoActual.identificacion,
       Rol: this.empleadoActual.rol,
@@ -254,26 +267,32 @@ export class CrearUsuarioComponent implements OnInit {
       Contrasena: this.empleadoActual.contrasena
     });
 
-  setTimeout(() => {
-    this.showToast = false; 
-  }, 3000);
-
   }
 
-  getAlertClasses() {
+  //objeto para animaciones de las alertas
+  objectALertClasses(opacity_0: boolean, opacity_100: boolean, translate: boolean) {
     return {
-      'opacity-0': !this.showToast,
-      'opacity-100': this.showToast,
-      'transform translate-y-full': !this.showToast, // Desplazamiento desde la izquierda
+      'opacity-0': opacity_0,
+      'opacity-100': opacity_100,
+      'transform translate-y-full': translate,
       'transition-transform ease-in-out duration-500': true,
       'transition-opacity ease-out duration-500': true
-    };
+    }
+
   }
 
-  
-  
+  //animacion alerta succes
+  getSuccesAlertClasses() {
+    return this.objectALertClasses(!this.showAlert, this.showAlert, !this.showAlert)
+  }
+  //animacion alerta danger
+  getDangerAlertClasses() {
+    return this.objectALertClasses(!this.showAlertDanger, this.showAlertDanger, !this.showAlertDanger)
+  }
+  //animacion alerta succes edit
+  getEditAlertClasses() {
+    return this.objectALertClasses(!this.showToast, this.showToast, !this.showToast)
+  }
 
-cerrarDrawer() {
-    this.showEditar = false;
-}
+
 }
