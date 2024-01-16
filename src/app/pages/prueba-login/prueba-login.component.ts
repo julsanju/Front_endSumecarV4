@@ -28,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from 'src/app/app.component';
 @Component({
   selector: 'app-prueba-login',
   standalone: true,
@@ -67,7 +68,7 @@ export class PruebaLoginComponent {
 
   constructor(private formBuilder: FormBuilder,  
               private loginService: LoginServicesService, 
-              private modalService: NgbModal, 
+              private app: AppComponent,
               private data:SharedServicesService,
               private router:Router) {
     this.loginForm = this.formBuilder.group({
@@ -76,6 +77,8 @@ export class PruebaLoginComponent {
       rol: ['Usuario', Validators.required],
     });
 
+    //ocultar el menu version movil para el login
+    this.app.mostrarMenu = false;
     //NzIconModule.forRoot([LockOutline]);
   }
 
@@ -110,14 +113,10 @@ export class PruebaLoginComponent {
       (response) => {
         console.log(response);
 
-        this.spinner = false;
-
-        Swal.fire('Login Exitoso', '', 'success');
-
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
-        console.log('Login exitoso');
-        this.router.navigate(['/menu/dashboard']);
-
+        
+        this.router.navigate(['/menu/dashboard'])
+        .then(() => window.location.reload())
         const userData2 = {
           usuario: this.loginForm.get('usuario')?.value,
           contrasena: this.loginForm.get('contrasena')?.value,

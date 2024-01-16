@@ -22,8 +22,9 @@ export class AppComponent implements OnInit {
   isCliente = false;
   username: string = '';
   rol: string = '';
+  mostrarMenu = true;
   constructor(private login: LoginServicesService, private router: Router) {}
-
+  
   ngOnInit(): void {
     initFlowbite();
 
@@ -94,16 +95,16 @@ export class AppComponent implements OnInit {
   //Home
   home(){ this.router.navigate(['/menu/dashboard']);}
   //Productos
-  montarPedido(){ this.router.navigate(['/menu/productos']); } //montar pedido
-  confirmedProducts(){this.router.navigate(['/menu/confirmed-products']);}//pedidos confirmados
-  pedidosFinalizados(){this.router.navigate(['/menu/finished-products']);}//pedidos finalizados
+  montarPedido(){ this.router.navigate(['/menu/productos']).then(() => window.location.reload()); } //montar pedido
+  confirmedProducts(){this.router.navigate(['/menu/confirmed-products']).then(() => window.location.reload());}//pedidos confirmados
+  pedidosFinalizados(){this.router.navigate(['/menu/finished-products']).then(() => window.location.reload());}//pedidos finalizados
   //Peticiones
-  realizarPeticion(){this.router.navigate(['/menu/add-information']);}//realizar peticion
-  peticionesRealizadas(){this.router.navigate(['/menu/view-peticiones']);}//peticiones realizadas
-  historialPeticiones(){this.router.navigate(['/menu/historial-peticiones']);}//historial de peticiones
+  realizarPeticion(){this.router.navigate(['/menu/add-information']).then(() => window.location.reload());}//realizar peticion
+  peticionesRealizadas(){this.router.navigate(['/menu/view-peticiones']).then(() => window.location.reload());}//peticiones realizadas
+  historialPeticiones(){this.router.navigate(['/menu/historial-peticiones']).then(() => window.location.reload());}//historial de peticiones
   //Historial
-  historialDocumentos(){this.router.navigate(['**']);}//historial de documentos excel y pdf
+  historialDocumentos(){this.router.navigate(['**']).then(() => window.location.reload());}//historial de documentos excel y pdf
   //Configuraciones
-  crearUsuario(){this.router.navigate(['/menu/usuarios']);}//crear usuario
-  cambiarContrasena(){this.router.navigate(['/menu/cambiar-contrasena']);}//cambiar contraseña
+  crearUsuario(){this.router.navigate(['/menu/usuarios']).then(() => window.location.reload());}//crear usuario
+  cambiarContrasena(){this.router.navigate(['/menu/cambiar-contrasena']).then(() => window.location.reload());}//cambiar contraseña
 }

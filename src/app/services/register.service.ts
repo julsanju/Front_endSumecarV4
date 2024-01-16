@@ -8,7 +8,7 @@ import { Empleado } from '../Interfaces/empleado';
   providedIn: 'any'
 })
 export class RegisterService {
-  private apiUrl = 'https://sumecar-ventas.azurewebsites.net/api/usuarios/insertar'; // Reemplaza con la URL correcta
+  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar'; 
   private imagenUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/guardar_imagen';
   private ApiUrlModificarEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/modificar_empleado'
   //headers

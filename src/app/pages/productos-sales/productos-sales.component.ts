@@ -12,11 +12,12 @@ import { Router } from '@angular/router';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRef } from '@angular/cdk/dialog';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-productos-sales',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NzModalModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NzModalModule],
   templateUrl: './productos-sales.component.html',
   styleUrl: './productos-sales.component.css'
 })
@@ -163,9 +164,14 @@ export class ProductosSalesComponent implements OnInit {
         Swal.fire('Su producto ha sido confirmado exitosamente!', '', 'success');
 
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
-        console.log('Login exitoso');
-        this.router.navigate(['menu/productos']);
-        this.producto_seleccionado = [];
+        
+        this.generatePDF();
+        this.generarExcel()
+
+        //asignar tiempo para borrar los datos seleccionados
+        setTimeout(() => {
+          this.producto_seleccionado = [];
+        }, 7000);
       },
       error => {
         console.error("Error:", error);
@@ -197,7 +203,7 @@ export class ProductosSalesComponent implements OnInit {
       location.reload();
     }, tiempoEspera);
   }
-  generateTableHTML() {
+  /*generateTableHTML() {
     const tableContainer = document.querySelector('.table-container');
     if (tableContainer) {
       // Obtén el contenido HTML de la tabla
@@ -205,6 +211,22 @@ export class ProductosSalesComponent implements OnInit {
       return tableHTML;
     }
     return '';
+  }*/
+
+  //animacion para alerta
+  objectALertClasses(opacity_0: boolean, opacity_100: boolean, translate: boolean) {
+    return {
+      'opacity-0': opacity_0,
+      'opacity-100': opacity_100,
+      'transform translate-y-full': translate,
+      'transition-transform ease-in-out duration-500': true,
+      'transition-opacity ease-out duration-500': true
+    }
+
+  }
+
+  getSaveProducts(){
+    return this.objectALertClasses(!this.showAlert, this.showAlert, !this.showAlert)
   }
 
   //generar PDF
