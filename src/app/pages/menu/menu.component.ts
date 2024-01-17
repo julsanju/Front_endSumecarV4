@@ -11,6 +11,7 @@ import { NzInputModule } from 'ng-zorro-antd/input'
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 
 @Component({
   selector: 'app-menu',
@@ -26,9 +27,11 @@ export class MenuComponent {
   isCliente = false;
   username: string = '';
   rol: string = '';
-  constructor(private login: LoginServicesService, private router: Router) {}
+  imagenUser:string = "";
+  constructor(private login: LoginServicesService, private router: Router, private servicio:UsuariosServicesService) {}
   breadcrumbs: string[] = [];
   ngOnInit() {
+    this.obtenerImagenUserxd()
     // Recupera la información del usuario desde localStorage
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
@@ -118,5 +121,25 @@ export class MenuComponent {
     }
 
     return breadcrumbs;
+  }
+
+  obtenerImagenUserxd(){
+    const userDataString = localStorage.getItem('userData');
+  if (userDataString) {
+    const userData = JSON.parse(userDataString);
+
+    // Extraer solo el id de usuario
+    const username = userData.usuario;
+
+    this.servicio.obtenerImagenUser(username).subscribe(
+      (response) => {
+          this.imagenUser = (response)
+      },
+      (error) => {
+        console.error('Error al obtener la imagen:', error);
+      }
+    );
+  }
+  return false;
   }
 }

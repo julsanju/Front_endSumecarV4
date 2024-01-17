@@ -18,7 +18,7 @@ import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.compo
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
-    { path: 'menu', component: MenuComponent, outlet: 'menu' },
+    { path: 'menu',component: MenuComponent, outlet: 'menu' },
     /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
     { path: 'home', component: HomePharmaComponent },*/
     { path: 'prueba-login', component: PruebaLoginComponent },

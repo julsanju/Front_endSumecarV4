@@ -1,10 +1,12 @@
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { LoginServicesService } from './services/login-services.service';
 import { HttpClientModule } from '@angular/common/http';
+import { UsuariosServicesService } from './services/usuarios-services.service';
+import { Imagen } from './Interfaces/imagen';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'web-app';
-
+  
   isCollapsed = false;
   isAdmin = false;
   isEmpleado = false;
@@ -23,11 +25,14 @@ export class AppComponent implements OnInit {
   username: string = '';
   rol: string = '';
   mostrarMenu = true;
-  constructor(private login: LoginServicesService, private router: Router) {}
+  dataImagen : Imagen [] = [];
+  imagenUser : string = "";
+  constructor(private login: LoginServicesService, private router: Router, private servicio:UsuariosServicesService) {}
   
   ngOnInit(): void {
     initFlowbite();
-
+    this.obtenerImagenUserxd();
+    
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
       try {
@@ -90,10 +95,64 @@ export class AppComponent implements OnInit {
     return false;
   }
 
+  //obtener imagen de user
+  /*obtenerImagenUser() {
+
+    const userDataString = localStorage.getItem('userData');
+  
+    if (userDataString) {
+  
+      const userData = JSON.parse(userDataString);
+  
+      // Extraer solo el id de usuario
+      const username = userData.usuario; 
+  
+      this.servicio.obtenerImagenUser(username).subscribe(
+        (response) => {
+          
+            // Asignar la URL de la primera imagen al atributo imagenUser
+            this.imagenUser = response;
+            console.log(this.imagenUser);
+          
+        },
+        error => {
+          console.error('Error obteniendo datos', error);
+        }
+      );
+  
+      
+    }
+  
+    return false;
+  
+  }*/
+
+  obtenerImagenUserxd(){
+    const userDataString = localStorage.getItem('userData');
+  if (userDataString) {
+    const userData = JSON.parse(userDataString);
+
+    // Extraer solo el id de usuario
+    const username = userData.usuario;
+
+    this.servicio.obtenerImagenUser(username).subscribe(
+      (response) => {
+          this.imagenUser = (response)
+      },
+      (error) => {
+        console.error('Error al obtener la imagen:', error);
+      }
+    );
+  }
+  return false;
+  }
+
   //**Redirecciones**
 
+  //login
+  direccionLogin(){ this.router.navigate(['/prueba-login']).then(() => window.location.reload()); }
   //Home
-  home(){ this.router.navigate(['/menu/dashboard']);}
+  home(){ this.router.navigate(['/menu/dashboard']).then(() => window.location.reload());}
   //Productos
   montarPedido(){ this.router.navigate(['/menu/productos']).then(() => window.location.reload()); } //montar pedido
   confirmedProducts(){this.router.navigate(['/menu/confirmed-products']).then(() => window.location.reload());}//pedidos confirmados
