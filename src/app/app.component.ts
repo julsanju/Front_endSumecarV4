@@ -7,7 +7,6 @@ import { LoginServicesService } from './services/login-services.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UsuariosServicesService } from './services/usuarios-services.service';
 import { Imagen } from './Interfaces/imagen';
-
 @Component({
   selector: 'app-root',
   standalone: true,

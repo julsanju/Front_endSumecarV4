@@ -13,111 +13,149 @@
 
 <body>
   <nz-layout>
-    <aside id="sidebar-multi-level-sidebar"
-      class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-      aria-label="Sidebar">
-      <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-        <div>
-          <a href="" class="flex items-center ps-2.5 justify-center mb-5">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3 sm:h-7 " alt="sumecar" />
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Sumecar</span>
-          </a>
-          <img [src]= "imagenUser" alt="imagen" class="w-36 h-36 rounded-full object-cover">
-        </div>
-        <div class="border-b mx-auto"> </div>
-        <ul class="space-y-2 font-medium">
-          <!--Dashboard-->
+    <aside
+      class="fixed top-0 left-0 z-20 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 w-64 px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+      <a href="#" class="mx-auto">
+        <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/full-logo.svg" alt="">
+      </a>
+      
+      <div class="flex flex-col items-center mt-10 -mx-2">
+        <img class="object-cover w-32 h-32 mx-2 rounded-full " [src]="imagenUser" alt="avatar">
+        <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">John Doe</h4>
+        <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">johnexample.com</p>
+      </div>
+
+      <div class="flex flex-col justify-between flex-1 mt-6 text-lg">
+        <nav>
+
+          <ul class="space-y-2 font-medium">
+            <!--dashboard-->
+            <li>
+              <a routerLink="/menu/dashboard"
+                class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+
+                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Home</span>
+
+              </a>
+            </li>
+            <!--finalizacion de dashboard-->
+            <!--productos-->
+            <li>
+              <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900"
+                aria-controls="dropdown-productos" data-collapse-toggle="dropdown-productos">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
+                </svg>
+
+                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Productos</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m1 1 4 4 4-4" />
+                </svg>
+              </a>
+              <!--contenido de productos-->
+              <ul id="dropdown-productos" class="bg-gray-50 text-base hidden py-2 space-y-2">
+                <!--Montar pedidos-->
+                @if (esCliente() || esAdmin()) {
+                <li>
+                  <a routerLink="/menu/productos"
+                    class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                      width="15" height="15" fill="#6c747f">
+                      <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                    </svg>
+                    Montar Pedido
+                  </a>
+                </li>
+                }
+                <!--pedidos confirmados-->
+                <li>
+                  <a routerLink="/menu/confirmed-products"
+                    class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                      width="15" height="15" fill="#6c747f">
+                      <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                    </svg>
+                    Pedidos Confirmados</a>
+                </li>
+                <!--Pedidos finalizados-->
+                <li>
+                  <a routerLink="/menu/finished-products"
+                    class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                      width="15" height="15" fill="#6c747f">
+                      <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                    </svg>
+                    Pedidos Finalizados</a>
+                </li>
+              </ul>
+            </li>
+          
+          <!--finalizacion de productos-->
+          <!--peticiones-->
           <li>
-            <a routerLink="/menu/dashboard"
-              class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-              </svg>
-              <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-base">Home</span>
-            </a>
-          </li>
-          <!--Productos-->
-          <li>
-            <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              aria-controls="dropdown-productos" data-collapse-toggle="dropdown-productos">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
-              </svg>
-              <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Productos</span>
-              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m1 1 4 4 4-4" />
-              </svg>
-            </button>
-            <ul id="dropdown-productos" class="hidden py-2 space-y-2">
-              <!--Montar pedidos-->
-              @if (esCliente() || esAdmin()) {
-              <li>
-                <a routerLink="/menu/productos"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Montar
-                  Pedido</a>
-              </li>
-              }
-              <!--pedidos confirmados-->
-              <li>
-                          <a routerLink="/menu/confirmed-products"
-                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Pedidos Confirmados</a>
-                        </li>
-              <!--Pedidos finalizados-->
-              <li>
-                <a routerLink="/menu/finished-products"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Pedidos
-                  Finalizados</a>
-              </li>
-            </ul>
-          </li>
-          <!--Peticiones-->
-          <li>
-            <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              aria-controls="dropdown-usuarios" data-collapse-toggle="dropdown-peticiones">
+            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              aria-controls="dropdown-peticiones" data-collapse-toggle="dropdown-peticiones">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
               </svg>
+
               <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Peticiones</span>
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m1 1 4 4 4-4" />
               </svg>
-            </button>
-            <ul id="dropdown-peticiones" class="hidden py-2 space-y-2">
+            </a>
+            <!--contenido de peticiones-->
+            <ul id="dropdown-peticiones" class="bg-gray-50 text-base hidden py-2 space-y-2">
               @if (esAdmin() || esCliente()) {
               <li>
                 <a routerLink="/menu/add-information"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Realizar
-                  peticiones</a>
+                  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                    width="15" height="15" fill="#6c747f">
+                    <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                  </svg>
+                  Realizar peticiones</a>
               </li>
               }
               <li>
                 <a routerLink="/menu/view-peticiones"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Peticiones
-                  realizadas</a>
+                  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                    width="15" height="15" fill="#6c747f">
+                    <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                  </svg>
+                  Peticiones realizadas</a>
               </li>
               <li>
                 <a routerLink="/menu/historial-peticiones"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Historial
-                  de peticiones</a>
+                  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                    width="15" height="15" fill="#6c747f">
+                    <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                  </svg>
+                  Historial de peticiones</a>
               </li>
             </ul>
           </li>
+          <!--finalizacion de peticiones-->
+
           <!--historial-->
           <li>
-            <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
               aria-controls="dropdown-usuarios" data-collapse-toggle="dropdown-historial">
               <svg class="w-6 h-6 text-gray-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor" viewBox="0 0 18 20">
@@ -129,71 +167,73 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m1 1 4 4 4-4" />
               </svg>
-            </button>
 
-            <!--historial de pdf-->
-            <ul id="dropdown-historial" class="hidden py-2 space-y-2">
+            </a>
+
+            <!--contenido de historial-->
+            <ul id="dropdown-historial" class="bg-gray-50 text-base hidden py-2 space-y-2">
 
               <li>
                 <a routerLink="**"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                    width="15" height="15" fill="#6c747f">
+                    <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                  </svg>
                   Historial documentos</a>
               </li>
 
             </ul>
           </li>
-          <!--Configuraciones-->
+          <!--finalizacion de historial-->
+          <!--configuracion-->
           <li>
-            <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
               aria-controls="dropdown-Configuraciones" data-collapse-toggle="dropdown-Configuraciones">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.3246 4.31731C10.751 2.5609 13.249 2.5609 13.6754 4.31731C13.9508 5.45193 15.2507 5.99038 16.2478 5.38285C17.7913 4.44239 19.5576 6.2087 18.6172 7.75218C18.0096 8.74925 18.5481 10.0492 19.6827 10.3246C21.4391 10.751 21.4391 13.249 19.6827 13.6754C18.5481 13.9508 18.0096 15.2507 18.6172 16.2478C19.5576 17.7913 17.7913 19.5576 16.2478 18.6172C15.2507 18.0096 13.9508 18.5481 13.6754 19.6827C13.249 21.4391 10.751 21.4391 10.3246 19.6827C10.0492 18.5481 8.74926 18.0096 7.75219 18.6172C6.2087 19.5576 4.44239 17.7913 5.38285 16.2478C5.99038 15.2507 5.45193 13.9508 4.31731 13.6754C2.5609 13.249 2.5609 10.751 4.31731 10.3246C5.45193 10.0492 5.99037 8.74926 5.38285 7.75218C4.44239 6.2087 6.2087 4.44239 7.75219 5.38285C8.74926 5.99037 10.0492 5.45193 10.3246 4.31731Z"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Configuraciones</span>
+
+              <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Configuracion</span>
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m1 1 4 4 4-4" />
               </svg>
-            </button>
-            <ul id="dropdown-Configuraciones" class="hidden py-2 space-y-2">
+            </a>
+            <ul id="dropdown-Configuraciones" class="bg-gray-50 text-base hidden py-2 space-y-2">
               @if (esAdmin()) {
               <li>
                 <a routerLink="/menu/usuarios"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Crear
-                  usuario</a>
+                  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                    width="15" height="15" fill="#6c747f">
+                    <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                  </svg>
+                  Crear usuario</a>
               </li>
               }
               <li>
                 <a routerLink="/menu/cambiar-contrasena"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Cambiar
-                  Contraseña</a>
+                  class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
+                    width="15" height="15" fill="#6c747f">
+                    <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
+                  </svg>
+                  Cambiar Contraseña</a>
               </li>
             </ul>
           </li>
+          <!--finalizacion de configuracion-->
         </ul>
-        <div id="dropdown-cta" class="p-4 mt-auto rounded-lg bg-blue-50 inset-x-0 bottom-0 absolute " role="alert">
-          <div class=" text-sm flex text-blue-800 ">
-            <div class="w-2/3">
-              <p>Sumecar profile</p>
-              <p>rol</p>
-            </div>
-            <div class="w-1/3">logo</div>
-          </div>
-        </div>
+        </nav>
       </div>
     </aside>
-    <!--<nz-layout class="inner-layout">
-                      <nz-breadcrumb>
-                        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-                        <nz-breadcrumb-item>List</nz-breadcrumb-item>
-                        <nz-breadcrumb-item>App</nz-breadcrumb-item>
-                      </nz-breadcrumb>
-                      <nz-content>Content</nz-content>
-                    </nz-layout>
-                  </nz-layout>-->
+    
     <nz-layout class="inner-layout  sm:ml-64">
       <nz-content>
         <nz-breadcrumb>
@@ -205,5 +245,6 @@
     </nz-layout>
   </nz-layout>
 </body>
+
 
 </html>
