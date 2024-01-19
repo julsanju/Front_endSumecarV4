@@ -12,7 +12,7 @@ export class UsuariosServicesService {
   private ApiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener'
   private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosUsuarios'; 
   private ApiUrlImagenUser = 'https://sumecarventas.azurewebsites.net/api/usuarios/imagen/';   
-  private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/imagen/'
+  private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin'
   constructor(private http : HttpClient) { }
 
   obtenerUsuarios(): Observable<UsuariosView[]>{
@@ -21,6 +21,10 @@ export class UsuariosServicesService {
 
   obtenerEmpleado(): Observable<Empleado[]>{
     return this.http.get<Empleado[]>(this.ApiUrlEmpleado);
+  }
+
+  filtroEmpleado_admin(): Observable<Empleado[]>{
+    return this.http.get<Empleado[]>(this.ApiUrlFiltroEmpleado);
   }
 
   obtenerImagenUser(username :string): Observable<string>{

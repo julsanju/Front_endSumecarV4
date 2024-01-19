@@ -82,7 +82,7 @@ export class AddInformationComponent implements OnInit{
   //llenar combobox
   llenarCombo() {
     // Llama al servicio para obtener los empleados
-    this.usurioService.obtenerEmpleado().subscribe(
+    this.usurioService.filtroEmpleado_admin().subscribe(
       (data: Empleado[]) => {
         // Mapea los datos obtenidos para adaptarlos al formato del array 'users'
         this.users = data.map((empleado: Empleado) => {
@@ -107,7 +107,7 @@ export class AddInformationComponent implements OnInit{
     this.formulario.get('correo')?.setValue(selectedUserValue);
   
     // Puedes acceder al servicio para obtener más detalles, incluido el correo electrónico
-    this.usurioService.obtenerEmpleado().subscribe(
+    this.usurioService.filtroEmpleado_admin().subscribe(
       (data: Empleado[]) => {
         const userDetails = data.find(user => user.correo === selectedUserValue);
         if (userDetails) {

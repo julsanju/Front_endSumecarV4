@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRouteSnapshot, UrlSegment, RouterModule   } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRouteSnapshot,RouterModule, ActivatedRoute    } from '@angular/router';
 //import { json } from 'node:stream/consumers';
 import { LoginServicesService } from 'src/app/services/login-services.service';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -55,7 +55,11 @@ export class MenuComponent {
     });
   }
 
+  productos(){ 
+    this.router.navigate(['/menu/productos']).then(() => window.location.reload()); 
+  }
   
+
   esAdmin(): boolean {
     // Recupera la información del usuario desde localStorage
     const userDataString = localStorage.getItem('userData');
