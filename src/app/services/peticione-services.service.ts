@@ -11,7 +11,7 @@ export class PeticioneServicesService {
   private ApiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones_pendientes/';
   private ApiUrlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones_finalizados/';
   private ApiUrlFinalizarPeticion = 'https://microservicio-sumecarventas.azurewebsites.net/api/finalizar_peticion/';
-  private ApiurlObtenerCorreo = 'https://microservicio-sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/';
+  private ApiurlObtenerCorreo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/';
   private APiUrlObtenerPendienteCliente = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones_pendientesC/';
   private APiUrlObtenerFinalizadoCliente = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones_finalizadosC/';
   constructor(private http : HttpClient) { }
