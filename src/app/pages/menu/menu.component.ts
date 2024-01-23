@@ -12,11 +12,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [HttpClientModule, RouterModule, NzLayoutModule, NzMenuModule, NzBreadCrumbModule, MatDialogModule, NzStepsModule, NzSelectModule, NzInputModule],
+  imports: [HttpClientModule, RouterModule, NzLayoutModule, NzMenuModule, NzBreadCrumbModule, MatDialogModule, NzStepsModule, NzSelectModule, NzInputModule, CommonModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
@@ -28,6 +29,12 @@ export class MenuComponent {
   username: string = '';
   rol: string = '';
   imagenUser:string = "";
+  /*animaciones sidebar*/
+  rotacionProductos = false;
+  rotacionPeticiones = false;
+  rotacionHistorial = false;
+  rotacionConfiguracion = false;
+
   constructor(private login: LoginServicesService, private router: Router, private servicio:UsuariosServicesService) {}
   breadcrumbs: string[] = [];
   ngOnInit() {
@@ -145,5 +152,21 @@ export class MenuComponent {
     );
   }
   return false;
+  }
+
+  toggleProductos() {
+    this.rotacionProductos = !this.rotacionProductos;
+  }
+
+  togglePeticiones() {
+    this.rotacionPeticiones = !this.rotacionPeticiones;
+  }
+
+  toggleHistorial() {
+    this.rotacionHistorial = !this.rotacionHistorial;
+  }
+
+  toggleConfiguracion() {
+    this.rotacionConfiguracion = !this.rotacionConfiguracion;
   }
 }

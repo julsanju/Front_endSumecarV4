@@ -99,7 +99,7 @@ export class ProductosSalesComponent implements OnInit {
 
     this.cantidadForm.reset();
   }
-  
+
   mostrarModal() {
     this.showModal = true;
   }
@@ -162,7 +162,7 @@ export class ProductosSalesComponent implements OnInit {
         Swal.fire('Su producto ha sido confirmado exitosamente!', '', 'success');
 
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
-        
+
         this.generatePDF();
         this.generarExcel()
 
@@ -201,15 +201,6 @@ export class ProductosSalesComponent implements OnInit {
       location.reload();
     }, tiempoEspera);
   }
-  /*generateTableHTML() {
-    const tableContainer = document.querySelector('.table-container');
-    if (tableContainer) {
-      // Obtén el contenido HTML de la tabla
-      const tableHTML = tableContainer.innerHTML;
-      return tableHTML;
-    }
-    return '';
-  }*/
 
   //animacion para alerta
   objectALertClasses(opacity_0: boolean, opacity_100: boolean, translate: boolean) {
@@ -223,18 +214,98 @@ export class ProductosSalesComponent implements OnInit {
 
   }
 
-  getSaveProducts(){
+  getSaveProducts() {
     return this.objectALertClasses(!this.showAlert, this.showAlert, !this.showAlert)
   }
 
+
   //generar PDF
-  generatePDF() {
+  generatePDF = async () => {
     const doc = new jsPDF();
 
-    doc.addImage('https://firebasestorage.googleapis.com/v0/b/pharmapa-e493a.appspot.com/o/images%2FSumecarLogo.png?alt=media&token=33aa3ec8-a7d0-4107-a3fb-bd599bd9c4a2', 'PNG', 10, 10, 50, 50);
+    /**ENCABEZADO***/
+    // Establecer la posición inicial y el tamaño de la imagen
+    const imgWidth = 50;
+    const imgHeight = 30;
+    const imgX = 10;
+    const imgY = 10;
 
-    doc.text('PRODUCTOS CONFIRMADOS', 10, 10); // Título del PDF
+    // Agregar la imagen a la izquierda
+    const img = 'https://i.postimg.cc/MKQq1cmg/Sumecar-Logo.png';
+    doc.addImage(img, 'JPG', imgX, imgY, imgWidth, imgHeight);
 
+    // Ajustar la posición del primer título
+    const titleX = imgX + imgWidth + 70; // Ajustar la posición horizontal del título
+    const titleY = imgY + 5; // Ajustar la posición vertical del primer título
+    // Tamaño de fuente más pequeño
+    const fontSize = 10;
+    // Agregar los títulos uno debajo del otro
+    const titles = [
+      'SUMINISTRADORA DE MEDICAMENTOS DEL CARIBE S.A',
+      'SUMECAR S.A',
+      'NIT. 806.009.848-3',
+      'Iva Régimen Común',
+      'No Somos Gran Contribuyente',
+      'No somos Autoretenedores'
+    ];
+
+    /**CUERPO DEL PDF**/
+    // Agregar otros textos en el cuerpo del PDF
+    const additionalTexts = [
+      'Fecha:' + '23/01/2024',
+      'Cliente: ' + 'Julian Santana',
+      'Identificacion: ' + 'CC 1043639265',
+      'Telefono:' + '3106992004',
+      'Direccion:' + 'Diagonal 38 #54-210',
+      'Ciudad:' + 'Cartagena de Indias',
+    ];
+
+    const additionalTextY = titleY + titles.length * 5 + 10; // Ajustar la posición vertical para los textos adicionales
+    const textXPosition = 15; // Ajustar la posición horizontal para los textos adicionales
+    const textWidth = 100; // Ajustar el ancho del rectángulo
+    const totalTextHeight = additionalTexts.length * 6;
+
+    doc.rect(textXPosition - 2, additionalTextY - 6, textWidth + 4, totalTextHeight + 4);
+
+    additionalTexts.forEach((text, index) => {
+      const textYPosition = additionalTextY + index * 6;
+
+      doc.setFontSize(fontSize);
+      doc.text(text, textXPosition, textYPosition, { align: 'justify' });
+    });
+
+    titles.forEach((title, index) => {
+      // Calcular automáticamente la posición vertical
+      const titleYPosition = titleY + index * 5; // Puedes ajustar el espacio entre líneas cambiando el valor multiplicativo (ej. 10)
+
+      doc.setFontSize(fontSize);
+      // Agregar el título
+      doc.text(title, titleX, titleYPosition, { align: 'center' });
+    });
+
+    /**AGREGAR OTROS TEXTOS A LA DERECHA CON UNA LÍNEA SEPARADORA**/
+    const otherTexts = [
+      '#ORDEN: ' + '015',
+      'Cantidad de items: ' + '5',
+    ];
+
+    const otherTextX = textXPosition + textWidth + 4; // Ajustar el valor según sea necesario
+    const otherTextY = additionalTextY; // Ajustar la posición vertical para los otros textos
+
+    // Dibujar un rectángulo alrededor de los "otros textos"
+    const otherTextsWidth = 75; // Ajustar el ancho del rectángulo
+    const otherTextsHeight = otherTexts.length * 6;
+    doc.rect(otherTextX - 2, otherTextY - 6, otherTextsWidth + 4, otherTextsHeight + 28);
+
+    otherTexts.forEach((text, index) => {
+      const textYPosition = otherTextY + index * 10; // Ajustar la separación vertical según sea necesario
+      doc.setFontSize(15);
+      doc.text(text, otherTextX + otherTextsWidth, textYPosition, { align: 'right' });
+      
+    });
+    
+
+    /**TABLA DE LA INFORMACION***/
     const columns = ['Código', 'Artículo', 'Laboratorio', 'Cantidad'];
     const rows: (string | number)[][] = [];
 
@@ -245,8 +316,8 @@ export class ProductosSalesComponent implements OnInit {
     autoTable(doc, {
       head: [columns],
       body: rows,
-      margin: { top: 30, bottom: 20 },
-      // ...
+      startY: 100,
+      margin: { top: 10, bottom: 30 }
     })
 
     doc.save('table.pdf')
