@@ -82,7 +82,6 @@ export class ProductosSalesComponent implements OnInit {
 
   }
 
-
   //filtro de productos
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
@@ -109,7 +108,6 @@ export class ProductosSalesComponent implements OnInit {
     this.showModal = false;
     // Otras acciones que necesitas realizar al cancelar la selección
   }
-
 
   cancelarSeleccion() {
     // Verifica si productoActual no es null
@@ -233,18 +231,7 @@ export class ProductosSalesComponent implements OnInit {
   generatePDF() {
     const doc = new jsPDF();
 
-    const imgPath = 'assets/img/SumecarLogo.png';
-
-    // Leer el archivo PNG como una imagen
-    const img = new Image();
-    img.src = imgPath;
-
-    // Cuando la imagen se haya cargado, agregarla al PDF
-    img.onload = function () {
-      doc.addImage(img, 'PNG', 10, 20, 50, 50);
-
-      // Resto de tu código...
-    };
+    doc.addImage('https://firebasestorage.googleapis.com/v0/b/pharmapa-e493a.appspot.com/o/images%2FSumecarLogo.png?alt=media&token=33aa3ec8-a7d0-4107-a3fb-bd599bd9c4a2', 'PNG', 10, 10, 50, 50);
 
     doc.text('PRODUCTOS CONFIRMADOS', 10, 10); // Título del PDF
 
