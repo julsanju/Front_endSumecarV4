@@ -6,6 +6,8 @@ export interface Usuarios {
     Nombre: string, 
     Ubicacion: string,
     Telefono: string, 
-    Correo: string
-    
+    Correo: string,
+    Departamento: string,
+    Ciudad: string,
+    ImagenUrl: File
 }

@@ -8,7 +8,8 @@ import { Empleado } from '../Interfaces/empleado';
   providedIn: 'any'
 })
 export class RegisterService {
-  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar'; 
+  //private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar'; 
+  private apiUrl = 'http://localhost:5171/api/usuarios/insertar'; 
   private imagenUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/guardar_imagen';
   private ApiUrlModificarEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/modificar_empleado'
   //headers
@@ -16,8 +17,9 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  registerUser(userData: Usuarios): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  registerUser(userData: FormData): Observable<any> {
+    //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
 
     return this.http.post(this.apiUrl, userData, { headers });
   }

@@ -136,7 +136,7 @@ export class RegisterSalesComponent {
     }
   }
 
-  onSubmit() {
+  /*onSubmit() {
     //if (this.registrationForm.valid) {
       const userData: Usuarios = this.registrationForm.value;
 
@@ -154,7 +154,7 @@ export class RegisterSalesComponent {
         
       );
     //}
-  }
+  }*/
 
 
   onFileSelected(event: any) {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Empleado } from 'src/app/Interfaces/empleado';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
@@ -11,6 +11,7 @@ import { UsuariosServicesService } from 'src/app/services/usuarios-services.serv
 import { MessageService } from 'primeng/api';
 import { Toast, ToastModule } from 'primeng/toast';
 import { HttpClientModule } from '@angular/common/http';
+import { DepartamentoCiudad } from 'src/app/Interfaces/departamento-ciudad';
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
@@ -42,8 +43,21 @@ export class CrearUsuarioComponent implements OnInit {
   empleadoActual: Empleado | null = null;
   showToast = false;
   showEditar = false;
+  //variables para departamentos y ciudades
+  departamentos: DepartamentoCiudad[] = [];
+  ciudades: DepartamentoCiudad[] = [];
+  //imagenes
+  @ViewChild('fileInput') fileInput: ElementRef | undefined;
+  selectedImages: string[] = [];
+  formData: FormData;
 
-  constructor(private servicioUsuarios: UsuariosServicesService, private formBuilder: FormBuilder, private registerService: RegisterService, private messageService: MessageService) {
+  constructor(private servicioUsuarios: UsuariosServicesService,
+    private formBuilder: FormBuilder,
+    private registerService: RegisterService,
+    private messageService: MessageService) {
+
+    this.formData = new FormData()
+
     this.registrationForm = this.formBuilder.group({
       Identificacion: ['', Validators.required],
       Rol: ['', Validators.required],
@@ -52,7 +66,10 @@ export class CrearUsuarioComponent implements OnInit {
       Telefono: ['', Validators.required],
       Correo: ['', [Validators.required, Validators.email]],
       Usuario: ['', Validators.required],
-      Contrasena: ['', Validators.required]
+      Contrasena: ['', Validators.required],
+      Departamento: ['', Validators.required],
+      Ciudad: ['', Validators.required],
+      Imagen: [null]
     });
 
     this.UpdateForm = this.formBuilder.group({
@@ -68,8 +85,7 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Llamada al servicio para obtener los datos
-
+    // Llamada al servicio para obtener los datos de empleados
     this.servicioUsuarios.obtenerEmpleado().subscribe(
       (response) => {
         this.dataSource = response;
@@ -79,6 +95,19 @@ export class CrearUsuarioComponent implements OnInit {
         console.error('Error obteniendo datos', error);
       }
     );
+
+    //lamada al servicio para obtener departamentos
+    this.servicioUsuarios.obtenerDepartamento().subscribe(
+      (response) => {
+        this.departamentos = response;
+        console.log(this.departamentos)
+      },
+      (error) => {
+        console.error('Error obteniendo departamentos', error);
+      }
+    );
+
+    this.mostrarCiudad()
 
 
   }
@@ -124,11 +153,59 @@ export class CrearUsuarioComponent implements OnInit {
     }, 3000);
   }
 
+  //imagenes
+  onFileChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+
+    if (files && files.length > 0) {
+      this.selectedImages = [];
+      this.formData = new FormData();
+
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          this.selectedImages.push(e.target.result);
+        };
+
+        reader.readAsDataURL(files[i]);
+
+        this.formData.append('image', files[i], files[i].name);
+      }
+    }
+  }
+
+
+  clearSelection() {
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
+    this.selectedImages = [];
+  }
+  //subcribirse a los cambios para ciudad mediante a codigo de departamento
+  mostrarCiudad() {
+    this.registrationForm.get('Departamento')?.valueChanges.subscribe((codigoDepartamento) => {
+      // Obtener ciudades basadas en el departamento seleccionado
+      this.servicioUsuarios.obtenerCiudad(codigoDepartamento).subscribe(
+        (data) => {
+          this.ciudades = data;
+          console.log(this.ciudades)
+
+        },
+        (error) => {
+          console.error('Error obteniendo ciudades', error);
+        }
+      );
+    });
+  }
 
   //metodo para crear un nuevo usuario
-  crearUsuario() {
+  /*crearUsuario() {
     this.cargando = true;
     const userData: Usuarios = this.registrationForm.value;
+
+    
 
     // Llamada al servicio para registrar al usuario
     if (this.registrationForm.valid) {
@@ -159,6 +236,67 @@ export class CrearUsuarioComponent implements OnInit {
 
         );
       }
+    }
+    else {
+      this.errorMessage = { Message: "Por favor, Asegúrese Completar todos los campos para finalizar el registro." };
+      this.mostrarDanger();
+      this.cargando = false
+    }
+
+  }*/
+
+  crearUsuario() {
+    this.cargando = true;
+
+    const imagen = this.registrationForm.get('Imagen')!.value;
+    //const userData: Usuarios = this.registrationForm.value;
+    
+      const formData = new FormData();
+      //mapeo
+      formData.append('Nombre', this.registrationForm.value.Nombre);
+      formData.append('Contrasena', this.registrationForm.value.Contrasena);
+      formData.append('ImagenUrl',this.registrationForm.value.Imagen);
+      formData.append('Identificacion', this.registrationForm.value.Identificacion);
+      formData.append('Rol', this.registrationForm.value.Rol);
+      formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+      formData.append('Telefono', this.registrationForm.value.Telefono);
+      formData.append('Correo', this.registrationForm.value.Correo);
+      formData.append('Usuario', this.registrationForm.value.Usuario);
+      formData.append('Contrasena', this.registrationForm.value.Contrasena);
+      formData.append('Usuario', this.registrationForm.value.Usuario);
+      formData.append('Departamento', this.registrationForm.value.Departamento);
+      formData.append('Ciudad', this.registrationForm.value.Ciudad);
+
+      // Llamada al servicio para registrar al usuario
+      if (this.registrationForm.valid) {
+        if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
+          this.errorMessage = { Message: "Formato incorrecto para el correo electronico." };
+          this.mostrarDanger();
+          this.cargando = false
+        }
+        else {
+
+
+          console.log(formData);
+          /*this.registerService.registerUser(formData).subscribe(
+            response => {
+              console.log(response)
+              this.mostrarAlerta();
+              this.cargando = false
+              this.registrationForm.reset();
+            },
+            error => {
+              console.error("Error:", error);
+              console.log(error.error)
+              this.errorMessage = error.error;
+              this.mostrarDanger();
+              console.log(this.errorMessage?.Message);
+              this.cargando = false;
+            },
+  
+          );*/
+        }
+      
     }
     else {
       this.errorMessage = { Message: "Por favor, Asegúrese Completar todos los campos para finalizar el registro." };

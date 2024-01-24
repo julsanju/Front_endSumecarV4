@@ -22,7 +22,7 @@
             </svg>
         </button>
     </div>
-    
+
 
     <!--danger alert para la creacion de usuario-->
     <div [ngClass]="getDangerAlertClasses()" id="danger-alert"
@@ -48,7 +48,7 @@
             </svg>
         </button>
     </div>
-    
+
 
     <!--alert succesful para modificar usuario-->
     <div [ngClass]="getEditAlertClasses()" id="alert-border-3"
@@ -67,7 +67,7 @@
     </div>
 
     <!--finalizacion de alerts-->
-    
+
     <div class="sm:flex sm:items-center sm:justify-between">
         <div>
             <div class="flex items-center gap-x-3">
@@ -379,6 +379,32 @@
                 <option value="empleado">Empleado</option>
             </select>
 
+            <!--departamento-->
+            <label for="countries"
+                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
+                class="block mb-2 text-sm font-medium">Departamento</label>
+
+            <select id="countries" formControlName="Departamento"
+                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Departamento'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Departamento'].valid}"
+                class="text-sm rounded-lg block w-full p-2.5">
+                <option selected disabled>Seleccionar:</option>
+                @for (d of departamentos;track d) {
+                <option [value]="d.idDepartamento">{{d.departamento}}</option>
+                }
+            </select>
+
+            <!--ciudad-->
+            <label for="countries"
+                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
+                class="block mb-2 text-sm font-medium">Ciudad</label>
+            <select id="countries" formControlName="Ciudad"
+                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ciudad'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ciudad'].valid}"
+                class="text-sm rounded-lg block w-full p-2.5">
+                <option selected disabled>Seleccionar:</option>
+                @for(c of ciudades; track c){
+                <option [value]="c.idCiudad">{{c.ciudad}}</option>
+                }
+            </select>
             <!--telefono-->
             <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
                 <label for="subject"
@@ -509,9 +535,73 @@
                         [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}"
                         placeholder="••••••••••">
                 </div>
+
             </div>
 
+            <div class="mb-6 relative" [ngClass]="{'mb-5': registrationForm.controls['Imagen'].valid}">
+                <ng-container *ngIf="selectedImages.length === 0; else selectedImagesSection">
+                    <!-- Mostrar el campo para subir la imagen si no hay imágenes seleccionadas -->
+                    <label for="dropzone-file"
+                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                                    para subir imagen o tomar foto</span></p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)</p>
+                        </div>
+                        <input #fileInput id="dropzone-file" type="file" class="hidden" (change)="onFileChange($event)"
+                            accept="image/*" multiple  formControlName="Imagen"/>
+                    </label>
+                </ng-container>
 
+                <!-- Mostrar las imágenes seleccionadas -->
+                <ng-template #selectedImagesSection>
+                    <div class="selected-images top-0 left-0 w-full h-full bg-white p-4">
+                        <div *ngFor="let image of selectedImages" class="mb-2">
+                            <img [src]="image" alt="Selected Image" class="max-w-full h-auto rounded-lg" />
+                        </div>
+                        <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
+                            selección</button>
+                    </div>
+                </ng-template>
+            </div>
+
+            <!--<div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
+                <div class="flex items-center justify-center w-full">
+                    <label for="dropzone-file"
+                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                                    para subir imagen o tomar foto</span></p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)
+                            </p>
+                        </div>
+                        <input #fileInput id="dropzone-file" type="file" class="hidden" accept="image/*" multiple
+                            (change)="onFileChange($event)" />
+
+                    </label>
+                    
+                    <div class="selected-images  top-0 left-0 w-full h-full bg-white p-4" *ngIf="selectedImages.length > 0">
+                        <div *ngFor="let image of selectedImages" class="mb-2">
+                            <img [src]="image" alt="Selected Image" class="max-w-full h-auto" />
+                        </div>
+                        <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
+                            selección</button>
+                    </div>
+                </div>
+
+            </div>-->
             <!-- En tu archivo .html -->
             <!--(click)="" -->
             <button type="button" (click)="crearUsuario();" [disabled]="cargando"

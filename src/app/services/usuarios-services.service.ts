@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UsuariosView } from '../Interfaces/usuarios-view';
 import { Empleado } from '../Interfaces/empleado';
 import { Imagen } from '../Interfaces/imagen';
+import { DepartamentoCiudad } from '../Interfaces/departamento-ciudad';
 @Injectable({
   providedIn: 'any'
 })
@@ -12,7 +13,10 @@ export class UsuariosServicesService {
   private ApiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener'
   private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosUsuarios'; 
   private ApiUrlImagenUser = 'https://sumecarventas.azurewebsites.net/api/usuarios/imagen/';   
-  private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin'
+  private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin';
+  private ApiUrlDepartamentos = 'http://localhost:5171/api/usuarios/obtener_departamentos'
+  private ApiUrlCiudades = 'http://localhost:5171/api/usuarios/obtener_departamentos/'
+  
   constructor(private http : HttpClient) { }
 
   obtenerUsuarios(): Observable<UsuariosView[]>{
@@ -31,5 +35,12 @@ export class UsuariosServicesService {
     return this.http.get(this.ApiUrlImagenUser + username, { responseType: 'text' });
   }
 
+  obtenerDepartamento() : Observable<DepartamentoCiudad[]>{
+    return this.http.get<DepartamentoCiudad[]>(this.ApiUrlDepartamentos);
+  }
+
+  obtenerCiudad(codigo:string) : Observable<DepartamentoCiudad[]>{
+    return this.http.get<DepartamentoCiudad[]>(this.ApiUrlCiudades + codigo);
+  }
   
 }
