@@ -14,8 +14,8 @@ export class UsuariosServicesService {
   private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosUsuarios'; 
   private ApiUrlImagenUser = 'https://sumecarventas.azurewebsites.net/api/usuarios/imagen/';   
   private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin';
-  private ApiUrlDepartamentos = 'http://localhost:5171/api/usuarios/obtener_departamentos'
-  private ApiUrlCiudades = 'http://localhost:5171/api/usuarios/obtener_departamentos/'
+  private ApiUrlDepartamentos = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos'
+  private ApiUrlCiudades = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos/'
   
   constructor(private http : HttpClient) { }
 

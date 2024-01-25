@@ -12,6 +12,8 @@ import { MessageService } from 'primeng/api';
 import { Toast, ToastModule } from 'primeng/toast';
 import { HttpClientModule } from '@angular/common/http';
 import { DepartamentoCiudad } from 'src/app/Interfaces/departamento-ciudad';
+import { forkJoin } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
@@ -50,11 +52,13 @@ export class CrearUsuarioComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
   selectedImages: string[] = [];
   formData: FormData;
+  files: any = []
 
   constructor(private servicioUsuarios: UsuariosServicesService,
     private formBuilder: FormBuilder,
     private registerService: RegisterService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private sanitizer: DomSanitizer ) {
 
     this.formData = new FormData()
 
@@ -69,7 +73,7 @@ export class CrearUsuarioComponent implements OnInit {
       Contrasena: ['', Validators.required],
       Departamento: ['', Validators.required],
       Ciudad: ['', Validators.required],
-      Imagen: [null]
+      Imagen: ['', Validators.required]
     });
 
     this.UpdateForm = this.formBuilder.group({
@@ -100,7 +104,6 @@ export class CrearUsuarioComponent implements OnInit {
     this.servicioUsuarios.obtenerDepartamento().subscribe(
       (response) => {
         this.departamentos = response;
-        console.log(this.departamentos)
       },
       (error) => {
         console.error('Error obteniendo departamentos', error);
@@ -154,10 +157,10 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   //imagenes
-  onFileChange(event: Event) {
+  /*onFileChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const files = inputElement.files;
 
+    const files = inputElement.files;
     if (files && files.length > 0) {
       this.selectedImages = [];
       this.formData = new FormData();
@@ -172,7 +175,42 @@ export class CrearUsuarioComponent implements OnInit {
         reader.readAsDataURL(files[i]);
 
         this.formData.append('image', files[i], files[i].name);
+        console.log(files[i].name)
       }
+    }
+
+  }*/
+
+  public onFileChange(event: any) {
+
+    const imagen = event.target.files[0];
+    const inputElement = event.target as HTMLInputElement;
+
+    const files = inputElement.files;
+    if (files && files.length > 0) {
+      this.selectedImages = [];
+      this.formData = new FormData();
+
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          this.selectedImages.push(e.target.result);
+        };
+
+        reader.readAsDataURL(files[i]);
+
+        this.formData.append('image', files[i], files[i].name);
+        console.log(files[i].name)
+      }
+    }
+    console.log(imagen);
+    
+    if (imagen.type.startsWith('image/')) {
+      console.log('Sí es una imagen');
+      this.files.push(imagen);
+    } else {
+      console.log('No es una imagen');
     }
   }
 
@@ -245,58 +283,113 @@ export class CrearUsuarioComponent implements OnInit {
 
   }*/
 
-  crearUsuario() {
+  
+  /*loadImages = () => {
+    try {
+      const formData = new FormData();
+      this.files.forEach((item:File) => {
+        formData.append('files', item);
+      });
+      //this.loading = true;
+      this.registerService.registerUser(formData).subscribe(
+      (res) => {
+          
+          console.log('Carga exitosa');
+        },
+        (error) => {
+          console.error('Error en la carga de imágenes:', error);
+          this.mostrarDanger();
+          
+        }
+      );
+    } catch (e) {
+      console.log('ERROR', e);
+    }                            
+  };*/
+  
+  blobFile = async ($event: any) =>
+    new Promise((resolve, reject) => {
+      try {
+        const unsafeImg = window.URL.createObjectURL($event);
+        const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+        const reader = new FileReader();
+        reader.readAsDataURL($event);
+        reader.onload = () => {
+          resolve({
+            blob: $event,
+            image,
+            base: reader.result,
+          });
+        };
+        reader.onerror = (error) => {
+          resolve({
+            blob: $event,
+            image,
+            base: null,
+          });
+        };
+      } catch (e) {
+        reject(e);
+      }
+    });
+
+  /*crearUsuario() {
     this.cargando = true;
 
-    const imagen = this.registrationForm.get('Imagen')!.value;
+
     //const userData: Usuarios = this.registrationForm.value;
+    const selectedImages = this.registrationForm.get('Imagen')?.value;
+    const imageFile = selectedImages[0]?.file;
+
+    const formData = new FormData();
     
-      const formData = new FormData();
-      //mapeo
-      formData.append('Nombre', this.registrationForm.value.Nombre);
-      formData.append('Contrasena', this.registrationForm.value.Contrasena);
-      formData.append('ImagenUrl',this.registrationForm.value.Imagen);
-      formData.append('Identificacion', this.registrationForm.value.Identificacion);
-      formData.append('Rol', this.registrationForm.value.Rol);
-      formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-      formData.append('Telefono', this.registrationForm.value.Telefono);
-      formData.append('Correo', this.registrationForm.value.Correo);
-      formData.append('Usuario', this.registrationForm.value.Usuario);
-      formData.append('Contrasena', this.registrationForm.value.Contrasena);
-      formData.append('Usuario', this.registrationForm.value.Usuario);
-      formData.append('Departamento', this.registrationForm.value.Departamento);
-      formData.append('Ciudad', this.registrationForm.value.Ciudad);
+    //mapeo
+    formData.append('Nombre', this.registrationForm.value.Nombre);
+    formData.append('Contrasena', this.registrationForm.value.Contrasena);
+    this.files.forEach((item:File) => {
+      formData.append('ImagenUrl', item)
+    });
+    //formData.append('ImagenUrl', selectedImages[0], selectedImages[0].name);
+    formData.append('Identificacion', this.registrationForm.value.Identificacion);
+    formData.append('Rol', this.registrationForm.value.Rol);
+    formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+    formData.append('Telefono', this.registrationForm.value.Telefono);
+    formData.append('Correo', this.registrationForm.value.Correo);
+    formData.append('Usuario', this.registrationForm.value.Usuario);
+    formData.append('Contrasena', this.registrationForm.value.Contrasena);
+    formData.append('Usuario', this.registrationForm.value.Usuario);
+    formData.append('Departamento', this.registrationForm.value.Departamento);
+    formData.append('Ciudad', this.registrationForm.value.Ciudad);
 
-      // Llamada al servicio para registrar al usuario
-      if (this.registrationForm.valid) {
-        if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
-          this.errorMessage = { Message: "Formato incorrecto para el correo electronico." };
-          this.mostrarDanger();
-          this.cargando = false
-        }
-        else {
+    // Llamada al servicio para registrar al usuario
+    if (this.registrationForm.valid) {
+      if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
+        this.errorMessage = { Message: "Formato incorrecto para el correo electronico." };
+        this.mostrarDanger();
+        this.cargando = false
+      }
+      else {
 
 
-          console.log(formData);
-          /*this.registerService.registerUser(formData).subscribe(
-            response => {
-              console.log(response)
-              this.mostrarAlerta();
-              this.cargando = false
-              this.registrationForm.reset();
-            },
-            error => {
-              console.error("Error:", error);
-              console.log(error.error)
-              this.errorMessage = error.error;
-              this.mostrarDanger();
-              console.log(this.errorMessage?.Message);
-              this.cargando = false;
-            },
-  
-          );*/
-        }
-      
+        console.log(formData);
+        this.registerService.registerUser(formData).subscribe(
+          response => {
+            console.log(response)
+            this.mostrarAlerta();
+            this.cargando = false
+            this.registrationForm.reset();
+          },
+          error => {
+            console.error("Error:", error);
+            console.log(error.error)
+            this.errorMessage = error.error;
+            this.mostrarDanger();
+            console.log(this.errorMessage?.Message);
+            this.cargando = false;
+          },
+        );
+      }
+
     }
     else {
       this.errorMessage = { Message: "Por favor, Asegúrese Completar todos los campos para finalizar el registro." };
@@ -304,8 +397,78 @@ export class CrearUsuarioComponent implements OnInit {
       this.cargando = false
     }
 
-  }
+  }*/
 
+  crearUsuario() {
+    this.cargando = true;
+  
+    // Obtén las imágenes antes de enviar el formulario
+    //this.loadImages();
+  
+    const imagesLoaded$ = forkJoin(this.files.map((item:File) => this.blobFile(item)));
+  
+    imagesLoaded$.subscribe(
+      (images: any) => {
+        const formData = new FormData();
+  
+        formData.append('Nombre', this.registrationForm.value.Nombre);
+        formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  
+        images.forEach((image: any) => {
+          // Agrega las imágenes al FormData
+          if (image && image.blob) {
+            formData.append('ImagenUrl', image.blob);
+          }
+        });
+  
+        formData.append('Identificacion', this.registrationForm.value.Identificacion);
+        formData.append('Rol', this.registrationForm.value.Rol);
+        formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+        formData.append('Telefono', this.registrationForm.value.Telefono);
+        formData.append('Correo', this.registrationForm.value.Correo);
+        formData.append('Usuario', this.registrationForm.value.Usuario);
+        formData.append('Contrasena', this.registrationForm.value.Contrasena);
+        formData.append('Departamento', this.registrationForm.value.Departamento);
+        formData.append('Ciudad', this.registrationForm.value.Ciudad);
+  
+        // Llamada al servicio para registrar al usuario
+        if (this.registrationForm.valid) {
+          if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
+            this.errorMessage = { Message: 'Formato incorrecto para el correo electrónico.' };
+            this.mostrarDanger();
+            this.cargando = false;
+          } else {
+            this.registerService.registerUser(formData).subscribe(
+              (response) => {
+                console.log(response);
+                this.mostrarAlerta();
+                this.cargando = false;
+                this.registrationForm.reset();
+              },
+              (error) => {
+                console.error('Error:', error);
+                console.log(error.error);
+                this.errorMessage = error.error;
+                this.mostrarDanger();
+                console.log(this.errorMessage?.Message);
+                this.cargando = false;
+              }
+            );
+          }
+        } else {
+          this.errorMessage = { Message: 'Por favor, asegúrese de completar todos los campos para finalizar el registro.' };
+          this.mostrarDanger();
+          this.cargando = false;
+        }
+      },
+      (error) => {
+        console.error('Error al cargar imágenes:', error);
+        this.mostrarDanger();
+        this.cargando = false;
+      }
+    );
+  }
+  
   //metodo para abrir el drawer que modificara los usuarios
   abrirModificarEmpleado() {
     this.showEditar = true;
