@@ -62,4 +62,7 @@ button.disabled {
   width: 265px; 
 }
 
-
+.disabled-button {
+  opacity: 0.7; /* o cualquier estilo que desees para representar un estado deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor para indicar que el botón no está disponible */
+}

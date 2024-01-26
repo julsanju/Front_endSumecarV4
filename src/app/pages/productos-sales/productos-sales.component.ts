@@ -13,6 +13,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRef } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
+import { PdfServicesService } from 'src/app/services/pdf-services.service';
+import { PdfInterface } from 'src/app/Interfaces/pdf-interface';
 
 @Component({
   selector: 'app-productos-sales',
@@ -25,6 +27,7 @@ export class ProductosSalesComponent implements OnInit {
 
   displayedColumns: string[] = ['codigo', 'articulo', 'laboratorio'];
   dataSource: Productos[] = [];
+  dataPDf: PdfInterface[] = [];
   originalDataSource: Productos[] = [];
   selectedRow: any;
   clickedRows = new Set<Productos>();
@@ -37,6 +40,7 @@ export class ProductosSalesComponent implements OnInit {
   anchoBarra: number = 0;
   assignedQuantity!: number;
   showModal: boolean = false;
+  cargando = false;
   //paginacion
   pageSize: number = 8;
   currentPage: number = 1;
@@ -47,8 +51,11 @@ export class ProductosSalesComponent implements OnInit {
   //dawner
   estadoBotones: boolean = false;
 
+  hayProductosSeleccionados: boolean = false;
+
   constructor(private dataServices: DataProductsService,
     private servicio: ProductsServicesService,
+    private pdfService: PdfServicesService,
     private formBuilder: FormBuilder,
     private router: Router,
     public dialog: MatDialog) {
@@ -79,9 +86,14 @@ export class ProductosSalesComponent implements OnInit {
       }
     );
 
+    this.hayProductosSeleccionados = false;
+    if(this.producto_seleccionado.length >= 1){
+      this.hayProductosSeleccionados = true;
+    }
 
   }
 
+  
   //filtro de productos
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
@@ -128,7 +140,7 @@ export class ProductosSalesComponent implements OnInit {
 
   mostrarAlerta() {
     this.showAlert = true;
-
+    this.hayProductosSeleccionados = true;
     setTimeout(() => {
       this.showAlert = false;
     }, 1000);
@@ -156,20 +168,21 @@ export class ProductosSalesComponent implements OnInit {
 
     this.servicio.confirmarProductos(this.producto_seleccionado, this.username).subscribe(
       response => {
-        console.log(response);
+        
+        const numero_orden = response && response.hasOwnProperty('numeroOrden') ? response.numeroOrden : '';
+        
         this.spinner = false;
 
         Swal.fire('Su producto ha sido confirmado exitosamente!', '', 'success');
 
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
 
-        this.generatePDF();
-        this.generarExcel()
-
-        //asignar tiempo para borrar los datos seleccionados
-        setTimeout(() => {
-          this.producto_seleccionado = [];
-        }, 7000);
+        this.generatePDF(numero_orden);
+        this.generarExcel(numero_orden)
+        this.hayProductosSeleccionados = true; 
+        this.producto_seleccionado = [];
+        this.hayProductosSeleccionados = false;
+        
       },
       error => {
         console.error("Error:", error);
@@ -190,7 +203,18 @@ export class ProductosSalesComponent implements OnInit {
     );
     this.estadoBotones = true;
   }
-
+  
+  //metodo para cancelar los productos seleccionados
+  cancelar(){
+    this.cargando = true
+    setTimeout(() => {
+      // borrar los productos después del tiempo de espera
+      this.producto_seleccionado = [];
+      this.cargando = false
+      this.hayProductosSeleccionados = false
+    }, 1000);
+    
+  }
   //pagina para refrescar la pagina
   refrescar() {
     // Esperar 2 segundos (ajusta el tiempo según tus necesidades)
@@ -218,114 +242,180 @@ export class ProductosSalesComponent implements OnInit {
     return this.objectALertClasses(!this.showAlert, this.showAlert, !this.showAlert)
   }
 
+  //obtener datos para setear en pdf
+  /*obtenerDataPdf(){
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+      }
+    }
+    //servicio para mostrar datos pdf
+    this.pdfService.mostrar_datosPdf(this.username).subscribe(
+      response => {
+        this.dataPDf = response;
+      },
+      error => {
+        console.error("Error:", error);
+        
+      },
+
+    );
+  }*/
 
   //generar PDF
-  generatePDF = async () => {
-    const doc = new jsPDF();
+  generatePDF = async (numero_orden:string) => {
 
-    /**ENCABEZADO***/
-    // Establecer la posición inicial y el tamaño de la imagen
-    const imgWidth = 50;
-    const imgHeight = 30;
-    const imgX = 10;
-    const imgY = 10;
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
 
-    // Agregar la imagen a la izquierda
-    const img = 'https://i.postimg.cc/MKQq1cmg/Sumecar-Logo.png';
-    doc.addImage(img, 'JPG', imgX, imgY, imgWidth, imgHeight);
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+      }
+    }
+    //servicio para mostrar datos pdf
+    this.pdfService.mostrar_datosPdf(this.username).subscribe(
+      (response) => {
+        this.dataPDf = response;
+        this.dataPDf.forEach(element => {
+          const doc = new jsPDF();
 
-    // Ajustar la posición del primer título
-    const titleX = imgX + imgWidth + 70; // Ajustar la posición horizontal del título
-    const titleY = imgY + 5; // Ajustar la posición vertical del primer título
-    // Tamaño de fuente más pequeño
-    const fontSize = 10;
-    // Agregar los títulos uno debajo del otro
-    const titles = [
-      'SUMINISTRADORA DE MEDICAMENTOS DEL CARIBE S.A',
-      'SUMECAR S.A',
-      'NIT. 806.009.848-3',
-      'Iva Régimen Común',
-      'No Somos Gran Contribuyente',
-      'No somos Autoretenedores'
-    ];
+          /**ENCABEZADO***/
+          // Establecer la posición inicial y el tamaño de la imagen
+          const imgWidth = 50;
+          const imgHeight = 30;
+          const imgX = 10;
+          const imgY = 10;
 
-    /**CUERPO DEL PDF**/
-    // Agregar otros textos en el cuerpo del PDF
-    const additionalTexts = [
-      'Fecha:' + '23/01/2024',
-      'Cliente: ' + 'Julian Santana',
-      'Identificacion: ' + 'CC 1043639265',
-      'Telefono:' + '3106992004',
-      'Direccion:' + 'Diagonal 38 #54-210',
-      'Ciudad:' + 'Cartagena de Indias',
-    ];
+          // Agregar la imagen a la izquierda
+          const img = 'https://i.postimg.cc/MKQq1cmg/Sumecar-Logo.png';
+          doc.addImage(img, 'JPG', imgX, imgY, imgWidth, imgHeight);
 
-    const additionalTextY = titleY + titles.length * 5 + 10; // Ajustar la posición vertical para los textos adicionales
-    const textXPosition = 15; // Ajustar la posición horizontal para los textos adicionales
-    const textWidth = 100; // Ajustar el ancho del rectángulo
-    const totalTextHeight = additionalTexts.length * 6;
+          // Ajustar la posición del primer título
+          const titleX = imgX + imgWidth + 70; // Ajustar la posición horizontal del título
+          const titleY = imgY + 5; // Ajustar la posición vertical del primer título
+          // Tamaño de fuente más pequeño
+          const fontSize = 10;
+          // Agregar los títulos uno debajo del otro
+          const titles = [
+            'SUMINISTRADORA DE MEDICAMENTOS DEL CARIBE S.A',
+            'SUMECAR S.A',
+            'NIT. 806.009.848-3',
+            'Iva Régimen Común',
+            'No Somos Gran Contribuyente',
+            'No somos Autoretenedores'
+          ];
 
-    doc.rect(textXPosition - 2, additionalTextY - 6, textWidth + 4, totalTextHeight + 4);
+          //convertir el tipo date en objeto
+          const fecha = new Date(element.fecha);
+          const hora = new Date(element.fecha);
 
-    additionalTexts.forEach((text, index) => {
-      const textYPosition = additionalTextY + index * 6;
+          const additionalTexts = [
+            'FECHA: ' + fecha.toLocaleDateString(),
+            'HORA: ' + hora.toLocaleTimeString(),
+            'Cliente: ' + element.nombre.toUpperCase() +" "+ element.apellido.toUpperCase(),
+            'Identificacion: ' + element.identificacion.toUpperCase(),
+            'Telefono: ' + element.telefono.toUpperCase(),
+            'Direccion: ' + element.ubicacion.toUpperCase(),
+            'Ciudad: ' + element.ciudad.toUpperCase(),
+          ];
 
-      doc.setFontSize(fontSize);
-      doc.text(text, textXPosition, textYPosition, { align: 'justify' });
-    });
 
-    titles.forEach((title, index) => {
-      // Calcular automáticamente la posición vertical
-      const titleYPosition = titleY + index * 5; // Puedes ajustar el espacio entre líneas cambiando el valor multiplicativo (ej. 10)
+          /**CUERPO DEL PDF**/
+          // Agregar otros textos en el cuerpo del PDF
 
-      doc.setFontSize(fontSize);
-      // Agregar el título
-      doc.text(title, titleX, titleYPosition, { align: 'center' });
-    });
 
-    /**AGREGAR OTROS TEXTOS A LA DERECHA CON UNA LÍNEA SEPARADORA**/
-    const otherTexts = [
-      '#ORDEN: ' + '015',
-      'Cantidad de items: ' + '5',
-    ];
+          const additionalTextY = titleY + titles.length * 5 + 10; // Ajustar la posición vertical para los textos adicionales
+          const textXPosition = 15; // Ajustar la posición horizontal para los textos adicionales
+          const textWidth = 100; // Ajustar el ancho del rectángulo
+          const totalTextHeight = additionalTexts.length * 6;
 
-    const otherTextX = textXPosition + textWidth + 4; // Ajustar el valor según sea necesario
-    const otherTextY = additionalTextY; // Ajustar la posición vertical para los otros textos
+          doc.rect(textXPosition - 2, additionalTextY - 6, textWidth + 4, totalTextHeight + 4);
 
-    // Dibujar un rectángulo alrededor de los "otros textos"
-    const otherTextsWidth = 75; // Ajustar el ancho del rectángulo
-    const otherTextsHeight = otherTexts.length * 6;
-    doc.rect(otherTextX - 2, otherTextY - 6, otherTextsWidth + 4, otherTextsHeight + 28);
+          additionalTexts.forEach((text, index) => {
+            const textYPosition = additionalTextY + index * 6;
 
-    otherTexts.forEach((text, index) => {
-      const textYPosition = otherTextY + index * 10; // Ajustar la separación vertical según sea necesario
-      doc.setFontSize(15);
-      doc.text(text, otherTextX + otherTextsWidth, textYPosition, { align: 'right' });
-      
-    });
-    
+            doc.setFontSize(fontSize);
+            doc.text(text, textXPosition, textYPosition, { align: 'justify' });
+          });
 
-    /**TABLA DE LA INFORMACION***/
-    const columns = ['Código', 'Artículo', 'Laboratorio', 'Cantidad'];
-    const rows: (string | number)[][] = [];
+          titles.forEach((title, index) => {
+            // Calcular automáticamente la posición vertical
+            const titleYPosition = titleY + index * 5; // Puedes ajustar el espacio entre líneas cambiando el valor multiplicativo (ej. 10)
 
-    this.producto_seleccionado.forEach(item => {
-      rows.push([item.codigo, item.articulo, item.laboratorio, item.cantidad.toString()]);
-    });
+            doc.setFontSize(fontSize);
+            // Agregar el título
+            doc.text(title, titleX, titleYPosition, { align: 'center' });
+          });
 
-    autoTable(doc, {
-      head: [columns],
-      body: rows,
-      startY: 100,
-      margin: { top: 10, bottom: 30 }
-    })
+          /**AGREGAR OTROS TEXTOS A LA DERECHA CON UNA LÍNEA SEPARADORA**/
+          //cantidad de items 
+          const cantidad_items = this.producto_seleccionado.length;
+          const otherTexts = [
+            '#ORDEN: ' + numero_orden,
+            'Cantidad de items: ' + cantidad_items,
+          ];
 
-    doc.save('table.pdf')
+          const otherTextX = textXPosition + textWidth + 4; // Ajustar el valor según sea necesario
+          const otherTextY = additionalTextY; // Ajustar la posición vertical para los otros textos
+
+          // Dibujar un rectángulo alrededor de los "otros textos"
+          const otherTextsWidth = 75; // Ajustar el ancho del rectángulo
+          const otherTextsHeight = otherTexts.length * 6;
+          doc.rect(otherTextX - 2, otherTextY - 6, otherTextsWidth + 4, otherTextsHeight + 34);
+
+          otherTexts.forEach((text, index) => {
+            const textYPosition = otherTextY + index * 10; // Ajustar la separación vertical según sea necesario
+            doc.setFontSize(15);
+            doc.text(text, otherTextX + otherTextsWidth, textYPosition, { align: 'right' });
+
+          });
+
+
+          /**TABLA DE LA INFORMACION***/
+          const columns = ['Código', 'Artículo', 'Laboratorio', 'Cantidad'];
+          const rows: (string | number)[][] = [];
+
+          this.producto_seleccionado.forEach(item => {
+            rows.push([item.codigo, item.articulo, item.laboratorio, item.cantidad.toString()]);
+          });
+
+          autoTable(doc, {
+            head: [columns],
+            body: rows,
+            startY: 100,
+            margin: { top: 10, bottom: 30 }
+          })
+
+          doc.save('numero de orden #'+numero_orden+'.pdf')
+        });
+      },
+      error => {
+        console.error("Error:", error);
+
+      },
+
+    );
+
+
+
+
   }
 
 
   //generar Excel
-  generarExcel() {
+  generarExcel(numero_orden:string) {
     import('xlsx').then((xlsx) => {
       const data = this.producto_seleccionado.map(item => ({
         'Código': item.codigo,
@@ -337,19 +427,20 @@ export class ProductosSalesComponent implements OnInit {
       const worksheet = xlsx.utils.json_to_sheet(data);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, 'productos');
+      this.saveAsExcelFile(excelBuffer, 'numero', numero_orden);
     });
 
   }
 
 
-  saveAsExcelFile(buffer: any, fileName: string): void {
+  saveAsExcelFile(buffer: any, fileName: string, numero_orden: string): void {
     let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     let EXCEL_EXTENSION = '.xlsx';
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE
     });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    //FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    FileSaver.saveAs(data, fileName + '_de_orden_' + numero_orden + EXCEL_EXTENSION);
   }
 
   //paginacion

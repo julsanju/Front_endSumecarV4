@@ -1,6 +1,11 @@
 export interface PdfInterface {
-    Titulo:string
-    Contenido:string
-    logo:string
-    //data: { logo: string; Titulo: string; Contenido: string }[];
+    fecha:Date
+    nombre:string
+    apellido:string
+    identificacion:string
+    telefono:string
+    ubicacion:string
+    departamento:string
+    ciudad:string
+    
 }

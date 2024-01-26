@@ -342,7 +342,7 @@
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
                 <p class="mt-2 text-sm"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor' +
+                    <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
                         'introduce tu identificación.' : registrationForm.controls['Identificacion'].invalid ? 'Oops!' :
                         '¡Excelente! '}}</span> {{registrationForm.controls['Identificacion'].pristine ? '' :
                     registrationForm.controls['Identificacion'].invalid ? 'Identificacion incorrecta :(' :
@@ -367,6 +367,25 @@
                     'Nombre incorrecto :(' : 'Nombre correcto :)'}}
                 </p>
             </div>
+
+            <!--apellido-->
+            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
+                <label for="subject"
+                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Apellido'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Apellido'].valid}"
+                    class="block mb-2 text-sm font-medium">Apellido</label>
+                <input type="text" id="subject" formControlName="Apellido"
+                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Apellido'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Apellido'].valid}"
+                    class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
+                <p class="mt-2 text-sm"
+                    [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Apellido'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Apellido'].valid}">
+                    <span class="font-medium">{{registrationForm.controls['Apellido'].pristine ? 'Por favor, introduce tu'
+                        +
+                        'Apellido.' : registrationForm.controls['Apellido'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
+                    {{registrationForm.controls['Apellido'].pristine ? '' : registrationForm.controls['Apellido'].invalid ?
+                    'Apellido incorrecto :(' : 'Apellido correcto :)'}}
+                </p>
+            </div>
+
             <!--rol-->
             <label for="countries"
                 [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
