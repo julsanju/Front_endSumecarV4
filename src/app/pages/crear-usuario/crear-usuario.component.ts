@@ -25,6 +25,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class CrearUsuarioComponent implements OnInit {
+  products: any[] | undefined;
   registrationForm: FormGroup;
   UpdateForm: FormGroup;
   dataSource: Empleado[] = [];
@@ -45,6 +46,8 @@ export class CrearUsuarioComponent implements OnInit {
   empleadoActual: Empleado | null = null;
   showToast = false;
   showEditar = false;
+  //loading 
+  isLoading: boolean = true;
   //variables para departamentos y ciudades
   departamentos: DepartamentoCiudad[] = [];
   ciudades: DepartamentoCiudad[] = [];
@@ -91,6 +94,7 @@ export class CrearUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos de empleados
+    this.products = Array.from({ length: 5 }).map((_, i) => `Item #${i}`);
     this.servicioUsuarios.obtenerEmpleado().subscribe(
       (response) => {
         this.dataSource = response;

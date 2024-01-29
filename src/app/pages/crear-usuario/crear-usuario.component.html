@@ -1,783 +1,714 @@
 <section class="container px-4 mx-auto" style="height: 100vh !important; margin-top: 60px;">
-
-    <!--alert succesfull para la creacion de usuario-->
-    <div [ngClass]="getSuccesAlertClasses()" id="alert-border-3"
-        class="fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 rounded mr-5"
-        role="alert">
-        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-            viewBox="0 0 20 20">
+  <!--alert succesfull para la creacion de usuario-->
+  <div [ngClass]="getSuccesAlertClasses()" id="alert-border-3"
+    class="fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 rounded mr-5"
+    role="alert">
+    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+      viewBox="0 0 20 20">
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+    </svg>
+    <div class="ms-3 text-sm font-medium">
+      <span class="font-bold"> Carga exitosa!</span> Empelado creado con exito :)
+    </div>
+    <button type="button"
+      class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+      data-dismiss-target="#alert-border-3" aria-label="Close">
+      <span class="sr-only">Dismiss</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+    </button>
+  </div>
+  <!--danger alert para la creacion de usuario-->
+  <div [ngClass]="getDangerAlertClasses()" id="danger-alert"
+    class=" fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg mr-9 bg-red-50 dark:bg-gray-800 dark:text-red-400"
+    role="alert">
+    <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor" viewBox="0 0 20 20">
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+    </svg>
+    <span class="sr-only">Info</span>
+    <div>
+      <span class="font-bold">Registro Incorrecto :( <br> </span> {{ this.errorMessage?.Message}}
+    </div>
+    <button type="button"
+      class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
+      data-dismiss-target="#danger-alert" aria-label="Close">
+      <span class="sr-only">Dismiss</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+    </button>
+  </div>
+  <!--alert succesful para modificar usuario-->
+  <div [ngClass]="getEditAlertClasses()" id="alert-border-3"
+    class="fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 rounded mr-5"
+    role="alert">
+    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+      viewBox="0 0 20 20">
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+    </svg>
+    <div class="ms-3 text-sm font-medium">
+      Carga Exitosa! <span class="font-semibold hover:no-underline">El empleado ha sido modificado correctamente
+        :). </span>
+    </div>
+  </div>
+  <!--finalizacion de alerts-->
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div>
+      <div class="flex items-center gap-x-3">
+        <h2 class="text-lg font-medium text-gray-800 dark:text-white">Usuarios</h2>
+        <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">240
+          usuarios</span>
+      </div>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Usuarios creados :)</p>
+    </div>
+    <div class="flex items-center mt-4 gap-x-3">
+      <button
+        class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_3098_154395)">
             <path
-                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832"
+              stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_3098_154395">
+              <rect width="20" height="20" fill="white" />
+            </clipPath>
+          </defs>
         </svg>
-        <div class="ms-3 text-sm font-medium">
-            <span class="font-bold"> Carga exitosa!</span> Empelado creado con exito :)
-        </div>
-        <button type="button"
-            class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
-            data-dismiss-target="#alert-border-3" aria-label="Close">
-            <span class="sr-only">Dismiss</span>
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-        </button>
-    </div>
-
-
-    <!--danger alert para la creacion de usuario-->
-    <div [ngClass]="getDangerAlertClasses()" id="danger-alert"
-        class=" fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg mr-9 bg-red-50 dark:bg-gray-800 dark:text-red-400"
-        role="alert">
-        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor" viewBox="0 0 20 20">
-            <path
-                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+        <span>Export</span>
+      </button>
+      <button
+        class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600"
+        data-drawer-target="drawer-contact" data-drawer-show="drawer-contact" aria-controls="drawer-contact">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <span class="sr-only">Info</span>
-        <div>
-            <span class="font-bold">Registro Incorrecto :( <br> </span> {{ this.errorMessage?.Message}}
-        </div>
-
-        <button type="button"
-            class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
-            data-dismiss-target="#danger-alert" aria-label="Close">
-            <span class="sr-only">Dismiss</span>
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-        </button>
+        <span>Agregar usuario</span>
+      </button>
     </div>
+  </div>
+  <!--alerta de usuario escogido-->
+  <div class="flex flex-col mt-6">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
 
-
-    <!--alert succesful para modificar usuario-->
-    <div [ngClass]="getEditAlertClasses()" id="alert-border-3"
-        class="fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 rounded mr-5"
-        role="alert">
-        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-            viewBox="0 0 20 20">
-            <path
-                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-        </svg>
-
-        <div class="ms-3 text-sm font-medium">
-            Carga Exitosa! <span class="font-semibold hover:no-underline">El empleado ha sido modificado correctamente
-                :). </span>
-        </div>
-    </div>
-
-    <!--finalizacion de alerts-->
-
-    <div class="sm:flex sm:items-center sm:justify-between">
-        <div>
-            <div class="flex items-center gap-x-3">
-                <h2 class="text-lg font-medium text-gray-800 dark:text-white">Usuarios</h2>
-
-                <span
-                    class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">240
-                    usuarios</span>
-            </div>
-
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Usuarios creados :)</p>
-        </div>
-
-
-        <div class="flex items-center mt-4 gap-x-3">
-            <button
-                class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_3098_154395)">
-                        <path
-                            d="M13.3333 13.3332L9.99997 9.9999M9.99997 9.9999L6.66663 13.3332M9.99997 9.9999V17.4999M16.9916 15.3249C17.8044 14.8818 18.4465 14.1806 18.8165 13.3321C19.1866 12.4835 19.2635 11.5359 19.0351 10.6388C18.8068 9.7417 18.2862 8.94616 17.5555 8.37778C16.8248 7.80939 15.9257 7.50052 15 7.4999H13.95C13.6977 6.52427 13.2276 5.61852 12.5749 4.85073C11.9222 4.08295 11.104 3.47311 10.1817 3.06708C9.25943 2.66104 8.25709 2.46937 7.25006 2.50647C6.24304 2.54358 5.25752 2.80849 4.36761 3.28129C3.47771 3.7541 2.70656 4.42249 2.11215 5.23622C1.51774 6.04996 1.11554 6.98785 0.935783 7.9794C0.756025 8.97095 0.803388 9.99035 1.07431 10.961C1.34523 11.9316 1.83267 12.8281 2.49997 13.5832"
-                            stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_3098_154395">
-                            <rect width="20" height="20" fill="white" />
-                        </clipPath>
-                    </defs>
-                </svg>
-
-                <span>Export</span>
-            </button>
-
-            <button
-                class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600"
-                data-drawer-target="drawer-contact" data-drawer-show="drawer-contact" aria-controls="drawer-contact">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-
-                <span>Agregar usuario</span>
-            </button>
-        </div>
-    </div>
-
-    <!--alerta de usuario escogido-->
-
-
-
-
-
-    <div class="flex flex-col mt-6">
-        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                            <tr>
-                                <th scope="col"
-                                    class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <button class="flex items-center gap-x-3 focus:outline-none">
-                                        <span>Nombre</span>
-
-                                        <svg class="h-3" viewBox="0 0 10 11" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z"
-                                                fill="currentColor" stroke="currentColor" stroke-width="0.1" />
-                                            <path
-                                                d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z"
-                                                fill="currentColor" stroke="currentColor" stroke-width="0.1" />
-                                            <path
-                                                d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z"
-                                                fill="currentColor" stroke="currentColor" stroke-width="0.3" />
-                                        </svg>
-                                    </button>
-                                </th>
-
-                                <th scope="col"
-                                    class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Usuarios
-                                </th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Contraseña</th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Identificacion
-                                </th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Telefono</th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Direccion</th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Rol</th>
-
-                                <th scope="col" class="relative py-3.5 px-4">
-                                    <span class="sr-only">Edit</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                            @for (row of getPaginatedData();track row) {
-                            <tr>
-                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                    <div>
-                                        <h2 class="font-medium text-gray-800 dark:text-white uppercase">{{row.nombre}}
-                                        </h2>
-                                        <p class="text-gray-500 dark:text-gray-400">{{row.correo}}</p>
-                                    </div>
-                                </td>
-                                <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                    <div
-                                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        {{row.usuario}}
-                                    </div>
-                                </td>
-
-                                <td class="px-4 py-4 text-sm whitespace-nowrap uppercase">
-                                    <div
-                                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        {{row.contrasena}}
-                                    </div>
-                                </td>
-
-                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                    <div
-                                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        {{row.identificacion}}
-                                    </div>
-                                </td>
-                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                    <div
-                                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        {{row.telefono}}
-                                    </div>
-                                </td>
-
-                                <td class="px-4 py-4 text-sm whitespace-nowrap uppercase">
-                                    <div
-                                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        {{row.ubicacion}}
-                                    </div>
-                                </td>
-
-                                <td class="px-4 py-4 text-sm whitespace-nowrap uppercase">
-                                    <div
-                                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        {{row.rol}}
-                                    </div>
-                                </td>
-
-                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-
-                                    <div class="group relative">
-                                        <button (click)="EmpleadoSeleccionado(row); abrirModificarEmpleado()"
-                                            class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
-                                            data-drawer-target="drawer-contact" data-drawer-show="drawer-contact"
-                                            aria-controls="drawer-contact">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="#b9bcc3" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                                            </svg>
-                                        </button>
-                                        <span
-                                            class="absolute -top-14 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border border-gray-300 bg-white py-2 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100">Editar
-                                            <span> </span></span>
-                                    </div>
-                                </td>
-                            </tr>
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
-        <div class="text-sm text-gray-500 dark:text-gray-400">
-            <div>
-                <p class="text-sm text-gray-700 dark:text-gray-400">
-                    Mostrando
-                    <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
-                    a
-                    <span class="font-medium">{{ getEndIndex() }}</span>
-                    de
-                    <span class="font-medium">{{ dataSource.length }}</span>
-                    resultados
-                </p>
-            </div>
-
-        </div>
-
-        <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-            <a (click)="onPageChange(currentPage - 1)"
-                class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                </svg>
-
-                <span>
-                    Anterior
-                </span>
-            </a>
-
-            <a (click)="onPageChange(currentPage + 1)"
-                class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                <span>
-                    Siguiente
-                </span>
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                </svg>
-            </a>
-
-        </div>
-    </div>
-
-    <!--drawner para el formulario de la creacion de usuario-->
-    <div id="drawer-contact"
-        class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
-        tabindex="-1" aria-labelledby="drawer-contact-label">
-        <h5 id="drawer-label"
-            class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
-
-            <svg class="w-5 h-5 me-2.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="currentColor">
-                <path
-                    d="M8.5 12C10.9853 12 13 9.98528 13 7.5C13 5.01472 10.9853 3 8.5 3C6.01472 3 4 5.01472 4 7.5C4 9.98528 6.01472 12 8.5 12Z"
-                    fill="#6b7280" />
-                <path
-                    d="M10 13H7C5.67441 13.0016 4.40356 13.5289 3.46622 14.4662C2.52888 15.4036 2.00159 16.6744 2 18V20C2 20.2652 2.10536 20.5196 2.29289 20.7071C2.48043 20.8946 2.73478 21 3 21H14C14.2652 21 14.5196 20.8946 14.7071 20.7071C14.8946 20.5196 15 20.2652 15 20V18C14.9984 16.6744 14.4711 15.4036 13.5338 14.4662C12.5964 13.5289 11.3256 13.0016 10 13Z"
-                    fill="#6b7280" />
-                <path
-                    d="M21 10H19V8C19 7.73478 18.8946 7.48043 18.7071 7.29289C18.5196 7.10536 18.2652 7 18 7C17.7348 7 17.4804 7.10536 17.2929 7.29289C17.1054 7.48043 17 7.73478 17 8V10H15C14.7348 10 14.4804 10.1054 14.2929 10.2929C14.1054 10.4804 14 10.7348 14 11C14 11.2652 14.1054 11.5196 14.2929 11.7071C14.4804 11.8946 14.7348 12 15 12H17V14C17 14.2652 17.1054 14.5196 17.2929 14.7071C17.4804 14.8946 17.7348 15 18 15C18.2652 15 18.5196 14.8946 18.7071 14.7071C18.8946 14.5196 19 14.2652 19 14V12H21C21.2652 12 21.5196 11.8946 21.7071 11.7071C21.8946 11.5196 22 11.2652 22 11C22 10.7348 21.8946 10.4804 21.7071 10.2929C21.5196 10.1054 21.2652 10 21 10Z"
-                    fill="#6b7280" />
-            </svg>
-            Registro de usuarios :)
-        </h5>
-        <button type="button" data-drawer-hide="drawer-contact" aria-controls="drawer-contact"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-            <span class="sr-only">Close menu</span>
-        </button>
-        <form [formGroup]="registrationForm" class="mb-6">
-            <!--identificacion-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Identificacion'].valid}">
-                <label for="subject"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Identificacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Identificacion'].valid}"
-                    class="block mb-2 text-sm font-medium">Identificacion</label>
-                <input type="text" id="subject" formControlName="Identificacion"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Identificacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Identificacion'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
-                <p class="mt-2 text-sm"
-                    [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
-                        'introduce tu identificación.' : registrationForm.controls['Identificacion'].invalid ? 'Oops!' :
-                        '¡Excelente! '}}</span> {{registrationForm.controls['Identificacion'].pristine ? '' :
-                    registrationForm.controls['Identificacion'].invalid ? 'Identificacion incorrecta :(' :
-                    'Identificación correcta :)'}}
-                </p>
-            </div>
-
-            <!--nombre-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Nombre'].valid}">
-                <label for="subject"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Nombre'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Nombre'].valid}"
-                    class="block mb-2 text-sm font-medium">Nombre</label>
-                <input type="text" id="subject" formControlName="Nombre"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Nombre'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Nombre'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
-                <p class="mt-2 text-sm"
-                    [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Nombre'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Nombre'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Nombre'].pristine ? 'Por favor, introduce tu'
-                        +
-                        'Nombre.' : registrationForm.controls['Nombre'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
-                    {{registrationForm.controls['Nombre'].pristine ? '' : registrationForm.controls['Nombre'].invalid ?
-                    'Nombre incorrecto :(' : 'Nombre correcto :)'}}
-                </p>
-            </div>
-
-            <!--apellido-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
-                <label for="subject"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Apellido'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Apellido'].valid}"
-                    class="block mb-2 text-sm font-medium">Apellido</label>
-                <input type="text" id="subject" formControlName="Apellido"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Apellido'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Apellido'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
-                <p class="mt-2 text-sm"
-                    [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Apellido'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Apellido'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Apellido'].pristine ? 'Por favor, introduce tu'
-                        +
-                        'Apellido.' : registrationForm.controls['Apellido'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
-                    {{registrationForm.controls['Apellido'].pristine ? '' : registrationForm.controls['Apellido'].invalid ?
-                    'Apellido incorrecto :(' : 'Apellido correcto :)'}}
-                </p>
-            </div>
-
-            <!--rol-->
-            <label for="countries"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
-                class="block mb-2 text-sm font-medium">Rol</label>
-            <select id="countries" formControlName="Rol"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Rol'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Rol'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5">
-                <option selected disabled>Seleccionar:</option>
-                <option value="admin">Admin</option>
-                <option value="empleado">Empleado</option>
-            </select>
-
-            <!--departamento-->
-            <label for="countries"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
-                class="block mb-2 text-sm font-medium">Departamento</label>
-
-            <select id="countries" formControlName="Departamento"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Departamento'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Departamento'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5">
-                <option selected disabled>Seleccionar:</option>
-                @for (d of departamentos;track d) {
-                <option [value]="d.idDepartamento">{{d.departamento}}</option>
-                }
-            </select>
-
-            <!--ciudad-->
-            <label for="countries"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
-                class="block mb-2 text-sm font-medium">Ciudad</label>
-            <select id="countries" formControlName="Ciudad"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ciudad'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ciudad'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5">
-                <option selected disabled>Seleccionar:</option>
-                @for(c of ciudades; track c){
-                <option [value]="c.idCiudad">{{c.ciudad}}</option>
-                }
-            </select>
-            <!--telefono-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
-                <label for="subject"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Telefono'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Telefono'].valid}"
-                    class="block mb-2 text-sm font-medium">Telefono</label>
-                <input type="text" id="subject" formControlName="Telefono"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Telefono'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Telefono'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" required>
-                <p class="mt-2 text-sm"
-                    [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Telefono'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Telefono'].valid}">
-                    <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce '
-                        +
-                        'tu telefono.' : registrationForm.controls['Telefono'].invalid ? 'Oops!' :
-                        '¡Excelente!'}}</span> {{registrationForm.controls['Telefono'].pristine ? '' :
-                    registrationForm.controls['Telefono'].invalid ? 'Telefono incorrecto :(' : 'Telefono correcto :)'}}
-                </p>
-            </div>
-            <!--direccion-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Ubicacion'].valid}">
-                <label for="subject"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ubicacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}"
-                    class="block mb-2 text-sm font-medium">Ubicacion</label>
-                <input type="text" id="subject" formControlName="Ubicacion"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ubicacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ubicacion'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="Diag. #" required>
-                <p class="mt-2 text-sm"
-                    [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Ubicacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}">
-
-                    <span class="font-medium">{{registrationForm.controls['Ubicacion'].pristine ? 'Por favor, introduce'
-                        +
-                        'tu ubicacion.' : registrationForm.controls['Ubicacion'].invalid ? 'Oops!' :
-                        '¡Excelente!'}}</span> {{registrationForm.controls['Ubicacion'].pristine ? '' :
-                    registrationForm.controls['Ubicacion'].invalid ? 'Ubicacion incorrecta :(' : 'Ubicacion correcta
-                    :)'}}
-                </p>
-            </div>
-            <!--correo-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Correo'].valid}">
-                <label for="website-admin"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Correo'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Correo'].valid}"
-                    class="block text-sm font-medium">Correo</label>
-                <div class="flex">
-                    <span class="inline-flex items-center px-3 text-sm"
-                        [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Correo'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Correo'].valid}">
-                        <svg class="w-5 h-5"
-                            [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Correo'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Correo'].valid}"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path
-                                d="M12.036 12.278L21.294 4.488C20.9354 4.17501 20.476 4.00176 20 4H4C3.49469 4.00097 3.00873 4.19442 2.641 4.541L12.036 12.278Z"
-                                fill="currentColor" />
-                            <path
-                                d="M13.241 13.817C12.8804 14.0923 12.4397 14.2422 11.986 14.244C11.5579 14.2449 11.1412 14.1062 10.799 13.849L2 6.6V18C2 18.5304 2.21071 19.0391 2.58579 19.4142C2.96086 19.7893 3.46957 20 4 20H20C20.5304 20 21.0391 19.7893 21.4142 19.4142C21.7893 19.0391 22 18.5304 22 18V6.5L13.241 13.817Z"
-                                fill="currentColor" />
-                        </svg>
-                    </span>
-                    <input type="text" id="email-address-icon" formControlName="Correo"
-                        [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Correo'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Correo'].valid}"
-                        class="text-sm rounded-r-lg block w-full p-2.5" placeholder="name@flowbite.com">
-                </div>
-            </div>
-
-            <!--username-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Usuario'].valid}">
-                <label for="website-admin"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Usuario'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Usuario'].valid}"
-                    class="block mb-2 text-sm font-medium">Username</label>
-                <div class="flex">
-                    <span class="inline-flex items-center px-3 text-sm"
-                        [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Usuario'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Usuario'].valid}">
-                        <svg class="w-5 h-5"
-                            [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Usuario'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Usuario'].valid}"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-                        </svg>
-                    </span>
-                    <input type="text" id="website-admin" formControlName="Usuario"
-                        class="text-sm rounded-r-lg block w-full p-2.5"
-                        [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Usuario'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Usuario'].valid}"
-                        placeholder="Bonnie Green">
-                </div>
-            </div>
-
-
-            <!--password-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
-                <label for="email-address-icon"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Contrasena'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Contrasena'].valid}"
-                    class="block mb-2 text-sm font-medium">Contraseña</label>
-                <div class="flex">
-                    <span class="inline-flex items-center px-3 text-sm"
-                        [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Contrasena'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}">
-                        <svg class="w-5 h-5"
-                            [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Contrasena'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Contrasena'].valid}"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M18 9H16.5V6.5C16.5 5.30653 16.0259 4.16193 15.182 3.31802C14.3381 2.47411 13.1935 2 12 2C10.8065 2 9.66193 2.47411 8.81802 3.31802C7.97411 4.16193 7.5 5.30653 7.5 6.5V9H6C5.46957 9 4.96086 9.21071 4.58579 9.58579C4.21071 9.96086 4 10.4696 4 11V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V11C20 10.4696 19.7893 9.96086 19.4142 9.58579C19.0391 9.21071 18.5304 9 18 9ZM13 17C13 17.2652 12.8946 17.5196 12.7071 17.7071C12.5196 17.8946 12.2652 18 12 18C11.7348 18 11.4804 17.8946 11.2929 17.7071C11.1054 17.5196 11 17.2652 11 17V14C11 13.7348 11.1054 13.4804 11.2929 13.2929C11.4804 13.1054 11.7348 13 12 13C12.2652 13 12.5196 13.1054 12.7071 13.2929C12.8946 13.4804 13 13.7348 13 14V17ZM14.5 9H9.5V6.5C9.5 5.83696 9.76339 5.20107 10.2322 4.73223C10.7011 4.26339 11.337 4 12 4C12.663 4 13.2989 4.26339 13.7678 4.73223C14.2366 5.20107 14.5 5.83696 14.5 6.5V9Z" />
-                        </svg>
-                    </span>
-                    <input type="password" id="website-admin" formControlName="Contrasena"
-                        class="text-sm rounded-r-lg block w-full p-2.5"
-                        [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}"
-                        placeholder="••••••••••">
-                </div>
-            </div>
-
-
-            <!--repetir password-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
-                <label for="email-address-icon"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Contrasena'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Contrasena'].valid}"
-                    class="block mb-2 text-sm font-medium">Contraseña</label>
-                <div class="flex">
-                    <span class="inline-flex items-center px-3 text-sm"
-                        [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Contrasena'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}">
-                        <svg class="w-5 h-5"
-                            [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Contrasena'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Contrasena'].valid}"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M18 9H16.5V6.5C16.5 5.30653 16.0259 4.16193 15.182 3.31802C14.3381 2.47411 13.1935 2 12 2C10.8065 2 9.66193 2.47411 8.81802 3.31802C7.97411 4.16193 7.5 5.30653 7.5 6.5V9H6C5.46957 9 4.96086 9.21071 4.58579 9.58579C4.21071 9.96086 4 10.4696 4 11V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V11C20 10.4696 19.7893 9.96086 19.4142 9.58579C19.0391 9.21071 18.5304 9 18 9ZM13 17C13 17.2652 12.8946 17.5196 12.7071 17.7071C12.5196 17.8946 12.2652 18 12 18C11.7348 18 11.4804 17.8946 11.2929 17.7071C11.1054 17.5196 11 17.2652 11 17V14C11 13.7348 11.1054 13.4804 11.2929 13.2929C11.4804 13.1054 11.7348 13 12 13C12.2652 13 12.5196 13.1054 12.7071 13.2929C12.8946 13.4804 13 13.7348 13 14V17ZM14.5 9H9.5V6.5C9.5 5.83696 9.76339 5.20107 10.2322 4.73223C10.7011 4.26339 11.337 4 12 4C12.663 4 13.2989 4.26339 13.7678 4.73223C14.2366 5.20107 14.5 5.83696 14.5 6.5V9Z" />
-                        </svg>
-                    </span>
-                    <input type="password" id="website-admin" formControlName="Contrasena"
-                        class="text-sm rounded-r-lg block w-full p-2.5"
-                        [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}"
-                        placeholder="••••••••••">
-                </div>
-
-            </div>
-
-            <div class="mb-6 relative" [ngClass]="{'mb-5': registrationForm.controls['Imagen'].valid}">
-                <ng-container *ngIf="selectedImages.length === 0; else selectedImagesSection">
-                    <!-- Mostrar el campo para subir la imagen si no hay imágenes seleccionadas -->
-                    <label for="dropzone-file"
-                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                            </svg>
-                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
-                                    para subir imagen o tomar foto</span></p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)</p>
-                        </div>
-                        <input #fileInput id="dropzone-file" type="file" class="hidden" (change)="onFileChange($event)"
-                            accept="image/*" multiple  formControlName="Imagen"/>
-                    </label>
-                </ng-container>
-
-                <!-- Mostrar las imágenes seleccionadas -->
-                <ng-template #selectedImagesSection>
-                    <div class="selected-images top-0 left-0 w-full h-full bg-white p-4">
-                        <div *ngFor="let image of selectedImages" class="mb-2">
-                            <img [src]="image" alt="Selected Image" class="max-w-full h-auto rounded-lg" />
-                        </div>
-                        <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
-                            selección</button>
-                    </div>
-                </ng-template>
-            </div>
-
-            <!--<div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
-                <div class="flex items-center justify-center w-full">
-                    <label for="dropzone-file"
-                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                            </svg>
-                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
-                                    para subir imagen o tomar foto</span></p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)
-                            </p>
-                        </div>
-                        <input #fileInput id="dropzone-file" type="file" class="hidden" accept="image/*" multiple
-                            (change)="onFileChange($event)" />
-
-                    </label>
-                    
-                    <div class="selected-images  top-0 left-0 w-full h-full bg-white p-4" *ngIf="selectedImages.length > 0">
-                        <div *ngFor="let image of selectedImages" class="mb-2">
-                            <img [src]="image" alt="Selected Image" class="max-w-full h-auto" />
-                        </div>
-                        <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
-                            selección</button>
-                    </div>
-                </div>
-
-            </div>-->
-            <!-- En tu archivo .html -->
-            <!--(click)="" -->
-            <button type="button" (click)="crearUsuario();" [disabled]="cargando"
-                class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
-                @if(!cargando){
-                <span>Crear usuario</span>
-                }
-                @if(cargando){
-                <span class="inline-flex items-center">
-
-                    <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
-                        viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                            fill="#E5E7EB" />
-                        <path
-                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                            fill="currentColor" />
+          @if(isLoading){
+            <div class="card">
+              <p-table [value]="products" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th>Code</th>
+                          <th>Name</th>
+                          <th>Category</th>
+                          <th>Quantity</th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product>
+                      <tr>
+                          <td><p-skeleton></p-skeleton></td>
+                          <td><p-skeleton></p-skeleton></td>
+                          <td><p-skeleton></p-skeleton></td>
+                          <td><p-skeleton></p-skeleton></td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+          </div>
+          }
+          @if(!isLoading){
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th scope="col"
+                  class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <button class="flex items-center gap-x-3 focus:outline-none">
+                    <span>Nombre</span>
+                    <svg class="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z"
+                        fill="currentColor" stroke="currentColor" stroke-width="0.1" />
+                      <path
+                        d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z"
+                        fill="currentColor" stroke="currentColor" stroke-width="0.1" />
+                      <path
+                        d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z"
+                        fill="currentColor" stroke="currentColor" stroke-width="0.3" />
                     </svg>
-                    Loading...
-                </span>
-                }
-            </button>
-        </form>
-    </div>
-
-    <!--drawer para editar informacion del usuario-->
-    @if(showEditar){
-    <!-- Fondo desvanecido -->
-    <div id="drawer-overlay" class="fixed top-0 left-0 z-30 w-screen h-screen bg-black opacity-50"
-        [ngClass]="{'hidden': !showEditar}" (click)="cerrarModificarEmpleado()"></div>
-
-    <!-- Drawer -->
-    @for (empleado of empleadoSeleccionado; track empleadoSeleccionado) {
-    <div id="drawer-edit" class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto bg-white w-80 dark:bg-gray-800"
-        tabindex="-1" aria-labelledby="drawer-edit-label" [ngClass]="{'hidden': !showEditar}">
-        <h5 id="drawer-label"
-            class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
-            <svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                viewBox="0 0 20 16">
-                <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-                <path
-                    d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-            </svg>Modificar usuarios
-        </h5>
-        <button type="button" data-drawer-hide="drawer-edit" aria-controls="drawer-edit"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
-            (click)="cerrarModificarEmpleado()">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-            <span class="sr-only">Close menu</span>
-        </button>
-        <form class="mb-6" [formGroup]="UpdateForm">
-            <div class="mb-6">
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Nombre</label>
-
-                    <input type="text" placeholder="John Doe"
-                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                        formControlName="Nombre" />
-                </div>
-
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Correo</label>
-
-                    <input type="text" placeholder="John Doe" formControlName="Correo"
-                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                </div>
-            </div>
-
-            <div class="mb-6">
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Usuario</label>
-
-                    <input type="text" placeholder="John Doe" formControlName="Usuario"
-                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                </div>
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Contraseña</label>
-
-                    <input type="text" placeholder="John Doe" formControlName="Contrasena"
-                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                </div>
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Identificacion</label>
-
-                    <input type="text" placeholder="John Doe" formControlName="Identificacion"
-                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                </div>
-            </div>
-
-
-            <div class="mb-6">
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Telefono</label>
-
-                    <input type="text" placeholder="John Doe" formControlName="Telefono"
-                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                </div>
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Direccion</label>
-
-                    <input type="text" placeholder="John Doe" formControlName="Ubicacion"
-                        class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                </div>
-            </div>
-
-
-            <div class="mb-6">
-
-                <div>
-                    <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Rol</label>
-                    <select id="countries" formControlName="Rol"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected disabled class="capitalize">{{empleado.rol}}</option>
-                        <option value="admin">Admin</option>
-                        <option value="empleado">Empleado</option>
-                    </select>
-                </div>
-            </div>
-
-            <button type="button" (click)="EditarEmpleado()" [disabled]="cargando"
-                class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
-                @if(!cargando){
-
-                <span class="flex inline-flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  </button>
+                </th>
+                <th scope="col"
+                  class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  Usuarios
+                </th>
+                <th scope="col"
+                  class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  Contraseña</th>
+                <th scope="col"
+                  class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  Identificacion
+                </th>
+                <th scope="col"
+                  class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  Telefono</th>
+                <th scope="col"
+                  class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  Direccion</th>
+                <th scope="col"
+                  class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  Rol</th>
+                <th scope="col" class="relative py-3.5 px-4">
+                  <span class="sr-only">Edit</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+              @for (row of getPaginatedData();track row) {
+              <tr>
+                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                  <div>
+                    <h2 class="font-medium text-gray-800 dark:text-white uppercase">{{row.nombre}}
+                    </h2>
+                    <p class="text-gray-500 dark:text-gray-400">{{row.correo}}</p>
+                  </div>
+                </td>
+                <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                  <div
+                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                    {{row.usuario}}
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap uppercase">
+                  <div
+                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                    {{row.contrasena}}
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                  <div
+                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                    {{row.identificacion}}
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                  <div
+                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                    {{row.telefono}}
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap uppercase">
+                  <div
+                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                    {{row.ubicacion}}
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap uppercase">
+                  <div
+                    class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                    {{row.rol}}
+                  </div>
+                </td>
+                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                  <div class="group relative">
+                    <button (click)="EmpleadoSeleccionado(row); abrirModificarEmpleado()"
+                      class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
+                      data-drawer-target="drawer-contact" data-drawer-show="drawer-contact"
+                      aria-controls="drawer-contact">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#b9bcc3" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                    </svg>
-                    <span class="text-lg text-gray-100 dark:text-white">Actualizar</span>
-
-                </span>
-
-                }
-                @if(cargando){
-                <span class="inline-flex items-center">
-
-                    <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
-                        viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                            fill="#E5E7EB" />
-                        <path
-                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                            fill="currentColor" />
-                    </svg>
-                    Loading...
-                </span>
-                }
-            </button>
-
-        </form>
+                          d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                      </svg>
+                    </button>
+                    <span
+                      class="absolute -top-14 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border border-gray-300 bg-white py-2 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100">Editar
+                      <span> </span></span>
+                  </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          }
+        </div>
+      </div>
     </div>
-    }
-    }
+  </div>
+  <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+      <div>
+        <p class="text-sm text-gray-700 dark:text-gray-400">
+          Mostrando
+          <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
+          a
+          <span class="font-medium">{{ getEndIndex() }}</span>
+          de
+          <span class="font-medium">{{ dataSource.length }}</span>
+          resultados
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
+      <a (click)="onPageChange(currentPage - 1)"
+        class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-5 h-5 rtl:-scale-x-100">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
+        </svg>
+        <span>
+          Anterior
+        </span>
+      </a>
+      <a (click)="onPageChange(currentPage + 1)"
+        class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+        <span>
+          Siguiente
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-5 h-5 rtl:-scale-x-100">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+  <!--drawner para el formulario de la creacion de usuario-->
+  <div id="drawer-contact"
+    class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
+    tabindex="-1" aria-labelledby="drawer-contact-label">
+    <h5 id="drawer-label"
+      class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+      <svg class="w-5 h-5 me-2.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        fill="currentColor">
+        <path
+          d="M8.5 12C10.9853 12 13 9.98528 13 7.5C13 5.01472 10.9853 3 8.5 3C6.01472 3 4 5.01472 4 7.5C4 9.98528 6.01472 12 8.5 12Z"
+          fill="#6b7280" />
+        <path
+          d="M10 13H7C5.67441 13.0016 4.40356 13.5289 3.46622 14.4662C2.52888 15.4036 2.00159 16.6744 2 18V20C2 20.2652 2.10536 20.5196 2.29289 20.7071C2.48043 20.8946 2.73478 21 3 21H14C14.2652 21 14.5196 20.8946 14.7071 20.7071C14.8946 20.5196 15 20.2652 15 20V18C14.9984 16.6744 14.4711 15.4036 13.5338 14.4662C12.5964 13.5289 11.3256 13.0016 10 13Z"
+          fill="#6b7280" />
+        <path
+          d="M21 10H19V8C19 7.73478 18.8946 7.48043 18.7071 7.29289C18.5196 7.10536 18.2652 7 18 7C17.7348 7 17.4804 7.10536 17.2929 7.29289C17.1054 7.48043 17 7.73478 17 8V10H15C14.7348 10 14.4804 10.1054 14.2929 10.2929C14.1054 10.4804 14 10.7348 14 11C14 11.2652 14.1054 11.5196 14.2929 11.7071C14.4804 11.8946 14.7348 12 15 12H17V14C17 14.2652 17.1054 14.5196 17.2929 14.7071C17.4804 14.8946 17.7348 15 18 15C18.2652 15 18.5196 14.8946 18.7071 14.7071C18.8946 14.5196 19 14.2652 19 14V12H21C21.2652 12 21.5196 11.8946 21.7071 11.7071C21.8946 11.5196 22 11.2652 22 11C22 10.7348 21.8946 10.4804 21.7071 10.2929C21.5196 10.1054 21.2652 10 21 10Z"
+          fill="#6b7280" />
+      </svg>
+      Registro de usuarios :)
+    </h5>
+    <button type="button" data-drawer-hide="drawer-contact" aria-controls="drawer-contact"
+      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+      <span class="sr-only">Close menu</span>
+    </button>
+    <form [formGroup]="registrationForm" class="mb-6">
+      <!--identificacion-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Identificacion'].valid}">
+        <label for="subject"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Identificacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Identificacion'].valid}"
+          class="block mb-2 text-sm font-medium">Identificacion</label>
+        <input type="text" id="subject" formControlName="Identificacion"
+          [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Identificacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Identificacion'].valid}"
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
+        <p class="mt-2 text-sm"
+          [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
+          <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
+            'introduce tu identificación.' : registrationForm.controls['Identificacion'].invalid ? 'Oops!' :
+            '¡Excelente! '}}</span> {{registrationForm.controls['Identificacion'].pristine ? '' :
+          registrationForm.controls['Identificacion'].invalid ? 'Identificacion incorrecta :(' :
+          'Identificación correcta :)'}}
+        </p>
+      </div>
+      <!--nombre-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Nombre'].valid}">
+        <label for="subject"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Nombre'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Nombre'].valid}"
+          class="block mb-2 text-sm font-medium">Nombre</label>
+        <input type="text" id="subject" formControlName="Nombre"
+          [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Nombre'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Nombre'].valid}"
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
+        <p class="mt-2 text-sm"
+          [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Nombre'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Nombre'].valid}">
+          <span class="font-medium">{{registrationForm.controls['Nombre'].pristine ? 'Por favor, introduce tu'
+            +
+            'Nombre.' : registrationForm.controls['Nombre'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
+          {{registrationForm.controls['Nombre'].pristine ? '' : registrationForm.controls['Nombre'].invalid ?
+          'Nombre incorrecto :(' : 'Nombre correcto :)'}}
+        </p>
+      </div>
+      <!--apellido-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
+        <label for="subject"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Apellido'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Apellido'].valid}"
+          class="block mb-2 text-sm font-medium">Apellido</label>
+        <input type="text" id="subject" formControlName="Apellido"
+          [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Apellido'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Apellido'].valid}"
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
+        <p class="mt-2 text-sm"
+          [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Apellido'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Apellido'].valid}">
+          <span class="font-medium">{{registrationForm.controls['Apellido'].pristine ? 'Por favor, introduce tu'
+            +
+            'Apellido.' : registrationForm.controls['Apellido'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
+          {{registrationForm.controls['Apellido'].pristine ? '' : registrationForm.controls['Apellido'].invalid ?
+          'Apellido incorrecto :(' : 'Apellido correcto :)'}}
+        </p>
+      </div>
+      <!--rol-->
+      <label for="countries"
+        [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
+        class="block mb-2 text-sm font-medium">Rol</label>
+      <select id="countries" formControlName="Rol"
+        [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Rol'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Rol'].valid}"
+        class="text-sm rounded-lg block w-full p-2.5">
+        <option selected disabled>Seleccionar:</option>
+        <option value="admin">Admin</option>
+        <option value="empleado">Empleado</option>
+      </select>
+      <!--departamento-->
+      <label for="countries"
+        [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
+        class="block mb-2 text-sm font-medium">Departamento</label>
+      <select id="countries" formControlName="Departamento"
+        [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Departamento'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Departamento'].valid}"
+        class="text-sm rounded-lg block w-full p-2.5">
+        <option selected disabled>Seleccionar:</option>
+        @for (d of departamentos;track d) {
+        <option [value]="d.idDepartamento">{{d.departamento}}</option>
+        }
+      </select>
+      <!--ciudad-->
+      <label for="countries"
+        [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
+        class="block mb-2 text-sm font-medium">Ciudad</label>
+      <select id="countries" formControlName="Ciudad"
+        [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ciudad'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ciudad'].valid}"
+        class="text-sm rounded-lg block w-full p-2.5">
+        <option selected disabled>Seleccionar:</option>
+        @for(c of ciudades; track c){
+        <option [value]="c.idCiudad">{{c.ciudad}}</option>
+        }
+      </select>
+      <!--telefono-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
+        <label for="subject"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Telefono'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Telefono'].valid}"
+          class="block mb-2 text-sm font-medium">Telefono</label>
+        <input type="text" id="subject" formControlName="Telefono"
+          [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Telefono'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Telefono'].valid}"
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" required>
+        <p class="mt-2 text-sm"
+          [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Telefono'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Telefono'].valid}">
+          <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce '
+            +
+            'tu telefono.' : registrationForm.controls['Telefono'].invalid ? 'Oops!' :
+            '¡Excelente!'}}</span> {{registrationForm.controls['Telefono'].pristine ? '' :
+          registrationForm.controls['Telefono'].invalid ? 'Telefono incorrecto :(' : 'Telefono correcto :)'}}
+        </p>
+      </div>
+      <!--direccion-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Ubicacion'].valid}">
+        <label for="subject"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ubicacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}"
+          class="block mb-2 text-sm font-medium">Ubicacion</label>
+        <input type="text" id="subject" formControlName="Ubicacion"
+          [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ubicacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ubicacion'].valid}"
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="Diag. #" required>
+        <p class="mt-2 text-sm"
+          [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Ubicacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}">
+          <span class="font-medium">{{registrationForm.controls['Ubicacion'].pristine ? 'Por favor, introduce'
+            +
+            'tu ubicacion.' : registrationForm.controls['Ubicacion'].invalid ? 'Oops!' :
+            '¡Excelente!'}}</span> {{registrationForm.controls['Ubicacion'].pristine ? '' :
+          registrationForm.controls['Ubicacion'].invalid ? 'Ubicacion incorrecta :(' : 'Ubicacion correcta
+          :)'}}
+        </p>
+      </div>
+      <!--correo-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Correo'].valid}">
+        <label for="website-admin"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Correo'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Correo'].valid}"
+          class="block text-sm font-medium">Correo</label>
+        <div class="flex">
+          <span class="inline-flex items-center px-3 text-sm"
+            [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Correo'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Correo'].valid}">
+            <svg class="w-5 h-5"
+              [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Correo'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Correo'].valid}"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12.036 12.278L21.294 4.488C20.9354 4.17501 20.476 4.00176 20 4H4C3.49469 4.00097 3.00873 4.19442 2.641 4.541L12.036 12.278Z"
+                fill="currentColor" />
+              <path
+                d="M13.241 13.817C12.8804 14.0923 12.4397 14.2422 11.986 14.244C11.5579 14.2449 11.1412 14.1062 10.799 13.849L2 6.6V18C2 18.5304 2.21071 19.0391 2.58579 19.4142C2.96086 19.7893 3.46957 20 4 20H20C20.5304 20 21.0391 19.7893 21.4142 19.4142C21.7893 19.0391 22 18.5304 22 18V6.5L13.241 13.817Z"
+                fill="currentColor" />
+            </svg>
+          </span>
+          <input type="text" id="email-address-icon" formControlName="Correo"
+            [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Correo'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Correo'].valid}"
+            class="text-sm rounded-r-lg block w-full p-2.5" placeholder="name@flowbite.com">
+        </div>
+      </div>
+      <!--username-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Usuario'].valid}">
+        <label for="website-admin"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Usuario'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Usuario'].valid}"
+          class="block mb-2 text-sm font-medium">Username</label>
+        <div class="flex">
+          <span class="inline-flex items-center px-3 text-sm"
+            [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Usuario'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Usuario'].valid}">
+            <svg class="w-5 h-5"
+              [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Usuario'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Usuario'].valid}"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+            </svg>
+          </span>
+          <input type="text" id="website-admin" formControlName="Usuario"
+            class="text-sm rounded-r-lg block w-full p-2.5"
+            [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Usuario'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Usuario'].valid}"
+            placeholder="Bonnie Green">
+        </div>
+      </div>
+      <!--password-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
+        <label for="email-address-icon"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Contrasena'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Contrasena'].valid}"
+          class="block mb-2 text-sm font-medium">Contraseña</label>
+        <div class="flex">
+          <span class="inline-flex items-center px-3 text-sm"
+            [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Contrasena'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}">
+            <svg class="w-5 h-5"
+              [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Contrasena'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Contrasena'].valid}"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M18 9H16.5V6.5C16.5 5.30653 16.0259 4.16193 15.182 3.31802C14.3381 2.47411 13.1935 2 12 2C10.8065 2 9.66193 2.47411 8.81802 3.31802C7.97411 4.16193 7.5 5.30653 7.5 6.5V9H6C5.46957 9 4.96086 9.21071 4.58579 9.58579C4.21071 9.96086 4 10.4696 4 11V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V11C20 10.4696 19.7893 9.96086 19.4142 9.58579C19.0391 9.21071 18.5304 9 18 9ZM13 17C13 17.2652 12.8946 17.5196 12.7071 17.7071C12.5196 17.8946 12.2652 18 12 18C11.7348 18 11.4804 17.8946 11.2929 17.7071C11.1054 17.5196 11 17.2652 11 17V14C11 13.7348 11.1054 13.4804 11.2929 13.2929C11.4804 13.1054 11.7348 13 12 13C12.2652 13 12.5196 13.1054 12.7071 13.2929C12.8946 13.4804 13 13.7348 13 14V17ZM14.5 9H9.5V6.5C9.5 5.83696 9.76339 5.20107 10.2322 4.73223C10.7011 4.26339 11.337 4 12 4C12.663 4 13.2989 4.26339 13.7678 4.73223C14.2366 5.20107 14.5 5.83696 14.5 6.5V9Z" />
+            </svg>
+          </span>
+          <input type="password" id="website-admin" formControlName="Contrasena"
+            class="text-sm rounded-r-lg block w-full p-2.5"
+            [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}"
+            placeholder="••••••••••">
+        </div>
+      </div>
+      <!--repetir password-->
+      <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
+        <label for="email-address-icon"
+          [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Contrasena'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Contrasena'].valid}"
+          class="block mb-2 text-sm font-medium">Contraseña</label>
+        <div class="flex">
+          <span class="inline-flex items-center px-3 text-sm"
+            [ngClass]="{'bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600': registrationForm.controls['Contrasena'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}">
+            <svg class="w-5 h-5"
+              [ngClass]="{'text-gray-500 dark:text-gray-400': registrationForm.controls['Contrasena'].pristine, 'text-red-500 dark:text-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-500 dark:text-green-400': registrationForm.controls['Contrasena'].valid}"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M18 9H16.5V6.5C16.5 5.30653 16.0259 4.16193 15.182 3.31802C14.3381 2.47411 13.1935 2 12 2C10.8065 2 9.66193 2.47411 8.81802 3.31802C7.97411 4.16193 7.5 5.30653 7.5 6.5V9H6C5.46957 9 4.96086 9.21071 4.58579 9.58579C4.21071 9.96086 4 10.4696 4 11V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V11C20 10.4696 19.7893 9.96086 19.4142 9.58579C19.0391 9.21071 18.5304 9 18 9ZM13 17C13 17.2652 12.8946 17.5196 12.7071 17.7071C12.5196 17.8946 12.2652 18 12 18C11.7348 18 11.4804 17.8946 11.2929 17.7071C11.1054 17.5196 11 17.2652 11 17V14C11 13.7348 11.1054 13.4804 11.2929 13.2929C11.4804 13.1054 11.7348 13 12 13C12.2652 13 12.5196 13.1054 12.7071 13.2929C12.8946 13.4804 13 13.7348 13 14V17ZM14.5 9H9.5V6.5C9.5 5.83696 9.76339 5.20107 10.2322 4.73223C10.7011 4.26339 11.337 4 12 4C12.663 4 13.2989 4.26339 13.7678 4.73223C14.2366 5.20107 14.5 5.83696 14.5 6.5V9Z" />
+            </svg>
+          </span>
+          <input type="password" id="website-admin" formControlName="Contrasena"
+            class="text-sm rounded-r-lg block w-full p-2.5"
+            [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}"
+            placeholder="••••••••••">
+        </div>
+      </div>
+      <div class="mb-6 relative" [ngClass]="{'mb-5': registrationForm.controls['Imagen'].valid}">
+        @if (selectedImages.length === 0) {
+        <!-- Mostrar el campo para subir la imagen si no hay imágenes seleccionadas -->
+        <label for="dropzone-file"
+          class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                para subir imagen o tomar foto</span></p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)</p>
+          </div>
+          <input #fileInput id="dropzone-file" type="file" class="hidden" (change)="onFileChange($event)"
+            accept="image/*" multiple formControlName="Imagen" />
+        </label>
+        } @else {
+        <div class="selected-images top-0 left-0 w-full h-full bg-white p-4">
+          @for (image of selectedImages; track image) {
+          <div class="mb-2">
+            <img [src]="image" alt="Selected Image" class="max-w-full h-auto rounded-lg" />
+          </div>
+          }
+          <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
+            selección</button>
+        </div>
+        }
+        <!-- Mostrar las imágenes seleccionadas -->
+      </div>
+      <!--<div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
+                                                                    <div class="flex items-center justify-center w-full">
+                                                                      <label for="dropzone-file"
+                                                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                                          <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                                              stroke-width="2"
+                                                                              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                                            </svg>
+                                                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                                                                            para subir imagen o tomar foto</span></p>
+                                                                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)
+                                                                            </p>
+                                                                          </div>
+                                                                          <input #fileInput id="dropzone-file" type="file" class="hidden" accept="image/*" multiple
+                                                                            (change)="onFileChange($event)" />
+                                                                          </label>
+                                                                          <div class="selected-images  top-0 left-0 w-full h-full bg-white p-4" *ngIf="selectedImages.length > 0">
+                                                                            <div *ngFor="let image of selectedImages" class="mb-2">
+                                                                              <img [src]="image" alt="Selected Image" class="max-w-full h-auto" />
+                                                                            </div>
+                                                                            <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
+                                                                            selección</button>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>-->
+      <!-- En tu archivo .html -->
+      <!--(click)="" -->
+      <button type="button" (click)="crearUsuario();" [disabled]="cargando"
+        class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
+        @if(!cargando){
+        <span>Crear usuario</span>
+        }
+        @if(cargando){
+        <span class="inline-flex items-center">
+          <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
+            viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="#E5E7EB" />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentColor" />
+          </svg>
+          Loading...
+        </span>
+        }
+      </button>
+    </form>
+  </div>
+  <!--drawer para editar informacion del usuario-->
+  @if(showEditar){
+  <!-- Fondo desvanecido -->
+  <div id="drawer-overlay" class="fixed top-0 left-0 z-30 w-screen h-screen bg-black opacity-50"
+    [ngClass]="{'hidden': !showEditar}" (click)="cerrarModificarEmpleado()"></div>
+  <!-- Drawer -->
+  @for (empleado of empleadoSeleccionado; track empleadoSeleccionado) {
+  <div id="drawer-edit" class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto bg-white w-80 dark:bg-gray-800"
+    tabindex="-1" aria-labelledby="drawer-edit-label" [ngClass]="{'hidden': !showEditar}">
+    <h5 id="drawer-label"
+      class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+      <svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+        viewBox="0 0 20 16">
+        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
+        <path
+          d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
+      </svg>Modificar usuarios
+    </h5>
+    <button type="button" data-drawer-hide="drawer-edit" aria-controls="drawer-edit"
+      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
+      (click)="cerrarModificarEmpleado()">
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+      <span class="sr-only">Close menu</span>
+    </button>
+    <form class="mb-6" [formGroup]="UpdateForm">
+      <div class="mb-6">
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Nombre</label>
+          <input type="text" placeholder="John Doe"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+            formControlName="Nombre" />
+        </div>
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Correo</label>
+          <input type="text" placeholder="John Doe" formControlName="Correo"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+        </div>
+      </div>
+      <div class="mb-6">
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Usuario</label>
+          <input type="text" placeholder="John Doe" formControlName="Usuario"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+        </div>
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Contraseña</label>
+          <input type="text" placeholder="John Doe" formControlName="Contrasena"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+        </div>
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Identificacion</label>
+          <input type="text" placeholder="John Doe" formControlName="Identificacion"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+        </div>
+      </div>
+      <div class="mb-6">
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Telefono</label>
+          <input type="text" placeholder="John Doe" formControlName="Telefono"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+        </div>
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Direccion</label>
+          <input type="text" placeholder="John Doe" formControlName="Ubicacion"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+        </div>
+      </div>
+      <div class="mb-6">
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Rol</label>
+          <select id="countries" formControlName="Rol"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected disabled class="capitalize">{{empleado.rol}}</option>
+            <option value="admin">Admin</option>
+            <option value="empleado">Empleado</option>
+          </select>
+        </div>
+      </div>
+      <button type="button" (click)="EditarEmpleado()" [disabled]="cargando"
+        class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
+        @if(!cargando){
+        <span class="flex inline-flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+          <span class="text-lg text-gray-100 dark:text-white">Actualizar</span>
+        </span>
+        }
+        @if(cargando){
+        <span class="inline-flex items-center">
+          <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
+            viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="#E5E7EB" />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentColor" />
+          </svg>
+          Loading...
+        </span>
+        }
+      </button>
+    </form>
+  </div>
+  }
+  }
 </section>

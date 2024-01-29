@@ -24,7 +24,7 @@ import { PdfInterface } from 'src/app/Interfaces/pdf-interface';
   styleUrl: './productos-sales.component.css'
 })
 export class ProductosSalesComponent implements OnInit {
-
+  
   displayedColumns: string[] = ['codigo', 'articulo', 'laboratorio'];
   dataSource: Productos[] = [];
   dataPDf: PdfInterface[] = [];
@@ -35,6 +35,8 @@ export class ProductosSalesComponent implements OnInit {
   cantidadValue !: number;
   producto_seleccionado: Productos[] = [];
   productoActual: Productos | null = null;
+  //loading 
+  isLoading: boolean = true;
   //modal
   showAlert: boolean = false;
   anchoBarra: number = 0;
@@ -50,9 +52,12 @@ export class ProductosSalesComponent implements OnInit {
   errorMessage: MensajeError | null = null;
   //dawner
   estadoBotones: boolean = false;
-
+  estadoSeleccionarCheck : boolean = false;
+  estadoCheck: boolean = false;
+  estadoEliminarCheck: boolean = false;
   hayProductosSeleccionados: boolean = false;
-
+  estadoBotonesCheck: boolean = true;
+  botonDeshabilitado: boolean = true;
   constructor(private dataServices: DataProductsService,
     private servicio: ProductsServicesService,
     private pdfService: PdfServicesService,
@@ -75,25 +80,31 @@ export class ProductosSalesComponent implements OnInit {
 
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos
-
+    
     this.servicio.obtenerProductos().subscribe(
       (response) => {
         this.dataSource = response;
         this.originalDataSource = response;
+        this.isLoading = false;
       },
       error => {
         console.error('Error obteniendo datos', error);
       }
     );
 
+    
     this.hayProductosSeleccionados = false;
-    if(this.producto_seleccionado.length >= 1){
+    if (this.producto_seleccionado.length >= 1) {
       this.hayProductosSeleccionados = true;
+      
+    }
+    else if(this.producto_seleccionado.length <= 0){
+
     }
 
   }
 
-  
+
   //filtro de productos
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
@@ -143,6 +154,7 @@ export class ProductosSalesComponent implements OnInit {
     this.hayProductosSeleccionados = true;
     setTimeout(() => {
       this.showAlert = false;
+      this.botonDeshabilitado = true;
     }, 1000);
 
   }
@@ -168,9 +180,9 @@ export class ProductosSalesComponent implements OnInit {
 
     this.servicio.confirmarProductos(this.producto_seleccionado, this.username).subscribe(
       response => {
-        
+
         const numero_orden = response && response.hasOwnProperty('numeroOrden') ? response.numeroOrden : '';
-        
+
         this.spinner = false;
 
         Swal.fire('Su producto ha sido confirmado exitosamente!', '', 'success');
@@ -179,10 +191,10 @@ export class ProductosSalesComponent implements OnInit {
 
         this.generatePDF(numero_orden);
         this.generarExcel(numero_orden)
-        this.hayProductosSeleccionados = true; 
+        this.hayProductosSeleccionados = true;
         this.producto_seleccionado = [];
         this.hayProductosSeleccionados = false;
-        
+
       },
       error => {
         console.error("Error:", error);
@@ -203,9 +215,9 @@ export class ProductosSalesComponent implements OnInit {
     );
     this.estadoBotones = true;
   }
-  
+
   //metodo para cancelar los productos seleccionados
-  cancelar(){
+  cancelar() {
     this.cargando = true
     setTimeout(() => {
       // borrar los productos después del tiempo de espera
@@ -213,8 +225,64 @@ export class ProductosSalesComponent implements OnInit {
       this.cargando = false
       this.hayProductosSeleccionados = false
     }, 1000);
-    
+
   }
+  //metodo para poder mostrar los checkbox para seleccionar productos
+  mostrarCheck() {
+    this.estadoSeleccionarCheck = true;
+    this.estadoCheck = true;
+    this.estadoBotonesCheck = false;
+  }
+  //metodo para poder cancelar el mostrar los checkbox de seleccionar productos
+  cancelarCheck() {
+    this.estadoCheck = false;
+    this.estadoEliminarCheck = false;
+    this.estadoBotonesCheck = true;
+    this.estadoSeleccionarCheck = false;
+  }
+  //metodo para eliminar productos del check
+  /*eliminarProducto(idProducto: string) {
+    this.producto_seleccionado = this.producto_seleccionado.filter(producto => producto.codigo !== idProducto);
+  }*/
+  seleccionarProducto(producto: Productos) {
+    producto.seleccionado = !producto.seleccionado;
+  }
+
+  /*cambiarEstadoCheck(event: any) {
+    this.estadoEliminarCheck = event.target.checked;
+    this.estadoCheck = event.target.checked;
+    console.log('Estado de estadoBotonesCheck:', this.estadoEliminarCheck);
+  }*/
+
+  cambiarEstadoCheck(event: any, codigo: string) {
+    let producto = this.producto_seleccionado.find(p => p.codigo === codigo);
+    if (producto) {
+      producto.seleccionado = event.target.checked;
+    }
+    
+    let cantidadSeleccionada = this.producto_seleccionado.filter(producto => producto.seleccionado).length;
+    
+    this.estadoEliminarCheck = cantidadSeleccionada > 0;
+    this.estadoCheck = cantidadSeleccionada > 0;
+    if (cantidadSeleccionada == 0) {
+      this.estadoBotonesCheck = true;
+      this.estadoSeleccionarCheck = false;
+    }
+  }
+  
+  eliminarProducto() {
+    this.cargando = true
+    setTimeout(() => {
+      this.producto_seleccionado = this.producto_seleccionado.filter(producto => !producto.seleccionado);
+      this.cargando = false;
+      if (this.producto_seleccionado.length <= 0) {
+        this.hayProductosSeleccionados = false;  
+        this.botonDeshabilitado = false;
+      }
+      this.cancelarCheck();
+    },1000)
+  }
+
   //pagina para refrescar la pagina
   refrescar() {
     // Esperar 2 segundos (ajusta el tiempo según tus necesidades)
@@ -242,35 +310,8 @@ export class ProductosSalesComponent implements OnInit {
     return this.objectALertClasses(!this.showAlert, this.showAlert, !this.showAlert)
   }
 
-  //obtener datos para setear en pdf
-  /*obtenerDataPdf(){
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      try {
-        // Intenta analizar la cadena como JSON
-        const userData = JSON.parse(userDataString);
-        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-
-      } catch (error) {
-        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
-        console.error('Error al analizar JSON:', error);
-      }
-    }
-    //servicio para mostrar datos pdf
-    this.pdfService.mostrar_datosPdf(this.username).subscribe(
-      response => {
-        this.dataPDf = response;
-      },
-      error => {
-        console.error("Error:", error);
-        
-      },
-
-    );
-  }*/
-
   //generar PDF
-  generatePDF = async (numero_orden:string) => {
+  generatePDF = async (numero_orden: string) => {
 
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
@@ -324,7 +365,7 @@ export class ProductosSalesComponent implements OnInit {
           const additionalTexts = [
             'FECHA: ' + fecha.toLocaleDateString(),
             'HORA: ' + hora.toLocaleTimeString(),
-            'Cliente: ' + element.nombre.toUpperCase() +" "+ element.apellido.toUpperCase(),
+            'Cliente: ' + element.nombre.toUpperCase() + " " + element.apellido.toUpperCase(),
             'Identificacion: ' + element.identificacion.toUpperCase(),
             'Telefono: ' + element.telefono.toUpperCase(),
             'Direccion: ' + element.ubicacion.toUpperCase(),
@@ -398,7 +439,7 @@ export class ProductosSalesComponent implements OnInit {
             margin: { top: 10, bottom: 30 }
           })
 
-          doc.save('numero de orden #'+numero_orden+'.pdf')
+          doc.save('numero de orden #' + numero_orden + '.pdf')
         });
       },
       error => {
@@ -415,7 +456,7 @@ export class ProductosSalesComponent implements OnInit {
 
 
   //generar Excel
-  generarExcel(numero_orden:string) {
+  generarExcel(numero_orden: string) {
     import('xlsx').then((xlsx) => {
       const data = this.producto_seleccionado.map(item => ({
         'Código': item.codigo,

@@ -7,8 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./page404.component.css']
 })
 export class Page404Component {
+  
   constructor(private router:Router){}
   regresar(){
     this.router.navigate(['/prueba-login']);
   }
+
 }

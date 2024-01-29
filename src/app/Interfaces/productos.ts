@@ -7,4 +7,5 @@ export interface Productos {
     usuario : string,
     telefono :string,
     correo : string
+    seleccionado: boolean
 }
