@@ -15,8 +15,8 @@ export class UsuariosServicesService {
   private ApiUrlImagenUser = 'https://sumecarventas.azurewebsites.net/api/usuarios/imagen/';   
   private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin';
   private ApiUrlDepartamentos = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos'
-  private ApiUrlCiudades = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos/'
-  
+  private ApiUrlCiudades = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos/';
+  private ApiUrlMapeo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/'
   constructor(private http : HttpClient) { }
 
   obtenerUsuarios(): Observable<UsuariosView[]>{
@@ -43,4 +43,7 @@ export class UsuariosServicesService {
     return this.http.get<DepartamentoCiudad[]>(this.ApiUrlCiudades + codigo);
   }
   
+  obtenerMapeo(username:string): Observable<UsuariosView[]>{
+    return this.http.get<UsuariosView[]>(this.ApiUrlMapeo + username);
+  }
 }

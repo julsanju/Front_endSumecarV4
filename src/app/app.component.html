@@ -1,6 +1,6 @@
 <!--menu version movil-->
 @if(mostrarMenu){
-<div data-dial-init class="fixed end-6 bottom-6 group" style="z-index: 10;">
+<div data-dial-init class="fixed end-6 bottom-6 group mr-5" style="z-index: 10;">
   <div id="speed-dial-menu-square" class="flex flex-col items-center hidden mb-4 space-y-2">
     <!--***home***-->
     <button (click)="home()" type="button" data-tooltip-target="tooltip-share" data-tooltip-placement="left"
@@ -218,6 +218,14 @@
     <!-- Dropdown menu user -->
     <div id="user-dropdown"
       class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+      <div class="px-4 py-3">
+        <img class="w-24 h-24 mb-3 rounded-full shadow-lg object-cover" [src]="imagenUser" />
+        @for(data of dataMapeo; track dataMapeo){
+        <span class="block text-sm text-gray-900 dark:text-white uppercase">{{data.nombre}} {{data.apellido}}</span>
+        <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{data.correo}}</span>
+        }
+      </div>
+
       <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="multiLevelDropdownButton">
 
         <!--configuraciones-->

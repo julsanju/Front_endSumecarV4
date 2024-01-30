@@ -1,6 +1,7 @@
 export interface UsuariosView {
     identificacion:string
-    nombre:string
+    nombre:string,
+    apellido:string,
     telefono:string
     correo:string
     rol:number

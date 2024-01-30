@@ -19,6 +19,8 @@ export class HistorialPeticionesComponent {
   correo : string = '';
   private rolSubject = new Subject<boolean>();
 
+  //loading 
+  isLoading: boolean = true;
   //name = 'julsanju2004@gmail.com';
   loading: boolean = true;
   data: Peticiones[] = [];
@@ -40,10 +42,10 @@ export class HistorialPeticionesComponent {
     console.log(this.validacionRol())
     this.rolSubject.subscribe((esEmpleado: boolean) => {
       if (esEmpleado) {
-
+        this.isLoading = false;
         this.handleEmpleadoCase();
       } else {
-        
+        this.isLoading = false;
         this.handleClienteCase();
       }
     });

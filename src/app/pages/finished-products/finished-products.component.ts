@@ -23,6 +23,9 @@ import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.comp
 export class FinishedProductsComponent implements OnInit{
   dataUser : string = '';
   correo : string = '';
+  errorOccurred:boolean = false;
+  errorImageURL = '';
+  isLoading: boolean = true;
   private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
@@ -49,6 +52,7 @@ export class FinishedProductsComponent implements OnInit{
       if (esEmpleadoOesAdmin) {
 
         this.handleEmpleadoCase();
+
       } else {
         
         this.handleClienteCase();
@@ -69,10 +73,13 @@ export class FinishedProductsComponent implements OnInit{
           this.servicio.obtenerFinalizadoEmpleado().subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -197,6 +204,16 @@ export class FinishedProductsComponent implements OnInit{
         });
       }
     );
+  }
+
+  // metodo para poder mostrar la parte del error del servicio
+  mostrarError(): void {
+    // Lógica para mostrar la imagen de error en lugar del mensaje
+    this.errorImageURL = 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg';
+    
+    this.errorOccurred = true;
+    this.isLoading = false;
+
   }
 
   getPaginatedData(): Productos[] {

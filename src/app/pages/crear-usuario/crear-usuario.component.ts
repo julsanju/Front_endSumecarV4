@@ -25,7 +25,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class CrearUsuarioComponent implements OnInit {
-  products: any[] | undefined;
   registrationForm: FormGroup;
   UpdateForm: FormGroup;
   dataSource: Empleado[] = [];
@@ -94,11 +93,13 @@ export class CrearUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos de empleados
-    this.products = Array.from({ length: 5 }).map((_, i) => `Item #${i}`);
+    
     this.servicioUsuarios.obtenerEmpleado().subscribe(
       (response) => {
         this.dataSource = response;
         this.originalDataSource = response;
+        this.isLoading = false;
+
       },
       error => {
         console.error('Error obteniendo datos', error);

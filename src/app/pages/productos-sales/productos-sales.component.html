@@ -66,39 +66,56 @@
   </div>
   <!--tabla-->
   @if(isLoading){
-    <section class="bg-white dark:bg-gray-900">
-      <div class="container px-6 py-10 mx-auto animate-pulse">
-          <h1 class="w-48 h-2 mx-auto bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
-  
-          <p class="w-64 h-2 mx-auto mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
-          <p class="w-64 h-2 mx-auto mt-4 bg-gray-200 rounded-lg sm:w-80 dark:bg-gray-700"></p>
-  
-          <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 lg:grid-cols-3">
-              <div class="w-full ">
-                  <div class="w-full h-64 bg-gray-300 rounded-lg md:h-72 dark:bg-gray-600"></div>
-                  
-                  <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
-                  <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
-              </div>
-  
-              <div class="w-full ">
-                  <div class="w-full h-64 bg-gray-300 rounded-lg md:h-72 dark:bg-gray-600"></div>
-                  
-                  <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
-                  <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
-              </div>
-  
-              <div class="w-full ">
-                  <div class="w-full h-64 bg-gray-300 rounded-lg md:h-72 dark:bg-gray-600"></div>
-                  
-                  <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
-                  <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
-              </div>
-          </div>
+  <section class="bg-white dark:bg-gray-900">
+    <div class="container px-6 py-10 mx-auto animate-pulse">
+      <h1 class="w-48 h-2 mx-auto bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
+
+      <p class="w-64 h-2 mx-auto mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
+      <p class="w-64 h-2 mx-auto mt-4 bg-gray-200 rounded-lg sm:w-80 dark:bg-gray-700"></p>
+
+      <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="w-full ">
+          <div class="w-full h-64 bg-gray-300 rounded-lg md:h-72 dark:bg-gray-600"></div>
+
+          <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
+          <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
+        </div>
+
+        <div class="w-full ">
+          <div class="w-full h-64 bg-gray-300 rounded-lg md:h-72 dark:bg-gray-600"></div>
+
+          <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
+          <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
+        </div>
+
+        <div class="w-full ">
+          <div class="w-full h-64 bg-gray-300 rounded-lg md:h-72 dark:bg-gray-600"></div>
+
+          <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
+          <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
+        </div>
       </div>
+    </div>
   </section>
   }
   @if(!isLoading){
+  @if(errorOccurred){
+  <div class="flex flex-col items-center justify-center text-center">
+    <img [src]="errorImageURL" alt="Error" class="mb-5 max-w-full h-auto mx-auto" />
+
+  </div>
+  <div class="text-center">
+
+    <h1
+      class="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white text-center mx-auto">
+      ¡Uy! Algo salió mal.
+    </h1>
+    <p class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">No hay productos
+      asociados a esta cuenta
+    </p>
+  </div>
+  }
+  @if(!errorOccurred){
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -131,7 +148,7 @@
     </tbody>
 
   </table>
-  }
+
   <div class="flex items-center justify-between mt-4">
     <div class="flex-1 flex justify-between sm:hidden">
       <a (click)="onPageChange(currentPage - 1)"
@@ -185,6 +202,9 @@
       </div>
     </div>
   </div>
+
+  }
+  }
   <!--modal para cantidad-->
   @if(showModal){
   <div id="crud-modal" tabindex="-1"
@@ -215,7 +235,7 @@
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad</label>
               <input type="text" formControlName="cantidad" required="" name="cantidad" id="name" autocomplete="off"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Cantidad de productos" required=""
+                placeholder="Cantidad de productos" required="" (keydown.enter)="mostrarAlerta(); cerrar_modal()"
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
             </div>
           </div>
@@ -331,11 +351,17 @@
       </button>-->
       <!--boton para seleccionar productos-->
       @if(!estadoSeleccionarCheck){
-      <button type="button" [disabled]="!botonDeshabilitado" (click)="mostrarCheck()"
-        [ngClass]="{'disabled-button': !botonDeshabilitado}"
+      <button data-tooltip-target="tooltip-seleccionar" data-tooltip-placement="bottom" type="button"
+        [disabled]="!botonDeshabilitado" (click)="mostrarCheck()" [ngClass]="{'disabled-button': !botonDeshabilitado}"
         class="style-icon text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
         Seleccionar
       </button>
+      <!-- contenido para seleccionar -->
+      <div id="tooltip-seleccionar" role="tooltip"
+        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-500">
+        Botón para marcar los productos a eliminar.
+        <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
       }
       @if(estadoCheck){
       <!--boton para cancelar el checkbox-->
@@ -372,11 +398,12 @@
         </span>
         }
       </button>
+
       }
       @if(estadoBotonesCheck){
       <!--cancelar pedido-->
-      <button type="button" [disabled]="!botonDeshabilitado" [ngClass]="{'disabled-button': !botonDeshabilitado}"
-        (click)="cancelar()"
+      <button type="button" data-tooltip-target="tooltip-cancelar" data-tooltip-placement="bottom"
+        [disabled]="!botonDeshabilitado" [ngClass]="{'disabled-button': !botonDeshabilitado}" (click)="cancelar()"
         class="style-icon text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">
         @if(!cargando){
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -400,16 +427,44 @@
         </span>
         }
       </button>
+      <!-- contenido para cancelar -->
+      <div id="tooltip-cancelar" role="tooltip"
+        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-500">
+        Botón para abortar la eliminación de productos seleccionados por el usuario.
+        <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
       <!--confirmar pedido-->
-      <button type="button" [disabled]="!botonDeshabilitado" [ngClass]="{'disabled-button': !botonDeshabilitado}"
-        (click)="confirmar()"
+      <button type="button" data-tooltip-target="tooltip-confirmar" data-tooltip-placement="bottom"
+        [disabled]="!botonDeshabilitado" [ngClass]="{'disabled-button': !botonDeshabilitado}" (click)="confirmar()"
         class="style-icon text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+        @if(!cargandoSucces){
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
             d="M9.66705 17.875H9.65205C9.51807 17.8732 9.38582 17.8444 9.26317 17.7905C9.14051 17.7366 9.02995 17.6585 8.93805 17.561L4.27205 12.6C4.18196 12.5044 4.11158 12.392 4.06494 12.2692C4.0183 12.1464 3.9963 12.0156 4.0002 11.8843C4.00807 11.6191 4.12097 11.368 4.31405 11.186C4.50712 11.0041 4.76457 10.9063 5.02974 10.9142C5.16105 10.9181 5.29029 10.9478 5.41011 11.0016C5.52992 11.0555 5.63796 11.1324 5.72805 11.228L9.68705 15.435L18.287 6.79202C18.379 6.69629 18.4892 6.61983 18.611 6.5671C18.7329 6.51438 18.864 6.48644 18.9967 6.48493C19.1295 6.48341 19.2612 6.50835 19.3842 6.55828C19.5073 6.60822 19.6191 6.68215 19.7132 6.77576C19.8074 6.86937 19.8819 6.98079 19.9326 7.10353C19.9832 7.22626 20.0089 7.35785 20.0081 7.49061C20.0074 7.62337 19.9802 7.75465 19.9281 7.8768C19.8761 7.99894 19.8003 8.1095 19.705 8.20202L10.375 17.58C10.2825 17.6737 10.1722 17.748 10.0507 17.7986C9.92913 17.8493 9.79872 17.8752 9.66705 17.875Z"
             fill="#1e429f" />
         </svg>
+        }
+        @if(cargandoSucces){
+        <span class="inline-flex items-center text-gray-900 hover:text-white">
+          <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
+            viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="#000" />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentColor" />
+          </svg>
+          Cargando...
+        </span>
+        }
       </button>
+      <!-- contenido para cancelar -->
+      <div id="tooltip-confirmar" role="tooltip"
+        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-500">
+        Botón para confirmar la solicitud de productos elegidos por el usuario.
+        <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
       }
     </div>
   </div>

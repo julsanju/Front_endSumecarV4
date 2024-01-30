@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { CommonModule } from '@angular/common';
+import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 
 @Component({
   selector: 'app-menu',
@@ -34,11 +35,14 @@ export class MenuComponent {
   rotacionPeticiones = false;
   rotacionHistorial = false;
   rotacionConfiguracion = false;
+  //datos para mapear
+  dataMapeo: UsuariosView [] = [];
 
   constructor(private login: LoginServicesService, private router: Router, private servicio:UsuariosServicesService) {}
   breadcrumbs: string[] = [];
   ngOnInit() {
     this.obtenerImagenUserxd()
+    this.mapeoUserProfile();
     // Recupera la información del usuario desde localStorage
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
@@ -66,6 +70,26 @@ export class MenuComponent {
     this.router.navigate(['/menu/productos']).then(() => window.location.reload()); 
   }
   
+  //metodo para mapear datos en el userProfile
+  mapeoUserProfile() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+
+      // Extraer solo el id de usuario
+      const username = userData.usuario;
+
+      this.servicio.obtenerMapeo(username).subscribe(
+        (response) => {
+          this.dataMapeo = (response)
+        },
+        (error) => {
+          console.error('Error al obtener la imagen:', error);
+        }
+      );
+    }
+    return false;
+  }
 
   esAdmin(): boolean {
     // Recupera la información del usuario desde localStorage

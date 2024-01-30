@@ -1,4 +1,4 @@
-import { Component,  OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import { Productos } from 'src/app/Interfaces/productos';
 import { Empleado } from 'src/app/Interfaces/empleado';
@@ -11,7 +11,7 @@ import { PeticioneServicesService } from 'src/app/services/peticione-services.se
 import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
 
@@ -20,9 +20,12 @@ import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.comp
   templateUrl: './confirmed-products.component.html',
   styleUrls: ['./confirmed-products.component.css']
 })
-export class ConfirmedProductsComponent implements OnInit{
-  dataUser : string = '';
-  correo : string = '';
+export class ConfirmedProductsComponent implements OnInit {
+  dataUser: string = '';
+  correo: string = '';
+  isLoading: boolean = true;
+  errorOccurred: boolean = false;
+  errorImageURL = '';
   private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
@@ -35,13 +38,13 @@ export class ConfirmedProductsComponent implements OnInit{
   pageSize: number = 5;
   currentPage: number = 1;
 
-  constructor(private servicio: ProductsServicesService, private router:Router, private peticion: PeticioneServicesService) {}
+  constructor(private servicio: ProductsServicesService, private router: Router, private peticion: PeticioneServicesService) { }
 
   ngOnInit() {
     setTimeout(() => {
       this.loading = true;
     }, 2000);
-  
+
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
     this.validacionRol();
     console.log(this.validacionRol())
@@ -50,7 +53,7 @@ export class ConfirmedProductsComponent implements OnInit{
 
         this.handleEmpleadoCase();
       } else {
-        
+
         this.handleClienteCase();
       }
     });
@@ -63,15 +66,18 @@ export class ConfirmedProductsComponent implements OnInit{
     this.obtenerCorreo().subscribe(
       (correo) => {
         this.correo = correo;
-  
+
         if (this.correo) {
           this.servicio.obtenerFiltradoEmpleado().subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -88,7 +94,7 @@ export class ConfirmedProductsComponent implements OnInit{
     this.obtener_usuarioToClientes().subscribe(
       (usuario) => {
         this.dataUser = usuario;
-  
+
         if (this.dataUser) {
           this.servicio.obtenerFiltrado(this.dataUser).subscribe(
             (response) => {
@@ -104,7 +110,7 @@ export class ConfirmedProductsComponent implements OnInit{
     );
   }
 
-  private obtener_usuario(username : string){
+  private obtener_usuario(username: string) {
     //obtener username
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
@@ -139,7 +145,7 @@ export class ConfirmedProductsComponent implements OnInit{
   }
 
 
-  obtenerCorreo(): Observable<string>{
+  obtenerCorreo(): Observable<string> {
     var name = this.obtener_usuario(this.dataUser);
 
     return this.peticion.obtenerCorreo(name).pipe(
@@ -148,12 +154,12 @@ export class ConfirmedProductsComponent implements OnInit{
         return this.data2[0].correo;
       })
     );
-      
+
   }
 
   validacionRol(): void {
     var name = this.obtener_usuario(this.dataUser);
-  
+
     this.peticion.obtenerCorreo(name).subscribe(
       (response) => {
         this.data2 = response;
@@ -184,7 +190,7 @@ export class ConfirmedProductsComponent implements OnInit{
         this.spinner = false;
 
         this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-        
+
 
         Swal.fire({
           title: 'ERROR',
@@ -193,6 +199,15 @@ export class ConfirmedProductsComponent implements OnInit{
         });
       }
     );
+  }
+
+  mostrarError(): void {
+    // Lógica para mostrar la imagen de error en lugar del mensaje
+    this.errorImageURL = 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg';
+
+    this.errorOccurred = true;
+    this.isLoading = false;
+
   }
 
   getPaginatedData(): Productos[] {
@@ -227,14 +242,14 @@ export class ConfirmedProductsComponent implements OnInit{
     return false; // Retorna false si no se encuentra información del usuario
   }
 
-  esEmpleado(): boolean{
+  esEmpleado(): boolean {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
-      try{
+      try {
         const userData = JSON.parse(userDataString);
         return userData.rol === 'empleado';
-      }catch (error) {
-        console.error('Error al aalizar JSON:' , error)
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
         return false;
       }
     }
@@ -242,14 +257,14 @@ export class ConfirmedProductsComponent implements OnInit{
 
   }
 
-  esCliente(): boolean{
+  esCliente(): boolean {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
-      try{
+      try {
         const userData = JSON.parse(userDataString);
         return userData.rol === 'cliente';
-      }catch (error) {
-        console.error('Error al aalizar JSON:' , error)
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
         return false;
       }
     }

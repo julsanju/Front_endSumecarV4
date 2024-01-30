@@ -15,6 +15,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { PdfServicesService } from 'src/app/services/pdf-services.service';
 import { PdfInterface } from 'src/app/Interfaces/pdf-interface';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-productos-sales',
@@ -37,12 +38,15 @@ export class ProductosSalesComponent implements OnInit {
   productoActual: Productos | null = null;
   //loading 
   isLoading: boolean = true;
+  errorOccurred:boolean = false;
+  errorImageURL = '';
   //modal
   showAlert: boolean = false;
   anchoBarra: number = 0;
   assignedQuantity!: number;
   showModal: boolean = false;
   cargando = false;
+  cargandoSucces = false;
   //paginacion
   pageSize: number = 8;
   currentPage: number = 1;
@@ -88,7 +92,9 @@ export class ProductosSalesComponent implements OnInit {
         this.isLoading = false;
       },
       error => {
-        console.error('Error obteniendo datos', error);
+        console.log("error" + error)
+        this.mostrarError();
+        this.isLoading = false;
       }
     );
 
@@ -104,6 +110,15 @@ export class ProductosSalesComponent implements OnInit {
 
   }
 
+
+  mostrarError(): void {
+    // Lógica para mostrar la imagen de error en lugar del mensaje
+    this.errorImageURL = 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg';
+    
+    this.errorOccurred = true;
+    this.isLoading = false;
+
+  }
 
   //filtro de productos
   applyFilter(event: Event) {
@@ -163,7 +178,7 @@ export class ProductosSalesComponent implements OnInit {
   //confirmar productos
   confirmar() {
     const userDataString = localStorage.getItem('userData');
-
+    this.cargandoSucces = true
     this.spinner = true;
     if (userDataString) {
       try {
@@ -180,7 +195,7 @@ export class ProductosSalesComponent implements OnInit {
 
     this.servicio.confirmarProductos(this.producto_seleccionado, this.username).subscribe(
       response => {
-
+        
         const numero_orden = response && response.hasOwnProperty('numeroOrden') ? response.numeroOrden : '';
 
         this.spinner = false;
@@ -191,10 +206,13 @@ export class ProductosSalesComponent implements OnInit {
 
         this.generatePDF(numero_orden);
         this.generarExcel(numero_orden)
-        this.hayProductosSeleccionados = true;
-        this.producto_seleccionado = [];
-        this.hayProductosSeleccionados = false;
 
+        setTimeout(() => {
+          // borrar los productos después del tiempo de espera
+          this.hayProductosSeleccionados = false
+          this.cargandoSucces = false;
+          this.producto_seleccionado = [];
+        }, 1000);
       },
       error => {
         console.error("Error:", error);
@@ -216,6 +234,7 @@ export class ProductosSalesComponent implements OnInit {
     this.estadoBotones = true;
   }
 
+  
   //metodo para cancelar los productos seleccionados
   cancelar() {
     this.cargando = true

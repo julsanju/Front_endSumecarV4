@@ -27,7 +27,8 @@ export class ViewPeticionesComponent implements OnInit {
   data: Peticiones[] = [];
   data2: Empleado[] = [];
   displayedColumns: string[] = ['id', 'correo', 'mensaje', 'fecha', 'estado'];
-
+  //loading 
+  isLoading: boolean = true;
   // Variables de paginación
   pageSize: number = 5;
   currentPage: number = 1;
@@ -46,8 +47,9 @@ export class ViewPeticionesComponent implements OnInit {
       if (esEmpleado) {
 
         this.handleEmpleadoCase();
+        this.isLoading = false;
       } else {
-        
+        this.isLoading = false;
         this.handleClienteCase();
       }
     });

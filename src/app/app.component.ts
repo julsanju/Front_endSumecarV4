@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UsuariosServicesService } from './services/usuarios-services.service';
 import { Imagen } from './Interfaces/imagen';
 import { CommonModule } from '@angular/common';
+import { UsuariosView } from './Interfaces/usuarios-view';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,7 +18,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   title = 'web-app';
-
+  dataMapeo: UsuariosView [] = [];
   isCollapsed = false;
   isAdmin = false;
   isEmpleado = false;
@@ -31,13 +32,17 @@ export class AppComponent implements OnInit {
   rotacionProductos = false;
   rotacionPeticiones = false;
   rotacionHistorial = false;
-  
-  constructor(private login: LoginServicesService, private router: Router, private servicio: UsuariosServicesService) { }
+
+  constructor(private login: LoginServicesService,
+    private servicioUsuarios: UsuariosServicesService,
+    private router: Router,
+    private servicio: UsuariosServicesService) { }
 
   ngOnInit(): void {
     initFlowbite();
     this.obtenerImagenUserxd();
-
+    this.mapeoUserProfile();
+    
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
       try {
@@ -112,6 +117,27 @@ export class AppComponent implements OnInit {
       this.servicio.obtenerImagenUser(username).subscribe(
         (response) => {
           this.imagenUser = (response)
+        },
+        (error) => {
+          console.error('Error al obtener la imagen:', error);
+        }
+      );
+    }
+    return false;
+  }
+
+  //metodo para mapear datos en el userProfile
+  mapeoUserProfile() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+
+      // Extraer solo el id de usuario
+      const username = userData.usuario;
+
+      this.servicioUsuarios.obtenerMapeo(username).subscribe(
+        (response) => {
+          this.dataMapeo = (response)
         },
         (error) => {
           console.error('Error al obtener la imagen:', error);
