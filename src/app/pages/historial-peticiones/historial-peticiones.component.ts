@@ -21,6 +21,8 @@ export class HistorialPeticionesComponent {
 
   //loading 
   isLoading: boolean = true;
+  errorOccurred: boolean = false;
+  errorImageURL = '';
   //name = 'julsanju2004@gmail.com';
   loading: boolean = true;
   data: Peticiones[] = [];
@@ -63,10 +65,13 @@ export class HistorialPeticionesComponent {
           this.servicio.obtenerFinalizados(this.correo).subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -74,6 +79,8 @@ export class HistorialPeticionesComponent {
       (error) => {
         console.error('Error al obtener el correo: ', error);
         this.loading = false;
+        this.mostrarError();
+        this.isLoading = false;
       }
     );
   }
@@ -87,10 +94,13 @@ export class HistorialPeticionesComponent {
           this.servicio.obtenerFinalizadosCliente(this.dataUser).subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -121,7 +131,7 @@ export class HistorialPeticionesComponent {
     this.servicio.obtenerCorreo(name).subscribe(
       (response) => {
         this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado';
+        const esEmpleado = this.data2[0].rol === 'empleado' ||  this.data2[0].rol === 'admin';
         this.rolSubject.next(esEmpleado);
       },
       (error) => {
@@ -162,6 +172,15 @@ export class HistorialPeticionesComponent {
       })
     );
       
+  }
+
+  mostrarError(): void {
+    // Lógica para mostrar la imagen de error en lugar del mensaje
+    this.errorImageURL = 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg';
+
+    this.errorOccurred = true;
+    this.isLoading = false;
+
   }
 
   getPaginatedData(): Peticiones[] {

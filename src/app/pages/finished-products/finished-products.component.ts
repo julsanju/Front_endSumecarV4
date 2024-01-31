@@ -101,10 +101,13 @@ export class FinishedProductsComponent implements OnInit{
           this.servicio.obtenerFinalizado(this.dataUser).subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -166,7 +169,7 @@ export class FinishedProductsComponent implements OnInit{
       (response) => {
         this.data2 = response;
         const esEmpleadoOesAdmin = this.data2[0].rol === 'empleado' || this.data2[0].rol !== 'admin';
-        
+        console.log(this.data2);
           this.rolSubject.next(esEmpleadoOesAdmin);
         
         

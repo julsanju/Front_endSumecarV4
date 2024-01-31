@@ -15,12 +15,13 @@ import { DialogOverviewComponent } from './pages/dialog-overview/dialog-overview
 import { ProductosSalesComponent } from './pages/productos-sales/productos-sales.component';
 import { Page404Component } from './pages/page404/page404.component';
 import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.component';
-
+import { PruebaLayoutComponent } from './pages/prueba-layout/prueba-layout.component';
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
     { path: 'menu',component: MenuComponent, outlet: 'menu' },
     /*{ path: '', pathMatch: 'full', redirectTo: '/home' },
     { path: 'home', component: HomePharmaComponent },*/
+    { path: 'layout', component: PruebaLayoutComponent },
     { path: 'prueba-login', component: PruebaLoginComponent },
     
     {

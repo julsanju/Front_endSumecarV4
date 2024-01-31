@@ -14,9 +14,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
+import { DatosAccordeon } from 'src/app/Interfaces/datosAccordion';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-confirmed-products',
+  standalone: true,
+  imports : [CommonModule],
   templateUrl: './confirmed-products.component.html',
   styleUrls: ['./confirmed-products.component.css']
 })
@@ -26,11 +30,15 @@ export class ConfirmedProductsComponent implements OnInit {
   isLoading: boolean = true;
   errorOccurred: boolean = false;
   errorImageURL = '';
+  accordeon: { [key: number]: boolean } = {};
+  //accordeon: boolean[] = Array.from({ length: this.getPaginatedData().length }, () => false);
+  //accordeon: boolean = false;
   private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
   loading: boolean = true;
   data: Productos[] = [];
+  dataxd: DatosAccordeon[] = [];
   data2: Empleado[] = [];
   displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
 
@@ -40,23 +48,24 @@ export class ConfirmedProductsComponent implements OnInit {
 
   constructor(private servicio: ProductsServicesService, private router: Router, private peticion: PeticioneServicesService) { }
 
-  ngOnInit() {
+  ngOnInit() {                    
     setTimeout(() => {
       this.loading = true;
-    }, 2000);
+    }, 1000);
 
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
     this.validacionRol();
-    console.log(this.validacionRol())
+    
     this.rolSubject.subscribe((esEmpleado: boolean) => {
       if (esEmpleado) {
-
         this.handleEmpleadoCase();
       } else {
 
         this.handleClienteCase();
       }
+      
     });
+    
   }
 
 
@@ -68,9 +77,21 @@ export class ConfirmedProductsComponent implements OnInit {
         this.correo = correo;
 
         if (this.correo) {
-          this.servicio.obtenerFiltradoEmpleado().subscribe(
+          // this.servicio.obtenerFiltradoEmpleado().subscribe(
+          //   (response) => {
+          //     this.data = response;
+          //     this.isLoading = false;
+          //   },
+          //   (error) => {
+          //     console.error('Error al obtener los productos: ', error);
+          //     this.loading = false;
+          //     this.mostrarError();
+          //     this.isLoading = false;
+          //   }
+          // );
+          this.servicio.obtenerDatosAccordeon().subscribe(
             (response) => {
-              this.data = response;
+              this.dataxd = response;
               this.isLoading = false;
             },
             (error) => {
@@ -99,10 +120,13 @@ export class ConfirmedProductsComponent implements OnInit {
           this.servicio.obtenerFiltrado(this.dataUser).subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -159,17 +183,21 @@ export class ConfirmedProductsComponent implements OnInit {
 
   validacionRol(): void {
     var name = this.obtener_usuario(this.dataUser);
-
+    
     this.peticion.obtenerCorreo(name).subscribe(
+      
       (response) => {
         this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado';
+        const esEmpleado = this.data2[0].rol === 'empleado'|| this.data2[0].rol === 'admin';
         this.rolSubject.next(esEmpleado);
+        console.log(this.data2);
+        console.log(esEmpleado);     
       },
       (error) => {
         // Manejar errores si es necesario
         console.error(error);
         this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
+        
       }
     );
   }
@@ -210,10 +238,19 @@ export class ConfirmedProductsComponent implements OnInit {
 
   }
 
-  getPaginatedData(): Productos[] {
+  abrirCerrarAccordeon(numeroOrden: number) {
+    this.accordeon[numeroOrden] = !this.accordeon[numeroOrden];
+  }
+
+  // getPaginatedData(): Productos[] {
+  //   const startIndex = (this.currentPage - 1) * this.pageSize;
+  //   const endIndex = startIndex + this.pageSize;
+  //   return this.data.slice(startIndex, endIndex);
+  // }
+  getPaginatedData(): DatosAccordeon[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    return this.data.slice(startIndex, endIndex);
+    return this.dataxd.slice(startIndex, endIndex);
   }
 
   onPageChange(page: number): void {

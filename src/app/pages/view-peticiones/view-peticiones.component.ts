@@ -29,6 +29,8 @@ export class ViewPeticionesComponent implements OnInit {
   displayedColumns: string[] = ['id', 'correo', 'mensaje', 'fecha', 'estado'];
   //loading 
   isLoading: boolean = true;
+  errorOccurred: boolean = false;
+  errorImageURL = '';
   // Variables de paginación
   pageSize: number = 5;
   currentPage: number = 1;
@@ -67,10 +69,13 @@ export class ViewPeticionesComponent implements OnInit {
           this.servicio.obtenerPendientes(this.correo).subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -91,10 +96,13 @@ export class ViewPeticionesComponent implements OnInit {
           this.servicio.obtenerPendientesCliente(this.dataUser).subscribe(
             (response) => {
               this.data = response;
+              this.isLoading = false;
             },
             (error) => {
               console.error('Error al obtener los productos: ', error);
               this.loading = false;
+              this.mostrarError();
+              this.isLoading = false;
             }
           );
         }
@@ -155,7 +163,7 @@ export class ViewPeticionesComponent implements OnInit {
     this.servicio.obtenerCorreo(name).subscribe(
       (response) => {
         this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado';
+        const esEmpleado = this.data2[0].rol === 'empleado' ||  this.data2[0].rol === 'admin';
         this.rolSubject.next(esEmpleado);
       },
       (error) => {
@@ -193,6 +201,14 @@ export class ViewPeticionesComponent implements OnInit {
     );
   }
 
+  mostrarError(): void {
+    // Lógica para mostrar la imagen de error en lugar del mensaje
+    this.errorImageURL = 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg';
+
+    this.errorOccurred = true;
+    this.isLoading = false;
+
+  }
   getPaginatedData(): Peticiones[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;

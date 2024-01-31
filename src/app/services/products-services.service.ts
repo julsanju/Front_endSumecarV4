@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Productos } from '../Interfaces/productos';
+import { DatosAccordeon } from '../Interfaces/datosAccordion';
 @Injectable({
   providedIn: 'any'
 })
@@ -10,6 +11,8 @@ export class ProductsServicesService {
   //mostrar todos los productos
   private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
   private UrlPendientes = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar/'; 
+  private UrlAccordion = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion'; 
+  
   private UrlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizados/'; 
   private UrlProductosFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/insertar/';
   private UrlPendientesEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_empleado';
@@ -32,6 +35,11 @@ export class ProductsServicesService {
   //obtener productos confirmados
   obtenerFiltrado(username : string) : Observable<Productos[]>{
     return this.http.get<Productos[]>(this.UrlPendientes + username);
+  }
+
+  //obtener productos confirmados para accordion
+  obtenerDatosAccordeon() : Observable<DatosAccordeon[]>{
+    return this.http.get<DatosAccordeon[]>(this.UrlAccordion);
   }
 
   //obtener productos confirmados como empleado

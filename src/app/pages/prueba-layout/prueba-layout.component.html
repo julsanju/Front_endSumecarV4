@@ -1,0 +1,42 @@
+<!-- app.component.html -->
+<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3"> Número de Orden </th>
+        <th scope="col" class="px-6 py-3"> Nombre </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let row of data">
+        <tr (click)="toggleAccordion(row)">
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ row.numero_orden }}
+            <span class="accordion-arrow" [ngClass]="{'arrow-down': row.showDetails, 'arrow-right': !row.showDetails}"></span>
+          </td>
+          <td class="px-6 py-4">{{ row.nombre }}</td>
+        </tr>
+        <tr *ngIf="row.showDetails" class="accordion-content">
+          <td colspan="2">
+            <table class="inner-table">
+              <thead>
+                <tr>
+                  <th>Apellido</th>
+                  <th>Ciudad</th>
+                  <th>Identificación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ row.apellido }}</td>
+                  <td>{{ row.ciudad }}</td>
+                  <td>{{ row.identificacion }}</td>
+                </tr>
+                <!-- Puedes agregar más filas según tus necesidades -->
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  
