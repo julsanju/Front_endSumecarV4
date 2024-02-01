@@ -12,6 +12,9 @@ export class ProductsServicesService {
   private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
   private UrlPendientes = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar/'; 
   private UrlAccordion = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion'; 
+  private UrlAccordionCliente = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion/';
+  private UrlAccordionFinalizada = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion_finalizada'; 
+  private UrlAccordionFinalizadaCliente = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion_finalizada/';
   
   private UrlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizados/'; 
   private UrlProductosFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/insertar/';
@@ -37,9 +40,24 @@ export class ProductsServicesService {
     return this.http.get<Productos[]>(this.UrlPendientes + username);
   }
 
-  //obtener productos confirmados para accordion
+  //obtener productos confirmados para accordion para empleado y admin
   obtenerDatosAccordeon() : Observable<DatosAccordeon[]>{
     return this.http.get<DatosAccordeon[]>(this.UrlAccordion);
+  }
+
+  //obtener productos confirmados para accordion para cliente
+  obtenerDatosAccordeonCliente(username:string) : Observable<DatosAccordeon[]>{
+    return this.http.get<DatosAccordeon[]>(this.UrlAccordionCliente + username);
+  }
+
+  //obtener productos confirmados para accordion para cliente
+  obtenerDatosAccordeonFinalizada() : Observable<DatosAccordeon[]>{
+    return this.http.get<DatosAccordeon[]>(this.UrlAccordionFinalizada);
+  }
+
+  //obtener productos confirmados para accordion para cliente
+  obtenerDatosAccordeonFinalizadaCliente(username:string) : Observable<DatosAccordeon[]>{
+    return this.http.get<DatosAccordeon[]>(this.UrlAccordionFinalizadaCliente + username);
   }
 
   //obtener productos confirmados como empleado

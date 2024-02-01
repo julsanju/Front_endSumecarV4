@@ -14,9 +14,13 @@ import { MatSort } from '@angular/material/sort';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
+import { DatosAccordeon } from 'src/app/Interfaces/datosAccordion';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-finished-products',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './finished-products.component.html',
   styleUrls: ['./finished-products.component.css']
 })
@@ -26,12 +30,14 @@ export class FinishedProductsComponent implements OnInit{
   errorOccurred:boolean = false;
   errorImageURL = '';
   isLoading: boolean = true;
+  accordeon: { [key: number]: boolean } = {};
   private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
   loading: boolean = true;
   data: Productos[] = [];
   data2: Empleado[] = [];
+  dataAccordeon: DatosAccordeon[] = [];
   displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
 
   // Variables de paginación
@@ -70,9 +76,9 @@ export class FinishedProductsComponent implements OnInit{
         this.correo = correo;
   
         if (this.correo) {
-          this.servicio.obtenerFinalizadoEmpleado().subscribe(
+          this.servicio.obtenerDatosAccordeonFinalizada().subscribe(
             (response) => {
-              this.data = response;
+              this.dataAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -98,9 +104,9 @@ export class FinishedProductsComponent implements OnInit{
         this.dataUser = usuario;
   
         if (this.dataUser) {
-          this.servicio.obtenerFinalizado(this.dataUser).subscribe(
+          this.servicio.obtenerDatosAccordeonFinalizadaCliente(this.dataUser).subscribe(
             (response) => {
-              this.data = response;
+              this.dataAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -168,7 +174,7 @@ export class FinishedProductsComponent implements OnInit{
     this.peticion.obtenerCorreo(name).subscribe(
       (response) => {
         this.data2 = response;
-        const esEmpleadoOesAdmin = this.data2[0].rol === 'empleado' || this.data2[0].rol !== 'admin';
+        const esEmpleadoOesAdmin = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
         console.log(this.data2);
           this.rolSubject.next(esEmpleadoOesAdmin);
         
@@ -219,10 +225,20 @@ export class FinishedProductsComponent implements OnInit{
 
   }
 
-  getPaginatedData(): Productos[] {
+  // getPaginatedData(): Productos[] {
+  //   const startIndex = (this.currentPage - 1) * this.pageSize;
+  //   const endIndex = startIndex + this.pageSize;
+  //   return this.data.slice(startIndex, endIndex);
+  // }
+
+  abrirCerrarAccordeon(numeroOrden: number) {
+    this.accordeon[numeroOrden] = !this.accordeon[numeroOrden];
+  }
+
+  getPaginatedData(): DatosAccordeon[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    return this.data.slice(startIndex, endIndex);
+    return this.dataAccordeon.slice(startIndex, endIndex);
   }
 
   onPageChange(page: number): void {
@@ -231,6 +247,35 @@ export class FinishedProductsComponent implements OnInit{
 
   getEndIndex(): number {
     return Math.min(this.currentPage * this.pageSize, this.data.length);
+  }
+
+  esEmpleado(): boolean {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'empleado';
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
+        return false;
+      }
+    }
+    return false;
+
+  }
+
+  esCliente(): boolean {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'cliente';
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
+        return false;
+      }
+    }
+    return false;
   }
 
 }

@@ -38,7 +38,7 @@ export class ConfirmedProductsComponent implements OnInit {
   spinner: boolean = false;
   loading: boolean = true;
   data: Productos[] = [];
-  dataxd: DatosAccordeon[] = [];
+  dataAccordeon: DatosAccordeon[] = [];
   data2: Empleado[] = [];
   displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
 
@@ -91,7 +91,7 @@ export class ConfirmedProductsComponent implements OnInit {
           // );
           this.servicio.obtenerDatosAccordeon().subscribe(
             (response) => {
-              this.dataxd = response;
+              this.dataAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -117,9 +117,9 @@ export class ConfirmedProductsComponent implements OnInit {
         this.dataUser = usuario;
 
         if (this.dataUser) {
-          this.servicio.obtenerFiltrado(this.dataUser).subscribe(
+          this.servicio.obtenerDatosAccordeonCliente(this.dataUser).subscribe(
             (response) => {
-              this.data = response;
+              this.dataAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -250,7 +250,7 @@ export class ConfirmedProductsComponent implements OnInit {
   getPaginatedData(): DatosAccordeon[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    return this.dataxd.slice(startIndex, endIndex);
+    return this.dataAccordeon.slice(startIndex, endIndex);
   }
 
   onPageChange(page: number): void {
