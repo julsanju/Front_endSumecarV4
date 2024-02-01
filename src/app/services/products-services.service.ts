@@ -11,7 +11,7 @@ export class ProductsServicesService {
   //mostrar todos los productos
   private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
   private UrlPendientes = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar/'; 
-  private UrlAccordion = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion'; 
+  private UrlAccordion = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion'; 
   
   private UrlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizados/'; 
   private UrlProductosFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/insertar/';
