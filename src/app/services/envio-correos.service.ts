@@ -8,7 +8,8 @@ import { Correo } from '../Interfaces/correo';
 })
 export class EnvioCorreosService {
 
-  private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/agregar_peticion/'
+  // private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/agregar_peticion/'
+  private apiUrl = 'http://localhost:5107/api/agregar_peticion/'
   constructor(private http: HttpClient) {}
 
   addPeticion(data : Correo, usuario:string): Observable<any>{

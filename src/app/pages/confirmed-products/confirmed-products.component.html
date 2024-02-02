@@ -73,7 +73,7 @@
       @for (row of getPaginatedData(); track row) {
       <ng-container>
         <tr (click)="abrirCerrarAccordeon(row.numero_orden)"
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out">
+          class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out">
 
           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <svg data-accordion-icon class="w-3 h-3 transform transition-transform ml-5"
