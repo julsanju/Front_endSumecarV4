@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Inject, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,15 +11,26 @@ import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
+import { AddInformationComponent } from '../add-information/add-information.component';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EnvioCorreosService } from 'src/app/services/envio-correos.service';
+import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
+import { Correo } from 'src/app/Interfaces/correo';
+import { DetallePeticionP } from 'src/app/Interfaces/detalle-peticionP';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-view-peticiones',
+  standalone: true,
+  imports: [NgbModule, ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './view-peticiones.component.html',
   styleUrls: ['./view-peticiones.component.css'],
 })
 export class ViewPeticionesComponent implements OnInit {
-  dataUser : string = '';
-  correo : string = '';
+  @ViewChild('vcContainer', { read: ViewContainerRef }) container!: ViewContainerRef;
+  dataUser: string = '';
+  correo: string = '';
   private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
@@ -34,14 +45,34 @@ export class ViewPeticionesComponent implements OnInit {
   // Variables de paginación
   pageSize: number = 5;
   currentPage: number = 1;
+  //datos para modal peticiones
+  usernameModalP = '';
+  correoModalP = '';
+  dataModalP !: Empleado
+  formulario: FormGroup;
+  usuarioSeleccionadoEmail: string = '';
+  detalle: DetallePeticionP[] = [{ Articulo: '', Cantidad: 0 }];
+  articulosEscritos: boolean[] = [];
 
-  constructor(private servicio: PeticioneServicesService, private router:Router) {}
+
+  constructor(private servicio: PeticioneServicesService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private peticion: EnvioCorreosService,
+    private usurioService: UsuariosServicesService) {
+    this.formulario = this.formBuilder.group({
+      correo: ['', [Validators.required]],
+      mensaje: ['', [Validators.required]]
+    });
+
+  }
 
   ngOnInit() {
     setTimeout(() => {
       this.loading = false;
     }, 2000);
-  
+
+    this.llenarCombo();
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
     this.validacionRol();
     console.log(this.validacionRol())
@@ -58,13 +89,14 @@ export class ViewPeticionesComponent implements OnInit {
   }
 
 
+
   //metodos para poder saber si es empleado o cliente
   //empleado
   private handleEmpleadoCase() {
     this.obtenerCorreo().subscribe(
       (correo) => {
         this.correo = correo;
-  
+
         if (this.correo) {
           this.servicio.obtenerPendientes(this.correo).subscribe(
             (response) => {
@@ -91,7 +123,7 @@ export class ViewPeticionesComponent implements OnInit {
     this.obtener_usuarioToClientes().subscribe(
       (usuario) => {
         this.dataUser = usuario;
-  
+
         if (this.dataUser) {
           this.servicio.obtenerPendientesCliente(this.dataUser).subscribe(
             (response) => {
@@ -110,7 +142,7 @@ export class ViewPeticionesComponent implements OnInit {
     );
   }
 
-  private obtener_usuario(username : string){
+  private obtener_usuario(username: string) {
     //obtener username
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
@@ -145,7 +177,7 @@ export class ViewPeticionesComponent implements OnInit {
   }
 
 
-  obtenerCorreo(): Observable<string>{
+  obtenerCorreo(): Observable<string> {
     var name = this.obtener_usuario(this.dataUser);
 
     return this.servicio.obtenerCorreo(name).pipe(
@@ -154,16 +186,16 @@ export class ViewPeticionesComponent implements OnInit {
         return this.data2[0].correo;
       })
     );
-      
+
   }
 
   validacionRol(): void {
     var name = this.obtener_usuario(this.dataUser);
-  
+
     this.servicio.obtenerCorreo(name).subscribe(
       (response) => {
         this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado' ||  this.data2[0].rol === 'admin';
+        const esEmpleado = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
         this.rolSubject.next(esEmpleado);
       },
       (error) => {
@@ -190,7 +222,7 @@ export class ViewPeticionesComponent implements OnInit {
         this.spinner = false;
 
         this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-        
+
 
         Swal.fire({
           title: 'ERROR',
@@ -241,37 +273,157 @@ export class ViewPeticionesComponent implements OnInit {
     }
     return false; // Retorna false si no se encuentra información del usuario
   }
-  
+
   //empleado
-  esEmpleado(): boolean{
+  esEmpleado(): boolean {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
-      try{
+      try {
         const userData = JSON.parse(userDataString);
         return userData.rol === 'empleado';
-      }catch (error) {
-        console.error('Error al aalizar JSON:' , error)
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
         return false;
       }
     }
     return false;
-  
+
   }
-  
+
   //cliente
-  esCliente(): boolean{
+  esCliente(): boolean {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
-      try{
+      try {
         const userData = JSON.parse(userDataString);
         return userData.rol === 'cliente';
-      }catch (error) {
-        console.error('Error al aalizar JSON:' , error)
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
         return false;
       }
     }
     return false;
   }
+
+  /***modal para peticiones */
+
+
+  onSubmit() {
+    const userDataString = localStorage.getItem('userData');
+    const data: Correo = this.formulario.value
+
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+      }
+
+
+
+      this.peticion.addPeticion(data, this.usernameModalP).subscribe(
+        response => {
+          this.spinner = false;
+
+          Swal.fire('Peticion enviada correctamente', '', 'success');
+        },
+        error => {
+          this.spinner = false;
+
+          this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+          console.log(this.errorMessage);
+
+          Swal.fire({
+            title: 'ERROR',
+            html: `${this.errorMessage}`,
+            icon: 'error',
+          });
+        },
+      );
+    }
+
+
+  }
+
+  users: any[] = [];
+
+  //llenar combobox
+  llenarCombo() {
+    // Llama al servicio para obtener los empleados
+    this.usurioService.filtroEmpleado_admin().subscribe(
+      (data: Empleado[]) => {
+        // Mapea los datos obtenidos para adaptarlos al formato del array 'users'
+        this.users = data.map((empleado: Empleado) => {
+          return {
+            value: empleado.correo,
+            viewValue: empleado.nombre
+          };
+        });
+      },
+      error => {
+        console.error('Error al obtener empleados: ', error);
+      }
+    );
+  }
+
+  validateArticulo(index: number) {
+    // Aquí puedes agregar cualquier lógica de validación necesaria para el artículo en particular
+    this.articulosEscritos[index] = true;
+  }
+
+  onKeyPress(event: KeyboardEvent) {
+    // Obtén el código de la tecla presionada
+    const charCode = event.which || event.keyCode;
+
+    // Permitir solo números (códigos de tecla entre 48 y 57)
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  }
+
+  onUserSelect(event: any) {
+    const selectedUserValue = event.target.value;
+
+    // Actualiza el correo electrónico en el control del formulario
+    this.formulario.get('correo')?.setValue(selectedUserValue);
+
+    // Puedes acceder al servicio para obtener más detalles, incluido el correo electrónico
+    this.usurioService.filtroEmpleado_admin().subscribe(
+      (data: Empleado[]) => {
+        const userDetails = data.find(user => user.correo === selectedUserValue);
+        if (userDetails) {
+          // Actualiza otros detalles del usuario si es necesario
+          // Ejemplo: this.formulario.get('nombre').setValue(userDetails.nombre);
+        }
+      },
+      error => {
+        console.error('Error al obtener detalles del usuario: ', error);
+      }
+    );
+  }
+
+  updateEmail(email: string) {
+    this.usuarioSeleccionadoEmail = email;
+  }
+
+  addRow(index: number) {
+    if (index === this.detalle.length - 1) {
+      this.detalle.push({ Articulo: '', Cantidad: 0 });
+
+      setTimeout(() => {
+        const newIndex = index + 1;
+        const newElement = document.getElementById('articulo_' + newIndex);
+        if (newElement) {
+          newElement.focus();
+        }
+      });
+    }
+  }
+
 }
 
 

@@ -1,21 +1,34 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DetallePeticionP } from 'src/app/Interfaces/detalle-peticionP';
 
 @Component({
   selector: 'app-prueba-layout',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './prueba-layout.component.html',
   styleUrl: './prueba-layout.component.css'
 })
-export class PruebaLayoutComponent {
-  data = [
-    { numero_orden: 1, nombre: 'Nombre 1', apellido: 'Apellido 1', ciudad: 'Ciudad 1', identificacion: 'ID 1', showDetails: false },
-    { numero_orden: 2, nombre: 'Nombre 2', apellido: 'Apellido 2', ciudad: 'Ciudad 2', identificacion: 'ID 2', showDetails: false },
-    // Agrega más datos según sea necesario
-  ];
+export class PruebaLayoutComponent implements OnInit{
+  detalle : DetallePeticionP [] = [{ Articulo: '', Cantidad: 0 }];
 
-  toggleAccordion(row: any): void {
-    row.showDetails = !row.showDetails;
+  ngOnInit(){
+    
   }
+
+  addRow(index: number) {
+    if (index === this.detalle.length - 1) {
+      this.detalle.push({ Articulo: '', Cantidad: 0 });
+
+      setTimeout(() => {
+        const newIndex = index + 1;
+        const newElement = document.getElementById('articulo_' + newIndex);
+        if (newElement) {
+          newElement.focus();
+        }
+      });
+    }
+  }
+  
 }
