@@ -51,9 +51,10 @@ export class ViewPeticionesComponent implements OnInit {
   dataModalP !: Empleado
   formulario: FormGroup;
   usuarioSeleccionadoEmail: string = '';
-  detalle: DetallePeticionP[] = [{ Articulo: '', Cantidad: 0 }];
+  detalle: DetallePeticionP[] = [{ articulo: '', cantidad: 0 }];
   articulosEscritos: boolean[] = [];
-
+  accordeon: { [key: number]: boolean } = {};
+  showModal: boolean = false;
 
   constructor(private servicio: PeticioneServicesService,
     private router: Router,
@@ -305,6 +306,10 @@ export class ViewPeticionesComponent implements OnInit {
     return false;
   }
 
+  /** acoordeon de peticiones**/
+  abrirCerrarAccordeon(numeroPeticion: number) {
+    this.accordeon[numeroPeticion] = !this.accordeon[numeroPeticion];
+  }
   /***modal para peticiones */
 
 
@@ -412,7 +417,7 @@ export class ViewPeticionesComponent implements OnInit {
 
   addRow(index: number) {
     if (index === this.detalle.length - 1) {
-      this.detalle.push({ Articulo: '', Cantidad: 0 });
+      this.detalle.push({ articulo: '', cantidad: 0 });
 
       setTimeout(() => {
         const newIndex = index + 1;
@@ -424,6 +429,14 @@ export class ViewPeticionesComponent implements OnInit {
     }
   }
 
+  mostrarModal() {
+    this.showModal = true;
+  }
+
+  cerrar_modal() {
+    this.showModal = false;
+  }
+  
 }
 
 

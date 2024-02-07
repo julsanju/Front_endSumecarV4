@@ -101,7 +101,7 @@
         <tr>
           <td [attr.colspan]="(esAdmin() || esEmpleado()) ? 7 : 6">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="w-full text-xs text-white uppercase bg-blue-500 dark:bg-gray-700 dark:text-gray-400">
+              <thead class="w-full text-xs text-white uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" class="px-4 py-2">Código</th>
                   <th scope="col" class="px-4 py-2 ">Artículo</th>
@@ -113,7 +113,7 @@
               <tbody>
                 @for(detalle of row.detalle; track detalle){
                 <tr
-                  class="bg-blue-50 border border-gray-900 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out"
+                  class="bg-gray-100 border border-gray-900 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out"
                   style="width: 100%">
                   <td class=" px-6 py-3 max-w-full">{{ detalle.codigo }}</td>
                   <td class="border px-4 py-2 max-w-full">{{ detalle.articulo }}</td>
