@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Correo } from '../Interfaces/correo';
+import { UsuariosView } from '../Interfaces/usuarios-view';
 
 @Injectable({
   providedIn: 'any'

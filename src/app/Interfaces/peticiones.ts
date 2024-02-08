@@ -5,7 +5,7 @@ export interface Peticiones {
     numero_peticion:number
     correo:string
     mensaje:string
-    fecha:string
+    fecha:Date
     cliente:string
     identificacion:string
     telefono:string

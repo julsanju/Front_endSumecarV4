@@ -15,9 +15,10 @@
 
   </div>
   <!-- Modal nueva peticion -->
-  <div id="static-modal" [hidden]="!showModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  <div id="static-modal" [class.modal-open]="showModal" [hidden]="!showModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
     class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 ">
     <div class="relative p-4 w-full max-w-2xl max-h-full mx-auto">
+      
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
@@ -76,7 +77,8 @@
                         cualquier pregunta o problema que haya experimentado.</p>
                     </div>
                   </div>
-
+                </form>
+                <form [formGroup]="formulario_detallesPeticion"></form>
                   <div>
                     <table style="border: 2px solid #ccc;">
                       <thead>
@@ -92,7 +94,7 @@
                             <input
                               class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
                               type="text" [(ngModel)]="detalle[i].articulo" id="articulo_{{i}}"
-                              (keyup)="validateArticulo(i)" />
+                              (keyup)="validateArticulo(i)" formControllName="articulo" />
                           </th>
 
                           <td style="border: 2px solid #ccc;"
@@ -101,7 +103,7 @@
                               class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 bg-gray-300 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
                               type="text" [(ngModel)]="detalle[i].cantidad" (keyup.enter)="addRow(i)"
                               [ngClass]="{'cursor-not-allowed': !articulosEscritos[i]}"
-                              (keypress)="onKeyPress($event)" />
+                              (keypress)="onKeyPress($event)" formControllName="cantidad" />
                           </td>
                         </tr>
                       </tbody>

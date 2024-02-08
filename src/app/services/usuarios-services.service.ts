@@ -16,7 +16,8 @@ export class UsuariosServicesService {
   private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin';
   private ApiUrlDepartamentos = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos'
   private ApiUrlCiudades = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos/';
-  private ApiUrlMapeo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/'
+  //private ApiUrlMapeo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/'
+  private ApiUrlMapeo = 'http://localhost:5171/api/usuarios/obtener_empleado/'
   constructor(private http : HttpClient) { }
 
   obtenerUsuarios(): Observable<UsuariosView[]>{

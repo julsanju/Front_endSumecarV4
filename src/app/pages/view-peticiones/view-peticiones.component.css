@@ -137,3 +137,11 @@
   .input--invalid .input__field {
     border-color: red; /* Cambia el color del borde a rojo para campos inválidos cuando se establece la clase 'input--invalid' */
   }
+
+  .modal-open {
+    overflow: hidden;
+  }
+  
+  .modal-open .relative {
+    overflow: auto;
+  }

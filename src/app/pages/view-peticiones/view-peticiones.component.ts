@@ -19,6 +19,7 @@ import { UsuariosServicesService } from 'src/app/services/usuarios-services.serv
 import { Correo } from 'src/app/Interfaces/correo';
 import { DetallePeticionP } from 'src/app/Interfaces/detalle-peticionP';
 import { CommonModule } from '@angular/common';
+import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 
 @Component({
   selector: 'app-view-peticiones',
@@ -36,6 +37,7 @@ export class ViewPeticionesComponent implements OnInit {
   spinner: boolean = false;
   loading: boolean = true;
   data: Peticiones[] = [];
+  dataClient:Correo [] = [];
   data2: Empleado[] = [];
   displayedColumns: string[] = ['id', 'correo', 'mensaje', 'fecha', 'estado'];
   //loading 
@@ -50,8 +52,10 @@ export class ViewPeticionesComponent implements OnInit {
   correoModalP = '';
   dataModalP !: Empleado
   formulario: FormGroup;
+  formulario_detallesPeticion: FormGroup;
   usuarioSeleccionadoEmail: string = '';
   detalle: DetallePeticionP[] = [{ articulo: '', cantidad: 0 }];
+  DetallesActual: DetallePeticionP[] = [];
   articulosEscritos: boolean[] = [];
   accordeon: { [key: number]: boolean } = {};
   showModal: boolean = false;
@@ -61,10 +65,16 @@ export class ViewPeticionesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private peticion: EnvioCorreosService,
     private usurioService: UsuariosServicesService) {
+
     this.formulario = this.formBuilder.group({
       correo: ['', [Validators.required]],
-      mensaje: ['', [Validators.required]]
+      mensaje: ['', [Validators.required]],
     });
+
+    this.formulario_detallesPeticion = this.formBuilder.group({
+      articulo : ['', [Validators.required]],
+      cantidad : ['', [Validators.required]],
+    })
 
   }
 
@@ -312,47 +322,136 @@ export class ViewPeticionesComponent implements OnInit {
   }
   /***modal para peticiones */
 
-
+  // onSubmit() {
+  //   const userDataString = localStorage.getItem('userData');
+  //   const data: Correo = this.formulario.value;
+  //   const datadetalle: DetallePeticionP = this.formulario_detallesPeticion.value;
+  //   if (userDataString) {
+  //     try {
+  //       // Intenta analizar la cadena como JSON
+  //       const userData = JSON.parse(userDataString);
+  //       this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+  
+  //       // Agregar los datos del array 'detalle' al objeto 'data'
+  //       data.detalle = datadetalle;
+        
+  //       // Obtener los datos mapeados del cliente (síncrono)
+  //       const dataMapCliente = this.mapeoDatosCliente(this.usernameModalP);
+        
+  //       console.log(data, dataMapCliente)
+  //       // Combina los datos de formulario con los datos mapeados del cliente
+  //       const combinedData = { ...data, ...dataMapCliente };
+  
+  //       // Llamar al método addPeticion() con los datos combinados
+  //       this.peticion.addPeticion(combinedData, this.usernameModalP).subscribe(
+  //         response => {
+  //           this.spinner = false;
+  //           Swal.fire('Peticion enviada correctamente', '', 'success');
+  //         },
+  //         error => {
+  //           this.spinner = false;
+  //           this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+  //           console.log(this.errorMessage);
+  //           Swal.fire({
+  //             title: 'ERROR',
+  //             html: `${this.errorMessage}`,
+  //             icon: 'error',
+  //           });
+  //         }
+  //       );
+  
+  //     } catch (error) {
+  //       // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+  //       console.error('Error al analizar JSON:', error);
+  //     }
+  //   }
+  // }
+  
   onSubmit() {
     const userDataString = localStorage.getItem('userData');
-    const data: Correo = this.formulario.value
-
+    const data: Correo = this.formulario.value;
+    const datadetalle: DetallePeticionP = this.formulario_detallesPeticion.value;
     if (userDataString) {
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
         this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-
+  
+        // Agregar los datos del array 'detalle' al objeto 'data'
+        data.detalle = [datadetalle];
+        
+        // Obtener los datos mapeados del cliente (síncrono)
+        const dataMapCliente = this.mapeoDatosCliente(this.usernameModalP);
+        
+        console.log(data, dataMapCliente)
+        // Combina los datos de formulario con los datos mapeados del cliente
+        const combinedData = { ...data, ...dataMapCliente };
+  
+        // Llamar al método addPeticion() con los datos combinados
+        this.peticion.addPeticion(combinedData, this.usernameModalP).subscribe(
+          response => {
+            this.spinner = false;
+            Swal.fire('Peticion enviada correctamente', '', 'success');
+          },
+          error => {
+            this.spinner = false;
+            this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+            console.log(this.errorMessage);
+            Swal.fire({
+              title: 'ERROR',
+              html: `${this.errorMessage}`,
+              icon: 'error',
+            });
+          }
+        );
+  
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
         console.error('Error al analizar JSON:', error);
       }
-
-
-
-      this.peticion.addPeticion(data, this.usernameModalP).subscribe(
-        response => {
-          this.spinner = false;
-
-          Swal.fire('Peticion enviada correctamente', '', 'success');
-        },
-        error => {
-          this.spinner = false;
-
-          this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-          console.log(this.errorMessage);
-
-          Swal.fire({
-            title: 'ERROR',
-            html: `${this.errorMessage}`,
-            icon: 'error',
-          });
-        },
-      );
     }
+}
+
+  // onSubmit() {
+  //   const userDataString = localStorage.getItem('userData');
+  //   const data: Correo = this.formulario.value
+
+  //   if (userDataString) {
+  //     try {
+  //       // Intenta analizar la cadena como JSON
+  //       const userData = JSON.parse(userDataString);
+  //       this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+
+  //     } catch (error) {
+  //       // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+  //       console.error('Error al analizar JSON:', error);
+  //     }
+
+      
+      
+  //     this.peticion.addPeticion(data, this.usernameModalP).subscribe(
+  //       response => {
+  //         this.spinner = false;
+
+  //         Swal.fire('Peticion enviada correctamente', '', 'success');
+  //       },
+  //       error => {
+  //         this.spinner = false;
+
+  //         this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+  //         console.log(this.errorMessage);
+
+  //         Swal.fire({
+  //           title: 'ERROR',
+  //           html: `${this.errorMessage}`,
+  //           icon: 'error',
+  //         });
+  //       },
+  //     );
+  //   }
 
 
-  }
+  // }
 
   users: any[] = [];
 
@@ -375,6 +474,57 @@ export class ViewPeticionesComponent implements OnInit {
     );
   }
 
+  setearDatosView() {
+    // Llama al servicio para obtener los empleados
+    this.usurioService.filtroEmpleado_admin().subscribe(
+      (data: Empleado[]) => {
+        // Mapea los datos obtenidos para adaptarlos al formato del array 'users'
+        this.users = data.map((empleado: Empleado) => {
+          return {
+            value: empleado.correo,
+            viewValue: empleado.nombre
+          };
+        });
+      },
+      error => {
+        console.error('Error al obtener empleados: ', error);
+      }
+    );
+  }
+
+  //metodo para agregar detalles de peticiones
+  agregarDetalle() {
+    if (this.formulario.valid) {
+      const detalle: DetallePeticionP = {
+        articulo: this.formulario.value.articulo,
+        cantidad: this.formulario.value.cantidad
+      };
+      this.DetallesActual.push(detalle);
+      // Limpiar el formulario después de agregar el detalle
+      this.formulario.reset();
+    } else {
+      // Manejar el caso en que el formulario no es válido
+      // Puedes mostrar un mensaje de error o realizar alguna acción apropiada
+    }
+  }
+  //metodo para mapear datos del cliente
+  mapeoDatosCliente(username: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.usurioService.obtenerMapeo(username).subscribe(
+        (data: UsuariosView[]) => {
+          const mappedData = data.map((clienteData: UsuariosView) => {
+            console.log(clienteData);
+            return clienteData; // Aquí puedes modificar según lo que necesites devolver
+          });
+          resolve(mappedData);
+        },
+        error => {
+          console.error('Error al obtener empleados mapeados: ', error);
+          reject(error);
+        }
+      );
+    });
+  }
   validateArticulo(index: number) {
     // Aquí puedes agregar cualquier lógica de validación necesaria para el artículo en particular
     this.articulosEscritos[index] = true;
@@ -436,7 +586,7 @@ export class ViewPeticionesComponent implements OnInit {
   cerrar_modal() {
     this.showModal = false;
   }
-  
+
 }
 
 
