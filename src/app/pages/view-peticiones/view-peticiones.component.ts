@@ -11,15 +11,16 @@ import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
-import { AddInformationComponent } from '../add-information/add-information.component';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EnvioCorreosService } from 'src/app/services/envio-correos.service';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { Correo } from 'src/app/Interfaces/correo';
 import { DetallePeticionP } from 'src/app/Interfaces/detalle-peticionP';
 import { CommonModule } from '@angular/common';
 import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
+import { DetallePeticionModel } from 'src/app/Interfaces/detalle-peticion-model';
+import { DetalleDetallePeticionModel } from 'src/app/Interfaces/detalle-detalle-peticion-model';
 
 @Component({
   selector: 'app-view-peticiones',
@@ -37,7 +38,7 @@ export class ViewPeticionesComponent implements OnInit {
   spinner: boolean = false;
   loading: boolean = true;
   data: Peticiones[] = [];
-  dataClient:Correo [] = [];
+  dataClient: Correo[] = [];
   data2: Empleado[] = [];
   displayedColumns: string[] = ['id', 'correo', 'mensaje', 'fecha', 'estado'];
   //loading 
@@ -52,13 +53,14 @@ export class ViewPeticionesComponent implements OnInit {
   correoModalP = '';
   dataModalP !: Empleado
   formulario: FormGroup;
-  formulario_detallesPeticion: FormGroup;
+  formulario_detallesPeticion!: FormGroup;
   usuarioSeleccionadoEmail: string = '';
-  detalle: DetallePeticionP[] = [{ articulo: '', cantidad: 0 }];
-  DetallesActual: DetallePeticionP[] = [];
+  detalle: DetallePeticionP[] = [];
+
   articulosEscritos: boolean[] = [];
   accordeon: { [key: number]: boolean } = {};
   showModal: boolean = false;
+  showModalErrorArticulo: boolean = false;
 
   constructor(private servicio: PeticioneServicesService,
     private router: Router,
@@ -71,11 +73,6 @@ export class ViewPeticionesComponent implements OnInit {
       mensaje: ['', [Validators.required]],
     });
 
-    this.formulario_detallesPeticion = this.formBuilder.group({
-      articulo : ['', [Validators.required]],
-      cantidad : ['', [Validators.required]],
-    })
-
   }
 
   ngOnInit() {
@@ -84,19 +81,19 @@ export class ViewPeticionesComponent implements OnInit {
     }, 2000);
 
     this.llenarCombo();
-    // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
-    this.validacionRol();
-    console.log(this.validacionRol())
-    this.rolSubject.subscribe((esEmpleado: boolean) => {
-      if (esEmpleado) {
 
-        this.handleEmpleadoCase();
-        this.isLoading = false;
-      } else {
-        this.isLoading = false;
-        this.handleClienteCase();
-      }
+    this.formulario_detallesPeticion = this.formBuilder.group({
+      detalles: this.formBuilder.array([])
     });
+    this.agregarFila();
+
+    this.formulario_detallesPeticion.valueChanges.subscribe(data => {
+      this.actualizarDetalles();
+    });
+    // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
+
+    this.handleClienteCase();
+
   }
 
 
@@ -134,9 +131,10 @@ export class ViewPeticionesComponent implements OnInit {
     this.obtener_usuarioToClientes().subscribe(
       (usuario) => {
         this.dataUser = usuario;
-
+        //definimos que el estado de esta pagina es de tipo pendiente
+        const estado = "Pendiente"
         if (this.dataUser) {
-          this.servicio.obtenerPendientesCliente(this.dataUser).subscribe(
+          this.servicio.obtenerPendientesCliente(estado, this.dataUser).subscribe(
             (response) => {
               this.data = response;
               this.isLoading = false;
@@ -331,17 +329,17 @@ export class ViewPeticionesComponent implements OnInit {
   //       // Intenta analizar la cadena como JSON
   //       const userData = JSON.parse(userDataString);
   //       this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-  
+
   //       // Agregar los datos del array 'detalle' al objeto 'data'
-  //       data.detalle = datadetalle;
-        
+  //       data.detalle = [datadetalle];
+
   //       // Obtener los datos mapeados del cliente (síncrono)
   //       const dataMapCliente = this.mapeoDatosCliente(this.usernameModalP);
-        
+
   //       console.log(data, dataMapCliente)
   //       // Combina los datos de formulario con los datos mapeados del cliente
   //       const combinedData = { ...data, ...dataMapCliente };
-  
+
   //       // Llamar al método addPeticion() con los datos combinados
   //       this.peticion.addPeticion(combinedData, this.usernameModalP).subscribe(
   //         response => {
@@ -359,58 +357,13 @@ export class ViewPeticionesComponent implements OnInit {
   //           });
   //         }
   //       );
-  
+
   //     } catch (error) {
   //       // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
   //       console.error('Error al analizar JSON:', error);
   //     }
   //   }
   // }
-  
-  onSubmit() {
-    const userDataString = localStorage.getItem('userData');
-    const data: Correo = this.formulario.value;
-    const datadetalle: DetallePeticionP = this.formulario_detallesPeticion.value;
-    if (userDataString) {
-      try {
-        // Intenta analizar la cadena como JSON
-        const userData = JSON.parse(userDataString);
-        this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-  
-        // Agregar los datos del array 'detalle' al objeto 'data'
-        data.detalle = [datadetalle];
-        
-        // Obtener los datos mapeados del cliente (síncrono)
-        const dataMapCliente = this.mapeoDatosCliente(this.usernameModalP);
-        
-        console.log(data, dataMapCliente)
-        // Combina los datos de formulario con los datos mapeados del cliente
-        const combinedData = { ...data, ...dataMapCliente };
-  
-        // Llamar al método addPeticion() con los datos combinados
-        this.peticion.addPeticion(combinedData, this.usernameModalP).subscribe(
-          response => {
-            this.spinner = false;
-            Swal.fire('Peticion enviada correctamente', '', 'success');
-          },
-          error => {
-            this.spinner = false;
-            this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-            console.log(this.errorMessage);
-            Swal.fire({
-              title: 'ERROR',
-              html: `${this.errorMessage}`,
-              icon: 'error',
-            });
-          }
-        );
-  
-      } catch (error) {
-        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
-        console.error('Error al analizar JSON:', error);
-      }
-    }
-}
 
   // onSubmit() {
   //   const userDataString = localStorage.getItem('userData');
@@ -427,8 +380,8 @@ export class ViewPeticionesComponent implements OnInit {
   //       console.error('Error al analizar JSON:', error);
   //     }
 
-      
-      
+
+
   //     this.peticion.addPeticion(data, this.usernameModalP).subscribe(
   //       response => {
   //         this.spinner = false;
@@ -452,6 +405,57 @@ export class ViewPeticionesComponent implements OnInit {
 
 
   // }
+
+  //metodo para agregar detalles de peticiones
+
+
+  async onSubmit() {
+    const userDataString = localStorage.getItem('userData');
+    const userData = userDataString ? JSON.parse(userDataString) : null; // Parsea los datos del usuario si existen
+    console.log(userData.usuario);
+    if (userData) {
+      //const data: DetallePeticionModel = this.formulario.value; // Usa 'any' para permitir la adición de propiedades dinámicamente
+      const dataClient: UsuariosView | null = await this.mapeoDatosCliente(userData.usuario)
+      const detalles: DetallePeticionP[] = this.detalle.filter(detalle => detalle.articulo.trim() !== '' && detalle.cantidad !== 0);
+
+      const data: DetallePeticionModel[] = [
+        {
+          correo: this.formulario.get('correo')?.value,
+          mensaje: this.formulario.get('mensaje')?.value,
+          cliente: (dataClient?.nombre ?? '') + " " + (dataClient?.apellido ?? ''),
+          identificacion: dataClient?.identificacion ?? '',
+          telefono: dataClient?.telefono ?? '',
+          direccion: dataClient?.ubicacion ?? '',
+          ciudad: dataClient?.ciudad ?? '',
+          detalle: detalles
+        }
+      ];
+
+      console.log(data);
+      this.peticion.addPeticion(data, userData.usuario).subscribe(
+        response => {
+          this.spinner = false;
+
+          Swal.fire('Peticion enviada correctamente', '', 'success');
+        },
+        error => {
+          this.spinner = false;
+
+          this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+          console.log(this.errorMessage);
+
+          Swal.fire({
+            title: 'ERROR',
+            html: `${this.errorMessage}`,
+            icon: 'error',
+          });
+        },
+      );
+    }
+
+  }
+
+
 
   users: any[] = [];
 
@@ -492,31 +496,45 @@ export class ViewPeticionesComponent implements OnInit {
     );
   }
 
-  //metodo para agregar detalles de peticiones
-  agregarDetalle() {
-    if (this.formulario.valid) {
-      const detalle: DetallePeticionP = {
-        articulo: this.formulario.value.articulo,
-        cantidad: this.formulario.value.cantidad
-      };
-      this.DetallesActual.push(detalle);
-      // Limpiar el formulario después de agregar el detalle
-      this.formulario.reset();
-    } else {
-      // Manejar el caso en que el formulario no es válido
-      // Puedes mostrar un mensaje de error o realizar alguna acción apropiada
-    }
+  agregarFila(): void {
+    const detalles = this.formulario_detallesPeticion.get('detalles') as FormArray;
+    detalles.push(this.formBuilder.group({
+      articulo: [''],
+      cantidad: [0]
+    }));
+
+    // Agrega el detalle a la interfaz
+    this.detalle.push({
+      articulo: '',
+      cantidad: 0
+    });
   }
+
+  actualizarDetalles(): void {
+    this.detalle = this.detallesArray.controls.map(control => control.value);
+
+    // Filtra los detalles con valores vacíos o cantidad igual a 0
+    this.detalle = this.detalle.filter(detalle => detalle.articulo.trim() !== '' && detalle.cantidad !== 0);
+  }
+
+
+  get detallesArray() {
+    return this.formulario_detallesPeticion.get('detalles') as FormArray;
+  }
+
+
+
   //metodo para mapear datos del cliente
-  mapeoDatosCliente(username: string): Promise<any> {
+
+  mapeoDatosCliente(username: string): Promise<UsuariosView | null> {
     return new Promise((resolve, reject) => {
       this.usurioService.obtenerMapeo(username).subscribe(
         (data: UsuariosView[]) => {
-          const mappedData = data.map((clienteData: UsuariosView) => {
-            console.log(clienteData);
-            return clienteData; // Aquí puedes modificar según lo que necesites devolver
-          });
-          resolve(mappedData);
+          if (data.length > 0) {
+            resolve(data[0]); // Devuelve el primer cliente encontrado
+          } else {
+            resolve(null); // Si no se encontraron datos, devuelve null
+          }
         },
         error => {
           console.error('Error al obtener empleados mapeados: ', error);
@@ -525,6 +543,25 @@ export class ViewPeticionesComponent implements OnInit {
       );
     });
   }
+
+  // mapeoDatosCliente(username: string): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this.usurioService.obtenerMapeo(username).subscribe(
+  //       (data: UsuariosView[]) => {
+  //         const mappedData = data.map((clienteData: UsuariosView) => {
+  //           console.log(clienteData);
+  //           return clienteData; // Aquí puedes modificar según lo que necesites devolver
+  //         });
+  //         resolve(mappedData);
+  //       },
+  //       error => {
+  //         console.error('Error al obtener empleados mapeados: ', error);
+  //         reject(error);
+  //       }
+  //     );
+  //   });
+  // }
+
   validateArticulo(index: number) {
     // Aquí puedes agregar cualquier lógica de validación necesaria para el artículo en particular
     this.articulosEscritos[index] = true;
@@ -565,18 +602,14 @@ export class ViewPeticionesComponent implements OnInit {
     this.usuarioSeleccionadoEmail = email;
   }
 
-  addRow(index: number) {
-    if (index === this.detalle.length - 1) {
-      this.detalle.push({ articulo: '', cantidad: 0 });
+  addRow() {
+    this.detalle.push({
+      articulo: '',
+      cantidad: 0
+    });
 
-      setTimeout(() => {
-        const newIndex = index + 1;
-        const newElement = document.getElementById('articulo_' + newIndex);
-        if (newElement) {
-          newElement.focus();
-        }
-      });
-    }
+    this.formulario_detallesPeticion.addControl(`articulo_${this.detalle.length - 1}`, new FormControl(''));
+    this.formulario_detallesPeticion.addControl(`cantidad_${this.detalle.length - 1}`, new FormControl(''));
   }
 
   mostrarModal() {

@@ -4,7 +4,6 @@ import {MenuComponent} from './pages/menu/menu.component' ;
 import {CambiarContrasenaComponent} from './pages/cambiar-contrasena/cambiar-contrasena.component';
 import { RegisterSalesComponent } from './pages/register-sales/register-sales.component';
 import { VisualizarProductosComponent } from './pages/visualizar-productos/visualizar-productos.component';
-import { AddInformationComponent } from './pages/add-information/add-information.component';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
 import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones.component';
@@ -34,7 +33,6 @@ export const routes: Routes = [
         { path: 'register', component: RegisterSalesComponent }, // Componente RegisterSalesComponent se carga en la vista principal de '/menu'
         { path: 'cambiar-contrasena', component: CambiarContrasenaComponent }, // Componente CambiarContrasenaComponent se carga en la vista principal de '/menu'
         { path: 'view-products', component: VisualizarProductosComponent},
-        { path: 'add-information', component: AddInformationComponent},
         { path : 'confirmed-products', component : ConfirmedProductsComponent },
         { path : 'finished-products', component : FinishedProductsComponent },
         { path : 'view-peticiones',component : ViewPeticionesComponent},
