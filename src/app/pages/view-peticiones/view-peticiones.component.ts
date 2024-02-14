@@ -1,17 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild, Inject, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild,  ElementRef, QueryList,ViewChildren, ViewContainerRef } from '@angular/core';
 import { PeticioneServicesService } from 'src/app/services/peticione-services.service';
 import { Peticiones } from 'src/app/Interfaces/peticiones';
 import { Empleado } from 'src/app/Interfaces/empleado';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable} from 'rxjs';
 import Swal from 'sweetalert2';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EnvioCorreosService } from 'src/app/services/envio-correos.service';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
@@ -20,7 +15,7 @@ import { DetallePeticionP } from 'src/app/Interfaces/detalle-peticionP';
 import { CommonModule } from '@angular/common';
 import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 import { DetallePeticionModel } from 'src/app/Interfaces/detalle-peticion-model';
-import { DetalleDetallePeticionModel } from 'src/app/Interfaces/detalle-detalle-peticion-model';
+
 
 @Component({
   selector: 'app-view-peticiones',
@@ -30,10 +25,10 @@ import { DetalleDetallePeticionModel } from 'src/app/Interfaces/detalle-detalle-
   styleUrls: ['./view-peticiones.component.css'],
 })
 export class ViewPeticionesComponent implements OnInit {
+  @ViewChild('vc') vc!: ViewContainerRef;
   @ViewChild('vcContainer', { read: ViewContainerRef }) container!: ViewContainerRef;
   dataUser: string = '';
   correo: string = '';
-  private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
   loading: boolean = true;
@@ -82,6 +77,7 @@ export class ViewPeticionesComponent implements OnInit {
 
     this.llenarCombo();
 
+    //metodos para mandar json para endpoint peticiones
     this.formulario_detallesPeticion = this.formBuilder.group({
       detalles: this.formBuilder.array([])
     });
@@ -90,51 +86,20 @@ export class ViewPeticionesComponent implements OnInit {
     this.formulario_detallesPeticion.valueChanges.subscribe(data => {
       this.actualizarDetalles();
     });
-    // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
-
-    this.handleClienteCase();
+    
+    //metodo para obtener peticiones ya sea como cliente, empleado o admin
+    this.obtenerPeticiones();
 
   }
 
-
-
-  //metodos para poder saber si es empleado o cliente
-  //empleado
-  private handleEmpleadoCase() {
-    this.obtenerCorreo().subscribe(
-      (correo) => {
-        this.correo = correo;
-
-        if (this.correo) {
-          this.servicio.obtenerPendientes(this.correo).subscribe(
-            (response) => {
-              this.data = response;
-              this.isLoading = false;
-            },
-            (error) => {
-              console.error('Error al obtener los productos: ', error);
-              this.loading = false;
-              this.mostrarError();
-              this.isLoading = false;
-            }
-          );
-        }
-      },
-      (error) => {
-        console.error('Error al obtener el correo: ', error);
-        this.loading = false;
-      }
-    );
-  }
-  //cliente
-  private handleClienteCase() {
-    this.obtener_usuarioToClientes().subscribe(
+  private obtenerPeticiones() {
+    this.obtener_usuario().subscribe(
       (usuario) => {
         this.dataUser = usuario;
         //definimos que el estado de esta pagina es de tipo pendiente
         const estado = "Pendiente"
         if (this.dataUser) {
-          this.servicio.obtenerPendientesCliente(estado, this.dataUser).subscribe(
+          this.servicio.ObtenerPeticiones(estado, this.dataUser).subscribe(
             (response) => {
               this.data = response;
               this.isLoading = false;
@@ -151,23 +116,7 @@ export class ViewPeticionesComponent implements OnInit {
     );
   }
 
-  private obtener_usuario(username: string) {
-    //obtener username
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      try {
-        // Intenta analizar la cadena como JSON
-        const userData = JSON.parse(userDataString);
-        username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-      } catch (error) {
-        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
-        console.error('Error al analizar JSON:', error);
-      }
-    }
-    return username;
-  }
-
-  private obtener_usuarioToClientes(): Observable<string> {
+  private obtener_usuario(): Observable<string> {
     return new Observable((observer) => {
       const userDataString = localStorage.getItem('userData');
       if (userDataString) {
@@ -185,35 +134,6 @@ export class ViewPeticionesComponent implements OnInit {
     });
   }
 
-
-  obtenerCorreo(): Observable<string> {
-    var name = this.obtener_usuario(this.dataUser);
-
-    return this.servicio.obtenerCorreo(name).pipe(
-      map((response) => {
-        this.data2 = response;
-        return this.data2[0].correo;
-      })
-    );
-
-  }
-
-  validacionRol(): void {
-    var name = this.obtener_usuario(this.dataUser);
-
-    this.servicio.obtenerCorreo(name).subscribe(
-      (response) => {
-        this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
-        this.rolSubject.next(esEmpleado);
-      },
-      (error) => {
-        // Manejar errores si es necesario
-        console.error(error);
-        this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
-      }
-    );
-  }
 
   finalizarPeticion(id: number): void {
     this.servicio.FinalizarPeticion(id).subscribe(
@@ -250,6 +170,7 @@ export class ViewPeticionesComponent implements OnInit {
     this.isLoading = false;
 
   }
+
   getPaginatedData(): Peticiones[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -320,101 +241,12 @@ export class ViewPeticionesComponent implements OnInit {
   }
   /***modal para peticiones */
 
-  // onSubmit() {
-  //   const userDataString = localStorage.getItem('userData');
-  //   const data: Correo = this.formulario.value;
-  //   const datadetalle: DetallePeticionP = this.formulario_detallesPeticion.value;
-  //   if (userDataString) {
-  //     try {
-  //       // Intenta analizar la cadena como JSON
-  //       const userData = JSON.parse(userDataString);
-  //       this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-
-  //       // Agregar los datos del array 'detalle' al objeto 'data'
-  //       data.detalle = [datadetalle];
-
-  //       // Obtener los datos mapeados del cliente (síncrono)
-  //       const dataMapCliente = this.mapeoDatosCliente(this.usernameModalP);
-
-  //       console.log(data, dataMapCliente)
-  //       // Combina los datos de formulario con los datos mapeados del cliente
-  //       const combinedData = { ...data, ...dataMapCliente };
-
-  //       // Llamar al método addPeticion() con los datos combinados
-  //       this.peticion.addPeticion(combinedData, this.usernameModalP).subscribe(
-  //         response => {
-  //           this.spinner = false;
-  //           Swal.fire('Peticion enviada correctamente', '', 'success');
-  //         },
-  //         error => {
-  //           this.spinner = false;
-  //           this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-  //           console.log(this.errorMessage);
-  //           Swal.fire({
-  //             title: 'ERROR',
-  //             html: `${this.errorMessage}`,
-  //             icon: 'error',
-  //           });
-  //         }
-  //       );
-
-  //     } catch (error) {
-  //       // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
-  //       console.error('Error al analizar JSON:', error);
-  //     }
-  //   }
-  // }
-
-  // onSubmit() {
-  //   const userDataString = localStorage.getItem('userData');
-  //   const data: Correo = this.formulario.value
-
-  //   if (userDataString) {
-  //     try {
-  //       // Intenta analizar la cadena como JSON
-  //       const userData = JSON.parse(userDataString);
-  //       this.usernameModalP = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-
-  //     } catch (error) {
-  //       // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
-  //       console.error('Error al analizar JSON:', error);
-  //     }
-
-
-
-  //     this.peticion.addPeticion(data, this.usernameModalP).subscribe(
-  //       response => {
-  //         this.spinner = false;
-
-  //         Swal.fire('Peticion enviada correctamente', '', 'success');
-  //       },
-  //       error => {
-  //         this.spinner = false;
-
-  //         this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-  //         console.log(this.errorMessage);
-
-  //         Swal.fire({
-  //           title: 'ERROR',
-  //           html: `${this.errorMessage}`,
-  //           icon: 'error',
-  //         });
-  //       },
-  //     );
-  //   }
-
-
-  // }
-
-  //metodo para agregar detalles de peticiones
-
-
   async onSubmit() {
     const userDataString = localStorage.getItem('userData');
     const userData = userDataString ? JSON.parse(userDataString) : null; // Parsea los datos del usuario si existen
     console.log(userData.usuario);
     if (userData) {
-      //const data: DetallePeticionModel = this.formulario.value; // Usa 'any' para permitir la adición de propiedades dinámicamente
+      
       const dataClient: UsuariosView | null = await this.mapeoDatosCliente(userData.usuario)
       const detalles: DetallePeticionP[] = this.detalle.filter(detalle => detalle.articulo.trim() !== '' && detalle.cantidad !== 0);
 
@@ -454,8 +286,6 @@ export class ViewPeticionesComponent implements OnInit {
     }
 
   }
-
-
 
   users: any[] = [];
 
@@ -522,8 +352,14 @@ export class ViewPeticionesComponent implements OnInit {
     return this.formulario_detallesPeticion.get('detalles') as FormArray;
   }
 
+  //metodos para poder poner que cuando se presione enter se pase al campo articulo
+  enfocarSiguiente(i: number) {
 
-
+    const next = this.vc.element.nativeElement.querySelector(`#articulo_${i+1}`);
+    next.focus();
+  
+  }
+  
   //metodo para mapear datos del cliente
 
   mapeoDatosCliente(username: string): Promise<UsuariosView | null> {
@@ -544,23 +380,6 @@ export class ViewPeticionesComponent implements OnInit {
     });
   }
 
-  // mapeoDatosCliente(username: string): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.usurioService.obtenerMapeo(username).subscribe(
-  //       (data: UsuariosView[]) => {
-  //         const mappedData = data.map((clienteData: UsuariosView) => {
-  //           console.log(clienteData);
-  //           return clienteData; // Aquí puedes modificar según lo que necesites devolver
-  //         });
-  //         resolve(mappedData);
-  //       },
-  //       error => {
-  //         console.error('Error al obtener empleados mapeados: ', error);
-  //         reject(error);
-  //       }
-  //     );
-  //   });
-  // }
 
   validateArticulo(index: number) {
     // Aquí puedes agregar cualquier lógica de validación necesaria para el artículo en particular
@@ -575,6 +394,7 @@ export class ViewPeticionesComponent implements OnInit {
     if (charCode < 48 || charCode > 57) {
       event.preventDefault();
     }
+
   }
 
   onUserSelect(event: any) {
