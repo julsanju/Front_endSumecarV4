@@ -25,6 +25,7 @@ import { DetallePeticionModel } from 'src/app/Interfaces/detalle-peticion-model'
   styleUrls: ['./view-peticiones.component.css'],
 })
 export class ViewPeticionesComponent implements OnInit {
+  
   @ViewChild('vc') vc!: ViewContainerRef;
   @ViewChild('vcContainer', { read: ViewContainerRef }) container!: ViewContainerRef;
   dataUser: string = '';

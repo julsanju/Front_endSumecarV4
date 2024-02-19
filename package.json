@@ -36,6 +36,7 @@
     "jest": "^29.7.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.7.0",
+    "ng-apexcharts": "^1.8.0",
     "ng-zorro-antd": "^16.2.2",
     "node": "^20.5.1",
     "particles.js": "^2.0.0",
