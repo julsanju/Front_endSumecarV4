@@ -16,6 +16,10 @@ import { Observable, forkJoin, tap } from 'rxjs';
 })
 
 export class PruebaLayoutComponent implements OnInit {
+  montados = 0;
+  pendientes = 0;
+  finalizados = 0;
+  /*chartjs*/
   fecha1 = 0;
   mes1 = 0;
   cantidad1 = 0;
@@ -28,8 +32,15 @@ export class PruebaLayoutComponent implements OnInit {
   mes3 = 0;
   cantidad3 = 0;
 
+  fecha4 = 0;
+  mes4 = 0;
+  cantidad4 = 0;
+
+  fecha5 = 0;
+  mes5 = 0;
+  cantidad5 = 0;
+
   informe1 = 0;
-  informe2 = 0;
   dataUser = '';
 
   //condicional
@@ -45,8 +56,6 @@ export class PruebaLayoutComponent implements OnInit {
       // Cuando todas las llamadas a los servicios se completen, renderizar
       this.renderizar();
     });
-
-    console.log(this.fecha1)
   }
 
   dataInitNew(): Observable<any> {
@@ -68,8 +77,8 @@ export class PruebaLayoutComponent implements OnInit {
           this.cantidad1 = 0;
           this.cantidad2 = 0;
           this.cantidad3 = 0;
-
-
+          this.cantidad4 = 0;
+          this.cantidad5 = 0;
           // Iterar sobre los datos y asignar las cantidades a las variables correspondientes
           data.forEach((item, index) => {
             if (index === 0) {
@@ -77,16 +86,12 @@ export class PruebaLayoutComponent implements OnInit {
               this.fecha1 = item.anio;
               this.mes1 = item.mes;
               this.informe1 = item.informe1;
-              this.informe2 = item.informe2;
               //validacion para colores en el html
               // Validar si informe1 es negativo
               if (this.informe1 > 0) {
                 this.crecimiento1 = true;
               }
-              // Validar si informe2 es negativo
-              if (this.informe2 > 0) {
-                this.crecimiento2 = true;
-              }
+              
             } else if (index === 1) {
               this.cantidad2 = item.cantidad;
               this.fecha2 = item.anio;
@@ -95,6 +100,15 @@ export class PruebaLayoutComponent implements OnInit {
               this.cantidad3 = item.cantidad;
               this.fecha3 = item.anio;
               this.mes3 = item.mes;
+            }else if (index === 3) {
+              this.cantidad4 = item.cantidad;
+              this.fecha4 = item.anio;
+              this.mes4 = item.mes;
+            }
+            else if (index === 4) {
+              this.cantidad5 = item.cantidad;
+              this.fecha5 = item.anio;
+              this.mes5 = item.mes;
             }
 
           });
@@ -103,8 +117,9 @@ export class PruebaLayoutComponent implements OnInit {
             cantidad1: this.cantidad1,
             cantidad2: this.cantidad2,
             cantidad3: this.cantidad3,
-            informe1: this.informe1,
-            informe2: this.informe2
+            cantidad4: this.cantidad4,
+            cantidad5: this.cantidad5,
+            informe1: this.informe1
           });
           observer.complete();
         },
@@ -122,8 +137,8 @@ export class PruebaLayoutComponent implements OnInit {
   renderizar() {
     const options = {
       chart: {
-        height: "100%",
-        maxWidth: "100%",
+        height: "60%",
+        maxWidth: "20%",
         type: "area",
         fontFamily: "Inter, sans-serif",
         dropShadow: {
@@ -166,25 +181,38 @@ export class PruebaLayoutComponent implements OnInit {
       series: [
         {
           name: "Pedidos",
-          data: [this.cantidad1, this.cantidad2, this.cantidad3],
+          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4,  this.cantidad5],
           color: "#1A56DB",
         },
       ],
-      xaxis: {
-        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3],
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-      },
+      annotations: {
+        yaxis: [{
+          y: 30,
+          borderColor: '#999',
+          label: {
+            show: false,
+            text: 'Support',
+            style: {
+              color: "#fff",
+              background: '#00E396'
+            }
+          }
+        }],
+        xaxis: [{
+          x: new Date('14 Nov 2012').getTime(),
+          borderColor: '#999',
+          yAxisIndex: 0,
+          label: {
+            show: true,
+            text: 'Rally',
+            style: {
+              color: "#fff",
+              background: '#775DD0'
+            }
+          }
+        }]
+      }
+      
     }
 
     if (document.getElementById("montados-chart") && typeof ApexCharts !== 'undefined') {
