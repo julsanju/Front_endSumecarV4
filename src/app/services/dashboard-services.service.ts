@@ -9,9 +9,9 @@ import { Dashboard } from '../Interfaces/dashboard';
 export class DashboardServicesService {
 
   //local
-  /*private apiUrl = 'http://localhost:5107/api/Dashboard/Pedidos_montados';
-  private apiUrlPendintes = 'http://localhost:5107/api/Dashboard/Pedidos_pendientes';
-  private apiurlFinalizados = 'http://localhost:5107/api/Dashboard/Pedidos_finalizados';*/
+  private apiUrlMontados = 'http://localhost:5107/api/Dashboard/Pedidos_montados';
+  // private apiUrlPendintes = 'http://localhost:5107/api/Dashboard/Pedidos_pendientes';
+  // private apiurlFinalizados = 'http://localhost:5107/api/Dashboard/Pedidos_finalizados';*/
   
   //azure
   //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_montados';

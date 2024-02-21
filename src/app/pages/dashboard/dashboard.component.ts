@@ -50,8 +50,8 @@ export class DashboardComponent implements OnInit {
   crecimiento1: boolean = false;
   crecimiento2: boolean = false;
 
-  constructor(private servicio: DashboardServicesService) {}
-  
+  constructor(private servicio: DashboardServicesService) { }
+
 
   ngOnInit() {
     // pedidos montados
@@ -59,10 +59,12 @@ export class DashboardComponent implements OnInit {
     this.dataInitNew().subscribe(() => {
       // Cuando todas las llamadas a los servicios se completen, renderizar
       this.renderizar();
+      this.renderizarPeticiones();
+      this.renderizarUsuarios();
     });
-    
+
   }
-  
+
   dataInitNew(): Observable<any> {
     this.obtener_usuario().subscribe(
       (usuario) => {
@@ -91,12 +93,13 @@ export class DashboardComponent implements OnInit {
               this.fecha1 = item.anio;
               this.mes1 = item.mes;
               this.informe1 = item.informe1;
+              this.montados = item.resultado;
               //validacion para colores en el html
               // Validar si informe1 es negativo
               if (this.informe1 > 0) {
                 this.crecimiento1 = true;
               }
-              
+
             } else if (index === 1) {
               this.cantidad2 = item.cantidad;
               this.fecha2 = item.anio;
@@ -105,7 +108,7 @@ export class DashboardComponent implements OnInit {
               this.cantidad3 = item.cantidad;
               this.fecha3 = item.anio;
               this.mes3 = item.mes;
-            }else if (index === 3) {
+            } else if (index === 3) {
               this.cantidad4 = item.cantidad;
               this.fecha4 = item.anio;
               this.mes4 = item.mes;
@@ -186,12 +189,12 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: "Pedidos",
-          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4,  this.cantidad5],
+          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4, this.cantidad5],
           color: "#1A56DB",
         },
       ],
       xaxis: {
-        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3,this.fecha3 + " " + this.fecha4 + " " + this.mes4 + this.fecha5 + " " + this.mes5],
+        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3, this.fecha3 + " " + this.fecha4 + " " + this.mes4 + this.fecha5 + " " + this.mes5],
         labels: {
           show: false,
         },
@@ -205,7 +208,7 @@ export class DashboardComponent implements OnInit {
       yaxis: {
         show: false,
       },
-      
+
     }
 
     if (document.getElementById("montados-chart") && typeof ApexCharts !== 'undefined') {
@@ -214,7 +217,156 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  
+  renderizarPeticiones() {
+    const options = {
+      chart: {
+        height: "60%",
+        maxWidth: "20%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: false,
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          opacityFrom: 0.55,
+          opacityTo: 0,
+          shade: "#1C64F2",
+          gradientToColors: ["#1C64F2"],
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: 6,
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 2,
+          right: 2,
+          top: 0
+        },
+      },
+      series: [
+        {
+          name: "Pedidos",
+          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4, this.cantidad5],
+          color: "#1A56DB",
+        },
+      ],
+      xaxis: {
+        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3, this.fecha3 + " " + this.fecha4 + " " + this.mes4 + this.fecha5 + " " + this.mes5],
+        labels: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        show: false,
+      },
+
+    }
+
+    if (document.getElementById("peticiones-chart") && typeof ApexCharts !== 'undefined') {
+      const chart = new ApexCharts(document.getElementById("peticiones-chart"), options);
+      chart.render();
+    }
+  }
+
+  renderizarUsuarios() {
+    const options = {
+      chart: {
+        height: "60%",
+        maxWidth: "20%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: false,
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          opacityFrom: 0.55,
+          opacityTo: 0,
+          shade: "#1C64F2",
+          gradientToColors: ["#1C64F2"],
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: 6,
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 2,
+          right: 2,
+          top: 0
+        },
+      },
+      series: [
+        {
+          name: "Pedidos",
+          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4, this.cantidad5],
+          color: "#1A56DB",
+        },
+      ],
+      xaxis: {
+        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3, this.fecha3 + " " + this.fecha4 + " " + this.mes4 + this.fecha5 + " " + this.mes5],
+        labels: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        show: false,
+      },
+
+    }
+
+    if (document.getElementById("usuarios-chart") && typeof ApexCharts !== 'undefined') {
+      const chart = new ApexCharts(document.getElementById("usuarios-chart"), options);
+      chart.render();
+    }
+  }
+
   //metodo para convertir el valor negativo a valor positivo
   convertirValorPositivo(numero: number): number {
     return Math.abs(numero);
@@ -237,5 +389,5 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  
+
 }

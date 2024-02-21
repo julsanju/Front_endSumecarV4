@@ -28,18 +28,19 @@
 
         <!--CARD 1-->
         <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-400 shadow-md">
-          
-            <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 mr-7 grid h-20 w-20 place-items-center">
-              
-              <img src="https://i.postimg.cc/zGPxMP1j/package-2.png" alt="">
+
+          <div
+            class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 mr-7 grid h-20 w-20 place-items-center">
+
+            <img src="https://i.postimg.cc/zGPxMP1j/package-2.png" alt="">
+          </div>
+          <div class="text-center justify-between">
+            <div class="absolute top-0 left-20 ml-24 mt-6">
+              <p class="text-xl font-normal text-gray-500 dark:text-gray-400"> <strong>PEDIDOS MONTADOS</strong></p>
             </div>
-            <div class="text-center justify-between">
-              <div class="absolute top-0 left-20 ml-24 mt-6">
-                <p class="text-xl font-normal text-gray-500 dark:text-gray-400"> <strong>PEDIDOS MONTADOS</strong></p>
-              </div>
-              
-            </div>
-          
+
+          </div>
+
           <div class="p-5 mt-14">
             <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-right">
               @if(crecimiento1){
@@ -51,20 +52,20 @@
               </svg>
               }
               @if(!crecimiento1){
-              <span class="text-red-100 dark:text-red-500">{{convertirValorPositivo(this.informe1)}}%</span>
+              <span class="text-red-500 dark:text-red-500">{{convertirValorPositivo(this.informe1)}}%</span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="#f05252" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" fill="#f06768"
+                <path stroke-linecap="round" stroke-linejoin="round"
                   d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
               </svg>
               }
-
+              <span class="text-3xl" style="margin-left: 70%;"> {{this.montados}}</span>
             </div>
             <div id="montados-chart"></div>
             <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
               <div class="flex flex-start items-center pt-5">
 
-                <a 
+                <a
                   class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
                   Ver mas
                   <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -94,10 +95,64 @@
           </div> -->
         </div>
         <!--CARD 2-->
-        <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+        <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-400 shadow-md">
+
           <div
-            class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
-            <img src="https://cdn-icons-png.flaticon.com/512/6384/6384868.png" alt="">
+            class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 mr-7 grid h-20 w-20 place-items-center">
+
+            <img src="https://i.postimg.cc/m294nmqv/peticiones3.png" alt="">
+            <!-- <img src="https://i.postimg.cc/X7fKQbVt/peticion2.png" alt=""> -->
+            <!-- <img src="https://i.postimg.cc/NjZnmtbS/peticion.png" alt=""> -->
+          </div>
+          <div class="text-center justify-between">
+            <div class="absolute top-0 left-20 ml-24 mt-6">
+              <p class="text-xl font-normal text-gray-500 dark:text-gray-400"> <strong>PETICIONES MONTADAS</strong></p>
+            </div>
+
+          </div>
+
+          <div class="p-5 mt-14">
+            <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-right">
+              @if(crecimiento1){
+              <span class="text-green-500 dark:text-green-500">{{convertirValorPositivo(this.informe1)}}%</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="#0e9f6e" class="w-6 h-6 mr-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+              </svg>
+              }
+              @if(!crecimiento1){
+              <span class="text-red-500 dark:text-red-500">{{convertirValorPositivo(this.informe1)}}%</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="#f05252" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+              </svg>
+              }
+              <span class="text-3xl" style="margin-left: 70%; margin-right: 5%;"> {{this.montados}}</span>
+            </div>
+            <div id="peticiones-chart"></div>
+            <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+              <div class="flex flex-start items-center pt-5">
+
+                <a
+                  class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                  Ver mas
+                  <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 9 4-4-4-4" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+          <div
+            class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 mr-7 grid h-20 w-20 place-items-center">
+            <img src="https://i.postimg.cc/NjZnmtbS/peticion.png" alt="">
           </div>
           <div class="p-4 text-right">
             <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Pedidos <br>
@@ -111,27 +166,62 @@
               <strong class="text-azul-200">ver mas</strong>
             </p>
           </div>
-        </div>
+        </div> -->
         <!--CARD 3-->
-        <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+        <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-400 shadow-md">
+
           <div
-            class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-green-600 to-green-400 text-white shadow-green-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
-            <img src="https://cdn-icons-png.flaticon.com/512/7843/7843753.png" alt="">
+            class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 mr-7 grid h-20 w-20 place-items-center">
+
+            <img src="https://i.postimg.cc/W4k0qLf9/usuarios.png" alt="">
+            <!-- <img src="https://i.postimg.cc/NjL6Yr8v/usuarios2.png" alt=""> -->
           </div>
-          <div class="p-4 text-right">
-            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">Pedidos <br>
-              Finalizados</p>
-            <h4
-              class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-              {{this.finalizados}}</h4>
+          <div class="text-center justify-between">
+            <div class="absolute top-0 left-20 ml-24 mt-6">
+              <p class="text-xl font-normal text-gray-500 dark:text-gray-400"> <strong>USUARIOS CREADOS</strong></p>
+            </div>
+
           </div>
-          <div class="border-t border-blue-gray-50 p-4">
-            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-              <strong class="text-azul-200">ver mas</strong>
-            </p>
+
+          <div class="p-5 mt-14">
+            <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-right">
+              @if(crecimiento1){
+              <span class="text-green-500 dark:text-green-500">{{convertirValorPositivo(this.informe1)}}%</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="#0e9f6e" class="w-6 h-6 mr-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+              </svg>
+              }
+              @if(!crecimiento1){
+              <span class="text-red-500 dark:text-red-500">{{convertirValorPositivo(this.informe1)}}%</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="#f05252" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+              </svg>
+              }
+              <span class="text-3xl" style="margin-left: 70%; margin-right: 5%;"> {{this.montados}}</span>
+            </div>
+            <div id="usuarios-chart"></div>
+            <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+              <div class="flex flex-start items-center pt-5">
+
+                <a
+                  class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                  Ver mas
+                  <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 9 4-4-4-4" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
+
         </div>
-        <!--CARD 4-->
+        <!-- CARD 4
         <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
           <div
             class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
@@ -149,7 +239,7 @@
               <strong class="text-azul-200">ver mas</strong>
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="mb-4 grid grid-cols-1 gap-6 ">

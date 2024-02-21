@@ -3,5 +3,5 @@ export interface Dashboard {
     mes:number
     cantidad:number
     informe1:number
-    informe2:number
+    resultado:number
 }
