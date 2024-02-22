@@ -19,129 +19,170 @@ import { Observable, forkJoin } from 'rxjs';
 
 
 export class DashboardComponent implements OnInit {
-  montados = 0;
-  pendientes = 0;
-  finalizados = 0;
-  /*chartjs*/
-  fecha1 = 0;
-  mes1 = 0;
-  cantidad1 = 0;
+  // Variables para pedidos
+  pedidosMontados = 0;
+  pedidosPendientes = 0;
+  pedidosFinalizados = 0;
+  fechaPedido1 = 0;
+  mesPedido1 = 0;
+  cantidadPedido1 = 0;
+  fechaPedido2 = 0;
+  mesPedido2 = 0;
+  cantidadPedido2 = 0;
+  fechaPedido3 = 0;
+  mesPedido3 = 0;
+  cantidadPedido3 = 0;
+  fechaPedido4 = 0;
+  mesPedido4 = 0;
+  cantidadPedido4 = 0;
+  fechaPedido5 = 0;
+  mesPedido5 = 0;
+  cantidadPedido5 = 0;
+  informePedido1 = 0;
+  crecimientoPedido1: boolean = false;
+  crecimientoPedido2: boolean = false;
 
-  fecha2 = 0;
-  mes2 = 0;
-  cantidad2 = 0;
-
-  fecha3 = 0;
-  mes3 = 0;
-  cantidad3 = 0;
-
-  fecha4 = 0;
-  mes4 = 0;
-  cantidad4 = 0;
-
-  fecha5 = 0;
-  mes5 = 0;
-  cantidad5 = 0;
-
-  informe1 = 0;
+  // Variables para peticiones
+  peticionesMontadas = 0;
+  peticionesPendientes = 0;
+  peticionesFinalizadas = 0;
+  fechaPeticion1 = 0;
+  mesPeticion1 = 0;
+  cantidadPeticion1 = 0;
+  fechaPeticion2 = 0;
+  mesPeticion2 = 0;
+  cantidadPeticion2 = 0;
+  fechaPeticion3 = 0;
+  mesPeticion3 = 0;
+  cantidadPeticion3 = 0;
+  fechaPeticion4 = 0;
+  mesPeticion4 = 0;
+  cantidadPeticion4 = 0;
+  fechaPeticion5 = 0;
+  mesPeticion5 = 0;
+  cantidadPeticion5 = 0;
+  informePeticion1 = 0;
+  crecimientoPeticion1: boolean = false;
+  crecimientoPeticion2: boolean = false;
   dataUser = '';
-
-  //condicional
-  crecimiento1: boolean = false;
-  crecimiento2: boolean = false;
 
   constructor(private servicio: DashboardServicesService) { }
 
-
   ngOnInit() {
     // pedidos montados
-    this.dataInitNew()
     this.dataInitNew().subscribe(() => {
-      // Cuando todas las llamadas a los servicios se completen, renderizar
       this.renderizar();
-      this.renderizarPeticiones();
-      this.renderizarUsuarios();
     });
 
+    // peticiones montadas
+    this.dataInitNewPeticiones().subscribe(() => {
+      this.renderizarPeticiones();
+    });
+  }
+
+  private initData(movimiento: string, estado: string): Observable<any> {
+    return new Observable(observer => {
+      this.obtener_usuario().subscribe(usuario => {
+        this.dataUser = usuario;
+        const dashboardObservable = this.servicio.obtenerDatos(this.dataUser, estado, movimiento);
+        forkJoin([dashboardObservable]).subscribe(
+          ([data]) => {
+            if (movimiento === 'pedidos') {
+              this.assignPedidoData(data);
+            } else if (movimiento === 'peticiones') {
+              this.assignPeticionData(data);
+            }
+            observer.next();
+            observer.complete();
+          },
+          error => {
+            console.error('Hubo un error al obtener los datos:', error);
+            observer.error(error);
+          }
+        );
+      });
+    });
+  }
+
+  private assignPeticionData(data: any): void {
+    // Asignar datos de peticiones a las variables correspondientes
+    data.forEach((item: any, index: number) => {
+      if (index === 0) {
+        this.peticionesMontadas = item.resultado;
+        this.fechaPeticion1 = item.anio;
+        this.mesPeticion1 = item.mes;
+        this.cantidadPeticion1 = item.cantidad;
+        this.informePeticion1 = item.informe1;
+        if (this.informePeticion1 > 0) {
+          this.crecimientoPeticion1 = true;
+        }
+      } else if (index === 1) {
+        this.fechaPeticion2 = item.anio;
+        this.mesPeticion2 = item.mes;
+        this.cantidadPeticion2 = item.cantidad;
+      } else if (index === 2) {
+        this.fechaPeticion3 = item.anio;
+        this.mesPeticion3 = item.mes;
+        this.cantidadPeticion3 = item.cantidad;
+      } else if (index === 3) {
+        this.fechaPeticion4 = item.anio;
+        this.mesPeticion4 = item.mes;
+        this.cantidadPeticion4 = item.cantidad;
+      } else if (index === 4) {
+        this.fechaPeticion5 = item.anio;
+        this.mesPeticion5 = item.mes;
+        this.cantidadPeticion5 = item.cantidad;
+      }
+    });
+  }
+
+  private assignPedidoData(data: any): void {
+    // Asignar datos de pedidos a las variables correspondientes
+    data.forEach((item: any, index: number) => {
+      if (index === 0) {
+        this.pedidosMontados = item.resultado;
+        this.fechaPedido1 = item.anio;
+        this.mesPedido1 = item.mes;
+        this.cantidadPedido1 = item.cantidad;
+        this.informePedido1 = item.informe1;
+        if (this.informePedido1 > 0) {
+          this.crecimientoPedido1 = true;
+        }
+      } else if (index === 1) {
+        this.fechaPedido2 = item.anio;
+        this.mesPedido2 = item.mes;
+        this.cantidadPedido2 = item.cantidad;
+      } else if (index === 2) {
+        this.fechaPedido3 = item.anio;
+        this.mesPedido3 = item.mes;
+        this.cantidadPedido3 = item.cantidad;
+      } else if (index === 3) {
+        this.fechaPedido4 = item.anio;
+        this.mesPedido4 = item.mes;
+        this.cantidadPedido4 = item.cantidad;
+      } else if (index === 4) {
+        this.fechaPedido5 = item.anio;
+        this.mesPedido5 = item.mes;
+        this.cantidadPedido5 = item.cantidad;
+      }
+    });
   }
 
   dataInitNew(): Observable<any> {
-    this.obtener_usuario().subscribe(
-      (usuario) => {
-        this.dataUser = usuario;
-      })
-
     const estado = 'pendiente';
     const movimiento = 'pedidos';
-    const dashboardObservable = this.servicio.obtenerDatos(this.dataUser, estado, movimiento);
-
-    return new Observable(observer => {
-      forkJoin([dashboardObservable]).subscribe(
-        ([data]) => { // Corregir el tipo de datos recibido
-
-
-          // Reiniciar las cantidades
-          this.cantidad1 = 0;
-          this.cantidad2 = 0;
-          this.cantidad3 = 0;
-          this.cantidad4 = 0;
-          this.cantidad5 = 0;
-          // Iterar sobre los datos y asignar las cantidades a las variables correspondientes
-          data.forEach((item, index) => {
-            if (index === 0) {
-              this.cantidad1 = item.cantidad;
-              this.fecha1 = item.anio;
-              this.mes1 = item.mes;
-              this.informe1 = item.informe1;
-              this.montados = item.resultado;
-              //validacion para colores en el html
-              // Validar si informe1 es negativo
-              if (this.informe1 > 0) {
-                this.crecimiento1 = true;
-              }
-
-            } else if (index === 1) {
-              this.cantidad2 = item.cantidad;
-              this.fecha2 = item.anio;
-              this.mes2 = item.mes;
-            } else if (index === 2) {
-              this.cantidad3 = item.cantidad;
-              this.fecha3 = item.anio;
-              this.mes3 = item.mes;
-            } else if (index === 3) {
-              this.cantidad4 = item.cantidad;
-              this.fecha4 = item.anio;
-              this.mes4 = item.mes;
-            }
-            else if (index === 4) {
-              this.cantidad5 = item.cantidad;
-              this.fecha5 = item.anio;
-              this.mes5 = item.mes;
-            }
-
-          });
-
-          observer.next({
-            cantidad1: this.cantidad1,
-            cantidad2: this.cantidad2,
-            cantidad3: this.cantidad3,
-            cantidad4: this.cantidad4,
-            cantidad5: this.cantidad5,
-            informe1: this.informe1
-          });
-          observer.complete();
-        },
-        error => {
-          console.error('Hubo un error al obtener los datos:', error);
-          observer.error(error);
-        }
-      );
-
-    });
-
-
+    return this.initData(movimiento, estado);
   }
 
+  dataInitNewPeticiones(): Observable<any> {
+    const estado = 'pendiente';
+    const movimiento = 'peticiones';
+    return this.initData(movimiento, estado);
+  }
+
+
+  //renderizado para graficas
+  //pedidos
   renderizar() {
     const options = {
       chart: {
@@ -189,12 +230,12 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: "Pedidos",
-          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4, this.cantidad5],
+          data: [this.cantidadPedido1, this.cantidadPedido2, this.cantidadPedido3, this.cantidadPedido4, this.cantidadPedido5],
           color: "#1A56DB",
         },
       ],
       xaxis: {
-        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3, this.fecha3 + " " + this.fecha4 + " " + this.mes4 + this.fecha5 + " " + this.mes5],
+        categories: [this.fechaPedido1 + " " + this.mesPedido1, this.fechaPedido2 + " " + this.mesPedido2, this.fechaPedido3 + " " + this.mesPedido3, this.fechaPedido3 + " " + this.fechaPedido4 + " " + this.mesPedido4 + this.fechaPedido5 + " " + this.mesPedido5],
         labels: {
           show: false,
         },
@@ -216,7 +257,104 @@ export class DashboardComponent implements OnInit {
       chart.render();
     }
   }
+  //informacion adicional de pedidos
+  renderizarAdicionales(){
+    this.renderizarAdicionalPedidos();
+    this.renderizarAdicionalPedidos2();
+  }
 
+  
+  renderizarAdicionalPedidos() {
+    var options = {
+        series: [44, 55, 41, 17, 15],
+        chart: {
+            width: '100%', // Cambiar el ancho del gráfico para que se ajuste al contenedor
+            type: 'donut',
+            startAngle: -90,
+            endAngle: 270,
+            dropShadow: {
+                enabled: true,
+                color: '#111',
+                top: -1,
+                left: 3,
+                blur: 3,
+                opacity: 0.2
+            }
+        },
+        stroke: {
+            width: 0,
+        },
+        plotOptions: {
+            pie: {
+                donut: {
+                    labels: {
+                        show: true,
+                        total: {
+                            showAlways: false,
+                            show: true
+                        }
+                    }
+                }
+            }
+        },
+        labels: ["Comedy", "Action", "SciFi", "Drama", "Horror"],
+        dataLabels: {
+            dropShadow: {
+              enabled: false
+            }
+        },
+        fill: {
+            type: 'solid',
+        },
+        legend: {
+            position: 'right', // Cambiar la posición de la leyenda a la derecha
+            formatter: function(val:number, opts:any) {
+                return val + " - " + opts.w.globals.series[opts.seriesIndex]
+            }
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: '100%' // Ajustar el ancho del gráfico para dispositivos de menor tamaño
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#informacionAdicionalPedidos"), options);
+    chart.render();
+}
+
+
+
+
+  renderizarAdicionalPedidos2(){
+    var options = {
+      series: [{
+      name: 'Series 1',
+      data: [80, 50, 30, 40, 100, 20],
+    }],
+      chart: {
+      height: 350,
+      type: 'radar',
+      toolbar: {
+        show:false
+      }
+    },
+    xaxis: {
+      categories: ['January', 'February', 'March', 'April', 'May', 'June']
+    }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#informacionAdicionalPedidos2"), options);
+    chart.render();
+  }
+
+  //peticiones
   renderizarPeticiones() {
     const options = {
       chart: {
@@ -263,13 +401,13 @@ export class DashboardComponent implements OnInit {
       },
       series: [
         {
-          name: "Pedidos",
-          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4, this.cantidad5],
+          name: "Peticiones",
+          data: [this.cantidadPeticion1, this.cantidadPeticion2, this.cantidadPeticion3, this.cantidadPeticion4, this.cantidadPeticion5],
           color: "#1A56DB",
         },
       ],
       xaxis: {
-        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3, this.fecha3 + " " + this.fecha4 + " " + this.mes4 + this.fecha5 + " " + this.mes5],
+        categories: [this.fechaPeticion1 + " " + this.mesPeticion1, this.fechaPeticion2 + " " + this.mesPeticion2, this.fechaPeticion3 + " " + this.mesPeticion3, this.fechaPeticion3 + " " + this.fechaPeticion4 + " " + this.mesPeticion4 + this.fechaPeticion5 + " " + this.mesPeticion5],
         labels: {
           show: false,
         },
@@ -292,81 +430,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  renderizarUsuarios() {
-    const options = {
-      chart: {
-        height: "60%",
-        maxWidth: "20%",
-        type: "area",
-        fontFamily: "Inter, sans-serif",
-        dropShadow: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      tooltip: {
-        enabled: true,
-        x: {
-          show: false,
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          opacityFrom: 0.55,
-          opacityTo: 0,
-          shade: "#1C64F2",
-          gradientToColors: ["#1C64F2"],
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        width: 6,
-      },
-      grid: {
-        show: false,
-        strokeDashArray: 4,
-        padding: {
-          left: 2,
-          right: 2,
-          top: 0
-        },
-      },
-      series: [
-        {
-          name: "Pedidos",
-          data: [this.cantidad1, this.cantidad2, this.cantidad3, this.cantidad4, this.cantidad5],
-          color: "#1A56DB",
-        },
-      ],
-      xaxis: {
-        categories: [this.fecha1 + " " + this.mes1, this.fecha2 + " " + this.mes2, this.fecha3 + " " + this.mes3, this.fecha3 + " " + this.fecha4 + " " + this.mes4 + this.fecha5 + " " + this.mes5],
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-      },
-
-    }
-
-    if (document.getElementById("usuarios-chart") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("usuarios-chart"), options);
-      chart.render();
-    }
-  }
-
+  
   //metodo para convertir el valor negativo a valor positivo
   convertirValorPositivo(numero: number): number {
     return Math.abs(numero);
