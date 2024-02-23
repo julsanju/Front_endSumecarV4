@@ -15,7 +15,8 @@ export class DashboardServicesService {
   
   //azure
   //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_montados';
-  private apiUrl = 'http://localhost:5107/api/Dashboard/mostrar_graficoGeneral/{username}/{estado}/{movimiento}';
+  private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/mostrar_graficoGeneral/{username}/{estado}/{movimiento}';
+  //private apiUrl = 'http://localhost:5107/api/Dashboard/mostrar_graficoGeneral/{username}/{estado}/{movimiento}';
   private apiUrlPendintes = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_pendientes';
   private apiurlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_finalizados';
   

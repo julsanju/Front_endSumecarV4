@@ -72,6 +72,9 @@ export class DashboardComponent implements OnInit {
     // pedidos montados
     this.dataInitNew().subscribe(() => {
       this.renderizar();
+      this.renderizarBarNegativo();
+      this.renderizarBottom();
+      this.renderizarBottom2();
     });
 
     // peticiones montadas
@@ -182,6 +185,50 @@ export class DashboardComponent implements OnInit {
 
 
   //renderizado para graficas
+  //otros graficos
+  renderizarBarNegativo() {
+    var options = {
+      series: [42, 47, 52,],
+      chart: {
+        width: 380,
+        type: 'polarArea'
+      },
+      labels: ['Rose A', 'Rose B', 'Rose C'],
+      fill: {
+        opacity: 1
+      },
+      stroke: {
+        width: 1,
+        colors: undefined
+      },
+      yaxis: {
+        show: false
+      },
+      legend: {
+        position: 'bottom'
+      },
+      plotOptions: {
+        polarArea: {
+          rings: {
+            strokeWidth: 0
+          },
+          spokes: {
+            strokeWidth: 0
+          },
+        }
+      },
+      theme: {
+        monochrome: {
+          enabled: true,
+          shadeTo: 'light',
+          shadeIntensity: 0.6
+        }
+      }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+  }
   //pedidos
   renderizar() {
     const options = {
@@ -258,99 +305,280 @@ export class DashboardComponent implements OnInit {
     }
   }
   //informacion adicional de pedidos
-  renderizarAdicionales(){
+  renderizarAdicionales() {
+    this.renderizarAdicionalPedidos4();
     this.renderizarAdicionalPedidos();
     this.renderizarAdicionalPedidos2();
+    this.renderizarAdicionalPedidos3();
+
   }
 
-  
   renderizarAdicionalPedidos() {
     var options = {
-        series: [44, 55, 41, 17, 15],
-        chart: {
-            width: '100%', // Cambiar el ancho del gráfico para que se ajuste al contenedor
-            type: 'donut',
-            startAngle: -90,
-            endAngle: 270,
-            dropShadow: {
-                enabled: true,
-                color: '#111',
-                top: -1,
-                left: 3,
-                blur: 3,
-                opacity: 0.2
+      series: [44, 55, 41, 17, 15],
+      chart: {
+        width: '100%', // Cambiar el ancho del gráfico para que se ajuste al contenedor
+        type: 'donut',
+        startAngle: -90,
+        endAngle: 270,
+        dropShadow: {
+          enabled: true,
+          color: '#111',
+          top: -1,
+          left: 3,
+          blur: 3,
+          opacity: 0.2
+        }
+      },
+      stroke: {
+        width: 0,
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+              total: {
+                showAlways: false,
+                show: true
+              }
             }
-        },
-        stroke: {
-            width: 0,
-        },
-        plotOptions: {
-            pie: {
-                donut: {
-                    labels: {
-                        show: true,
-                        total: {
-                            showAlways: false,
-                            show: true
-                        }
-                    }
-                }
-            }
-        },
-        labels: ["Comedy", "Action", "SciFi", "Drama", "Horror"],
-        dataLabels: {
-            dropShadow: {
-              enabled: false
-            }
-        },
-        fill: {
-            type: 'solid',
-        },
-        legend: {
-            position: 'right', // Cambiar la posición de la leyenda a la derecha
-            formatter: function(val:number, opts:any) {
-                return val + " - " + opts.w.globals.series[opts.seriesIndex]
-            }
-        },
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: '100%' // Ajustar el ancho del gráfico para dispositivos de menor tamaño
-                },
-                legend: {
-                    position: 'bottom'
-                }
-            }
-        }]
+          }
+        }
+      },
+      labels: ["Comedy", "Action", "SciFi", "Drama", "Horror"],
+      dataLabels: {
+
+        enabled: false
+
+      },
+      fill: {
+        type: 'solid',
+      },
+      legend: {
+        position: 'right', // Cambiar la posición de la leyenda a la derecha
+        formatter: function (val: number, opts: any) {
+          return val + " - " + opts.w.globals.series[opts.seriesIndex]
+        }
+      },
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: '100%' // Ajustar el ancho del gráfico para dispositivos de menor tamaño
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }]
     };
 
     var chart = new ApexCharts(document.querySelector("#informacionAdicionalPedidos"), options);
     chart.render();
-}
+  }
 
-
-
-
-  renderizarAdicionalPedidos2(){
+  renderizarAdicionalPedidos2() {
     var options = {
       series: [{
-      name: 'Series 1',
-      data: [80, 50, 30, 40, 100, 20],
-    }],
+        name: 'Series 1',
+        data: [80, 50, 30, 40, 100, 20],
+      }],
       chart: {
-      height: 350,
-      type: 'radar',
-      toolbar: {
-        show:false
+        height: 350,
+        type: 'radar',
+        toolbar: {
+          show: false
+        }
+      },
+      xaxis: {
+        categories: ['January', 'February', 'March', 'April', 'May', 'June']
       }
-    },
-    xaxis: {
-      categories: ['January', 'February', 'March', 'April', 'May', 'June']
-    }
     };
 
     var chart = new ApexCharts(document.querySelector("#informacionAdicionalPedidos2"), options);
+    chart.render();
+  }
+
+  renderizarAdicionalPedidos3() {
+    var options = {
+      series: [{
+      name: 'Metric1',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric2',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric3',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric4',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric5',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric6',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric7',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric8',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    },
+    {
+      name: 'Metric9',
+      data: this.generateData(18, {
+        min: 0,
+        max: 90
+      })
+    }
+    ],
+      chart: {
+      height: 350,
+      type: 'heatmap',
+    },
+    dataLabels: {
+      enabled: false
+    },
+    colors: ["#008FFB"],
+    title: {
+      text: 'HeatMap Chart (Single color)'
+    },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#informacionAdicionalPedidos3"), options);
+    chart.render();
+  }
+
+  generateData(count: number, yrange: { min: number, max: number }) {
+    let i = 0;
+    const series = [];
+    while (i < count) {
+      const x = 'w' + (i + 1).toString();
+      const y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+      series.push({
+        x: x,
+        y: y
+      });
+      i++;
+    }
+    return series;
+  }
+
+  renderizarAdicionalPedidos4() {
+    var options = {
+      series: [{
+        name: "Session Duration",
+        data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+      },
+      {
+        name: "Page Views",
+        data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+      },
+      {
+        name: 'Total Visits',
+        data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+      }
+      ],
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: [5, 7, 5],
+        curve: 'straight',
+        dashArray: [0, 8, 5]
+      },
+      title: {
+        text: 'Page Statistics',
+        align: 'left'
+      },
+      legend: {
+        tooltipHoverFormatter: function (val: any, opts: any) {
+          return val + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
+        }
+      },
+      markers: {
+        size: 0,
+        hover: {
+          sizeOffset: 6
+        }
+      },
+      xaxis: {
+        categories: ['01 Jan', '02 Jan', '03 Jan', '04 Jan', '05 Jan', '06 Jan', '07 Jan', '08 Jan', '09 Jan',
+          '10 Jan', '11 Jan', '12 Jan'
+        ],
+      },
+      tooltip: {
+        y: [
+          {
+            title: {
+              formatter: function (val: any) {
+                return val + " (mins)"
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function (val: any) {
+                return val + " per session"
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function (val: any) {
+                return val;
+              }
+            }
+          }
+        ]
+      },
+      grid: {
+        borderColor: '#f1f1f1',
+      }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#renderizarAdicionalPedidos4"), options);
     chart.render();
   }
 
@@ -430,7 +658,165 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  
+  //renderizado general parte bottom
+  renderizarBottom() {
+    const getChartOptions = () => {
+      return {
+        series: [90, 85, 70],
+        colors: ["#1C64F2", "#16BDCA", "#FDBA8C"],
+        chart: {
+          height: "380px",
+          width: "100%",
+          type: "radialBar",
+          sparkline: {
+            enabled: true,
+          },
+        },
+        plotOptions: {
+          radialBar: {
+            track: {
+              background: '#E5E7EB',
+            },
+            dataLabels: {
+              show: false,
+            },
+            hollow: {
+              margin: 0,
+              size: "32%",
+            }
+          },
+        },
+        grid: {
+          show: false,
+          strokeDashArray: 4,
+          padding: {
+            left: 2,
+            right: 2,
+            top: -23,
+            bottom: -20,
+          },
+        },
+        labels: ["Done", "In progress", "To do"],
+        legend: {
+          show: true,
+          position: "bottom",
+          fontFamily: "Inter, sans-serif",
+        },
+        tooltip: {
+          enabled: true,
+          x: {
+            show: false,
+          },
+        },
+        yaxis: {
+          show: false,
+          labels: {
+            formatter: function (value: number) {
+              return value + '%';
+            }
+          }
+        }
+      }
+    }
+
+    if (document.getElementById("radial-chart") && typeof ApexCharts !== 'undefined') {
+      const chart = new ApexCharts(document.querySelector("#radial-chart"), getChartOptions());
+      chart.render();
+    }
+  }
+  renderizarBottom2() {
+
+    const options = {
+      // enable and customize data labels using the following example, learn more from here: https://apexcharts.com/docs/datalabels/
+      dataLabels: {
+        enabled: true,
+        // offsetX: 10,
+        style: {
+          cssClass: 'text-xs text-white font-medium'
+        },
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 16,
+          right: 16,
+          top: -26
+        },
+      },
+      series: [
+        {
+          name: "Developer Edition",
+          data: [150, 141, 145, 152, 135, 125],
+          color: "#1A56DB",
+        },
+        {
+          name: "Designer Edition",
+          data: [64, 41, 76, 41, 113, 173],
+          color: "#7E3BF2",
+        },
+      ],
+      chart: {
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: false,
+        },
+      },
+      legend: {
+        show: true
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          opacityFrom: 0.55,
+          opacityTo: 0,
+          shade: "#1C64F2",
+          gradientToColors: ["#1C64F2"],
+        },
+      },
+      stroke: {
+        width: 6,
+      },
+      xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        show: false,
+        labels: {
+          formatter: function (value: any) {
+            return '$' + value;
+          }
+        }
+      },
+    }
+
+    if (document.getElementById("data-labels-chart") && typeof ApexCharts !== 'undefined') {
+      const chart = new ApexCharts(document.getElementById("data-labels-chart"), options);
+      chart.render();
+    }
+
+  }
   //metodo para convertir el valor negativo a valor positivo
   convertirValorPositivo(numero: number): number {
     return Math.abs(numero);
