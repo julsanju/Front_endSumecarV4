@@ -28,7 +28,7 @@ export class CrearUsuarioComponent implements OnInit {
   registrationForm: FormGroup;
   UpdateForm: FormGroup;
   dataSource: Empleado[] = [];
-
+  //defaultImagen = 'https://i.postimg.cc/CKsd5m7z/man.png'
   originalDataSource: Empleado[] = [];
   currentPage: number = 1;
   pageSize: number = 4;
@@ -60,7 +60,7 @@ export class CrearUsuarioComponent implements OnInit {
     private formBuilder: FormBuilder,
     private registerService: RegisterService,
     private messageService: MessageService,
-    private sanitizer: DomSanitizer ) {
+    private sanitizer: DomSanitizer) {
 
     this.formData = new FormData()
 
@@ -68,7 +68,7 @@ export class CrearUsuarioComponent implements OnInit {
       Identificacion: ['', Validators.required],
       Rol: ['', Validators.required],
       Nombre: ['', Validators.required],
-      Apellido:['', Validators.required],
+      Apellido: ['', Validators.required],
       Ubicacion: ['', Validators.required],
       Telefono: ['', Validators.required],
       Correo: ['', [Validators.required, Validators.email]],
@@ -76,7 +76,7 @@ export class CrearUsuarioComponent implements OnInit {
       Contrasena: ['', Validators.required],
       Departamento: ['', Validators.required],
       Ciudad: ['', Validators.required],
-      Imagen: ['', Validators.required]
+      Imagen: ['']
     });
 
     this.UpdateForm = this.formBuilder.group({
@@ -93,7 +93,7 @@ export class CrearUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos de empleados
-    
+
     this.servicioUsuarios.obtenerEmpleado().subscribe(
       (response) => {
         this.dataSource = response;
@@ -162,30 +162,6 @@ export class CrearUsuarioComponent implements OnInit {
     }, 3000);
   }
 
-  //imagenes
-  /*onFileChange(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-
-    const files = inputElement.files;
-    if (files && files.length > 0) {
-      this.selectedImages = [];
-      this.formData = new FormData();
-
-      for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-
-        reader.onload = (e: any) => {
-          this.selectedImages.push(e.target.result);
-        };
-
-        reader.readAsDataURL(files[i]);
-
-        this.formData.append('image', files[i], files[i].name);
-        console.log(files[i].name)
-      }
-    }
-
-  }*/
 
   public onFileChange(event: any) {
 
@@ -211,7 +187,7 @@ export class CrearUsuarioComponent implements OnInit {
       }
     }
     console.log(imagen);
-    
+
     if (imagen.type.startsWith('image/')) {
       console.log('Sí es una imagen');
       this.files.push(imagen);
@@ -247,24 +223,34 @@ export class CrearUsuarioComponent implements OnInit {
   blobFile = async ($event: any) =>
     new Promise((resolve, reject) => {
       try {
-        const unsafeImg = window.URL.createObjectURL($event);
-        const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
-        const reader = new FileReader();
-        reader.readAsDataURL($event);
-        reader.onload = () => {
+        if (!$event) {
+          // Si $event es null, resolvemos la promesa con null
           resolve({
-            blob: $event,
-            image,
-            base: reader.result,
+            blob: '',
+            image: '',
+            base: '',
           });
-        };
-        reader.onerror = (error) => {
-          resolve({
-            blob: $event,
-            image,
-            base: null,
-          });
-        };
+          return;
+        } else {
+          const unsafeImg = window.URL.createObjectURL($event);
+          const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+          const reader = new FileReader();
+          reader.readAsDataURL($event);
+          reader.onload = () => {
+            resolve({
+              blob: $event,
+              image,
+              base: reader.result,
+            });
+          };
+          reader.onerror = (error) => {
+            resolve({
+              blob: $event,
+              image,
+              base: null,
+            });
+          };
+        }
       } catch (e) {
         reject(e);
       }
@@ -272,27 +258,15 @@ export class CrearUsuarioComponent implements OnInit {
 
   crearUsuario() {
     this.cargando = true;
-  
-    // Obtén las imágenes antes de enviar el formulario
-    //this.loadImages();
-  
-    const imagesLoaded$ = forkJoin(this.files.map((item:File) => this.blobFile(item)));
-  
-    imagesLoaded$.subscribe(
-      (images: any) => {
-        const formData = new FormData();
-  
+    try {
+      const formData = new FormData();
+      // Verificar si hay archivos
+      if (this.files.length === 0 || !Image) {
+        console.log('No se proporcionaron imágenes.');
         formData.append('Nombre', this.registrationForm.value.Nombre);
         formData.append('Apellido', this.registrationForm.value.Apellido);
         formData.append('Contrasena', this.registrationForm.value.Contrasena);
-  
-        images.forEach((image: any) => {
-          // Agrega las imágenes al FormData
-          if (image && image.blob) {
-            formData.append('ImagenUrl', image.blob);
-          }
-        });
-  
+        formData.append('ImagenUrl', '');
         formData.append('Identificacion', this.registrationForm.value.Identificacion);
         formData.append('Rol', this.registrationForm.value.Rol);
         formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
@@ -302,45 +276,194 @@ export class CrearUsuarioComponent implements OnInit {
         formData.append('Contrasena', this.registrationForm.value.Contrasena);
         formData.append('Departamento', this.registrationForm.value.Departamento);
         formData.append('Ciudad', this.registrationForm.value.Ciudad);
-  
-        // Llamada al servicio para registrar al usuario
-        if (this.registrationForm.valid) {
-          if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
-            this.errorMessage = { Message: 'Formato incorrecto para el correo electrónico.' };
-            this.mostrarDanger();
-            this.cargando = false;
-          } else {
-            this.registerService.registerUser(formData).subscribe(
-              (response) => {
-                console.log(response);
-                this.mostrarAlerta();
-                this.cargando = false;
-                this.registrationForm.reset();
-              },
-              (error) => {
-                console.error('Error:', error);
-                console.log(error.error);
-                this.errorMessage = error.error;
-                this.mostrarDanger();
-                console.log(this.errorMessage?.Message);
-                this.cargando = false;
-              }
-            );
-          }
-        } else {
-          this.errorMessage = { Message: 'Por favor, asegúrese de completar todos los campos para finalizar el registro.' };
+        // Continuar con el proceso sin agregar imágenes al formData
+        this.enviarFormulario(formData, this.registrationForm.value.Usuario)
+        console.log(this.registrationForm.value.Identificacion)
+        //return;
+      }
+
+      // Si hay archivos, cargar imágenes y enviar el formulario
+      const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
+
+      imagesLoaded$.subscribe(
+        (images: any) => {
+
+          formData.append('Nombre', this.registrationForm.value.Nombre);
+          formData.append('Apellido', this.registrationForm.value.Apellido);
+          formData.append('Contrasena', this.registrationForm.value.Contrasena);
+
+          images.forEach((image: any) => {
+            // Agrega las imágenes al FormData
+            if (image && image.blob) {
+              formData.append('ImagenUrl', image.blob);
+            }
+          });
+
+          formData.append('Identificacion', this.registrationForm.value.Identificacion);
+          formData.append('Rol', this.registrationForm.value.Rol);
+          formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+          formData.append('Telefono', this.registrationForm.value.Telefono);
+          formData.append('Correo', this.registrationForm.value.Correo);
+          formData.append('Usuario', this.registrationForm.value.Usuario);
+          formData.append('Contrasena', this.registrationForm.value.Contrasena);
+          formData.append('Departamento', this.registrationForm.value.Departamento);
+          formData.append('Ciudad', this.registrationForm.value.Ciudad);
+
+          this.enviarFormulario(formData, this.registrationForm.value.Usuario);
+          this.cargando = false;
+          // // Llamada al servicio para registrar al usuario
+          // if (this.registrationForm.valid) {
+          //   if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
+          //     this.errorMessage = { Message: 'Formato incorrecto para el correo electrónico.' };
+          //     this.mostrarDanger();
+          //     this.cargando = false;
+          //   } else {
+          //     this.registerService.registerUser(formData, this.registrationForm.value.Usuario ).subscribe(
+          //       (response) => {
+          //         console.log(response);
+          //         this.mostrarAlerta();
+          //         this.cargando = false;
+          //         this.registrationForm.reset();
+          //       },
+          //       (error) => {
+          //         console.error('Error:', error);
+          //         console.log(error.error);
+          //         this.errorMessage = error.error;
+          //         this.mostrarDanger();
+          //         console.log(this.errorMessage?.Message);
+          //         this.cargando = false;
+
+          //       }
+          //     );
+          //   }
+          // } else {
+          //   this.errorMessage = { Message: 'Por favor, asegúrese de completar todos los campos para finalizar el registro.' };
+          //   this.mostrarDanger();
+          //   this.cargando = false;
+          // }
+
+        },
+        (error) => {
+          console.error('Error al cargar imágenes:', error);
           this.mostrarDanger();
           this.cargando = false;
         }
-      },
-      (error) => {
-        console.error('Error al cargar imágenes:', error);
+      );
+    } catch (exception) {
+      console.log(exception);
+    }
+  }
+
+  enviarFormulario(formData: FormData, username: string) {
+    this.cargando = true;
+    // Llamada al servicio para registrar al usuario
+    if (this.registrationForm.valid) {
+      if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
+        this.errorMessage = { Message: 'Formato incorrecto para el correo electrónico.' };
         this.mostrarDanger();
         this.cargando = false;
+      } else {
+        this.registerService.registerUser(formData, username).subscribe(
+          (response) => {
+            console.log(response);
+            this.mostrarAlerta();
+            this.cargando = false;
+            this.registrationForm.reset();
+          },
+          (error) => {
+            console.error('Error:', error);
+            console.log(error.error);
+            this.errorMessage = error.error;
+            this.mostrarDanger();
+            console.log(this.errorMessage?.Message);
+            this.cargando = false;
+
+          }
+        );
       }
-    );
+    } else {
+      this.errorMessage = { Message: 'Por favor, asegúrese de completar todos los campos para finalizar el registro.' };
+      this.mostrarDanger();
+      this.cargando = false;
+    }
   }
-  
+
+
+  // crearUsuario() {
+  //   //this.cargando = true;
+  //   try{
+  //   const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
+
+
+
+  //   imagesLoaded$.subscribe(
+  //     (images: any) => {
+  //       const formData = new FormData();
+
+  //       formData.append('Nombre', this.registrationForm.value.Nombre);
+  //       formData.append('Apellido', this.registrationForm.value.Apellido);
+  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
+
+  //       images.forEach((image: any) => {
+  //         // Agrega las imágenes al FormData
+  //         if (image && image.blob) {
+  //           formData.append('ImagenUrl', image.blob);
+  //         } else if(!image && !image.blob) {
+  //           formData.append('ImagenUrl', ''); 
+  //         }
+  //       });
+
+  //       formData.append('Identificacion', this.registrationForm.value.Identificacion);
+  //       formData.append('Rol', this.registrationForm.value.Rol);
+  //       formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+  //       formData.append('Telefono', this.registrationForm.value.Telefono);
+  //       formData.append('Correo', this.registrationForm.value.Correo);
+  //       formData.append('Usuario', this.registrationForm.value.Usuario);
+  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  //       formData.append('Departamento', this.registrationForm.value.Departamento);
+  //       formData.append('Ciudad', this.registrationForm.value.Ciudad);
+
+  //       // Llamada al servicio para registrar al usuario
+  //       if (this.registrationForm.valid) {
+  //         if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
+  //           this.errorMessage = { Message: 'Formato incorrecto para el correo electrónico.' };
+  //           this.mostrarDanger();
+  //           this.cargando = false;
+  //         } else {
+  //           this.registerService.registerUser(formData).subscribe(
+  //             (response) => {
+  //               console.log(response);
+  //               this.mostrarAlerta();
+  //               this.cargando = false;
+  //               this.registrationForm.reset();
+  //             },
+  //             (error) => {
+  //               console.error('Error:', error);
+  //               console.log(error.error);
+  //               this.errorMessage = error.error;
+  //               this.mostrarDanger();
+  //               console.log(this.errorMessage?.Message);
+  //               this.cargando = false;
+  //             }
+  //           );
+  //         }
+  //       } else {
+  //         this.errorMessage = { Message: 'Por favor, asegúrese de completar todos los campos para finalizar el registro.' };
+  //         this.mostrarDanger();
+  //         this.cargando = false;
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error('Error al cargar imágenes:', error);
+  //       this.mostrarDanger();
+  //       this.cargando = false;
+  //     }
+  //   );
+  //   } catch(exception){
+  //     console.log(exception)
+  //   }
+  // }
+
   //metodo para abrir el drawer que modificara los usuarios
   abrirModificarEmpleado() {
     this.showEditar = true;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRouteSnapshot,RouterModule, ActivatedRoute    } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRouteSnapshot, RouterModule, ActivatedRoute } from '@angular/router';
 //import { json } from 'node:stream/consumers';
 import { LoginServicesService } from 'src/app/services/login-services.service';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -29,19 +29,19 @@ export class MenuComponent {
   isCliente = false;
   username: string = '';
   rol: string = '';
-  imagenUser:string = "";
+  defaultImagen: string = "";
+  imagenUser: string = "";
   /*animaciones sidebar*/
   rotacionProductos = false;
   rotacionPeticiones = false;
   rotacionHistorial = false;
   rotacionConfiguracion = false;
   //datos para mapear
-  dataMapeo: UsuariosView [] = [];
+  dataMapeo: UsuariosView[] = [];
 
-  constructor(private login: LoginServicesService, private router: Router, private servicio:UsuariosServicesService) {}
+  constructor(private login: LoginServicesService, private router: Router, private servicio: UsuariosServicesService) { }
   breadcrumbs: string[] = [];
   ngOnInit() {
-    this.obtenerImagenUserxd()
     this.mapeoUserProfile();
     // Recupera la información del usuario desde localStorage
     const userDataString = localStorage.getItem('userData');
@@ -66,10 +66,10 @@ export class MenuComponent {
     });
   }
 
-  productos(){ 
-    this.router.navigate(['/menu/productos']).then(() => window.location.reload()); 
+  productos() {
+    this.router.navigate(['/menu/productos']).then(() => window.location.reload());
   }
-  
+
   //metodo para mapear datos en el userProfile
   mapeoUserProfile() {
     const userDataString = localStorage.getItem('userData');
@@ -82,6 +82,7 @@ export class MenuComponent {
       this.servicio.obtenerMapeo(username).subscribe(
         (response) => {
           this.dataMapeo = (response)
+          this.obtenerImagenUserxd()
         },
         (error) => {
           console.error('Error al obtener la imagen:', error);
@@ -108,14 +109,14 @@ export class MenuComponent {
     return false; // Retorna false si no se encuentra información del usuario
   }
 
-  esEmpleado(): boolean{
+  esEmpleado(): boolean {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
-      try{
+      try {
         const userData = JSON.parse(userDataString);
         return userData.rol === 'empleado';
-      }catch (error) {
-        console.error('Error al aalizar JSON:' , error)
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
         return false;
       }
     }
@@ -123,20 +124,20 @@ export class MenuComponent {
 
   }
 
-  esCliente(): boolean{
+  esCliente(): boolean {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
-      try{
+      try {
         const userData = JSON.parse(userDataString);
         return userData.rol === 'cliente';
-      }catch (error) {
-        console.error('Error al aalizar JSON:' , error)
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
         return false;
       }
     }
     return false;
   }
-  
+
   //parte del breadcump
   private createBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: string[] = []): string[] {
     const children: ActivatedRouteSnapshot[] = route.children;
@@ -158,24 +159,35 @@ export class MenuComponent {
     return breadcrumbs;
   }
 
-  obtenerImagenUserxd(){
+  obtenerImagenUserxd() {
     const userDataString = localStorage.getItem('userData');
-  if (userDataString) {
-    const userData = JSON.parse(userDataString);
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
 
-    // Extraer solo el id de usuario
-    const username = userData.usuario;
-
-    this.servicio.obtenerImagenUser(username).subscribe(
-      (response) => {
-          this.imagenUser = (response)
-      },
-      (error) => {
-        console.error('Error al obtener la imagen:', error);
-      }
-    );
-  }
-  return false;
+      // Extraer solo el id de usuario
+      const username = userData.usuario;
+      const sexo = this.dataMapeo[0].sexo;
+      this.servicio.obtenerImagenUser(username).subscribe(
+        (response) => {
+            this.imagenUser = (response)
+        },
+        (error) => {
+          this.dataMapeo.forEach(element => {
+            if (element.sexo === 'F') {
+              this.imagenUser = 'https://i.postimg.cc/c1tLBrHx/woman.png';
+              console.log(element.sexo)
+            }
+            else if (element.sexo === 'M') {
+              this.imagenUser = 'https://i.postimg.cc/VLXgf0p5/man-1.png';
+              console.log(this.dataMapeo[0].sexo)
+            }
+          });
+          
+          console.error('Error al obtener la imagen:', error);
+        }
+      );
+    }
+    return false;
   }
 
   toggleProductos() {

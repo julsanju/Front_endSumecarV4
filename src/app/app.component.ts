@@ -18,7 +18,7 @@ import { UsuariosView } from './Interfaces/usuarios-view';
 })
 export class AppComponent implements OnInit {
   title = 'web-app';
-  dataMapeo: UsuariosView [] = [];
+  dataMapeo: UsuariosView[] = [];
   isCollapsed = false;
   isAdmin = false;
   isEmpleado = false;
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     initFlowbite();
     this.obtenerImagenUserxd();
     this.mapeoUserProfile();
-    
+
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
       try {
@@ -116,7 +116,12 @@ export class AppComponent implements OnInit {
 
       this.servicio.obtenerImagenUser(username).subscribe(
         (response) => {
-          this.imagenUser = (response)
+          if (response == null || !response) {
+            this.imagenUser = 'https://i.postimg.cc/VLXgf0p5/man-1.png';
+          }
+          else {
+            this.imagenUser = (response)
+          }
         },
         (error) => {
           console.error('Error al obtener la imagen:', error);

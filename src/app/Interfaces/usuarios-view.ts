@@ -4,6 +4,7 @@ import { DetallePeticionP } from "./detalle-peticionP"
 export interface UsuariosView {
     identificacion:string
     nombre:string,
+    sexo:string,
     apellido:string,
     telefono:string
     correo:string
