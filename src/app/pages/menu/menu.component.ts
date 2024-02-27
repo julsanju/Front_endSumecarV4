@@ -82,7 +82,7 @@ export class MenuComponent {
       this.servicio.obtenerMapeo(username).subscribe(
         (response) => {
           this.dataMapeo = (response)
-          this.obtenerImagenUserxd()
+          this.obtenerImagenUser()
         },
         (error) => {
           console.error('Error al obtener la imagen:', error);
@@ -159,27 +159,40 @@ export class MenuComponent {
     return breadcrumbs;
   }
 
-  obtenerImagenUserxd() {
+  obtenerImagenUser() {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
       const userData = JSON.parse(userDataString);
 
       // Extraer solo el id de usuario
       const username = userData.usuario;
-      const sexo = this.dataMapeo[0].sexo;
       this.servicio.obtenerImagenUser(username).subscribe(
         (response) => {
-            this.imagenUser = (response)
+          if (!response || response === '') {
+            this.dataMapeo.forEach(element => {
+              if (element.sexo === 'F') {
+                this.imagenUser = 'https://i.postimg.cc/7hkDGkfy/woman-1.png';
+              } else if (element.sexo === 'M') {
+                this.imagenUser = 'https://i.postimg.cc/v87D7Qfj/boy.png';
+              }
+                else if (element.sexo === 'Otro') {
+                this.imagenUser = 'https://i.postimg.cc/fy36WWcK/who.png';
+              }
+            });
+          } else {
+            this.imagenUser = response;
+          }
         },
         (error) => {
           this.dataMapeo.forEach(element => {
             if (element.sexo === 'F') {
-              this.imagenUser = 'https://i.postimg.cc/c1tLBrHx/woman.png';
-              console.log(element.sexo)
+              this.imagenUser = 'https://i.postimg.cc/7hkDGkfy/woman-1.png';
             }
-            else if (element.sexo === 'M') {
-              this.imagenUser = 'https://i.postimg.cc/VLXgf0p5/man-1.png';
-              console.log(this.dataMapeo[0].sexo)
+            if (element.sexo === 'M') {
+              this.imagenUser = 'https://i.postimg.cc/v87D7Qfj/boy.png';
+            }
+            if (element.sexo === 'Otro') {
+              this.imagenUser = 'https://i.postimg.cc/fy36WWcK/who.png';
             }
           });
           

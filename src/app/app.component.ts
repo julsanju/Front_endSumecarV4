@@ -9,6 +9,7 @@ import { UsuariosServicesService } from './services/usuarios-services.service';
 import { Imagen } from './Interfaces/imagen';
 import { CommonModule } from '@angular/common';
 import { UsuariosView } from './Interfaces/usuarios-view';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -38,11 +39,9 @@ export class AppComponent implements OnInit {
     private router: Router,
     private servicio: UsuariosServicesService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     initFlowbite();
-    this.obtenerImagenUserxd();
     this.mapeoUserProfile();
-
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
       try {
@@ -105,32 +104,6 @@ export class AppComponent implements OnInit {
     return false;
   }
 
-
-  obtenerImagenUserxd() {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      const userData = JSON.parse(userDataString);
-
-      // Extraer solo el id de usuario
-      const username = userData.usuario;
-
-      this.servicio.obtenerImagenUser(username).subscribe(
-        (response) => {
-          if (response == null || !response) {
-            this.imagenUser = 'https://i.postimg.cc/VLXgf0p5/man-1.png';
-          }
-          else {
-            this.imagenUser = (response)
-          }
-        },
-        (error) => {
-          console.error('Error al obtener la imagen:', error);
-        }
-      );
-    }
-    return false;
-  }
-
   //metodo para mapear datos en el userProfile
   mapeoUserProfile() {
     const userDataString = localStorage.getItem('userData');
@@ -142,9 +115,54 @@ export class AppComponent implements OnInit {
 
       this.servicioUsuarios.obtenerMapeo(username).subscribe(
         (response) => {
-          this.dataMapeo = (response)
+          this.dataMapeo = (response);
+          this.obtenerImagenUser();
         },
         (error) => {
+          console.error('Error al obtener la imagen:', error);
+        }
+      );
+    }
+    
+  }
+
+  obtenerImagenUser() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+
+      // Extraer solo el id de usuario
+      const username = userData.usuario;
+      this.servicio.obtenerImagenUser(username).subscribe(
+        (response) => {
+          if (!response || response === '') {
+            this.dataMapeo.forEach(element => {
+              if (element.sexo === 'F') {
+                this.imagenUser = 'https://i.postimg.cc/7hkDGkfy/woman-1.png';
+              } else if (element.sexo === 'M') {
+                this.imagenUser = 'https://i.postimg.cc/v87D7Qfj/boy.png';
+              }
+                else if (element.sexo === 'Otro') {
+                this.imagenUser = 'https://i.postimg.cc/fy36WWcK/who.png';
+              }
+            });
+          } else {
+            this.imagenUser = response;
+          }
+        },
+        (error) => {
+          this.dataMapeo.forEach(element => {
+            if (element.sexo === 'F') {
+              this.imagenUser = 'https://i.postimg.cc/7hkDGkfy/woman-1.png';
+            }
+            if (element.sexo === 'M') {
+              this.imagenUser = 'https://i.postimg.cc/v87D7Qfj/boy.png';
+            }
+            if (element.sexo === 'Otro') {
+              this.imagenUser = 'https://i.postimg.cc/fy36WWcK/who.png';
+            }
+          });
+          
           console.error('Error al obtener la imagen:', error);
         }
       );

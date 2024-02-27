@@ -69,6 +69,7 @@ export class CrearUsuarioComponent implements OnInit {
       Rol: ['', Validators.required],
       Nombre: ['', Validators.required],
       Apellido: ['', Validators.required],
+      Sexo: ['', Validators.required],
       Ubicacion: ['', Validators.required],
       Telefono: ['', Validators.required],
       Correo: ['', [Validators.required, Validators.email]],
@@ -83,6 +84,8 @@ export class CrearUsuarioComponent implements OnInit {
       Identificacion: ['', Validators.required],
       Rol: ['', Validators.required],
       Nombre: ['', Validators.required],
+      Apellido: ['', Validators.required],
+      Sexo: ['', Validators.required],
       Ubicacion: ['', Validators.required],
       Telefono: ['', Validators.required],
       Correo: ['', [Validators.required, Validators.email]],
@@ -99,7 +102,6 @@ export class CrearUsuarioComponent implements OnInit {
         this.dataSource = response;
         this.originalDataSource = response;
         this.isLoading = false;
-
       },
       error => {
         console.error('Error obteniendo datos', error);
@@ -183,7 +185,7 @@ export class CrearUsuarioComponent implements OnInit {
         reader.readAsDataURL(files[i]);
 
         this.formData.append('image', files[i], files[i].name);
-        console.log(files[i].name)
+        
       }
     }
     console.log(imagen);
@@ -210,8 +212,6 @@ export class CrearUsuarioComponent implements OnInit {
       this.servicioUsuarios.obtenerCiudad(codigoDepartamento).subscribe(
         (data) => {
           this.ciudades = data;
-          console.log(this.ciudades)
-
         },
         (error) => {
           console.error('Error obteniendo ciudades', error);
@@ -265,6 +265,7 @@ export class CrearUsuarioComponent implements OnInit {
         console.log('No se proporcionaron imágenes.');
         formData.append('Nombre', this.registrationForm.value.Nombre);
         formData.append('Apellido', this.registrationForm.value.Apellido);
+        formData.append('Sexo', this.registrationForm.value.Sexo);
         formData.append('Contrasena', this.registrationForm.value.Contrasena);
         formData.append('ImagenUrl', '');
         formData.append('Identificacion', this.registrationForm.value.Identificacion);
@@ -290,6 +291,7 @@ export class CrearUsuarioComponent implements OnInit {
 
           formData.append('Nombre', this.registrationForm.value.Nombre);
           formData.append('Apellido', this.registrationForm.value.Apellido);
+          formData.append('Sexo', this.registrationForm.value.Sexo);
           formData.append('Contrasena', this.registrationForm.value.Contrasena);
 
           images.forEach((image: any) => {
@@ -311,37 +313,7 @@ export class CrearUsuarioComponent implements OnInit {
 
           this.enviarFormulario(formData, this.registrationForm.value.Usuario);
           this.cargando = false;
-          // // Llamada al servicio para registrar al usuario
-          // if (this.registrationForm.valid) {
-          //   if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
-          //     this.errorMessage = { Message: 'Formato incorrecto para el correo electrónico.' };
-          //     this.mostrarDanger();
-          //     this.cargando = false;
-          //   } else {
-          //     this.registerService.registerUser(formData, this.registrationForm.value.Usuario ).subscribe(
-          //       (response) => {
-          //         console.log(response);
-          //         this.mostrarAlerta();
-          //         this.cargando = false;
-          //         this.registrationForm.reset();
-          //       },
-          //       (error) => {
-          //         console.error('Error:', error);
-          //         console.log(error.error);
-          //         this.errorMessage = error.error;
-          //         this.mostrarDanger();
-          //         console.log(this.errorMessage?.Message);
-          //         this.cargando = false;
-
-          //       }
-          //     );
-          //   }
-          // } else {
-          //   this.errorMessage = { Message: 'Por favor, asegúrese de completar todos los campos para finalizar el registro.' };
-          //   this.mostrarDanger();
-          //   this.cargando = false;
-          // }
-
+          
         },
         (error) => {
           console.error('Error al cargar imágenes:', error);
@@ -388,82 +360,6 @@ export class CrearUsuarioComponent implements OnInit {
     }
   }
 
-
-  // crearUsuario() {
-  //   //this.cargando = true;
-  //   try{
-  //   const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
-
-
-
-  //   imagesLoaded$.subscribe(
-  //     (images: any) => {
-  //       const formData = new FormData();
-
-  //       formData.append('Nombre', this.registrationForm.value.Nombre);
-  //       formData.append('Apellido', this.registrationForm.value.Apellido);
-  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
-
-  //       images.forEach((image: any) => {
-  //         // Agrega las imágenes al FormData
-  //         if (image && image.blob) {
-  //           formData.append('ImagenUrl', image.blob);
-  //         } else if(!image && !image.blob) {
-  //           formData.append('ImagenUrl', ''); 
-  //         }
-  //       });
-
-  //       formData.append('Identificacion', this.registrationForm.value.Identificacion);
-  //       formData.append('Rol', this.registrationForm.value.Rol);
-  //       formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-  //       formData.append('Telefono', this.registrationForm.value.Telefono);
-  //       formData.append('Correo', this.registrationForm.value.Correo);
-  //       formData.append('Usuario', this.registrationForm.value.Usuario);
-  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
-  //       formData.append('Departamento', this.registrationForm.value.Departamento);
-  //       formData.append('Ciudad', this.registrationForm.value.Ciudad);
-
-  //       // Llamada al servicio para registrar al usuario
-  //       if (this.registrationForm.valid) {
-  //         if (this.registrationForm.get('Correo')?.hasError('invalidEmail')) {
-  //           this.errorMessage = { Message: 'Formato incorrecto para el correo electrónico.' };
-  //           this.mostrarDanger();
-  //           this.cargando = false;
-  //         } else {
-  //           this.registerService.registerUser(formData).subscribe(
-  //             (response) => {
-  //               console.log(response);
-  //               this.mostrarAlerta();
-  //               this.cargando = false;
-  //               this.registrationForm.reset();
-  //             },
-  //             (error) => {
-  //               console.error('Error:', error);
-  //               console.log(error.error);
-  //               this.errorMessage = error.error;
-  //               this.mostrarDanger();
-  //               console.log(this.errorMessage?.Message);
-  //               this.cargando = false;
-  //             }
-  //           );
-  //         }
-  //       } else {
-  //         this.errorMessage = { Message: 'Por favor, asegúrese de completar todos los campos para finalizar el registro.' };
-  //         this.mostrarDanger();
-  //         this.cargando = false;
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error('Error al cargar imágenes:', error);
-  //       this.mostrarDanger();
-  //       this.cargando = false;
-  //     }
-  //   );
-  //   } catch(exception){
-  //     console.log(exception)
-  //   }
-  // }
-
   //metodo para abrir el drawer que modificara los usuarios
   abrirModificarEmpleado() {
     this.showEditar = true;
@@ -490,14 +386,7 @@ export class CrearUsuarioComponent implements OnInit {
       else {
 
         this.registerService.ModificarEmpleado(userData)
-          .subscribe(/*{
-      next: () => {
-        // Aquí resetear 
-        this.UpdateForm.reset(); 
-        this.mostrarAlerta();
-        this.cerrar_modal();
-        this.cargando = false;
-      },*/
+          .subscribe(
             response => {
               console.log(response)
               this.mostrarEditAlerta();
@@ -515,25 +404,6 @@ export class CrearUsuarioComponent implements OnInit {
             },
 
           );
-        /*console.log(userData);
-        this.registerService.ModificarEmpleado(userData).subscribe(
-          response => {
-            console.log(response)
-            this.mostrarAlerta();
-            this.cerrar_modal();
-            this.cargando = false
-            this.registrationForm.reset();
-          },
-          error => {
-            console.error("Error:", error);
-            console.log(error.error)
-            this.errorMessage = error.error;
-            this.mostrarDanger();
-            console.log(this.errorMessage?.Message);
-            this.cargando = false;
-          },
-
-        );*/
       }
     }
     else {
@@ -556,13 +426,15 @@ export class CrearUsuarioComponent implements OnInit {
       Identificacion: this.empleadoActual.identificacion,
       Rol: this.empleadoActual.rol,
       Nombre: this.empleadoActual.nombre,
+      Apellido: this.empleadoActual.apellido,
+      Sexo: this.empleadoActual.sexo,
       Ubicacion: this.empleadoActual.ubicacion,
       Telefono: this.empleadoActual.telefono,
       Correo: this.empleadoActual.correo,
       Usuario: this.empleadoActual.usuario,
       Contrasena: this.empleadoActual.contrasena
     });
-
+    this.abrirModificarEmpleado();
   }
 
   //objeto para animaciones de las alertas

@@ -38,6 +38,9 @@ export class DashboardComponent implements OnInit {
   fechaPedido5 = 0;
   mesPedido5 = 0;
   cantidadPedido5 = 0;
+  fechaPedido6 = 0;
+  mesPedido6 = 0;
+  cantidadPedido6 = 0;
   informePedido1 = 0;
   crecimientoPedido1: boolean = false;
   crecimientoPedido2: boolean = false;
@@ -49,18 +52,27 @@ export class DashboardComponent implements OnInit {
   fechaPeticion1 = 0;
   mesPeticion1 = 0;
   cantidadPeticion1 = 0;
+
   fechaPeticion2 = 0;
   mesPeticion2 = 0;
   cantidadPeticion2 = 0;
+  
   fechaPeticion3 = 0;
   mesPeticion3 = 0;
   cantidadPeticion3 = 0;
+  
   fechaPeticion4 = 0;
   mesPeticion4 = 0;
   cantidadPeticion4 = 0;
+  
   fechaPeticion5 = 0;
   mesPeticion5 = 0;
   cantidadPeticion5 = 0;
+  
+  fechaPeticion6 = 0;
+  mesPeticion6 = 0;
+  cantidadPeticion6 = 0;
+
   informePeticion1 = 0;
   crecimientoPeticion1: boolean = false;
   crecimientoPeticion2: boolean = false;
@@ -135,6 +147,10 @@ export class DashboardComponent implements OnInit {
         this.fechaPeticion5 = item.anio;
         this.mesPeticion5 = item.mes;
         this.cantidadPeticion5 = item.cantidad;
+      } else if (index === 5) {
+        this.fechaPeticion6 = item.anio;
+        this.mesPeticion6 = item.mes;
+        this.cantidadPeticion6 = item.cantidad;
       }
     });
   }
@@ -167,7 +183,12 @@ export class DashboardComponent implements OnInit {
         this.fechaPedido5 = item.anio;
         this.mesPedido5 = item.mes;
         this.cantidadPedido5 = item.cantidad;
+      } else if (index === 5) {
+        this.fechaPedido6 = item.anio;
+        this.mesPedido6 = item.mes;
+        this.cantidadPedido6 = item.cantidad;
       }
+
     });
   }
 
@@ -277,12 +298,12 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: "Pedidos",
-          data: [this.cantidadPedido1, this.cantidadPedido2, this.cantidadPedido3, this.cantidadPedido4, this.cantidadPedido5],
+          data: [this.cantidadPedido1, this.cantidadPedido2, this.cantidadPedido3, this.cantidadPedido4, this.cantidadPedido5, this.cantidadPedido6],
           color: "#1A56DB",
         },
       ],
       xaxis: {
-        categories: [this.fechaPedido1 + " " + this.mesPedido1, this.fechaPedido2 + " " + this.mesPedido2, this.fechaPedido3 + " " + this.mesPedido3, this.fechaPedido3 + " " + this.fechaPedido4 + " " + this.mesPedido4 + this.fechaPedido5 + " " + this.mesPedido5],
+        categories: [this.fechaPedido1 + " " + this.mesPedido1, this.fechaPedido2 + " " + this.mesPedido2, this.fechaPedido3 + " " + this.mesPedido3, this.fechaPedido4 + " " + this.mesPedido4, this.fechaPedido5 + " " + this.mesPedido5, this.fechaPedido6 + " " + this.mesPedido6],
         labels: {
           show: false,
         },
@@ -532,12 +553,12 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: "Peticiones",
-          data: [this.cantidadPeticion1, this.cantidadPeticion2, this.cantidadPeticion3, this.cantidadPeticion4, this.cantidadPeticion5],
+          data: [this.cantidadPeticion1, this.cantidadPeticion2, this.cantidadPeticion3, this.cantidadPeticion4, this.cantidadPeticion5, this.cantidadPeticion6],
           color: "#1A56DB",
         },
       ],
       xaxis: {
-        categories: [this.fechaPeticion1 + " " + this.mesPeticion1, this.fechaPeticion2 + " " + this.mesPeticion2, this.fechaPeticion3 + " " + this.mesPeticion3, this.fechaPeticion3 + " " + this.fechaPeticion4 + " " + this.mesPeticion4 + this.fechaPeticion5 + " " + this.mesPeticion5],
+        categories: [this.fechaPeticion1 + " " + this.mesPeticion1, this.fechaPeticion2 + " " + this.mesPeticion2, this.fechaPeticion3 + " " + this.mesPeticion3,  + this.fechaPeticion4 + " " + this.mesPeticion4, this.fechaPeticion5 + " " + this.mesPeticion5, this.fechaPeticion6 + " " + this.mesPeticion6],
         labels: {
           show: false,
         },
@@ -648,13 +669,13 @@ export class DashboardComponent implements OnInit {
       },
       series: [
         {
-          name: "Developer Edition",
-          data: [150, 141, 145, 152, 135, 125],
+          name: "PEDIDOS",
+          data: [this.cantidadPedido1, this.cantidadPedido2, this.cantidadPedido3, this.cantidadPedido4, this.cantidadPedido5, this.cantidadPedido6],
           color: "#1A56DB",
         },
         {
-          name: "Designer Edition",
-          data: [64, 41, 76, 41, 113, 173],
+          name: "PETICIONES",
+          data: [this.cantidadPeticion1, this.cantidadPeticion2, this.cantidadPeticion3, this.cantidadPeticion4, this.cantidadPeticion5, this.cantidadPeticion6],
           color: "#7E3BF2",
         },
       ],
@@ -692,7 +713,7 @@ export class DashboardComponent implements OnInit {
         width: 6,
       },
       xaxis: {
-        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        categories: [this.fechaPeticion1 + " " + this.mesPeticion1, this.fechaPeticion2 + " " + this.mesPeticion2, this.fechaPeticion3 + " " + this.mesPeticion3,  + this.fechaPeticion4 + " " + this.mesPeticion4, this.fechaPeticion5 + " " + this.mesPeticion5, this.fechaPeticion6 + " " + this.mesPeticion6],
         labels: {
           show: false,
         },
@@ -706,9 +727,7 @@ export class DashboardComponent implements OnInit {
       yaxis: {
         show: false,
         labels: {
-          formatter: function (value: any) {
-            return '$' + value;
-          }
+          show: false
         }
       },
     }

@@ -57,6 +57,8 @@ export class ViewPeticionesComponent implements OnInit {
   accordeon: { [key: number]: boolean } = {};
   showModal: boolean = false;
   showModalErrorArticulo: boolean = false;
+  /** Cargando**/
+  cargando:boolean = false;
 
   constructor(private servicio: PeticioneServicesService,
     private router: Router,
@@ -137,20 +139,20 @@ export class ViewPeticionesComponent implements OnInit {
 
 
   finalizarPeticion(id: number): void {
+    this.cargando = true;
     this.servicio.FinalizarPeticion(id).subscribe(
       () => {
+        this.cargando = false;
         this.spinner = true;
-        this.spinner = false;
 
         Swal.fire('La peticion ha sido finalizada correctamente!', '', 'success');
 
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
-        console.log('Login exitoso');
         this.router.navigate(['/menu/historial-peticiones']);
       },
       (error) => {
         this.spinner = false;
-
+        this.cargando = false;
         this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
 
 

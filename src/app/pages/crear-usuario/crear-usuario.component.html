@@ -229,7 +229,7 @@
                 </td>
                 <td class="px-4 py-4 text-sm whitespace-nowrap">
                   <div class="group relative">
-                    <button (click)="EmpleadoSeleccionado(row); abrirModificarEmpleado()"
+                    <button (click)="EmpleadoSeleccionado(row)"
                       class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
                       data-drawer-target="drawer-contact" data-drawer-show="drawer-contact"
                       aria-controls="drawer-contact">
@@ -290,6 +290,7 @@
       </a>
     </div>
   </div>
+
   <!--drawner para el formulario de la creacion de usuario-->
   <div id="drawer-contact"
     class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
@@ -370,6 +371,18 @@
           'Apellido incorrecto :(' : 'Apellido correcto :)'}}
         </p>
       </div>
+      <!--sexo-->
+      <label for="countries"
+        [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Sexo'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Sexo'].invalid && !registrationForm.controls['Sexo'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Sexo'].valid}"
+        class="block mb-2 text-sm font-medium">Sexo</label>
+      <select id="countries" formControlName="Sexo"
+        [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Sexo'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Sexo'].invalid && !registrationForm.controls['Sexo'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Sexo'].valid}"
+        class="text-sm rounded-lg block w-full p-2.5">
+        <option selected disabled>Seleccionar:</option>
+        <option value="F">Femenino</option>
+        <option value="M">Masculino</option>
+        <option value="Otro">Otro</option>
+      </select>
       <!--rol-->
       <label for="countries"
         [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
@@ -639,11 +652,30 @@
     </button>
     <form class="mb-6" [formGroup]="UpdateForm">
       <div class="mb-6">
+        <!--nombre-->
         <div>
           <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Nombre</label>
           <input type="text" placeholder="John Doe"
             class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
             formControlName="Nombre" />
+        </div>
+        <!--apellido-->
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Apellido</label>
+          <input type="text" placeholder="John Doe"
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+            formControlName="Apellido" />
+        </div>
+        <!--sexo-->
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Sexo</label>
+          <select id="countries" formControlName="Sexo"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected disabled class="capitalize">{{empleado.sexo}}</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="Otro">Otro</option>
+          </select>
         </div>
         <div>
           <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Correo</label>
