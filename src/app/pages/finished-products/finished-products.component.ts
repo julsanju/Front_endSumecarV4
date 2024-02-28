@@ -14,7 +14,7 @@ import { MatSort } from '@angular/material/sort';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
-import { DatosAccordeon } from 'src/app/Interfaces/datosAccordion';
+import { DatosAccordeon } from 'src/app/Interfaces/datosAccordeon';
 import { CommonModule } from '@angular/common';
 
 @Component({

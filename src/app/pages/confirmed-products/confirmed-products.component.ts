@@ -14,13 +14,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
-import { DatosAccordeon } from 'src/app/Interfaces/datosAccordion';
+import { DatosAccordeon } from 'src/app/Interfaces/datosAccordeon';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-confirmed-products',
   standalone: true,
-  imports : [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './confirmed-products.component.html',
   styleUrls: ['./confirmed-products.component.css']
 })
@@ -39,6 +40,9 @@ export class ConfirmedProductsComponent implements OnInit {
   loading: boolean = true;
   data: Productos[] = [];
   dataAccordeon: DatosAccordeon[] = [];
+  dataOriginalAccordeon: DatosAccordeon[] = [];
+  searchForm: FormGroup;
+  term: string = '';
   data2: Empleado[] = [];
   displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
 
@@ -46,16 +50,26 @@ export class ConfirmedProductsComponent implements OnInit {
   pageSize: number = 5;
   currentPage: number = 1;
 
-  constructor(private servicio: ProductsServicesService, private router: Router, private peticion: PeticioneServicesService) { }
+  constructor(private formBuilder: FormBuilder,private servicio: ProductsServicesService, private router: Router, private peticion: PeticioneServicesService) {
+    this.searchForm = this.formBuilder.group({
+      searchInput: [''] 
+    });
+    this.searchForm.get('searchInput')?.valueChanges.subscribe(value => {
+      this.filterProducts(value);
+    });
 
-  ngOnInit() {                    
+    
+  }
+
+  
+  ngOnInit() {
     setTimeout(() => {
       this.loading = true;
     }, 1000);
 
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
     this.validacionRol();
-    
+
     this.rolSubject.subscribe((esEmpleado: boolean) => {
       if (esEmpleado) {
         this.handleEmpleadoCase();
@@ -63,9 +77,9 @@ export class ConfirmedProductsComponent implements OnInit {
 
         this.handleClienteCase();
       }
-      
+
     });
-    
+
   }
 
 
@@ -92,6 +106,7 @@ export class ConfirmedProductsComponent implements OnInit {
           this.servicio.obtenerDatosAccordeon().subscribe(
             (response) => {
               this.dataAccordeon = response;
+              this.dataOriginalAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -120,6 +135,7 @@ export class ConfirmedProductsComponent implements OnInit {
           this.servicio.obtenerDatosAccordeonCliente(this.dataUser).subscribe(
             (response) => {
               this.dataAccordeon = response;
+              this.dataOriginalAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -133,6 +149,7 @@ export class ConfirmedProductsComponent implements OnInit {
       }
     );
   }
+
 
   private obtener_usuario(username: string) {
     //obtener username
@@ -183,21 +200,21 @@ export class ConfirmedProductsComponent implements OnInit {
 
   validacionRol(): void {
     var name = this.obtener_usuario(this.dataUser);
-    
+
     this.peticion.obtenerCorreo(name).subscribe(
-      
+
       (response) => {
         this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado'|| this.data2[0].rol === 'admin';
+        const esEmpleado = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
         this.rolSubject.next(esEmpleado);
         console.log(this.data2);
-        console.log(esEmpleado);     
+        console.log(esEmpleado);
       },
       (error) => {
         // Manejar errores si es necesario
         console.error(error);
         this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
-        
+
       }
     );
   }
@@ -242,11 +259,6 @@ export class ConfirmedProductsComponent implements OnInit {
     this.accordeon[numeroOrden] = !this.accordeon[numeroOrden];
   }
 
-  // getPaginatedData(): Productos[] {
-  //   const startIndex = (this.currentPage - 1) * this.pageSize;
-  //   const endIndex = startIndex + this.pageSize;
-  //   return this.data.slice(startIndex, endIndex);
-  // }
   getPaginatedData(): DatosAccordeon[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -307,4 +319,37 @@ export class ConfirmedProductsComponent implements OnInit {
     }
     return false;
   }
+
+  //filtro de productos
+  applyFilter() {
+    const inputElement = document.getElementById("input_search") as HTMLInputElement;
+    if (inputElement) {
+      const xd = inputElement.value.trim().toLowerCase(); // Obtener el valor del input y convertirlo a minúsculas
+      
+      this.dataAccordeon = this.dataOriginalAccordeon.filter(producto => {
+        // Filtrar según el valor del input en las propiedades específicas del objeto producto
+        return producto.numero_orden||
+               producto.fecha.toLowerCase().includes(xd) ||
+               producto.cliente.toLowerCase().includes(xd) || 
+               producto.telefono.toLowerCase().includes(xd);
+    });
+    } else {
+      console.error('No se pudo encontrar el elemento con ID "input_search"');
+    }
+    console.log(this.dataOriginalAccordeon)
+  }
+
+  filterProducts(value: string) {
+    this.dataAccordeon = this.dataOriginalAccordeon.filter(data => {
+        const searchValue = value.toLowerCase();
+        const numeroOrdenString = data.numero_orden.toString();
+        const numeroOrdenMatch = numeroOrdenString === searchValue;
+        const clienteMatch = data.cliente.toLowerCase().includes(searchValue);
+        const fechaMatch = data.fecha.toLowerCase().includes(searchValue);
+        const telefonoMatch = data.telefono.toLowerCase().includes(searchValue);
+
+        return numeroOrdenMatch || clienteMatch || fechaMatch || telefonoMatch;
+    });
+}
+
 }

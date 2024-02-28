@@ -1,5 +1,13 @@
 <div style="height: 100vh !important; "
   class="relative overflow-x-auto shadow-md sm:rounded-lg space-table space-table ">
+
+  <form [formGroup]="searchForm">
+    <input formControlName="searchInput" placeholder="Buscar..." class="border px-2 py-1 rounded-lg mb-4">
+  </form>
+
+  <!-- <input (keyup)="applyFilter($event)" id="input_search" placeholder="Buscar..." class="border px-2 py-1 rounded-lg mb-4"> -->
+
+  
   @if(isLoading){
   <section class="bg-white dark:bg-gray-900">
     <div class="container px-6 py-10 mx-auto animate-pulse">
@@ -52,6 +60,7 @@
   </div>
   }
   @if(!errorOccurred){
+    
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -133,6 +142,7 @@
       }
     </tbody>
   </table>
+
   <div class="flex items-center justify-between mt-4">
     <div class="flex-1 flex justify-between sm:hidden">
       <a href="#" (click)="onPageChange(currentPage - 1)"

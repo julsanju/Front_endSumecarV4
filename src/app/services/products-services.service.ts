@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Productos } from '../Interfaces/productos';
-import { DatosAccordeon } from '../Interfaces/datosAccordion';
+import { DatosAccordeon } from '../Interfaces/datosAccordeon';
 @Injectable({
   providedIn: 'any'
 })
