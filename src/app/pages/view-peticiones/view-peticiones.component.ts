@@ -34,6 +34,8 @@ export class ViewPeticionesComponent implements OnInit {
   spinner: boolean = false;
   loading: boolean = true;
   data: Peticiones[] = [];
+  dataOriginalData: Peticiones[] = [];
+  resultadoSearch: boolean = false
   dataClient: Correo[] = [];
   data2: Empleado[] = [];
   displayedColumns: string[] = ['id', 'correo', 'mensaje', 'fecha', 'estado'];
@@ -50,6 +52,7 @@ export class ViewPeticionesComponent implements OnInit {
   dataModalP !: Empleado
   formulario: FormGroup;
   formulario_detallesPeticion!: FormGroup;
+  searchForm:FormGroup;
   usuarioSeleccionadoEmail: string = '';
   detalle: DetallePeticionP[] = [];
 
@@ -71,6 +74,21 @@ export class ViewPeticionesComponent implements OnInit {
       mensaje: ['', [Validators.required]],
     });
 
+    this.searchForm = this.formBuilder.group({
+      searchInput: [''],
+      searchNumber: ['']
+    });
+    this.searchForm.get('searchInput')?.valueChanges.subscribe(value => {
+      this.filterProductsbyclient(value);
+    });
+
+    this.searchForm.get('searchNumber')?.valueChanges.subscribe(value => {
+      if (value === null || value === '') { // Verifica si el valor es nulo o vacío
+        this.data = this.dataOriginalData; // Restablece los datos originales
+      } else {
+        this.filterProductsbyNumber(value);
+      }
+    });
   }
 
   ngOnInit() {
@@ -105,6 +123,7 @@ export class ViewPeticionesComponent implements OnInit {
           this.servicio.ObtenerPeticiones(estado, this.dataUser).subscribe(
             (response) => {
               this.data = response;
+              this.dataOriginalData = response;
               this.isLoading = false;
             },
             (error) => {
@@ -441,6 +460,37 @@ export class ViewPeticionesComponent implements OnInit {
 
   cerrar_modal() {
     this.showModal = false;
+  }
+
+  //metodo para filtrar productos por cliente
+  filterProductsbyclient(value: string) {
+    this.data = this.dataOriginalData.filter(data => {
+      const searchValue = value.toLowerCase();
+      const clienteMatch = data.cliente.toLowerCase().includes(searchValue);
+      const telefonoMatch = data.telefono.toLowerCase().includes(searchValue);
+      const mensajeMatch = data.mensaje.toLocaleLowerCase().includes(searchValue);
+
+      return clienteMatch || telefonoMatch || mensajeMatch;
+    });
+    this.resultadoSearch = this.data.length === 0;
+  }
+
+  //metodo para filtrar productos por numero de orden
+  filterProductsbyNumber(value: number) {
+    this.resultadoSearch = false;
+    if (!value && value !== 0) {
+      this.data = this.dataOriginalData;
+      return;
+    }
+
+    const searchValue = value.toString();
+    this.data = this.dataOriginalData.filter(data => {
+      const numeroOrden = data.numero_peticion.toString();
+      return numeroOrden.startsWith(searchValue);
+    });
+    
+    this.resultadoSearch = this.data.length === 0;
+    console.log(this.resultadoSearch)
   }
 
 }

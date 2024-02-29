@@ -6,14 +6,14 @@
     <!-- Boton nueva peticion -->
     @if(!esEmpleado()){
     <button (click)="mostrarModal()"
-      class="flex items-center justify-center w-1/2 px-5 py-2 sm:text-sm mb-3 tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+      class="flex items-center justify-center w-1/2 px-5 py-2 md:hidden sm:text-sm mb-3 tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M5 12H19" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M12 19L12 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
       <span>Nueva Peticion</span>
     </button>
-  }
+    }
   </div>
   <!-- Modal nueva peticion -->
   <div id="static-modal" [class.modal-open]="showModal" [hidden]="!showModal" data-modal-backdrop="static" tabindex="-1"
@@ -28,7 +28,7 @@
         <div class="p-4 md:p-5 space-y-4">
 
           <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-            
+
             <button type="button" (click)="cerrar_modal()"
               class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="static-modal">
@@ -94,11 +94,12 @@
                     <tbody>
                       <tr *ngFor="let detalle of detallesArray.controls; let i = index" [formGroupName]="i">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 ">
-                          <div #vc>     
-                          <textarea #articuloInput rows="1" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 h-12" 
-                          formControlName="articulo" id="articulo_{{i}}" (keyup)="validateArticulo(i)"
-                          placeholder="Acetamin..."></textarea>
-                        </div>
+                          <div #vc>
+                            <textarea #articuloInput rows="1"
+                              class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 h-12"
+                              formControlName="articulo" id="articulo_{{i}}" (keyup)="validateArticulo(i)"
+                              placeholder="Acetamin..."></textarea>
+                          </div>
                         </th>
                         <td style="border: 2px solid #ccc;"
                           class="px-6 py-4 bg-gray-100 whitespace-nowrap dark:text-white">
@@ -129,6 +130,36 @@
     </div>
   </div>
 
+  <form [formGroup]="searchForm">
+    <div class="relative grid-cols-3 gap-4 flex justify-between">
+      <div>
+        <label for="searchInput" class="block text-sm text-gray-500 dark:text-gray-300"># ORDEN</label>
+        <input formControlName="searchNumber" (keypress)="onKeyPress($event)" type="text" placeholder="#####"
+          class="block  mt-2 mb-4 w-full placeholder-gray-400/70 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 " />
+
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-500 dark:text-gray-300">BUSCAR</label>
+        <input formControlName="searchInput" type="text" placeholder="Example name"
+          class="block  mt-2 mb-4 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+
+      </div>
+      <!-- Boton nueva peticion -->
+    @if(!esEmpleado()){
+      <div class="mt-8">
+        <button (click)="mostrarModal()"
+          class="hidden md:block md:flex items-center justify-center w-1/2 px-5 py-2  sm:text-sm mb-3 tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L12 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>Nueva Peticion</span>
+        </button>
+      </div>
+    }
+    </div>
+  </form>
   @if(isLoading){
   <section class="bg-white dark:bg-gray-900">
 
@@ -222,23 +253,23 @@
                   hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-small
                   rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700
                 dark:focus:ring-green-800" (click)="finalizarPeticion(row.numero_peticion)">
-               @if(!cargando){
-                 <span>Finalizar</span>
-               }
-               @if(cargando){
-                <span class="inline-flex items-center">
-                  <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
-                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="#E5E7EB" />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentColor" />
-                  </svg>
-                  Cargando...
-                </span>
-               }
+              @if(!cargando){
+              <span>Finalizar</span>
+              }
+              @if(cargando){
+              <span class="inline-flex items-center">
+                <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
+                  viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="#E5E7EB" />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentColor" />
+                </svg>
+                Cargando...
+              </span>
+              }
             </button>
           </td>
           }
@@ -278,6 +309,7 @@
       }
     </tbody>
   </table>
+  @if(!resultadoSearch){
   <div class="flex items-center justify-between mt-4">
     <div class="flex-1 flex justify-between sm:hidden">
       <a href="#" (click)="onPageChange(currentPage - 1)"
@@ -331,12 +363,24 @@
       </div>
     </div>
   </div>
+  }
+  <!-- condicion para saber si se encontraron productos -->
+  @if(resultadoSearch){
+  <div class="flex flex-col items-center justify-center text-center w-full">
+    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg" alt="Error"
+      class="mb-5 max-w-full h-auto mx-auto" />
+  </div>
+  <div class="text-center">
 
-  <!--modal para peticiones-->
-
-
-
-
+    <h1
+      class="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white text-center mx-auto">
+      ¡Oops! Algo salió mal.
+    </h1>
+    <p class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">No se encontraron
+      pedidos.
+    </p>
+  </div>
+  }
   }
   }
 </div>

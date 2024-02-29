@@ -30,7 +30,7 @@ export class ConfirmedProductsComponent implements OnInit {
   correo: string = '';
   isLoading: boolean = true;
   errorOccurred: boolean = false;
-  errorImageURL = '';
+  errorImageURL: string = "";
   accordeon: { [key: number]: boolean } = {};
   //accordeon: boolean[] = Array.from({ length: this.getPaginatedData().length }, () => false);
   //accordeon: boolean = false;
@@ -45,23 +45,31 @@ export class ConfirmedProductsComponent implements OnInit {
   term: string = '';
   data2: Empleado[] = [];
   displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
-
+  resultadoSearch: boolean = false
   // Variables de paginación
   pageSize: number = 5;
   currentPage: number = 1;
 
-  constructor(private formBuilder: FormBuilder,private servicio: ProductsServicesService, private router: Router, private peticion: PeticioneServicesService) {
+  constructor(private formBuilder: FormBuilder, private servicio: ProductsServicesService, private router: Router, private peticion: PeticioneServicesService) {
     this.searchForm = this.formBuilder.group({
-      searchInput: [''] 
+      searchInput: [''],
+      searchNumber: ['']
     });
     this.searchForm.get('searchInput')?.valueChanges.subscribe(value => {
-      this.filterProducts(value);
+      this.filterProductsbyclient(value);
     });
 
-    
+    this.searchForm.get('searchNumber')?.valueChanges.subscribe(value => {
+      if (value === null || value === '') { // Verifica si el valor es nulo o vacío
+        this.dataAccordeon = this.dataOriginalAccordeon; // Restablece los datos originales
+      } else {
+        this.filterProductsbyNumber(value);
+      }
+    });
+
   }
 
-  
+
   ngOnInit() {
     setTimeout(() => {
       this.loading = true;
@@ -80,6 +88,7 @@ export class ConfirmedProductsComponent implements OnInit {
 
     });
 
+    
   }
 
 
@@ -273,6 +282,17 @@ export class ConfirmedProductsComponent implements OnInit {
     return Math.min(this.currentPage * this.pageSize, this.data.length);
   }
 
+  onKeyPress(event: KeyboardEvent) {
+    // Obtén el código de la tecla presionada
+    const charCode = event.which || event.keyCode;
+
+    // Permitir solo números (códigos de tecla entre 48 y 57)
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+
+  }
+
   //metodo para filtrar roles de usuario
   esAdmin(): boolean {
     // Recupera la información del usuario desde localStorage
@@ -320,36 +340,35 @@ export class ConfirmedProductsComponent implements OnInit {
     return false;
   }
 
-  //filtro de productos
-  applyFilter() {
-    const inputElement = document.getElementById("input_search") as HTMLInputElement;
-    if (inputElement) {
-      const xd = inputElement.value.trim().toLowerCase(); // Obtener el valor del input y convertirlo a minúsculas
-      
-      this.dataAccordeon = this.dataOriginalAccordeon.filter(producto => {
-        // Filtrar según el valor del input en las propiedades específicas del objeto producto
-        return producto.numero_orden||
-               producto.fecha.toLowerCase().includes(xd) ||
-               producto.cliente.toLowerCase().includes(xd) || 
-               producto.telefono.toLowerCase().includes(xd);
+  //metodo para filtrar productos por cliente
+  filterProductsbyclient(value: string) {
+    this.dataAccordeon = this.dataOriginalAccordeon.filter(data => {
+      const searchValue = value.toLowerCase();
+
+      const clienteMatch = data.cliente.toLowerCase().includes(searchValue);
+      const fechaMatch = data.fecha.toLowerCase().includes(searchValue);
+      const telefonoMatch = data.telefono.toLowerCase().includes(searchValue);
+
+      return clienteMatch || fechaMatch || telefonoMatch;
     });
-    } else {
-      console.error('No se pudo encontrar el elemento con ID "input_search"');
-    }
-    console.log(this.dataOriginalAccordeon)
+    this.resultadoSearch = this.dataAccordeon.length === 0;
+    this.resultadoSearch = !this.dataAccordeon.length;
   }
 
-  filterProducts(value: string) {
-    this.dataAccordeon = this.dataOriginalAccordeon.filter(data => {
-        const searchValue = value.toLowerCase();
-        const numeroOrdenString = data.numero_orden.toString();
-        const numeroOrdenMatch = numeroOrdenString === searchValue;
-        const clienteMatch = data.cliente.toLowerCase().includes(searchValue);
-        const fechaMatch = data.fecha.toLowerCase().includes(searchValue);
-        const telefonoMatch = data.telefono.toLowerCase().includes(searchValue);
+  //metodo para filtrar productos por numero de orden
+  filterProductsbyNumber(value: number) {
+    if (!value && value !== 0) {
+      this.dataAccordeon = this.dataOriginalAccordeon;
+      return;
+    }
 
-        return numeroOrdenMatch || clienteMatch || fechaMatch || telefonoMatch;
+    const searchValue = value.toString();
+    this.dataAccordeon = this.dataOriginalAccordeon.filter(data => {
+      const numeroOrden = data.numero_orden.toString();
+      return numeroOrden.startsWith(searchValue);
     });
-}
+    this.resultadoSearch = this.dataAccordeon.length === 0;
+  }
+
 
 }

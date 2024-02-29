@@ -5,11 +5,12 @@ import { Empleado } from 'src/app/Interfaces/empleado';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-historial-peticiones',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './historial-peticiones.component.html',
   styleUrls: ['./historial-peticiones.component.css']
 })
@@ -25,6 +26,9 @@ export class HistorialPeticionesComponent {
   //name = 'julsanju2004@gmail.com';
   loading: boolean = true;
   data: Peticiones[] = [];
+  dataOriginalData: Peticiones[] = [];
+  searchForm:FormGroup;
+  resultadoSearch: boolean = false
   data2: Empleado[] = [];
   displayedColumns: string[] = ['id', 'correo', 'mensaje', 'fecha', 'estado'];
   accordeon: { [key: number]: boolean } = {};
@@ -32,7 +36,23 @@ export class HistorialPeticionesComponent {
   pageSize: number = 5;
   currentPage: number = 1;
 
-  constructor(private servicio: PeticioneServicesService) { }
+  constructor(private servicio: PeticioneServicesService, private formBuilder: FormBuilder) {
+    this.searchForm = this.formBuilder.group({
+      searchInput: [''],
+      searchNumber: ['']
+    });
+    this.searchForm.get('searchInput')?.valueChanges.subscribe(value => {
+      this.filterProductsbyclient(value);
+    });
+
+    this.searchForm.get('searchNumber')?.valueChanges.subscribe(value => {
+      if (value === null || value === '') { // Verifica si el valor es nulo o vacío
+        this.data = this.dataOriginalData; // Restablece los datos originales
+      } else {
+        this.filterProductsbyNumber(value);
+      }
+    });
+   }
 
   ngOnInit() {
     setTimeout(() => {
@@ -55,6 +75,7 @@ export class HistorialPeticionesComponent {
           this.servicio.ObtenerPeticiones(estado, this.dataUser).subscribe(
             (response) => {
               this.data = response;
+              this.dataOriginalData = response;
               this.isLoading = false;
             },
             (error) => {
@@ -112,6 +133,17 @@ export class HistorialPeticionesComponent {
     return Math.min(this.currentPage * this.pageSize, this.data.length);
   }
 
+  //solo numeros
+  onKeyPress(event: KeyboardEvent) {
+    // Obtén el código de la tecla presionada
+    const charCode = event.which || event.keyCode;
+
+    // Permitir solo números (códigos de tecla entre 48 y 57)
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+
+  }
   //permisos de roles
   //admin
   esAdmin(): boolean {
@@ -165,5 +197,33 @@ export class HistorialPeticionesComponent {
   /** acoordeon de peticiones**/
   abrirCerrarAccordeon(numeroPeticion: number) {
     this.accordeon[numeroPeticion] = !this.accordeon[numeroPeticion];
+  }
+
+  //metodo para filtrar productos por cliente
+  filterProductsbyclient(value: string) {
+    this.data = this.dataOriginalData.filter(data => {
+      const searchValue = value.toLowerCase();
+      const clienteMatch = data.cliente.toLowerCase().includes(searchValue);
+      const telefonoMatch = data.telefono.toLowerCase().includes(searchValue);
+      const mensajeMatch = data.mensaje.toLocaleLowerCase().includes(searchValue);
+
+      return clienteMatch || telefonoMatch || mensajeMatch;
+    });
+    this.resultadoSearch = this.data.length === 0;
+  }
+
+  //metodo para filtrar productos por numero de orden
+  filterProductsbyNumber(value: number) {
+    if (!value && value !== 0) {
+      this.data = this.dataOriginalData;
+      return;
+    }
+
+    const searchValue = value.toString();
+    this.data = this.dataOriginalData.filter(data => {
+      const numeroOrden = data.numero_peticion.toString();
+      return numeroOrden.startsWith(searchValue);
+    });
+    this.resultadoSearch = this.data.length === 0;
   }
 }

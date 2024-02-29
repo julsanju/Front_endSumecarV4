@@ -16,11 +16,12 @@ import { DataProductsService } from '../../services/data-products.service';
 import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
 import { DatosAccordeon } from 'src/app/Interfaces/datosAccordeon';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-finished-products',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './finished-products.component.html',
   styleUrls: ['./finished-products.component.css']
 })
@@ -38,13 +39,34 @@ export class FinishedProductsComponent implements OnInit{
   data: Productos[] = [];
   data2: Empleado[] = [];
   dataAccordeon: DatosAccordeon[] = [];
+  dataOriginalAccordeon: DatosAccordeon[] = [];
+  searchForm: FormGroup;
+  term: string = '';
+  resultadoSearch: boolean = false
   displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
+  
 
   // Variables de paginación
   pageSize: number = 5;
   currentPage: number = 1;
 
-  constructor(private servicio: ProductsServicesService, private router:Router, private peticion: PeticioneServicesService) {}
+  constructor(private formBuilder: FormBuilder,private servicio: ProductsServicesService, private router:Router, private peticion: PeticioneServicesService) {
+    this.searchForm = this.formBuilder.group({
+      searchInput: [''],
+      searchNumber: ['']
+    });
+    this.searchForm.get('searchInput')?.valueChanges.subscribe(value => {
+      this.filterProductsbyclient(value);
+    });
+
+    this.searchForm.get('searchNumber')?.valueChanges.subscribe(value => {
+      if (value === null || value === '') { // Verifica si el valor es nulo o vacío
+        this.dataAccordeon = this.dataOriginalAccordeon; // Restablece los datos originales
+      } else {
+        this.filterProductsbyNumber(value);
+      }
+    });
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -79,6 +101,7 @@ export class FinishedProductsComponent implements OnInit{
           this.servicio.obtenerDatosAccordeonFinalizada().subscribe(
             (response) => {
               this.dataAccordeon = response;
+              this.dataOriginalAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -107,6 +130,7 @@ export class FinishedProductsComponent implements OnInit{
           this.servicio.obtenerDatosAccordeonFinalizadaCliente(this.dataUser).subscribe(
             (response) => {
               this.dataAccordeon = response;
+              this.dataOriginalAccordeon = response;
               this.isLoading = false;
             },
             (error) => {
@@ -225,11 +249,6 @@ export class FinishedProductsComponent implements OnInit{
 
   }
 
-  // getPaginatedData(): Productos[] {
-  //   const startIndex = (this.currentPage - 1) * this.pageSize;
-  //   const endIndex = startIndex + this.pageSize;
-  //   return this.data.slice(startIndex, endIndex);
-  // }
 
   abrirCerrarAccordeon(numeroOrden: number) {
     this.accordeon[numeroOrden] = !this.accordeon[numeroOrden];
@@ -276,6 +295,47 @@ export class FinishedProductsComponent implements OnInit{
       }
     }
     return false;
+  }
+
+  onKeyPress(event: KeyboardEvent) {
+    // Obtén el código de la tecla presionada
+    const charCode = event.which || event.keyCode;
+
+    // Permitir solo números (códigos de tecla entre 48 y 57)
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+
+  }
+  
+  //search
+  //metodo para filtrar productos por cliente
+  filterProductsbyclient(value: string) {
+    this.dataAccordeon = this.dataOriginalAccordeon.filter(data => {
+      const searchValue = value.toLowerCase();
+
+      const clienteMatch = data.cliente.toLowerCase().includes(searchValue);
+      const fechaMatch = data.fecha.toLowerCase().includes(searchValue);
+      const telefonoMatch = data.telefono.toLowerCase().includes(searchValue);
+
+      return clienteMatch || fechaMatch || telefonoMatch;
+    });
+    this.resultadoSearch = this.dataAccordeon.length === 0;
+  }
+
+  //metodo para filtrar productos por numero de orden
+  filterProductsbyNumber(value: number) {
+    if (!value && value !== 0) {
+      this.dataAccordeon = this.dataOriginalAccordeon;
+      return;
+    }
+
+    const searchValue = value.toString();
+    this.dataAccordeon = this.dataOriginalAccordeon.filter(data => {
+      const numeroOrden = data.numero_orden.toString();
+      return numeroOrden.startsWith(searchValue);
+    });
+    this.resultadoSearch = this.dataAccordeon.length === 0;
   }
 
 }

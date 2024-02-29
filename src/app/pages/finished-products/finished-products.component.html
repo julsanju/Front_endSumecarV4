@@ -1,5 +1,23 @@
 <div style="height: 100vh !important; "
   class="relative overflow-x-auto shadow-md sm:rounded-lg space-table space-table ">
+
+  <form [formGroup]="searchForm">
+    <div class="relative grid-cols-4 gap6 flex justify-between">
+      <div>
+        <label for="searchInput" class="block text-sm text-gray-500 dark:text-gray-300"># ORDEN</label>
+        <input formControlName="searchNumber" (keypress)="onKeyPress($event)" type="text" placeholder="#####"
+          class="block  mt-2 mb-4 w-full placeholder-gray-400/70 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 " />
+
+      </div>
+      <div>
+        <label class="block text-sm text-gray-500 dark:text-gray-300">CLIENTE</label>
+        <input formControlName="searchInput" type="text" placeholder="Example name"
+          class="block  mt-2 mb-4 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+
+      </div>
+    </div>
+  </form>
+
   @if(isLoading){
   <section class="bg-white dark:bg-gray-900">
     <div class="container px-6 py-10 mx-auto animate-pulse">
@@ -34,143 +52,162 @@
   </section>
   }
   @if(!isLoading){
-  @if(errorOccurred){
-  <div class="flex flex-col items-center justify-center text-center">
-    <img [src]="errorImageURL" alt="Error" class="mb-5 max-w-full h-auto mx-auto" />
+    @if(errorOccurred){
+    <div class="flex flex-col items-center justify-center text-center">
+      <img [src]="errorImageURL" alt="Error" class="mb-5 max-w-full h-auto mx-auto" />
 
-  </div>
-  <div class="text-center">
-
-    <h1
-      class="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white text-center mx-auto">
-      ¡Uy! Algo salió mal.
-    </h1>
-    <p class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">
-      No hay pedidos finalizados asociados a esta cuenta
-    </p>
-  </div>
-  }
-  @if(!errorOccurred){
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3"> # ORDEN </th>
-        <th scope="col" class="px-6 py-3"> FECHA </th>
-        <th scope="col" class="px-6 py-3"> HORA </th>
-        <th scope="col" class="px-6 py-3"> CLIENTE </th>
-        <th scope="col" class="px-6 py-3"> TELEFONO </th>
-        <th scope="col" class="px-6 py-3"> #ITEMS </th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (row of getPaginatedData(); track row) {
-      <ng-container>
-        <tr (click)="abrirCerrarAccordeon(row.numero_orden)"
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out">
-
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <svg data-accordion-icon class="w-3 h-3 transform transition-transform ml-5"
-              [ngClass]="{'rotate-180': accordeon[row.numero_orden], 'transition-transform duration-400 ease-in-out': true}"
-              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-              <path stroke="#4b5563" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
-            </svg>
-            {{ row.numero_orden }}
-          </td>
-          <td class="px-6 py-4">{{ row.fecha | date:'dd/MM/yyyy'}}</td>
-          <td class="px-6 py-4">{{ row.fecha | date:'HH:mm:ss a'}}</td>
-          <td class="px-6 py-4">{{ row.cliente }}</td>
-          <td class="px-6 py-4">{{ row.telefono }}</td>
-          <td class="px-6 py-4">{{ row.cantidad_items }}</td>
-        </tr>
-
-        @if(accordeon[row.numero_orden]){
-        <tr>
-          <td [attr.colspan]="(esCliente() || esEmpleado()) ? 7 : 6">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="w-full text-xs text-white uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" class="px-4 py-2">Código</th>
-                  <th scope="col" class="px-4 py-2 ">Artículo</th>
-                  <th scope="col" class="px-4 py-2 ">Laboratorio</th>
-                  <th scope="col" class="px-4 py-2">Cantidad</th>
-                  <!-- Agrega más columnas según sea necesario -->
-                </tr>
-              </thead>
-              <tbody>
-                @for(detalle of row.detalle; track detalle){
-                <tr
-                  class="bg-gray-50 border border-gray-900 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out"
-                  style="width: 100%">
-                  <td class=" px-6 py-3 max-w-full">{{ detalle.codigo }}</td>
-                  <td class="border px-4 py-2 max-w-full">{{ detalle.articulo }}</td>
-                  <td class="border px-4 py-2 max-w-full">{{ detalle.laboratorio }}</td>
-                  <td class="border px-4 py-2 max-w-full">{{ detalle.cantidad }}</td>
-
-                  <!-- Agrega más columnas según sea necesario -->
-                </tr>
-                }
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        }
-      </ng-container>
-      }
-    </tbody>
-  </table>
-  <div class="flex items-center justify-between mt-4">
-    <div class="flex-1 flex justify-between sm:hidden">
-      <a href="#" (click)="onPageChange(currentPage - 1)"
-        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-        Anterior
-      </a>
-      <a href="#" (click)="onPageChange(currentPage + 1)"
-        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-        Siguiente
-      </a>
     </div>
-    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-      <div>
-        <p class="text-sm text-gray-700 dark:text-gray-400">
-          Mostrando
-          <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
-          a
-          <span class="font-medium">{{ getEndIndex() }}</span>
-          de
-          <span class="font-medium">{{ data.length }}</span>
-          resultados
+    <div class="text-center">
+
+      <h1
+        class="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white text-center mx-auto">
+        ¡Uy! Algo salió mal.
+      </h1>
+      <p class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">
+        No hay pedidos finalizados asociados a esta cuenta
+      </p>
+    </div>
+    }
+    @if(!errorOccurred){
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3"> # ORDEN </th>
+          <th scope="col" class="px-6 py-3"> FECHA </th>
+          <th scope="col" class="px-6 py-3"> HORA </th>
+          <th scope="col" class="px-6 py-3"> CLIENTE </th>
+          <th scope="col" class="px-6 py-3"> TELEFONO </th>
+          <th scope="col" class="px-6 py-3"> #ITEMS </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of getPaginatedData(); track row) {
+        <ng-container>
+          <tr (click)="abrirCerrarAccordeon(row.numero_orden)"
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out">
+
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <svg data-accordion-icon class="w-3 h-3 transform transition-transform ml-5"
+                [ngClass]="{'rotate-180': accordeon[row.numero_orden], 'transition-transform duration-400 ease-in-out': true}"
+                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="#4b5563" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+              </svg>
+              {{ row.numero_orden }}
+            </td>
+            <td class="px-6 py-4">{{ row.fecha | date:'dd/MM/yyyy'}}</td>
+            <td class="px-6 py-4">{{ row.fecha | date:'HH:mm:ss a'}}</td>
+            <td class="px-6 py-4">{{ row.cliente }}</td>
+            <td class="px-6 py-4">{{ row.telefono }}</td>
+            <td class="px-6 py-4">{{ row.cantidad_items }}</td>
+          </tr>
+
+          @if(accordeon[row.numero_orden]){
+          <tr>
+            <td [attr.colspan]="(esCliente() || esEmpleado()) ? 7 : 6">
+              <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="w-full text-xs text-white uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" class="px-4 py-2">Código</th>
+                    <th scope="col" class="px-4 py-2 ">Artículo</th>
+                    <th scope="col" class="px-4 py-2 ">Laboratorio</th>
+                    <th scope="col" class="px-4 py-2">Cantidad</th>
+                    <!-- Agrega más columnas según sea necesario -->
+                  </tr>
+                </thead>
+                <tbody>
+                  @for(detalle of row.detalle; track detalle){
+                  <tr
+                    class="bg-gray-50 border border-gray-900 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out"
+                    style="width: 100%">
+                    <td class=" px-6 py-3 max-w-full">{{ detalle.codigo }}</td>
+                    <td class="border px-4 py-2 max-w-full">{{ detalle.articulo }}</td>
+                    <td class="border px-4 py-2 max-w-full">{{ detalle.laboratorio }}</td>
+                    <td class="border px-4 py-2 max-w-full">{{ detalle.cantidad }}</td>
+
+                    <!-- Agrega más columnas según sea necesario -->
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          }
+        </ng-container>
+        }
+      </tbody>
+    </table>
+    
+    @if(!resultadoSearch){
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex-1 flex justify-between sm:hidden">
+        <a (click)="onPageChange(currentPage - 1)"
+          class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+          Anterior
+        </a>
+        <a (click)="onPageChange(currentPage + 1)"
+          class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+          Siguiente
+        </a>
+      </div>
+      <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700 dark:text-gray-400">
+            Mostrando
+            <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
+            a
+            <span class="font-medium">{{ getEndIndex() }}</span>
+            de
+            <span class="font-medium">{{ data.length }}</span>
+            resultados
+          </p>
+        </div>
+        <div>
+          <nav class="relative z-0 inline-flex -space-x-px" aria-label="Pagination">
+            <a (click)="onPageChange(currentPage + 1)"
+              class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-l-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+              <span class="sr-only">Anterior</span>
+              <!-- Heroicon name: solid/chevron-left -->
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M6.707 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 0 1-1.414-1.414L11.586 11H3a1 1 0 1 1 0-2h8.586L6.707 4.707a1 1 0 0 1 0-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+            </a>
+            <!-- Add pagination links here -->
+            <!-- ... -->
+            <a (click)="onPageChange(currentPage - 1)"
+              class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-r-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+              <span class="sr-only">Siguiente</span>
+              <!-- Heroicon name: solid/chevron-right -->
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M13.293 16.707a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 0 1 1.414 1.414L8.414 9H17a1 1 0 1 1 0 2h-8.586l4.293 4.293a1 1 0 0 1 0 1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+    }
+    <!-- condicion para saber si se encontraron productos -->
+    @if(resultadoSearch){
+      <div class="flex flex-col items-center justify-center text-center w-full">
+        <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg" alt="Error" class="mb-5 max-w-full h-auto mx-auto" />
+      </div>
+      <div class="text-center">
+    
+        <h1
+          class="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white text-center mx-auto">
+          ¡Oops! Algo salió mal.
+        </h1>
+        <p class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">No se encontraron
+          pedidos.
         </p>
       </div>
-      <div>
-        <nav class="relative z-0 inline-flex -space-x-px" aria-label="Pagination">
-          <a (click)="onPageChange(currentPage + 1)"
-            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-l-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-            <span class="sr-only">Anterior</span>
-            <!-- Heroicon name: solid/chevron-left -->
-            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-              aria-hidden="true">
-              <path fill-rule="evenodd"
-                d="M6.707 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 0 1-1.414-1.414L11.586 11H3a1 1 0 1 1 0-2h8.586L6.707 4.707a1 1 0 0 1 0-1.414z"
-                clip-rule="evenodd" />
-            </svg>
-          </a>
-          <!-- Add pagination links here -->
-          <!-- ... -->
-          <a (click)="onPageChange(currentPage - 1)"
-            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-r-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-            <span class="sr-only">Siguiente</span>
-            <!-- Heroicon name: solid/chevron-right -->
-            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-              aria-hidden="true">
-              <path fill-rule="evenodd"
-                d="M13.293 16.707a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 0 1 1.414 1.414L8.414 9H17a1 1 0 1 1 0 2h-8.586l4.293 4.293a1 1 0 0 1 0 1.414z"
-                clip-rule="evenodd" />
-            </svg>
-          </a>
-        </nav>
-      </div>
-    </div>
-  </div>
+    }
   }
   }
 </div>
