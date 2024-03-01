@@ -11,13 +11,13 @@ import { DepartamentoCiudad } from '../Interfaces/departamento-ciudad';
 export class UsuariosServicesService {
 
   private ApiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener'
-  private ApiUrlEmpleado = 'http://localhost:5171/api/usuarios/obtener_todosUsuarios'; 
+  private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosUsuarios'; 
   // private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosUsuarios'; 
   private ApiUrlImagenUser = 'https://sumecarventas.azurewebsites.net/api/usuarios/imagen/';   
   private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin';
   private ApiUrlDepartamentos = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos'
   private ApiUrlCiudades = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos/';
-  private ApiUrlMapeo = 'http://localhost:5171/api/usuarios/obtener_empleado/'
+  private ApiUrlMapeo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/'
   //private ApiUrlMapeo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/'
   constructor(private http : HttpClient) { }
 
