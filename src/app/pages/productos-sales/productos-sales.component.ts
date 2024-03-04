@@ -3,24 +3,19 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Productos } from 'src/app/Interfaces/productos';
-import { DataProductsService } from 'src/app/services/data-products.service';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import Swal from 'sweetalert2';
 import * as FileSaver from 'file-saver';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
-import { Router } from '@angular/router';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogRef } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
 import { PdfServicesService } from 'src/app/services/pdf-services.service';
 import { PdfInterface } from 'src/app/Interfaces/pdf-interface';
-import { throwError } from 'rxjs';
+
 
 @Component({
   selector: 'app-productos-sales',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, NzModalModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './productos-sales.component.html',
   styleUrl: './productos-sales.component.css'
 })
@@ -62,12 +57,10 @@ export class ProductosSalesComponent implements OnInit {
   hayProductosSeleccionados: boolean = false;
   estadoBotonesCheck: boolean = true;
   botonDeshabilitado: boolean = true;
-  constructor(private dataServices: DataProductsService,
+  constructor(
     private servicio: ProductsServicesService,
     private pdfService: PdfServicesService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    public dialog: MatDialog) {
+    private formBuilder: FormBuilder) {
 
     this.cantidadForm = this.formBuilder.group({
       cantidad: ['', Validators.required]
@@ -259,19 +252,10 @@ export class ProductosSalesComponent implements OnInit {
     this.estadoBotonesCheck = true;
     this.estadoSeleccionarCheck = false;
   }
-  //metodo para eliminar productos del check
-  /*eliminarProducto(idProducto: string) {
-    this.producto_seleccionado = this.producto_seleccionado.filter(producto => producto.codigo !== idProducto);
-  }*/
   seleccionarProducto(producto: Productos) {
     producto.seleccionado = !producto.seleccionado;
   }
 
-  /*cambiarEstadoCheck(event: any) {
-    this.estadoEliminarCheck = event.target.checked;
-    this.estadoCheck = event.target.checked;
-    console.log('Estado de estadoBotonesCheck:', this.estadoEliminarCheck);
-  }*/
 
   cambiarEstadoCheck(event: any, codigo: string) {
     let producto = this.producto_seleccionado.find(p => p.codigo === codigo);

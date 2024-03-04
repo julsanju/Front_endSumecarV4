@@ -13,12 +13,6 @@
   
 }
 
-.style-modal{
-  display: flex;
-  flex-direction: initial;
-  justify-content: flex-start;
-}
-
 .line{
   display: flex;
   flex-direction: row;

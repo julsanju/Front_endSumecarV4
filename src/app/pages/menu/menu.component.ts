@@ -1,16 +1,10 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRouteSnapshot, RouterModule, ActivatedRoute } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 //import { json } from 'node:stream/consumers';
 import { LoginServicesService } from 'src/app/services/login-services.service';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzInputModule } from 'ng-zorro-antd/input'
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatDialogModule } from '@angular/material/dialog';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { CommonModule } from '@angular/common';
 import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
@@ -18,7 +12,7 @@ import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [HttpClientModule, RouterModule, NzLayoutModule, NzMenuModule, NzBreadCrumbModule, MatDialogModule, NzStepsModule, NzSelectModule, NzInputModule, CommonModule],
+  imports: [HttpClientModule, RouterModule, NzLayoutModule, CommonModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
@@ -59,11 +53,6 @@ export class MenuComponent {
       }
     }
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.breadcrumbs = this.createBreadcrumbs(this.router.routerState.snapshot.root); // Usa routerState.snapshot.root
-      }
-    });
   }
 
   productos() {
@@ -138,26 +127,7 @@ export class MenuComponent {
     return false;
   }
 
-  //parte del breadcump
-  private createBreadcrumbs(route: ActivatedRouteSnapshot, url: string = '', breadcrumbs: string[] = []): string[] {
-    const children: ActivatedRouteSnapshot[] = route.children;
-
-    if (children.length === 0) {
-      return breadcrumbs;
-    }
-
-    for (const child of children) {
-      const routeURL: string = child.url.map(segment => segment.path).join('/');
-      if (routeURL !== '') {
-        url += `${routeURL}`;
-      }
-
-      breadcrumbs.push(url);
-      return this.createBreadcrumbs(child, url, breadcrumbs);
-    }
-
-    return breadcrumbs;
-  }
+  
 
   obtenerImagenUser() {
     const userDataString = localStorage.getItem('userData');

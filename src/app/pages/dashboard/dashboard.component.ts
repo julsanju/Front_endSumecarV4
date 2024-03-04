@@ -1,12 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Dashboard } from 'src/app/Interfaces/dashboard';
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
 import * as ApexCharts from 'apexcharts';
-import { MenuComponent } from '../menu/menu.component';
-import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, forkJoin } from 'rxjs';
 
 

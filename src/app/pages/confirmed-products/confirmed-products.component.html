@@ -1,5 +1,43 @@
+<!--modal para confirmacion de la cancelacion del producto-->
+@if(pedidoSeleccionado){
+<div tabindex="-1" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg shadow-md p-4 max-w-md w-full">
+    <button (click)="cerrarModal()" type="button"
+      class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+      <span class="sr-only">Close modal</span>
+    </button>
+    <div class="p-4 md:p-5 text-center">
+      <svg class="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+      
+      <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Estas seguro de eliminar el pedido con
+        numero de orden  <strong>{{numero_orden}} </strong> ?
+      </h3>
+      
+      <button data-modal-hide="popup-modal" type="button"
+        class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-base inline-flex items-center px-5 py-2.5 text-center">
+        Si, Estoy seguro
+      </button>
+      <button (click)="cerrarModal()" data-modal-hide="popup-modal" type="button"
+        class="py-2.5 px-5 ms-3 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No,
+        cancelar :D</button>
+    </div>
+  </div>
+</div>
+
+}
+
 <div style="height: 100vh !important; "
   class="relative overflow-x-auto shadow-md sm:rounded-lg space-table space-table ">
+
+  <h2 class="text-lg font-medium text-gray-800 dark:text-white">PEDIDOS CONFIRMADOS</h2>
 
   <form [formGroup]="searchForm">
     <div class="relative grid-cols-4 gap6 flex justify-between">
@@ -7,13 +45,13 @@
         <label for="searchInput" class="block text-sm text-gray-500 dark:text-gray-300"># ORDEN</label>
         <input formControlName="searchNumber" (keypress)="onKeyPress($event)" type="text" placeholder="#####"
           class="block  mt-2 mb-4 w-full placeholder-gray-400/70 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 " />
-        
+
       </div>
       <div>
         <label class="block text-sm text-gray-500 dark:text-gray-300">CLIENTE</label>
         <input formControlName="searchInput" type="text" placeholder="Example name"
           class="block  mt-2 mb-4 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-        
+
       </div>
     </div>
   </form>
@@ -69,162 +107,178 @@
     </p>
   </div>
   }
-  
+
   @if(!errorOccurred){
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-  
-          <th scope="col" class="px-6 py-3"> # ORDEN </th>
-          <th scope="col" class="px-6 py-3"> FECHA </th>
-          <th scope="col" class="px-6 py-3"> HORA </th>
-          <th scope="col" class="px-6 py-3"> CLIENTE </th>
-          <th scope="col" class="px-6 py-3"> TELEFONO </th>
-          <th scope="col" class="px-6 py-3"> #ITEMS </th>
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+
+        <th scope="col" class="px-6 py-3"> # ORDEN </th>
+        <th scope="col" class="px-6 py-3"> FECHA </th>
+        <th scope="col" class="px-6 py-3"> HORA </th>
+        <th scope="col" class="px-6 py-3"> CLIENTE </th>
+        <th scope="col" class="px-6 py-3"> TELEFONO </th>
+        <th scope="col" class="px-6 py-3"> #ITEMS </th>
+        @if (esAdmin() || esEmpleado()) {
+        <th scope="col" class="px-6 py-3">
+          <span class="sr-only">Finalizar</span>
+        </th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (row of getPaginatedData(); track row) {
+      <ng-container>
+        <tr (click)="abrirCerrarAccordeon(row.numero_orden)"
+          class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out">
+
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <svg data-accordion-icon class="w-3 h-3 transform transition-transform ml-5"
+              [ngClass]="{'rotate-180': accordeon[row.numero_orden], 'transition-transform duration-400 ease-in-out': true}"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="#4b5563" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+            </svg>
+            {{ row.numero_orden }}
+          </td>
+          <td class="px-6 py-4">{{ row.fecha | date:'dd/MM/yyyy'}}</td>
+          <td class="px-6 py-4">{{ row.fecha | date:'HH:mm:ss a'}}</td>
+          <td class="px-6 py-4">{{ row.cliente }}</td>
+          <td class="px-6 py-4">{{ row.telefono }}</td>
+          <td class="px-6 py-4">{{ row.cantidad_items }}</td>
           @if (esAdmin() || esEmpleado()) {
-          <th scope="col" class="px-6 py-3">
-            <span class="sr-only">Finalizar</span>
-          </th>
-          }
-        </tr>
-      </thead>
-      
-      <tbody>
-        @for (row of getPaginatedData(); track row) {
-        <ng-container>
-          <tr (click)="abrirCerrarAccordeon(row.numero_orden)"
-            class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out">
-  
-            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <svg data-accordion-icon class="w-3 h-3 transform transition-transform ml-5"
-                [ngClass]="{'rotate-180': accordeon[row.numero_orden], 'transition-transform duration-400 ease-in-out': true}"
-                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="#4b5563" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
-              </svg>
-              {{ row.numero_orden }}
+          <div class="flex">
+            <td class="px-1 py-4 text-right">
+              <button (click)="abrirModal(row.numero_orden); $event.stopPropagation()" data-modal-target="popup-modal"
+                data-modal-toggle="popup-modal" type="button" class="focus:outline-none text-white bg-red-700
+                        hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-small
+                        rounded-lg text-xs px-5 py-2.5 me-2 mb-2">
+                <svg _ngcontent-ng-c4160068954="" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 24 24" fill="none">
+                  <path _ngcontent-ng-c4160068954="" fill-rule="evenodd" clip-rule="evenodd"
+                    d="M8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V8C4.44772 8 4 7.55228 4 7C4 6.44772 4.44772 6 5 6H8V4C8 3.46957 8.21071 2.96086 8.58579 2.58579ZM10 6H14V4H10V6ZM11 10C11 9.44772 10.5523 9 10 9C9.44772 9 9 9.44772 9 10V18C9 18.5523 9.44772 19 10 19C10.5523 19 11 18.5523 11 18V10ZM15 10C15 9.44772 14.5523 9 14 9C13.4477 9 13 9.44772 13 10V18C13 18.5523 13.4477 19 14 19C14.5523 19 15 18.5523 15 18V10Z"
+                    fill="#fff"></path>
+                </svg>
+              </button>
             </td>
-            <td class="px-6 py-4">{{ row.fecha | date:'dd/MM/yyyy'}}</td>
-            <td class="px-6 py-4">{{ row.fecha | date:'HH:mm:ss a'}}</td>
-            <td class="px-6 py-4">{{ row.cliente }}</td>
-            <td class="px-6 py-4">{{ row.telefono }}</td>
-            <td class="px-6 py-4">{{ row.cantidad_items }}</td>
-            @if (esAdmin() || esEmpleado()) {
-            <td class="px-6 py-4 text-right">
+            <td class="px-1 py-4 text-right">
               <button type="button" class="focus:outline-none text-white bg-green-700
                         hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-small
                         rounded-lg text-xs px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700
-                      dark:focus:ring-green-800" (click)="finalizarPeticionProducto(row.numero_orden)">Finalizar</button>
+                      dark:focus:ring-green-800"
+                (click)="finalizarPeticionProducto(row.numero_orden); $event.stopPropagation()">Finalizar</button>
             </td>
-            }
-          </tr>
-          @if(accordeon[row.numero_orden]){
-          <tr>
-            <td [attr.colspan]="(esAdmin() || esEmpleado()) ? 7 : 6">
-              <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="w-full text-xs text-white uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" class="px-4 py-2">Código</th>
-                    <th scope="col" class="px-4 py-2 ">Artículo</th>
-                    <th scope="col" class="px-4 py-2 ">Laboratorio</th>
-                    <th scope="col" class="px-4 py-2">Cantidad</th>
-                    <!-- Agrega más columnas según sea necesario -->
-                  </tr>
-                </thead>
-                <tbody>
-                  @for(detalle of row.detalle; track detalle){
-                  <tr
-                    class="bg-gray-100 border border-gray-900 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out"
-                    style="width: 100%">
-                    <td class=" px-6 py-3 max-w-full">{{ detalle.codigo }}</td>
-                    <td class="border px-4 py-2 max-w-full">{{ detalle.articulo }}</td>
-                    <td class="border px-4 py-2 max-w-full">{{ detalle.laboratorio }}</td>
-                    <td class="border px-4 py-2 max-w-full">{{ detalle.cantidad }}</td>
-  
-                    <!-- Agrega más columnas según sea necesario -->
-                  </tr>
-                  }
-                </tbody>
-              </table>
-            </td>
-          </tr>
+          </div>
           }
-        </ng-container>
-  
+        </tr>
+        @if(accordeon[row.numero_orden]){
+        <tr>
+          <td [attr.colspan]="(esAdmin() || esEmpleado()) ? 7 : 6">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead class="w-full text-xs text-white uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" class="px-4 py-2">Código</th>
+                  <th scope="col" class="px-4 py-2 ">Artículo</th>
+                  <th scope="col" class="px-4 py-2 ">Laboratorio</th>
+                  <th scope="col" class="px-4 py-2">Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(detalle of row.detalle; track detalle){
+                <tr
+                  class="bg-gray-100 border border-gray-900 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-6000 ease-out"
+                  style="width: 100%">
+                  <td class=" px-6 py-3 max-w-full">{{ detalle.codigo }}</td>
+                  <td class="border px-4 py-2 max-w-full">{{ detalle.articulo }}</td>
+                  <td class="border px-4 py-2 max-w-full">{{ detalle.laboratorio }}</td>
+                  <td class="border px-4 py-2 max-w-full">{{ detalle.cantidad }}</td>
+
+                </tr>
+                }
+              </tbody>
+            </table>
+          </td>
+        </tr>
         }
-      </tbody>
-    </table>
-    @if(!resultadoSearch){
-      <div class="flex items-center justify-between mt-4">
-        <div class="flex-1 flex justify-between sm:hidden">
-          <a (click)="onPageChange(currentPage - 1)"
-            class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-            Anterior
-          </a>
-          <a (click)="onPageChange(currentPage + 1)"
-            class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-            Siguiente
-          </a>
-        </div>
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-          <div>
-            <p class="text-sm text-gray-700 dark:text-gray-400">
-              Mostrando
-              <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
-              a
-              <span class="font-medium">{{ getEndIndex() }}</span>
-              de
-              <span class="font-medium">{{ data.length }}</span>
-              resultados
-            </p>
-          </div>
-          <div>
-            <nav class="relative z-0 inline-flex -space-x-px" aria-label="Pagination">
-              <a (click)="onPageChange(currentPage + 1)"
-                class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-l-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-                <span class="sr-only">Anterior</span>
-                <!-- Heroicon name: solid/chevron-left -->
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                  aria-hidden="true">
-                  <path fill-rule="evenodd"
-                    d="M6.707 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 0 1-1.414-1.414L11.586 11H3a1 1 0 1 1 0-2h8.586L6.707 4.707a1 1 0 0 1 0-1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-              </a>
-              <!-- Add pagination links here -->
-              <!-- ... -->
-              <a (click)="onPageChange(currentPage - 1)"
-                class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-r-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
-                <span class="sr-only">Siguiente</span>
-                <!-- Heroicon name: solid/chevron-right -->
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                  aria-hidden="true">
-                  <path fill-rule="evenodd"
-                    d="M13.293 16.707a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 0 1 1.414 1.414L8.414 9H17a1 1 0 1 1 0 2h-8.586l4.293 4.293a1 1 0 0 1 0 1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-              </a>
-            </nav>
-          </div>
-        </div>
-      </div>
-    }
-    
-    <!-- condicion para saber si se encontraron productos -->
-    @if(resultadoSearch){
-      <div class="flex flex-col items-center justify-center text-center w-full">
-        <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg" alt="Error" class="mb-5 max-w-full h-auto mx-auto" />
-      </div>
-      <div class="text-center">
-    
-        <h1
-          class="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white text-center mx-auto">
-          ¡Oops! Algo salió mal.
-        </h1>
-        <p class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">No se encontraron
-          pedidos.
+      </ng-container>
+
+      }
+    </tbody>
+  </table>
+
+  @if(!resultadoSearch){
+  <div class="flex items-center justify-between mt-4">
+    <div class="flex-1 flex justify-between sm:hidden">
+      <a (click)="onPageChange(currentPage - 1)"
+        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+        Anterior
+      </a>
+      <a (click)="onPageChange(currentPage + 1)"
+        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+        Siguiente
+      </a>
+    </div>
+    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+      <div>
+        <p class="text-sm text-gray-700 dark:text-gray-400">
+          Mostrando
+          <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
+          a
+          <span class="font-medium">{{ getEndIndex() }}</span>
+          de
+          <span class="font-medium">{{ data.length }}</span>
+          resultados
         </p>
       </div>
-    }
+      <div>
+        <nav class="relative z-0 inline-flex -space-x-px" aria-label="Pagination">
+          <a (click)="onPageChange(currentPage + 1)"
+            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-l-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+            <span class="sr-only">Anterior</span>
+            <!-- Heroicon name: solid/chevron-left -->
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+              aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M6.707 3.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1 0 1.414l-6 6a1 1 0 0 1-1.414-1.414L11.586 11H3a1 1 0 1 1 0-2h8.586L6.707 4.707a1 1 0 0 1 0-1.414z"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
+          <!-- Add pagination links here -->
+          <!-- ... -->
+          <a (click)="onPageChange(currentPage - 1)"
+            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 dark:text-gray-400 dark:border-gray-700 rounded-r-md dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+            <span class="sr-only">Siguiente</span>
+            <!-- Heroicon name: solid/chevron-right -->
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+              aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M13.293 16.707a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414l6-6a1 1 0 0 1 1.414 1.414L8.414 9H17a1 1 0 1 1 0 2h-8.586l4.293 4.293a1 1 0 0 1 0 1.414z"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
   }
-}
+
+  <!-- condicion para saber si se encontraron productos -->
+  @if(resultadoSearch){
+  <div class="flex flex-col items-center justify-center text-center w-full">
+    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/404/404-computer.svg" alt="Error"
+      class="mb-5 max-w-full h-auto mx-auto" />
+  </div>
+  <div class="text-center">
+
+    <h1
+      class="mb-3 text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white text-center mx-auto">
+      ¡Oops! Algo salió mal.
+    </h1>
+    <p class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">No se encontraron
+      pedidos.
+    </p>
+  </div>
+  }
+  }
+  }
 </div>

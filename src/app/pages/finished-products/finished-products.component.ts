@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import { Productos } from 'src/app/Interfaces/productos';
 import { Empleado } from 'src/app/Interfaces/empleado';
@@ -8,12 +8,6 @@ import Swal from 'sweetalert2';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
 import { PeticioneServicesService } from 'src/app/services/peticione-services.service';
-import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-import { DataProductsService } from '../../services/data-products.service';
-import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
 import { DatosAccordeon } from 'src/app/Interfaces/datosAccordeon';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';

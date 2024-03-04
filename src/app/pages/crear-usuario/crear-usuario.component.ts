@@ -3,13 +3,9 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, OnInit, ViewChild } from
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Empleado } from 'src/app/Interfaces/empleado';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
-import { Usuarios } from 'src/app/Interfaces/usuarios';
-import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
-import { NumbersOnlyDirective } from 'src/app/directives/numbers-only.directive';
 import { RegisterService } from 'src/app/services/register.service';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { MessageService } from 'primeng/api';
-import { Toast, ToastModule } from 'primeng/toast';
 import { HttpClientModule } from '@angular/common/http';
 import { DepartamentoCiudad } from 'src/app/Interfaces/departamento-ciudad';
 import { forkJoin } from 'rxjs';
@@ -28,7 +24,6 @@ export class CrearUsuarioComponent implements OnInit {
   registrationForm: FormGroup;
   UpdateForm: FormGroup;
   dataSource: Empleado[] = [];
-  //defaultImagen = 'https://i.postimg.cc/CKsd5m7z/man.png'
   originalDataSource: Empleado[] = [];
   currentPage: number = 1;
   pageSize: number = 4;

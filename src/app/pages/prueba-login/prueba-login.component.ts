@@ -1,32 +1,13 @@
 
-import { Component, AfterViewInit } from '@angular/core';
-import '@dotlottie/player-component'; 
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-declare let particlesJS: any;
+import { Component } from '@angular/core';
 
-//import { trigger, transition, style, animate } from '@angular/animations';
 import { LoginServicesService } from '../../services/login-services.service';
 import { Login } from '../../Interfaces/login';
 import { MensajeError } from '../../Interfaces/mensaje-error';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import {SharedServicesService} from '../../services/shared-services.service';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-//import { LockOutline } from '@ant-design/icons-angular/icons'; // Importa el ícono de candado
 import Swal from 'sweetalert2';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatSortModule } from '@angular/material/sort';
-import {MatExpansionModule} from '@angular/material/expansion';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatGridListModule } from '@angular/material/grid-list';
-import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from 'src/app/app.component';
 @Component({
@@ -34,9 +15,8 @@ import { AppComponent } from 'src/app/app.component';
   standalone: true,
   imports: [ReactiveFormsModule, 
     RouterModule, 
-    //HttpClient,
     HttpClientModule, 
-    MatPaginatorModule, MatTableModule, MatProgressBarModule, MatStepperModule, MatSelectModule, MatFormFieldModule, MatCheckboxModule, MatSortModule, MatInputModule, MatExpansionModule, MatDialogModule, MatGridListModule, MatCardModule, RouterOutlet],
+     RouterOutlet],
   templateUrl: './prueba-login.component.html',
   styleUrls: ['./prueba-login.component.css'],
   
@@ -79,7 +59,6 @@ export class PruebaLoginComponent {
 
     //ocultar el menu version movil para el login
     this.app.mostrarMenu = false;
-    //NzIconModule.forRoot([LockOutline]);
   }
 
   onPasswordChange() {
@@ -111,7 +90,6 @@ export class PruebaLoginComponent {
 
     this.loginService.LoginValidation(userData).subscribe(
       (response) => {
-        console.log(response);
 
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
         
@@ -138,8 +116,7 @@ export class PruebaLoginComponent {
 
         this.spinner = false;
         this.cargando = false;
-        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-        console.log(this.errorMessage);
+        this.errorMessage = error.Message; 
 
         Swal.fire({
           title: 'ERROR',

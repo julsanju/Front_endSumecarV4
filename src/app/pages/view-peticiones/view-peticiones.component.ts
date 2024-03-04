@@ -55,6 +55,9 @@ export class ViewPeticionesComponent implements OnInit {
   searchForm:FormGroup;
   usuarioSeleccionadoEmail: string = '';
   detalle: DetallePeticionP[] = [];
+  peticionSeleccionada: boolean = false;
+  numero_orden:number = 0;
+  cliente:string = '';
 
   articulosEscritos: boolean[] = [];
   accordeon: { [key: number]: boolean } = {};
@@ -182,6 +185,19 @@ export class ViewPeticionesComponent implements OnInit {
         });
       }
     );
+  }
+
+  abrirModal(numeroPedido: number, cliente: string) {
+    
+    this.peticionSeleccionada = true;
+    this.numero_orden = numeroPedido;
+    this.cliente = cliente;
+    console.log('Número de pedido seleccionado:', numeroPedido);
+
+  }
+
+  cerrarModal(){
+    this.peticionSeleccionada = false;
   }
 
   mostrarError(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsServicesService } from 'src/app/services/products-services.service';
 import { Productos } from 'src/app/Interfaces/productos';
 import { Empleado } from 'src/app/Interfaces/empleado';
@@ -8,12 +8,6 @@ import Swal from 'sweetalert2';
 import { MensajeError } from 'src/app/Interfaces/mensaje-error';
 import { Router } from '@angular/router';
 import { PeticioneServicesService } from 'src/app/services/peticione-services.service';
-import { MatTableDataSource } from '@angular/material/table'; // Importa MatTableDataSource
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { DataProductsService } from '../../services/data-products.service';
-import { DialogOverviewComponent } from '../dialog-overview/dialog-overview.component';
 import { DatosAccordeon } from 'src/app/Interfaces/datosAccordeon';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,8 +26,7 @@ export class ConfirmedProductsComponent implements OnInit {
   errorOccurred: boolean = false;
   errorImageURL: string = "";
   accordeon: { [key: number]: boolean } = {};
-  //accordeon: boolean[] = Array.from({ length: this.getPaginatedData().length }, () => false);
-  //accordeon: boolean = false;
+  
   private rolSubject = new Subject<boolean>();
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
@@ -46,6 +39,8 @@ export class ConfirmedProductsComponent implements OnInit {
   data2: Empleado[] = [];
   displayedColumns: string[] = ['# Orden', 'Codigo', 'Articulo', 'Laboratorio'];
   resultadoSearch: boolean = false
+  pedidoSeleccionado: boolean = false;
+  numero_orden:number = 0;
   // Variables de paginación
   pageSize: number = 5;
   currentPage: number = 1;
@@ -92,6 +87,19 @@ export class ConfirmedProductsComponent implements OnInit {
   }
 
 
+  abrirModal(numeroPedido: number) {
+    
+    this.pedidoSeleccionado = true;
+    this.numero_orden = numeroPedido;
+
+    console.log('Número de pedido seleccionado:', numeroPedido);
+
+  }
+
+  cerrarModal(){
+    this.pedidoSeleccionado = false;
+  }
+
   //metodos para poder saber si es empleado o cliente
   //empleado
   private handleEmpleadoCase() {
@@ -100,18 +108,7 @@ export class ConfirmedProductsComponent implements OnInit {
         this.correo = correo;
 
         if (this.correo) {
-          // this.servicio.obtenerFiltradoEmpleado().subscribe(
-          //   (response) => {
-          //     this.data = response;
-          //     this.isLoading = false;
-          //   },
-          //   (error) => {
-          //     console.error('Error al obtener los productos: ', error);
-          //     this.loading = false;
-          //     this.mostrarError();
-          //     this.isLoading = false;
-          //   }
-          // );
+          
           this.servicio.obtenerDatosAccordeon().subscribe(
             (response) => {
               this.dataAccordeon = response;
