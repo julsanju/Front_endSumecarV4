@@ -32,6 +32,8 @@ export class MenuComponent {
   rotacionConfiguracion = false;
   //datos para mapear
   dataMapeo: UsuariosView[] = [];
+  //loading
+  cargando:boolean = false;
 
   constructor(private login: LoginServicesService, private router: Router, private servicio: UsuariosServicesService) { }
   breadcrumbs: string[] = [];
@@ -61,6 +63,7 @@ export class MenuComponent {
 
   //metodo para mapear datos en el userProfile
   mapeoUserProfile() {
+    this.cargando = true;
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
       const userData = JSON.parse(userDataString);
@@ -70,10 +73,12 @@ export class MenuComponent {
 
       this.servicio.obtenerMapeo(username).subscribe(
         (response) => {
+          this.cargando = false
           this.dataMapeo = (response)
           this.obtenerImagenUser()
         },
         (error) => {
+          this.cargando = false
           console.error('Error al obtener la imagen:', error);
         }
       );

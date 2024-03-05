@@ -41,9 +41,10 @@ export class PruebaLoginComponent {
   spinner: boolean = false;
   //loading
   cargando = false;
-
-  togglePasswordVisibility(event: Event) {
-    this.passwordVisible = (event.target as HTMLInputElement).checked;
+  mostrarContrasena: boolean = false;
+  
+  mostrar_contrasena() {
+    this.mostrarContrasena = !this.mostrarContrasena
   }  
 
   constructor(private formBuilder: FormBuilder,  

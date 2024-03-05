@@ -65,6 +65,7 @@ export class ViewPeticionesComponent implements OnInit {
   showModalErrorArticulo: boolean = false;
   /** Cargando**/
   cargando:boolean = false;
+  cargandoEnviar:boolean = false;
 
   constructor(private servicio: PeticioneServicesService,
     private router: Router,
@@ -280,11 +281,11 @@ export class ViewPeticionesComponent implements OnInit {
   /***modal para peticiones */
 
   async onSubmit() {
+    this.cargandoEnviar = true;
     const userDataString = localStorage.getItem('userData');
     const userData = userDataString ? JSON.parse(userDataString) : null; // Parsea los datos del usuario si existen
-    console.log(userData.usuario);
+    
     if (userData) {
-      
       const dataClient: UsuariosView | null = await this.mapeoDatosCliente(userData.usuario)
       const detalles: DetallePeticionP[] = this.detalle.filter(detalle => detalle.articulo.trim() !== '' && detalle.cantidad !== 0);
 
@@ -301,19 +302,19 @@ export class ViewPeticionesComponent implements OnInit {
         }
       ];
 
-      console.log(data);
       this.peticion.addPeticion(data, userData.usuario).subscribe(
         response => {
+          this.cargandoEnviar = false;
           this.spinner = false;
 
           Swal.fire('Peticion enviada correctamente', '', 'success');
         },
         error => {
+          this.cargandoEnviar = false;
           this.spinner = false;
 
-          this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-          console.log(this.errorMessage);
-
+          this.errorMessage = error.Message; 
+          
           Swal.fire({
             title: 'ERROR',
             html: `${this.errorMessage}`,

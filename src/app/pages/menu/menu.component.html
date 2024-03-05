@@ -15,12 +15,24 @@
   <nz-layout>
     <aside
       class="fixed top-0 left-0 z-20 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 w-64 px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
-      
+
       <div class="flex flex-col items-center mt-5 -mx-2">
-        <img class="object-cover w-32 h-32 mb-3 mx-2 rounded-full" [src]="imagenUser" alt="avatar" > <!--[src]="imagenUser" alt="avatar"-->
+        @if(cargando){
+        <div class="flex flex-col items-center p-8 animate-pulse">
+          <p
+            class=" animate-pulse w-32 h-32 bg-gray-300 rounded-full dark:bg-gray-700 ring-4 ring-gray-400 dark:ring-gray-600">
+          </p>
+          <div class="mt-2 bg-gray-300 h-3 w-24"></div>
+          <div class="mt-2 bg-gray-300 h-3 w-20"></div>
+        </div>
+        }
+        @if(!cargando){
+        <img class="object-cover w-32 h-32 mb-3 mx-2 rounded-full" [src]="imagenUser" alt="avatar">
         @for(data of dataMapeo; track dataMapeo){
-        <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200 uppercase">{{data.nombre}} {{data.apellido}}</h4>
+        <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200 uppercase">{{data.nombre}} {{data.apellido}}
+        </h4>
         <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{{data.correo}}</p>
+        }
         }
       </div>
 
@@ -126,7 +138,7 @@
               </a>
               <!--contenido de peticiones-->
               <ul id="dropdown-peticiones" class="bg-gray-50 text-base hidden py-2 space-y-2">
-                
+
                 <li>
                   <a routerLink="/menu/view-peticiones"
                     class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
@@ -252,7 +264,7 @@
 
     <nz-layout class="inner-layout  sm:ml-64">
       <nz-content>
-            <router-outlet></router-outlet> <!-- Componentes se cargarán aquí -->
+        <router-outlet></router-outlet> <!-- Componentes se cargarán aquí -->
       </nz-content>
     </nz-layout>
   </nz-layout>

@@ -206,21 +206,20 @@ export class ProductosSalesComponent implements OnInit {
           this.cargandoSucces = false;
           this.producto_seleccionado = [];
         }, 1000);
+        this.servicio.notificarProductosConfirmados();
       },
       error => {
         console.error("Error:", error);
         console.log(error.error)
         this.spinner = false;
 
-        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
-        console.log(this.errorMessage);
+        this.errorMessage = error.Message;
 
         Swal.fire({
           title: 'ERROR',
           html: `${this.errorMessage}`,
           icon: 'error',
         });
-        console.log("Error en el registro");
       },
 
     );

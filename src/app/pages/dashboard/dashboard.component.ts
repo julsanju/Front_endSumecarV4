@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
 import * as ApexCharts from 'apexcharts';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, Subscription, forkJoin, interval } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
+  imports: [RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css', '../../../app/assets/css/sb-admin-2.min.css', '../../assets/vendor/fontawesome-free/css/all.min.css']
 })
 
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  generalPedidosPendientes = 0;
+  private subscription!: Subscription;
   // Variables para pedidos
   pedidosMontados = 0;
   pedidosPendientes = 0;
@@ -80,14 +84,22 @@ export class DashboardComponent implements OnInit {
     this.dataInitNew().subscribe(() => {
       this.renderizar();
       this.renderizarBarNegativo();
-      this.renderizarBottom();
       this.renderizarBottom2();
+      this.obtenerPedidoPendiente();
+
+      this.subscription = interval(1000).subscribe(() => {
+        this.obtenerPedidoPendiente();
+      });
     });
 
     // peticiones montadas
     this.dataInitNewPeticiones().subscribe(() => {
       this.renderizarPeticiones();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   private initData(movimiento: string, estado: string): Observable<any> {
@@ -320,186 +332,14 @@ export class DashboardComponent implements OnInit {
       chart.render();
     }
   }
-  //informacion adicional de pedidos
-  renderizarAdicionales() {
-    this.renderizarAdicionalPedidos4();
-    this.renderizarAdicionalPedidos();
-    this.renderizarAdicionalPedidos2();
 
-  }
-
-  renderizarAdicionalPedidos() {
-    var options = {
-      series: [44, 55, 41, 17, 15],
-      chart: {
-        width: '100%', // Cambiar el ancho del gráfico para que se ajuste al contenedor
-        type: 'donut',
-        startAngle: -90,
-        endAngle: 270,
-        dropShadow: {
-          enabled: true,
-          color: '#111',
-          top: -1,
-          left: 3,
-          blur: 3,
-          opacity: 0.2
-        }
-      },
-      stroke: {
-        width: 0,
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            labels: {
-              show: true,
-              total: {
-                showAlways: false,
-                show: true
-              }
-            }
-          }
-        }
-      },
-      labels: ["Comedy", "Action", "SciFi", "Drama", "Horror"],
-      dataLabels: {
-
-        enabled: false
-
-      },
-      fill: {
-        type: 'solid',
-      },
-      legend: {
-        position: 'right', // Cambiar la posición de la leyenda a la derecha
-        formatter: function (val: number, opts: any) {
-          return val + " - " + opts.w.globals.series[opts.seriesIndex]
-        }
-      },
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: '100%' // Ajustar el ancho del gráfico para dispositivos de menor tamaño
-          },
-          legend: {
-            position: 'bottom'
-          }
-        }
-      }]
-    };
-
-    var chart = new ApexCharts(document.querySelector("#informacionAdicionalPedidos"), options);
-    chart.render();
-  }
-
-  renderizarAdicionalPedidos2() {
-    var options = {
-      series: [{
-        name: 'Series 1',
-        data: [80, 50, 30, 40, 100, 20],
-      }],
-      chart: {
-        height: 350,
-        type: 'radar',
-        toolbar: {
-          show: false
-        }
-      },
-      xaxis: {
-        categories: ['January', 'February', 'March', 'April', 'May', 'June']
-      }
-    };
-
-    var chart = new ApexCharts(document.querySelector("#informacionAdicionalPedidos2"), options);
-    chart.render();
+  obtenerPedidoPendiente(){
+    this.servicio.obtenerPendientes().subscribe(data => {
+      this.generalPedidosPendientes = data[0].cantidad
+    })
   }
 
   
-  renderizarAdicionalPedidos4() {
-    var options = {
-      series: [{
-        name: "Session Duration",
-        data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
-      },
-      {
-        name: "Page Views",
-        data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-      },
-      {
-        name: 'Total Visits',
-        data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
-      }
-      ],
-      chart: {
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false
-        },
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: [5, 7, 5],
-        curve: 'straight',
-        dashArray: [0, 8, 5]
-      },
-      title: {
-        text: 'Page Statistics',
-        align: 'left'
-      },
-      legend: {
-        tooltipHoverFormatter: function (val: any, opts: any) {
-          return val + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
-        }
-      },
-      markers: {
-        size: 0,
-        hover: {
-          sizeOffset: 6
-        }
-      },
-      xaxis: {
-        categories: ['01 Jan', '02 Jan', '03 Jan', '04 Jan', '05 Jan', '06 Jan', '07 Jan', '08 Jan', '09 Jan',
-          '10 Jan', '11 Jan', '12 Jan'
-        ],
-      },
-      tooltip: {
-        y: [
-          {
-            title: {
-              formatter: function (val: any) {
-                return val + " (mins)"
-              }
-            }
-          },
-          {
-            title: {
-              formatter: function (val: any) {
-                return val + " per session"
-              }
-            }
-          },
-          {
-            title: {
-              formatter: function (val: any) {
-                return val;
-              }
-            }
-          }
-        ]
-      },
-      grid: {
-        borderColor: '#f1f1f1',
-      }
-    };
-
-    var chart = new ApexCharts(document.querySelector("#renderizarAdicionalPedidos4"), options);
-    chart.render();
-  }
-
   //peticiones
   renderizarPeticiones() {
     const options = {
@@ -577,71 +417,7 @@ export class DashboardComponent implements OnInit {
   }
 
   //renderizado general parte bottom
-  renderizarBottom() {
-    const getChartOptions = () => {
-      return {
-        series: [90, 85, 70],
-        colors: ["#1C64F2", "#16BDCA", "#FDBA8C"],
-        chart: {
-          height: "380px",
-          width: "100%",
-          type: "radialBar",
-          sparkline: {
-            enabled: true,
-          },
-        },
-        plotOptions: {
-          radialBar: {
-            track: {
-              background: '#E5E7EB',
-            },
-            dataLabels: {
-              show: false,
-            },
-            hollow: {
-              margin: 0,
-              size: "32%",
-            }
-          },
-        },
-        grid: {
-          show: false,
-          strokeDashArray: 4,
-          padding: {
-            left: 2,
-            right: 2,
-            top: -23,
-            bottom: -20,
-          },
-        },
-        labels: ["Done", "In progress", "To do"],
-        legend: {
-          show: true,
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-        },
-        tooltip: {
-          enabled: true,
-          x: {
-            show: false,
-          },
-        },
-        yaxis: {
-          show: false,
-          labels: {
-            formatter: function (value: number) {
-              return value + '%';
-            }
-          }
-        }
-      }
-    }
-
-    if (document.getElementById("radial-chart") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.querySelector("#radial-chart"), getChartOptions());
-      chart.render();
-    }
-  }
+  
   renderizarBottom2() {
 
     const options = {
@@ -671,7 +447,7 @@ export class DashboardComponent implements OnInit {
         {
           name: "PETICIONES",
           data: [this.cantidadPeticion1, this.cantidadPeticion2, this.cantidadPeticion3, this.cantidadPeticion4, this.cantidadPeticion5, this.cantidadPeticion6],
-          color: "#7E3BF2",
+          color: "#7E3AF2",
         },
       ],
       chart: {
