@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
-import * as ApexCharts from 'apexcharts';
+
 import { Observable, Subscription, forkJoin, interval } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import * as ApexCharts from 'apexcharts';
+
+
 
 
 @Component({

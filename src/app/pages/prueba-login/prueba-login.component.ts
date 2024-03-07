@@ -47,6 +47,7 @@ export class PruebaLoginComponent implements OnInit {
   userData: any;
   roles: string[] = ['cliente', 'empleado'];
   spinner: boolean = false;
+  modalRegister:boolean = false;
   //loading
   cargando = false;
   mostrarContrasena: boolean = false;
@@ -325,6 +326,14 @@ export class PruebaLoginComponent implements OnInit {
     setTimeout(() => {
       this.showAlertDanger = false;
     }, 3000);
+  }
+
+  //modal de register
+  abrirRegister(){
+    this.modalRegister = true;
+  }
+  cerrarRegister(){
+    this.modalRegister = false;
   }
   onPasswordChange() {
     const password = this.loginForm.get('contrasena')?.value;
