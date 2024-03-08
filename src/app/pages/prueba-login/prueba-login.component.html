@@ -1,3 +1,50 @@
+<!-- Modal para succesful o failed -->
+<!--alert succesfull para la creacion de usuario-->
+<div [ngClass]="getSuccesAlertClasses()" id="alert-border-3"
+  class="fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 rounded mr-5"
+  role="alert">
+  <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+    viewBox="0 0 20 20">
+    <path
+      d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+  </svg>
+  <div class="ms-3 text-sm font-medium">
+    <span class="font-bold"> Carga exitosa!</span> Cliente creado con exito :)
+  </div>
+  <button type="button"
+    class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+    data-dismiss-target="#alert-border-3" aria-label="Close">
+    <span class="sr-only">Dismiss</span>
+    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+    </svg>
+  </button>
+</div>
+<!--danger alert para la creacion de usuario-->
+<div [ngClass]="getDangerAlertClasses()" id="danger-alert"
+  class=" fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg mr-9 bg-red-50 dark:bg-gray-800 dark:text-red-400"
+  role="alert">
+  <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor" viewBox="0 0 20 20">
+    <path
+      d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+  </svg>
+  <span class="sr-only">Info</span>
+  <div>
+    <span class="font-bold">Registro Incorrecto :( <br> </span> {{ this.errorMessage?.Message}}
+  </div>
+  <button type="button"
+    class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
+    data-dismiss-target="#danger-alert" aria-label="Close">
+    <span class="sr-only">Dismiss</span>
+    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+    </svg>
+  </button>
+</div>
+
 <section class="bg-gray-100 min-h-screen flex items-center
   justify-center">
   <!-- LOTTIE -->
@@ -14,11 +61,11 @@
           placeholder="Usuario" required autofocus autocomplete="username">
 
         <div class="relative flex items-center">
-          <input formControlName="contrasena" class="p-2 pl-4 pr-14 rounded-xl border-gray-400 text-sm"
+          <input formControlName="contrasena" class="p-2 pl-8 lg:pl-2 pr-14 rounded-xl border-gray-400 text-sm"
             [type]="mostrarContrasena ? 'text' : 'password'" name="password" placeholder="********" required
             autocomplete="current-password">
 
-          <button class="absolute right-0 top-0 bottom-0 px-3 flex items-center justify-center focus:outline-none"
+          <button class="absolute mr-2 right-0 top-0 bottom-0 px-3 flex items-center justify-center focus:outline-none"
             (click)="mostrar_contrasena()">
 
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -34,7 +81,7 @@
 
         <div class="flex items-center justify-between" style="margin-bottom: -10px;">
           <label for="password" class=" text-white">Password</label>
-          <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:scale-105 duration-300">Olvido su
+          <a class="text-sm text-gray-500 dark:text-gray-400 hover:scale-105 duration-300">Olvido su
             contraseña?</a>
         </div>
 
@@ -67,7 +114,8 @@
         </button>
         <!--link para registrar nuevo cliente-->
         <span class="text-sm text-gray-500 dark:text-gray-400 hover:scale-105 duration-300 ml-2">¿No tienes una cuenta?
-          <a (click)="abrirRegister()" class="text-blue-500"> Registrate </a>
+          <a data-drawer-target="drawer-bottom-example" data-drawer-show="drawer-bottom-example"
+            data-drawer-placement="bottom" aria-controls="drawer-bottom-example" class="text-blue-500"> Registrate </a>
         </span>
 
       </form>
@@ -113,192 +161,191 @@
 </section>
 
 <!-- Modal para registrarse -->
-
-
-@if(modalRegister){
-<div id="drawer-bottom-example"
-  class="fixed bottom-0 left-0 right-0 z-40 w-full p-4 overflow-y-auto bg-white dark:bg-gray-800 transi">
+<div [ngClass]="getRegister()" id="drawer-bottom-example"
+  class="fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-gray-800 ">
   <button (click)="cerrarRegister()" type="button" data-drawer-hide="drawer-bottom-example"
     aria-controls="drawer-bottom-example"
-    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
-    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-12 h-12 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
     </svg>
     <span class="sr-only">Close menu</span>
   </button>
-  <h2 class="mb-5 text-base font-normal text-gray-500 md:text-lg dark:text-gray-400 text-center">REGISTRO DE USUARIOS :D
+  <h2 class=" text-lg font-normal text-gray-500 md:text-xl dark:text-gray-400 text-center">
+  REGISTRO DE USUARIOS :D
   </h2>
-  <div class="grid grid-cols2 overflow-y-auto">
+  <!-- <div style="border-bottom: 1px double #f2f2f2;"></div> -->
+  <div class="grid grid-cols2">
     <div class="flex">
-      <div class="w-2/5 p-5 radius md:block hidden max-h-full">
+      <div class="w-2/5 p-5 radius md:block hidden max-h-95">
         <div class="rounded-2xl flex justify-center items-center h-full"
-          style="background-color: rgb(180, 206, 255); border: 1px solid #e7e7e7;">
+          style="background-color: rgba(248, 248, 248, 0.753); border: 1px solid #e7e7e7;">
           <div id="image_login">
-            <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
-              type="module"></script>
-            <iframe src="https://lottie.host/embed/39c8e65f-9c8c-4ae9-a046-dc3febcbeb12/eKYeuv22gF.json"
-              style="width: 300px; height: 300px"></iframe>
+            <script src="https://lottie.host/51f2713d-7421-4f43-a21a-a2f46ddd3470/fbvJfJK2t7.json"></script>
+
+            <iframe src="https://lottie.host/embed/51f2713d-7421-4f43-a21a-a2f46ddd3470/fbvJfJK2t7.json"
+              style="width: 400px; height: 500px"></iframe>
           </div>
         </div>
       </div>
 
-      <div class="w-1/2 p-5 radius md:block hidden max-h-full">
-        <form [formGroup]="registrationForm" class="mb-6">
-          <div class="grid grid-cols-3 gap-4 overflow-y-auto" style="padding: 0 5% 0 5%;">
+      <div class=" p-5 radius max-h-full">
+        <div class="max-h-96 overflow-y-auto style-scroll">
+          <form [formGroup]="registrationForm" class="mb-6">
 
+            <div class="grid grid-cols-3 gap-4" style="padding: 0 0 0 5%;">
 
-            <!--identificacion-->
+              <!--identificacion-->
 
-            <div [ngClass]="{'mb-5': registrationForm.controls['Identificacion'].valid}">
-              <label for="subject"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Identificacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Identificacion'].valid}"
-                class="block mb-2 text-sm font-medium">Identificacion</label>
-              <input type="text" id="subject" formControlName="Identificacion"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Identificacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Identificacion'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
-              <p class="mt-2 text-sm"
-                [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
-                <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
-                  'introduce tu identificación.' : registrationForm.controls['Identificacion'].invalid ? 'Oops!' :
-                  '¡Excelente! '}}</span> {{registrationForm.controls['Identificacion'].pristine ? '' :
-                registrationForm.controls['Identificacion'].invalid ? 'Identificacion incorrecta :(' :
-                'Identificación correcta :)'}}
-              </p>
-            </div>
-            <!--nombre-->
-            <div [ngClass]="{'mb-5': registrationForm.controls['Nombre'].valid}">
-              <label for="subject"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Nombre'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Nombre'].valid}"
-                class="block mb-2 text-sm font-medium">Nombre</label>
-              <input type="text" id="subject" formControlName="Nombre"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Nombre'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Nombre'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
-              <p class="mt-2 text-sm"
-                [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Nombre'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Nombre'].valid}">
-                <span class="font-medium">{{registrationForm.controls['Nombre'].pristine ? 'Por favor, introduce tu'
-                  +
-                  'Nombre.' : registrationForm.controls['Nombre'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
-                {{registrationForm.controls['Nombre'].pristine ? '' : registrationForm.controls['Nombre'].invalid ?
-                'Nombre incorrecto :(' : 'Nombre correcto :)'}}
-              </p>
-            </div>
+              <div [ngClass]="{'mb-5': registrationForm.controls['Identificacion'].valid}">
+                <label for="subject"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Identificacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Identificacion'].valid}"
+                  class="block mb-2 text-sm font-medium">Identificacion</label>
+                <input type="text" id="subject" formControlName="Identificacion"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Identificacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Identificacion'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
+                <p class="mt-2 text-xs text-center"
+                  [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
+                  <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
+                    'introduce tu identificación.' : registrationForm.controls['Identificacion'].invalid ? 'Oops!' :
+                    '¡Excelente! '}}</span> {{registrationForm.controls['Identificacion'].pristine ? '' :
+                  registrationForm.controls['Identificacion'].invalid ? 'Identificacion incorrecta :(' :
+                  'Identificación correcta :)'}}
+                </p>
+              </div>
+              <!--nombre-->
+              <div [ngClass]="{'mb-5': registrationForm.controls['Nombre'].valid}">
+                <label for="subject"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Nombre'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Nombre'].valid}"
+                  class="block mb-2 text-sm font-medium">Nombre</label>
+                <input type="text" id="subject" formControlName="Nombre"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Nombre'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Nombre'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
+                <p class="mt-2 text-xs text-center"
+                  [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Nombre'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Nombre'].valid}">
+                  <span class="font-medium">{{registrationForm.controls['Nombre'].pristine ? 'Por favor, introduce tu'
+                    +
+                    ' nombre.' : registrationForm.controls['Nombre'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
+                  {{registrationForm.controls['Nombre'].pristine ? '' : registrationForm.controls['Nombre'].invalid ?
+                  'Nombre incorrecto :(' : 'Nombre correcto :)'}}
+                </p>
+              </div>
 
-            <!--apellido-->
-            <div [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
-              <label for="subject"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Apellido'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Apellido'].valid}"
-                class="block mb-2 text-sm font-medium">Apellido</label>
-              <input type="text" id="subject" formControlName="Apellido"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Apellido'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Apellido'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
-              <p class="mt-2 text-sm"
-                [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Apellido'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Apellido'].valid}">
-                <span class="font-medium">{{registrationForm.controls['Apellido'].pristine ? 'Por favor, introduce tu'
-                  +
-                  'Apellido.' : registrationForm.controls['Apellido'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
-                {{registrationForm.controls['Apellido'].pristine ? '' : registrationForm.controls['Apellido'].invalid ?
-                'Apellido incorrecto :(' : 'Apellido correcto :)'}}
-              </p>
-            </div>
-            <!--sexo-->
-            <div>
-              <label for="countries"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Sexo'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Sexo'].invalid && !registrationForm.controls['Sexo'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Sexo'].valid}"
-                class="block mb-2 text-sm font-medium">Sexo</label>
-              <select id="countries" formControlName="Sexo"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Sexo'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Sexo'].invalid && !registrationForm.controls['Sexo'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Sexo'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5">
-                <option selected disabled>Seleccionar:</option>
-                <option value="F">Femenino</option>
-                <option value="M">Masculino</option>
-                <option value="Otro">Otro</option>
-              </select>
-            </div>
-            <!--rol-->
-            <div>
-              <label for="countries"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
-                class="block mb-2 text-sm font-medium">Rol</label>
-              <select id="countries" formControlName="Rol"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Rol'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Rol'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5">
-                <option selected disabled>Seleccionar:</option>
-                <option value="admin">Admin</option>
-                <option value="empleado">Empleado</option>
-              </select>
-            </div>
+              <!--apellido-->
+              <div [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
+                <label for="subject"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Apellido'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Apellido'].valid}"
+                  class="block mb-2 text-sm font-medium">Apellido</label>
+                <input type="text" id="subject" formControlName="Apellido"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Apellido'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Apellido'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
+                <p class="mt-2 text-xs text-center"
+                  [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Apellido'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Apellido'].valid}">
+                  <span class="font-medium">{{registrationForm.controls['Apellido'].pristine ? 'Por favor, introduce tu'
+                    +
+                    ' apellido.' : registrationForm.controls['Apellido'].invalid ? 'Oops!' : '¡Excelente!'}}</span>
+                  {{registrationForm.controls['Apellido'].pristine ? '' : registrationForm.controls['Apellido'].invalid
+                  ?
+                  'Apellido incorrecto :(' : 'Apellido correcto :)'}}
+                </p>
+              </div>
+              <!--telefono-->
+              <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
+                <label for="subject"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Telefono'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Telefono'].valid}"
+                  class="block mb-2 text-sm font-medium">Telefono</label>
+                <input type="text" id="subject" formControlName="Telefono"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Telefono'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Telefono'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" required>
+                <p class="mt-2 text-xs text-center"
+                  [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Telefono'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Telefono'].valid}">
+                  <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce '
+                    +
+                    'tu telefono.' : registrationForm.controls['Telefono'].invalid ? 'Oops!' :
+                    '¡Excelente!'}}</span> {{registrationForm.controls['Telefono'].pristine ? '' :
+                  registrationForm.controls['Telefono'].invalid ? 'Telefono incorrecto :(' : 'Telefono correcto :)'}}
+                </p>
+              </div>
+              <!--direccion-->
+              <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Ubicacion'].valid}">
+                <label for="subject"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ubicacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}"
+                  class="block mb-2 text-sm font-medium">Ubicacion</label>
+                <input type="text" id="subject" formControlName="Ubicacion"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ubicacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ubicacion'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5" placeholder="Diag. #" required>
+                <p class="mt-2 text-xs text-center"
+                  [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Ubicacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}">
+                  <span class="font-medium">{{registrationForm.controls['Ubicacion'].pristine ? 'Por favor, introduce'
+                    +
+                    'tu ubicacion.' : registrationForm.controls['Ubicacion'].invalid ? 'Oops!' :
+                    '¡Excelente!'}}</span> {{registrationForm.controls['Ubicacion'].pristine ? '' :
+                  registrationForm.controls['Ubicacion'].invalid ? 'Ubicacion incorrecta :(' : 'Ubicacion correcta :)'}}
+                </p>
+              </div>
+              <!--sexo-->
+              <div>
+                <label for="countries"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Sexo'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Sexo'].invalid && !registrationForm.controls['Sexo'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Sexo'].valid}"
+                  class="block mb-2 text-sm font-medium">Sexo</label>
+                <select id="countries" formControlName="Sexo"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Sexo'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Sexo'].invalid && !registrationForm.controls['Sexo'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Sexo'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5">
+                  <option selected disabled>Seleccionar:</option>
+                  <option value="F">Femenino</option>
+                  <option value="M">Masculino</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
+              <!--rol-->
+              <div>
+                <label for="countries"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
+                  class="block mb-2 text-sm font-medium">Rol</label>
+                <select id="countries" formControlName="Rol"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Rol'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Rol'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5">
+                  <option selected disabled>Seleccionar:</option>
+                  <option value="cliente">Cliente</option>
+                </select>
+              </div>
+              <!--departamento-->
+              <div>
+                <label for="countries"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
+                  class="block mb-2 text-sm font-medium">Departamento</label>
+                <select id="countries" formControlName="Departamento"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Departamento'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Departamento'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5">
+                  <option selected disabled>Seleccionar:</option>
+                  @for (d of departamentos;track d) {
+                  <option [value]="d.idDepartamento">{{d.departamento}}</option>
+                  }
+                </select>
+              </div>
+              <!--ciudad-->
+              <div>
+                <label for="countries"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
+                  class="block mb-2 text-sm font-medium">Ciudad</label>
+                <select id="countries" formControlName="Ciudad"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ciudad'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ciudad'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5">
+                  <option selected disabled>Seleccionar:</option>
+                  @for(c of ciudades; track c){
+                  <option [value]="c.idCiudad">{{c.ciudad}}</option>
+                  }
+                </select>
+              </div>
 
-            <!--departamento-->
-            <div>
-              <label for="countries"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
-                class="block mb-2 text-sm font-medium">Departamento</label>
-              <select id="countries" formControlName="Departamento"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Departamento'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Departamento'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5">
-                <option selected disabled>Seleccionar:</option>
-                @for (d of departamentos;track d) {
-                <option [value]="d.idDepartamento">{{d.departamento}}</option>
-                }
-              </select>
             </div>
-            <!--ciudad-->
-            <div>
-              <label for="countries"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
-                class="block mb-2 text-sm font-medium">Ciudad</label>
-              <select id="countries" formControlName="Ciudad"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ciudad'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ciudad'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5">
-                <option selected disabled>Seleccionar:</option>
-                @for(c of ciudades; track c){
-                <option [value]="c.idCiudad">{{c.ciudad}}</option>
-                }
-              </select>
-            </div>
-            <!--telefono-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
-              <label for="subject"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Telefono'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Telefono'].valid}"
-                class="block mb-2 text-sm font-medium">Telefono</label>
-              <input type="text" id="subject" formControlName="Telefono"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Telefono'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Telefono'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" required>
-              <p class="mt-2 text-sm"
-                [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Telefono'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Telefono'].valid}">
-                <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce '
-                  +
-                  'tu telefono.' : registrationForm.controls['Telefono'].invalid ? 'Oops!' :
-                  '¡Excelente!'}}</span> {{registrationForm.controls['Telefono'].pristine ? '' :
-                registrationForm.controls['Telefono'].invalid ? 'Telefono incorrecto :(' : 'Telefono correcto :)'}}
-              </p>
-            </div>
-            <!--direccion-->
-            <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Ubicacion'].valid}">
-              <label for="subject"
-                [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ubicacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}"
-                class="block mb-2 text-sm font-medium">Ubicacion</label>
-              <input type="text" id="subject" formControlName="Ubicacion"
-                [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ubicacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ubicacion'].valid}"
-                class="text-sm rounded-lg block w-full p-2.5" placeholder="Diag. #" required>
-              <p class="mt-2 text-sm"
-                [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Ubicacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}">
-                <span class="font-medium">{{registrationForm.controls['Ubicacion'].pristine ? 'Por favor, introduce'
-                  +
-                  'tu ubicacion.' : registrationForm.controls['Ubicacion'].invalid ? 'Oops!' :
-                  '¡Excelente!'}}</span> {{registrationForm.controls['Ubicacion'].pristine ? '' :
-                registrationForm.controls['Ubicacion'].invalid ? 'Ubicacion incorrecta :(' : 'Ubicacion correcta :)'}}
-              </p>
-            </div>
+            <!-- grid para correo y username y contraseñas -->
+            <div
+              class="grid lg:grid-cols-2 grid-cols-1 gap-4 justify-center border border-gray-700 py-4 pl-4 rounded-lg">
 
-          </div>
-
-          <div class="grid grid-cols-2" style="padding: 0 5% 0 5%;">
-            <div class="grid grid-cols-2 gap-4 justify-center border border-gray-700 p-4 rounded-lg">
               <!--correo-->
-
-              <div [ngClass]="{'mb-5': registrationForm.controls['Correo'].valid}">
+              <div class="lg:ml-4">
                 <label for="website-admin"
                   [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Correo'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Correo'].invalid && !registrationForm.controls['Correo'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Correo'].valid}"
                   class="mb-2 block text-sm font-medium">Correo</label>
@@ -322,7 +369,7 @@
                 </div>
               </div>
               <!--username-->
-              <div class="mb-6 ml-6" [ngClass]="{'mb-5': registrationForm.controls['Usuario'].valid}">
+              <div class="mb-5 lg:ml-10">
                 <label for="website-admin"
                   [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Usuario'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Usuario'].valid}"
                   class="block mb-2 text-sm font-medium">Username</label>
@@ -344,7 +391,7 @@
               </div>
 
               <!--password-->
-              <div [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
+              <div class="lg:ml-4 ">
                 <label for="email-address-icon"
                   [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Contrasena'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Contrasena'].valid}"
                   class="block mb-2 text-sm font-medium">Contraseña</label>
@@ -365,7 +412,7 @@
                 </div>
               </div>
               <!--repetir password-->
-              <div class="mb-6 ml-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
+              <div class="mb-3 lg:ml-10">
                 <label for="email-address-icon"
                   [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Contrasena'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Contrasena'].valid}"
                   class="block mb-2 text-sm font-medium">Contraseña</label>
@@ -385,6 +432,7 @@
                     placeholder="••••••••••">
                 </div>
               </div>
+
             </div>
 
             <div class="flex justify-center">
@@ -393,14 +441,14 @@
                 @if (selectedImages.length === 0) {
                 <!-- Mostrar el campo para subir la imagen si no hay imágenes seleccionadas -->
                 <label for="dropzone-file"
-                  class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                  class="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                   <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                    <svg class="w-6 h-6 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                     </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                    <p class="mb-2 text-xs text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
                         para subir imagen o tomar foto</span></p>
                     <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)</p>
                   </div>
@@ -422,34 +470,37 @@
               </div>
 
             </div>
-          </div>
 
-          <div style="padding: 0 15% 0 15%;">
 
-            <button type="button" (click)="crearUsuario();" [disabled]="cargando"
-              class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
-              @if(!cargando){
-              <span>Crear usuario</span>
-              }
-              @if(cargando){
-              <span class="inline-flex items-center">
-                <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
-                  viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="#E5E7EB" />
-                  <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentColor" />
-                </svg>
-                Loading...
-              </span>
-              }
-            </button>
-          </div>
-        </form>
+            <div style="padding: 0 15% 0 15%;">
+
+              <button type="button" (click)="crearUsuario();" [disabled]="cargando"
+                class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
+                @if(!cargando){
+                <span>Crear usuario</span>
+                }
+                @if(cargando){
+                <span class="inline-flex items-center">
+                  <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                      fill="#E5E7EB" />
+                    <path
+                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                      fill="currentColor" />
+                  </svg>
+                  Loading...
+                </span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+
   </div>
+
+
 </div>
-}

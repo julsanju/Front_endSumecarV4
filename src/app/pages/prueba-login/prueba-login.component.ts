@@ -47,7 +47,7 @@ export class PruebaLoginComponent implements OnInit {
   userData: any;
   roles: string[] = ['cliente', 'empleado'];
   spinner: boolean = false;
-  modalRegister:boolean = false;
+  modalRegister:boolean = true;
   //loading
   cargando = false;
   mostrarContrasena: boolean = false;
@@ -332,8 +332,33 @@ export class PruebaLoginComponent implements OnInit {
   abrirRegister(){
     this.modalRegister = true;
   }
+
+  //objeto para animaciones de las alertas
+  objectALertClasses(opacity_0: boolean, opacity_100: boolean, translate: boolean) {
+    return {
+      'opacity-0': opacity_0,
+      'opacity-100': opacity_100,
+      'transform translate-y-full': translate,
+      'transition-transform ease-in-out duration-500': true,
+      'transition-opacity ease-out duration-500': true
+    }
+
+  }
+
+  getRegister(){
+    return this.objectALertClasses(this.modalRegister, this.modalRegister, this.modalRegister)
+    
+  }
   cerrarRegister(){
     this.modalRegister = false;
+  }
+
+  getSuccesAlertClasses() {
+    return this.objectALertClasses(!this.showAlert, this.showAlert, !this.showAlert)
+  }
+  //animacion alerta danger
+  getDangerAlertClasses() {
+    return this.objectALertClasses(!this.showAlertDanger, this.showAlertDanger, !this.showAlertDanger)
   }
   onPasswordChange() {
     const password = this.loginForm.get('contrasena')?.value;

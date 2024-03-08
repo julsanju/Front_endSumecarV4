@@ -274,8 +274,7 @@ export class CrearUsuarioComponent implements OnInit {
         formData.append('Ciudad', this.registrationForm.value.Ciudad);
         // Continuar con el proceso sin agregar imágenes al formData
         this.enviarFormulario(formData, this.registrationForm.value.Usuario)
-        console.log(this.registrationForm.value.Identificacion)
-        //return;
+        
       }
 
       // Si hay archivos, cargar imágenes y enviar el formulario
