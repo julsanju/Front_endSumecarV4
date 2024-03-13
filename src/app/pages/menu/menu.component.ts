@@ -8,15 +8,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { CommonModule } from '@angular/common';
 import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
+import { AuthService } from 'src/app/services/auth.service';
+import { FirebaseModule } from '../prueba-login/firebase/firebase.module';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [HttpClientModule, RouterModule, NzLayoutModule, CommonModule],
+  imports: [HttpClientModule, RouterModule, NzLayoutModule, CommonModule, FirebaseModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
+  //variables para autenticacion
+  userAuth = '';
+  foto: any = '';
+
   isCollapsed = false;
   isAdmin = false;
   isEmpleado = false;
@@ -35,7 +41,10 @@ export class MenuComponent {
   //loading
   cargando:boolean = false;
 
-  constructor(private login: LoginServicesService, private router: Router, private servicio: UsuariosServicesService) { }
+  constructor(private login: LoginServicesService, 
+    private router: Router, 
+    private servicio: UsuariosServicesService,
+    private auth: AuthService) { }
   breadcrumbs: string[] = [];
   ngOnInit() {
     this.mapeoUserProfile();
@@ -55,6 +64,7 @@ export class MenuComponent {
       }
     }
 
+    this.obtenerUsuario();
   }
 
   productos() {
@@ -132,8 +142,6 @@ export class MenuComponent {
     return false;
   }
 
-  
-
   obtenerImagenUser() {
     const userDataString = localStorage.getItem('userData');
     if (userDataString) {
@@ -176,6 +184,25 @@ export class MenuComponent {
       );
     }
     return false;
+  }
+
+  //autenticacion
+  logout() {
+    this.auth.logOut();
+  }
+
+  obtenerUsuario() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      
+      const userData = JSON.parse(userDataString);
+
+      // Extraer solo el id de usuario
+       this.username = userData.usuario;
+       this.foto = localStorage.getItem('photoURL');
+       console.log(this.username)
+       console.log(this.foto)
+    }
   }
 
   toggleProductos() {

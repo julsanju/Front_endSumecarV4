@@ -16,6 +16,9 @@ import { RegisterService } from 'src/app/services/register.service';
 import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FirebaseModule } from 'src/app/pages/prueba-login/firebase/firebase.module';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
   selector: 'app-prueba-login',
   standalone: true,
@@ -23,12 +26,17 @@ import { DomSanitizer } from '@angular/platform-browser';
     CommonModule,
     RouterModule,
     HttpClientModule,
-    RouterOutlet],
+    RouterOutlet,
+    FirebaseModule
+  ],
   templateUrl: './prueba-login.component.html',
   styleUrls: ['./prueba-login.component.css'],
 
 })
 export class PruebaLoginComponent implements OnInit {
+  //variables para autenticacion
+  username = '';
+  foto: any = '';
 
   users = [
     { value: 'cliente', viewValue: 'Cliente' },
@@ -47,7 +55,7 @@ export class PruebaLoginComponent implements OnInit {
   userData: any;
   roles: string[] = ['cliente', 'empleado'];
   spinner: boolean = false;
-  modalRegister:boolean = true;
+  modalRegister: boolean = true;
   //loading
   cargando = false;
   mostrarContrasena: boolean = false;
@@ -73,7 +81,8 @@ export class PruebaLoginComponent implements OnInit {
     private app: AppComponent,
     private data: SharedServicesService,
     private router: Router,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private auth: AuthService) {
 
     this.formData = new FormData()
 
@@ -100,7 +109,9 @@ export class PruebaLoginComponent implements OnInit {
     });
     //ocultar el menu version movil para el login
     this.app.mostrarMenu = false;
+
   }
+
 
   ngOnInit(): void {
     //lamada al servicio para obtener departamentos
@@ -136,7 +147,7 @@ export class PruebaLoginComponent implements OnInit {
         reader.readAsDataURL(files[i]);
 
         this.formData.append('image', files[i], files[i].name);
-        
+
       }
     }
     console.log(imagen);
@@ -329,7 +340,7 @@ export class PruebaLoginComponent implements OnInit {
   }
 
   //modal de register
-  abrirRegister(){
+  abrirRegister() {
     this.modalRegister = true;
   }
 
@@ -345,11 +356,11 @@ export class PruebaLoginComponent implements OnInit {
 
   }
 
-  getRegister(){
+  getRegister() {
     return this.objectALertClasses(this.modalRegister, this.modalRegister, this.modalRegister)
-    
+
   }
-  cerrarRegister(){
+  cerrarRegister() {
     this.modalRegister = false;
   }
 
@@ -439,5 +450,10 @@ export class PruebaLoginComponent implements OnInit {
   direccionCambio() {
     this.router.navigate(['/cambiar-contrasena']);
   }
+
+  loginWithGoogle() {
+    this.auth.loginGoogle();
+  }
+
 }
 
