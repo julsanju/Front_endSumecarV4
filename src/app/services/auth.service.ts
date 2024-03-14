@@ -17,10 +17,10 @@ export class AuthService {
     { 
       this.firebase.authState.subscribe((user) =>{
         if (user) {
-          this.userData = user;
+          this.userData = user.uid;
           this.fotoUser = user.photoURL;
-
-          localStorage.setItem('user', JSON.stringify(this.userData))
+          console.log(user.uid)
+          localStorage.setItem('user', this.userData)
           localStorage.setItem('photoURL', this.fotoUser);
         } else{
           localStorage.setItem('user', 'null');

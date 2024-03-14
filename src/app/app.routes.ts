@@ -12,11 +12,13 @@ import { ProductosSalesComponent } from './pages/productos-sales/productos-sales
 import { Page404Component } from './pages/page404/page404.component';
 import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.component';
 import { PruebaLayoutComponent } from './pages/prueba-layout/prueba-layout.component';
+import { LoginAditionalComponent } from './pages/login-aditional/login-aditional.component';
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
     { path: 'menu',component: MenuComponent, outlet: 'menu' },
     { path: 'layout', component: PruebaLayoutComponent },
     { path: 'prueba-login', component: PruebaLoginComponent },
+    { path: 'login-aditional', component: LoginAditionalComponent },
     
     {
       path: 'menu',
