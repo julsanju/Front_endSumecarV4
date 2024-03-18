@@ -91,6 +91,21 @@
           <option [value]="users.value">{{ users.viewValue }}</option>
           }
         </select>
+        <!-- captcha -->
+        <div>
+          <form #form="ngForm">
+            <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="token" required
+              [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
+            <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)" class="invalid-feedback">
+              <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
+            </div>
+
+            <!-- <div class="col-sm-12 mb-2">
+                  <button type="button" class="btn btn-sm btn-primary" (click)="send(form)">Send</button>
+              </div> -->
+          </form>
+        </div>
+
 
         <button (click)="onSubmit()" [disabled]="cargando"
           class="bg-blue-500 rounded-xl text-white py-2 hover:scale-105 duration-300">
@@ -143,7 +158,6 @@
         </svg>
         <span class="ml-1"> Inicia sesion con facebook</span>
       </button>
-
 
     </div>
     <!--IMAGEN -->

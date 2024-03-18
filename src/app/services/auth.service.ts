@@ -19,7 +19,6 @@ export class AuthService {
         if (user) {
           this.userData = user.uid;
           this.fotoUser = user.photoURL;
-          console.log(user.uid)
           localStorage.setItem('user', this.userData)
           localStorage.setItem('photoURL', this.fotoUser);
         } else{

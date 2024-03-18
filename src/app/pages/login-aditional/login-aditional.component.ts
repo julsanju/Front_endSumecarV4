@@ -13,7 +13,7 @@ export class LoginAditionalComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerImagen()
   }
-  
+
   obtenerImagen(){
     this.foto = localStorage.getItem('photoURL');
   }

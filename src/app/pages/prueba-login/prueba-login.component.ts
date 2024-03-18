@@ -4,7 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LoginServicesService } from '../../services/login-services.service';
 import { Login } from '../../Interfaces/login';
 import { MensajeError } from '../../Interfaces/mensaje-error';
-import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
 import { SharedServicesService } from '../../services/shared-services.service';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -18,6 +18,10 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FirebaseModule } from 'src/app/pages/prueba-login/firebase/firebase.module';
 import { AuthService } from 'src/app/services/auth.service';
+import { CaptchaServicesService } from 'src/app/services/captcha-services.service';
+import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
+import { environment } from 'src/app/environments/environment';
+
 
 @Component({
   selector: 'app-prueba-login',
@@ -26,8 +30,20 @@ import { AuthService } from 'src/app/services/auth.service';
     CommonModule,
     RouterModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterOutlet,
-    FirebaseModule
+    FirebaseModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+  ],
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
+    },
   ],
   templateUrl: './prueba-login.component.html',
   styleUrls: ['./prueba-login.component.css'],
@@ -69,6 +85,8 @@ export class PruebaLoginComponent implements OnInit {
   selectedImages: string[] = [];
   formData: FormData;
   files: any = []
+  captchaResponse: string = '';
+  token: string | undefined;
 
   mostrar_contrasena() {
     this.mostrarContrasena = !this.mostrarContrasena
@@ -82,7 +100,9 @@ export class PruebaLoginComponent implements OnInit {
     private data: SharedServicesService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private auth: AuthService) {
+    private auth: AuthService,
+    private captchaService: CaptchaServicesService) {
+    this.token = undefined;
 
     this.formData = new FormData()
 
@@ -112,6 +132,16 @@ export class PruebaLoginComponent implements OnInit {
 
   }
 
+  public send(form: NgForm): void {
+    if (form.invalid) {
+      for (const control of Object.keys(form.controls)) {
+        form.controls[control].markAsTouched();
+      }
+      return;
+    }
+
+    console.debug(`Token [${this.token}] generated`);
+  }
 
   ngOnInit(): void {
     //lamada al servicio para obtener departamentos
@@ -441,6 +471,28 @@ export class PruebaLoginComponent implements OnInit {
       console.log('Contraseña:', this.loginForm.value.password);
       console.log('Rol:', this.loginForm.value.role);
     }
+  }
+
+  xd() {
+
+    if (this.captchaResponse === '') {
+      // El usuario no ha resuelto el CAPTCHA
+      console.log('Por favor, resuelve el CAPTCHA.');
+    } else {
+      // El usuario ha resuelto correctamente el CAPTCHA
+      console.log('CAPTCHA resuelto correctamente.');
+      // Aquí puedes enviar tu formulario u otra lógica de aplicación.
+    }
+  }
+  captcha() {
+    this.captchaService.verify().subscribe(response => {
+      if (response.success) {
+        console.log('reCAPTCHA verificado');
+      } else {
+
+        console.error('Error al verificar reCAPTCHA');
+      }
+    });
   }
 
   toggleSelect() {
