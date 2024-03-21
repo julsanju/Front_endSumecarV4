@@ -23,7 +23,7 @@ import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSet
 import { environment } from 'src/app/environments/environment';
 
 
-@Component({
+@Component({ 
   selector: 'app-prueba-login',
   standalone: true,
   imports: [ReactiveFormsModule,
@@ -53,7 +53,7 @@ export class PruebaLoginComponent implements OnInit {
   //variables para autenticacion
   username = '';
   foto: any = '';
-
+  sitekey = environment.recaptcha.siteKey;
   users = [
     { value: 'cliente', viewValue: 'Cliente' },
     { value: 'empleado', viewValue: 'Empleado' },
@@ -85,8 +85,8 @@ export class PruebaLoginComponent implements OnInit {
   selectedImages: string[] = [];
   formData: FormData;
   files: any = []
-  captchaResponse: string = '';
-  token: string | undefined;
+  @ViewChild('recaptcha', {static: true}) recaptchaElement: any;
+  token: string = '';
 
   mostrar_contrasena() {
     this.mostrarContrasena = !this.mostrarContrasena
@@ -102,7 +102,6 @@ export class PruebaLoginComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private auth: AuthService,
     private captchaService: CaptchaServicesService) {
-    this.token = undefined;
 
     this.formData = new FormData()
 
@@ -132,16 +131,7 @@ export class PruebaLoginComponent implements OnInit {
 
   }
 
-  public send(form: NgForm): void {
-    if (form.invalid) {
-      for (const control of Object.keys(form.controls)) {
-        form.controls[control].markAsTouched();
-      }
-      return;
-    }
-
-    console.debug(`Token [${this.token}] generated`);
-  }
+  
 
   ngOnInit(): void {
     //lamada al servicio para obtener departamentos
@@ -473,26 +463,20 @@ export class PruebaLoginComponent implements OnInit {
     }
   }
 
-  xd() {
-
-    if (this.captchaResponse === '') {
-      // El usuario no ha resuelto el CAPTCHA
-      console.log('Por favor, resuelve el CAPTCHA.');
-    } else {
-      // El usuario ha resuelto correctamente el CAPTCHA
-      console.log('CAPTCHA resuelto correctamente.');
-      // Aquí puedes enviar tu formulario u otra lógica de aplicación.
-    }
-  }
-  captcha() {
-    this.captchaService.verify().subscribe(response => {
-      if (response.success) {
-        console.log('reCAPTCHA verificado');
-      } else {
-
-        console.error('Error al verificar reCAPTCHA');
+  verifyCaptcha(event: any) {
+    const token = event;
+    this.captchaService.verify(token).subscribe(
+      isValid => {
+        if (isValid) {
+          console.log('reCAPTCHA verificado');
+        } else {
+          console.error('Error al verificar reCAPTCHA');
+        }
+      },
+      error => {
+        console.error('Error al verificar reCAPTCHA:', error);
       }
-    });
+    );
   }
 
   toggleSelect() {

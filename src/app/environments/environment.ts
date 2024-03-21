@@ -13,6 +13,7 @@ export const environment = {
     },
 
     recaptcha: {
-        siteKey: '6LfKNi0cAAAAACeYwFRY9_d_qjGhpiwYUo5gNW5-',
+        //siteKey: "6Ler35wpAAAAABH5SgwP37UGKErdadY5ufJCaQzl",
+        siteKey: "6LcGf6ApAAAAANYJ5m-YVw8ZOwG9gsMDAGRXPuDD",
     },
 };

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { environment } from '../environments/environment';
 
 declare var grecaptcha: any;
 
@@ -9,41 +10,21 @@ declare var grecaptcha: any;
 })
 export class CaptchaServicesService {
   private apiUrl = 'http://localhost:5171/api/login/validationCaptcha';
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient) { }
 
-  verify(): Observable<any> {
-    return new Observable(observer => {
-      grecaptcha.ready(() => {
-        grecaptcha.execute('6Ler35wpAAAAABH5SgwP37UGKErdadY5ufJCaQzl', { action: 'submit' }).then((token: string) => {
-
-          this.http.post(this.apiUrl, { token }).subscribe(response => {
-
-            const success = response ? true : false;
-            observer.next({ success });
-            observer.complete();
-          },
-            error => {
-              console.error('Error al validar reCAPTCHA:', error);
-              observer.next({ success: false });
-              observer.complete();
-            });
-
-        });
-      });
-    });
+  verify(token: string): Observable<boolean> {
+    const body = { Token: token }; 
+    return this.http.post<boolean>(this.apiUrl, body, this.httpOptions).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al validar reCAPTCHA:', error);
+        return of(false); // Devuelve un Observable con el valor false en caso de error
+      })
+    );
   }
 
-  getTokenClientModule(token: string): Observable<any> {
-    
-      return this.http.post<any>( this.apiUrl , token )
-        .pipe(
-          map((response) => response),
-          catchError((err) => {
-            console.log('error caught in service')
-            console.error(err);
-            return throwError(err);
-          })
-        );
-  }
 }
