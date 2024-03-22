@@ -69,7 +69,7 @@
       <div class="md:w-1/2 px-16">
         <!--<x-validation-errors class="mb-4" />-->
         <h2 class="font-bold text-2xl text-blue-500">Login</h2>
-        <span class="text-sm mt-4"> Si ya eres miembro, inicia sesión fácilmente.</span>
+        <span class="text-base text-gray-600 font-bold mt-4"> Si ya eres miembro, inicia sesión fácilmente :)</span>
         <form [formGroup]="loginForm" class="flex flex-col gap-4">
           <input formControlName="usuario" class="p-2 mt-8 rounded-xl text-base  border-gray-400" type="email"
             name="email" placeholder="Usuario" required autofocus autocomplete="username">
@@ -79,8 +79,7 @@
               [type]="mostrarContrasena ? 'text' : 'password'" name="password" placeholder="********" required
               autocomplete="current-password">
 
-            <button
-              class="absolute right-0 top-0 bottom-0 px-3 flex items-center justify-center focus:outline-none"
+            <button class="absolute right-0 top-0 bottom-0 px-3 flex items-center justify-center focus:outline-none"
               (click)="mostrar_contrasena()">
 
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -96,7 +95,7 @@
 
           <div class="flex items-center justify-between" style="margin-bottom: -10px;">
             <label for="password" class=" text-white">Password</label>
-            <a class="text-base text-gray-500 dark:text-gray-400 hover:scale-105 duration-300">Olvido su
+            <a class="lg:text-base text-sm text-gray-500 dark:text-gray-400 hover:scale-105 duration-300">Olvido su
               contraseña?</a>
           </div>
 
@@ -108,7 +107,8 @@
           </select>
           <!-- captcha -->
           <div>
-            <re-captcha #captchaElem (resolved)="verifyCaptcha($event)" siteKey="6LcGf6ApAAAAANYJ5m-YVw8ZOwG9gsMDAGRXPuDD" size="invisible">
+            <re-captcha #captchaElem (resolved)="verifyCaptcha($event)"
+              siteKey="6LcGf6ApAAAAANYJ5m-YVw8ZOwG9gsMDAGRXPuDD" size="invisible">
             </re-captcha>
             <button hidden (click)="captchaElem.execute()">Verificar</button>
           </div>
@@ -150,39 +150,43 @@
         </div>
 
         <!-- Registrate -->
-        <div class="grid grid-cols-2 gap-8 w-full">
+        <div class="grid grid-cols-3 gap-2 w-full">
           <div class="flex justify-center">
-          <button type="button" (click)="loginWithGoogle()"
-            class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center w-full h-full">
-            <img src="https://i.postimg.cc/qMZMnStM/buscar-1.png" class="w-6 h-6">
-          </button>
+            <button type="button" (click)="loginWithGoogle()"
+              class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center h-full">
+              <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#3b5998"
+                viewBox="0 0 8 19">
+                <path fill-rule="evenodd"
+                  d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
           </div>
           <div class="flex justify-center">
-          <button type="button"
-            class="text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center hover:scale-105 duration-300 me-2 mb-2 w-full h-full">
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-              viewBox="0 0 8 19">
-              <path fill-rule="evenodd"
-                d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
-                clip-rule="evenodd" />
-            </svg>
-          </button>
-        </div>
+            <button type="button" (click)="loginWithGoogle()"
+              class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center rounded-lg h-full">
+              <img src="https://i.postimg.cc/fTz2VCTq/microsoft.png" class="w-6 h-6">
+            </button>
+          </div>
+          <div class="flex justify-center">
+            <button type="button" (click)="loginWithGoogle()"
+              class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center rounded-lg h-full">
+              <img src="https://i.postimg.cc/qMZMnStM/buscar-1.png" class="w-6 h-6">
+            </button>
+          </div>
+
         </div>
 
       </div>
       <!--IMAGEN -->
       <div class="w-1/2 px-5 radius md:block hidden max-h-full">
-        <!-- <img src="https://i.postimg.cc/HLQmKDB6/Room-Girl-Working-Copy-3-1192x863.png" style="width: 300px; height: 300px;" alt=""> -->
+        
         <div class="rounded-2xl flex justify-center items-center h-full"
-          style="background-color: #3f3e4e; border: 1px solid #e7e7e7;">
-          <div id="image_login" class="flex-grow flex items-center justify-center">
-            <!-- <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
-              type="module"></script>
-            <iframe src="https://lottie.host/embed/39c8e65f-9c8c-4ae9-a046-dc3febcbeb12/eKYeuv22gF.json"
-              style="width: 300px; height: 300px"></iframe> -->
-            <img src="https://i.postimg.cc/zvSZtn73/Room-Relaxing-Copy-3-1192x863.png" style="align-self: flex-end;" alt="">
-            <!-- <img src="https://i.postimg.cc/k5Y9QXHt/telefono-movil-3d-candado-codigo-seguridad-removebg-preview.png" alt=""> -->
+          style="background-color: #3b5998; border: 1px solid #e7e7e7;">
+          <div id="image_login" class="flex-grow flex items-center justify-center" style="margin-bottom: -230px;">
+
+            <img src="https://i.postimg.cc/ZR86JGG7/a2b02400-f213-45e7-a581-fc17fc786048.png" class="rounded-lg"
+              style="height: auto;" alt="">
           </div>
         </div>
       </div>
