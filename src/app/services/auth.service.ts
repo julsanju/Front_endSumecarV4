@@ -10,6 +10,7 @@ export class AuthService {
 
   userData: any;
   fotoUser: any;
+  correoUser: any;
 
   constructor(private firebase: AngularFireAuth,
     private router: Router,
@@ -17,12 +18,21 @@ export class AuthService {
     { 
       this.firebase.authState.subscribe((user) =>{
         if (user) {
-          this.userData = user.uid;
+          
+          const parts = user.displayName?.split(' ');
+          this.userData = `${parts![0]} ${parts![1]}`;
+
+          //this.userData = user.displayName
           this.fotoUser = user.photoURL;
+          this.correoUser = user.email;
+          
           localStorage.setItem('user', this.userData)
           localStorage.setItem('photoURL', this.fotoUser);
+          localStorage.setItem('email', this.correoUser);
         } else{
           localStorage.setItem('user', 'null');
+          localStorage.setItem('photoURL', 'null');
+          localStorage.setItem('email', 'null');
         }
       })
     }
@@ -61,6 +71,10 @@ export class AuthService {
     logOut(){
       return this.firebase.signOut().then(() => {
         localStorage.removeItem('user');
+        localStorage.removeItem('photoURL');
+        localStorage.removeItem('email');
+        console.log("te has deslogueado")
+        
         this.router.navigate(['prueba-login']);
       })
     }

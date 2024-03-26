@@ -20,8 +20,12 @@ import { FirebaseModule } from '../prueba-login/firebase/firebase.module';
 })
 export class MenuComponent {
   //variables para autenticacion
-  userAuth = '';
+  userAuth:any = '';
   foto: any = '';
+  telefono: any = '';
+  email: any = '';
+  //variable para decidir si mostraremos los usuarios de bd o de authGoogle
+  bool!: boolean;
 
   isCollapsed = false;
   isAdmin = false;
@@ -47,9 +51,14 @@ export class MenuComponent {
     private auth: AuthService) { }
   breadcrumbs: string[] = [];
   ngOnInit() {
-    this.mapeoUserProfile();
     // Recupera la información del usuario desde localStorage
+    
+    this.validateDataProfileAuth();
+    this.obtenerUsuario();
+    this.mapeoUserProfile();
+    
     const userDataString = localStorage.getItem('userData');
+    
     if (userDataString) {
       try {
         // Intenta analizar la cadena como JSON
@@ -64,7 +73,19 @@ export class MenuComponent {
       }
     }
 
-    this.obtenerUsuario();
+  }
+
+  //validacion si llamaremos los usuarios de bd o de authGoogle
+  validateDataProfileAuth(){
+    const data = localStorage.getItem('bool');
+    this.bool = data === 'false';
+    if (data === 'true') {
+      this.bool = Boolean(data);
+    }
+    if( data === 'false'){
+      this.bool = Boolean(data?.toLowerCase() === 'true');
+    }
+
   }
 
   productos() {
@@ -192,17 +213,11 @@ export class MenuComponent {
   }
 
   obtenerUsuario() {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      
-      const userData = JSON.parse(userDataString);
-
-      // Extraer solo el id de usuario
-       this.username = userData.usuario;
+    
        this.foto = localStorage.getItem('photoURL');
-       console.log(this.username)
-       console.log(this.foto)
-    }
+       this.userAuth = localStorage.getItem('user');
+       this.email = localStorage.getItem('email');
+       
   }
 
   toggleProductos() {

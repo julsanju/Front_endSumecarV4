@@ -23,7 +23,7 @@ import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSet
 import { environment } from 'src/app/environments/environment';
 
 
-@Component({ 
+@Component({
   selector: 'app-prueba-login',
   standalone: true,
   imports: [ReactiveFormsModule,
@@ -53,6 +53,7 @@ export class PruebaLoginComponent implements OnInit {
   //variables para autenticacion
   username = '';
   foto: any = '';
+  bool: boolean = false;
   sitekey = environment.recaptcha.siteKey;
   users = [
     { value: 'cliente', viewValue: 'Cliente' },
@@ -85,7 +86,8 @@ export class PruebaLoginComponent implements OnInit {
   selectedImages: string[] = [];
   formData: FormData;
   files: any = []
-  @ViewChild('recaptcha', {static: true}) recaptchaElement: any;
+  //@ViewChild('recaptcha', {static: true}) recaptchaElement: any;
+  @ViewChild('captchaElem') captchaElem: any;
   token: string = '';
 
   mostrar_contrasena() {
@@ -131,7 +133,7 @@ export class PruebaLoginComponent implements OnInit {
 
   }
 
-  
+
 
   ngOnInit(): void {
     //lamada al servicio para obtener departamentos
@@ -416,11 +418,10 @@ export class PruebaLoginComponent implements OnInit {
     //login
     const userData: Login = this.loginForm.value;
 
-    this.spinner = true;
-
     this.loginService.LoginValidation(userData).subscribe(
       (response) => {
-
+        this.bool = true
+        localStorage.setItem('bool', this.bool.toString())
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
 
         this.router.navigate(['/menu/dashboard'])
@@ -455,12 +456,7 @@ export class PruebaLoginComponent implements OnInit {
         });
       }
     );
-    if (this.loginForm.valid) {
-      console.log('Formulario válido');
-      console.log('Email:', this.loginForm.value.email);
-      console.log('Contraseña:', this.loginForm.value.password);
-      console.log('Rol:', this.loginForm.value.role);
-    }
+
   }
 
   verifyCaptcha(event: any) {
@@ -468,9 +464,9 @@ export class PruebaLoginComponent implements OnInit {
     this.captchaService.verify(token).subscribe(
       isValid => {
         if (isValid) {
-          console.log('reCAPTCHA verificado');
+          this.onSubmit()
         } else {
-          console.error('Error al verificar reCAPTCHA');
+          console.log("el captcha no pudo ser verificado correctamente")
         }
       },
       error => {
@@ -489,6 +485,7 @@ export class PruebaLoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.auth.loginGoogle();
+    localStorage.setItem('bool', this.bool.toString());
   }
 
 }
