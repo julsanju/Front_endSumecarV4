@@ -424,8 +424,8 @@ export class PruebaLoginComponent implements OnInit {
         localStorage.setItem('bool', this.bool.toString())
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
 
-        this.router.navigate(['/menu/dashboard'])
-          .then(() => window.location.reload())
+        // this.router.navigate(['/menu/dashboard'])
+        //   .then(() => window.location.reload())
         const userData2 = {
           usuario: this.loginForm.get('usuario')?.value,
           contrasena: this.loginForm.get('contrasena')?.value,

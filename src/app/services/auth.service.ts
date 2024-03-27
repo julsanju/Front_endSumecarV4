@@ -47,10 +47,13 @@ export class AuthService {
         console.log(error.message);
       })
     }
-    //logueo con google 
+
+    // logueo con google 
     loginGoogle(){
       return this.firebase.signInWithPopup(new GoogleAuthProvider())
-      .then(() => this.observeUserState())
+      .then(() => 
+       this.observeUserState()
+      )
       .catch((error:Error) =>{
         console.log("el error es:" + error.message);
       })
@@ -58,10 +61,15 @@ export class AuthService {
 
     // revisar el estado de la autenticacion
     observeUserState(){
+      
       this.firebase.authState.subscribe((userState) =>{
-        userState && this.ngZone.run(() => this.router.navigate(['menu/dashboard']))
+        if (userState) {
+          userState && this.ngZone.run(() => this.router.navigate(['menu/dashboard']))
+        }
       })
     }
+
+    
     //poner true si esta logueado o false si no lo esta
     get isLoggerIn() :boolean{
       const user = JSON.parse(localStorage.getItem('user')!);
@@ -73,9 +81,10 @@ export class AuthService {
         localStorage.removeItem('user');
         localStorage.removeItem('photoURL');
         localStorage.removeItem('email');
+        localStorage.removeItem('userData')
         console.log("te has deslogueado")
-        
-        this.router.navigate(['prueba-login']);
+        console.log(localStorage.getItem('userData'))
+        this.router.navigate(['/prueba-login']);
       })
     }
 }

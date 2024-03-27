@@ -185,6 +185,7 @@ export class MenuComponent {
             });
           } else {
             this.imagenUser = response;
+            console.log(this.imagenUser)
           }
         },
         (error) => {
