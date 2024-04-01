@@ -11,6 +11,7 @@ export class AuthService {
   userData: any;
   fotoUser: any;
   correoUser: any;
+  userVerified: string = '';
 
   constructor(private firebase: AngularFireAuth,
     private router: Router,
@@ -20,19 +21,25 @@ export class AuthService {
         if (user) {
           
           const parts = user.displayName?.split(' ');
+
+
           this.userData = `${parts![0]} ${parts![1]}`;
 
           //this.userData = user.displayName
           this.fotoUser = user.photoURL;
           this.correoUser = user.email;
+          this.userVerified = user.emailVerified.toString();
           
           localStorage.setItem('user', this.userData)
           localStorage.setItem('photoURL', this.fotoUser);
           localStorage.setItem('email', this.correoUser);
+          localStorage.setItem('userVerified', this.userVerified);
+          console.log(this.userVerified)
         } else{
           localStorage.setItem('user', 'null');
           localStorage.setItem('photoURL', 'null');
           localStorage.setItem('email', 'null');
+          localStorage.setItem('userVerified', 'null');
         }
       })
     }

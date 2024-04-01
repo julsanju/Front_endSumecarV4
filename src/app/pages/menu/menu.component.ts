@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, booleanAttribute } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 //import { json } from 'node:stream/consumers';
 import { LoginServicesService } from 'src/app/services/login-services.service';
@@ -24,6 +24,7 @@ export class MenuComponent {
   foto: any = '';
   telefono: any = '';
   email: any = '';
+  userVerified:any = '';
   //variable para decidir si mostraremos los usuarios de bd o de authGoogle
   bool!: boolean;
 
@@ -56,7 +57,7 @@ export class MenuComponent {
     this.validateDataProfileAuth();
     this.obtenerUsuario();
     this.mapeoUserProfile();
-    
+    console.log(this.userVerified)
     const userDataString = localStorage.getItem('userData');
     
     if (userDataString) {
@@ -218,6 +219,8 @@ export class MenuComponent {
        this.foto = localStorage.getItem('photoURL');
        this.userAuth = localStorage.getItem('user');
        this.email = localStorage.getItem('email');
+       const capsuleVerified =  localStorage.getItem('userVerified');
+       this.userVerified = Boolean(capsuleVerified);
        
   }
 

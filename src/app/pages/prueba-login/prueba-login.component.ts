@@ -22,7 +22,6 @@ import { CaptchaServicesService } from 'src/app/services/captcha-services.servic
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 import { environment } from 'src/app/environments/environment';
 
-
 @Component({
   selector: 'app-prueba-login',
   standalone: true,
@@ -54,6 +53,7 @@ export class PruebaLoginComponent implements OnInit {
   username = '';
   foto: any = '';
   bool: boolean = false;
+  userVerified:any = '';
   sitekey = environment.recaptcha.siteKey;
   users = [
     { value: 'cliente', viewValue: 'Cliente' },
@@ -132,7 +132,6 @@ export class PruebaLoginComponent implements OnInit {
     this.app.mostrarMenu = false;
 
   }
-
 
 
   ngOnInit(): void {
@@ -484,8 +483,18 @@ export class PruebaLoginComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.auth.loginGoogle();
-    localStorage.setItem('bool', this.bool.toString());
+     const capsuleVerified= localStorage.getItem('userVerified')
+     
+     this.userVerified = Boolean(capsuleVerified);
+     if (this.userVerified) {
+
+      this.auth.loginGoogle();
+      localStorage.setItem('bool', this.bool.toString());
+     }
+     else{
+      this.router.navigate(['/login-aditional'])
+     }
+    
   }
 
 }
