@@ -211,13 +211,13 @@ export class MenuComponent {
 
   //autenticacion
   logout() {
-    this.auth.logOut();
+    this.auth.logOut()
   }
 
   obtenerUsuario() {
     
        this.foto = localStorage.getItem('photoURL');
-       this.userAuth = localStorage.getItem('user');
+       this.userAuth = localStorage.getItem('nombre');
        this.email = localStorage.getItem('email');
        const capsuleVerified =  localStorage.getItem('userVerified');
        this.userVerified = Boolean(capsuleVerified);

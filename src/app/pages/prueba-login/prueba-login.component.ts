@@ -1,5 +1,5 @@
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 
 import { LoginServicesService } from '../../services/login-services.service';
 import { Login } from '../../Interfaces/login';
@@ -21,6 +21,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CaptchaServicesService } from 'src/app/services/captcha-services.service';
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 import { environment } from 'src/app/environments/environment';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-prueba-login',
@@ -51,9 +52,10 @@ import { environment } from 'src/app/environments/environment';
 export class PruebaLoginComponent implements OnInit {
   //variables para autenticacion
   username = '';
+  uid: any = '';
   foto: any = '';
   bool: boolean = false;
-  userVerified:any = '';
+  userVerified: any = '';
   sitekey = environment.recaptcha.siteKey;
   users = [
     { value: 'cliente', viewValue: 'Cliente' },
@@ -95,6 +97,8 @@ export class PruebaLoginComponent implements OnInit {
   }
 
   constructor(private formBuilder: FormBuilder,
+    private firebase: AngularFireAuth,
+    private ngZone: NgZone,
     private loginService: LoginServicesService,
     private servicioUsuarios: UsuariosServicesService,
     private registerService: RegisterService,
@@ -148,6 +152,20 @@ export class PruebaLoginComponent implements OnInit {
     this.mostrarCiudad()
   }
 
+  mostrarCiudad() {
+    this.registrationForm.get('Departamento')?.valueChanges.subscribe((codigoDepartamento) => {
+      // Obtener ciudades basadas en el departamento seleccionado
+      this.servicioUsuarios.obtenerCiudad(codigoDepartamento).subscribe(
+        (data) => {
+          this.ciudades = data;
+        },
+        (error) => {
+          console.error('Error obteniendo ciudades', error);
+        }
+      );
+    });
+  }
+  
   public onFileChange(event: any) {
 
     const imagen = event.target.files[0];
@@ -181,28 +199,13 @@ export class PruebaLoginComponent implements OnInit {
     }
   }
 
-
+  
   clearSelection() {
     if (this.fileInput) {
       this.fileInput.nativeElement.value = '';
     }
     this.selectedImages = [];
   }
-
-  mostrarCiudad() {
-    this.registrationForm.get('Departamento')?.valueChanges.subscribe((codigoDepartamento) => {
-      // Obtener ciudades basadas en el departamento seleccionado
-      this.servicioUsuarios.obtenerCiudad(codigoDepartamento).subscribe(
-        (data) => {
-          this.ciudades = data;
-        },
-        (error) => {
-          console.error('Error obteniendo ciudades', error);
-        }
-      );
-    });
-  }
-
   blobFile = async ($event: any) =>
     new Promise((resolve, reject) => {
       try {
@@ -423,8 +426,8 @@ export class PruebaLoginComponent implements OnInit {
         localStorage.setItem('bool', this.bool.toString())
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
 
-        // this.router.navigate(['/menu/dashboard'])
-        //   .then(() => window.location.reload())
+        this.router.navigate(['/menu/dashboard'])
+          .then(() => window.location.reload())
         const userData2 = {
           usuario: this.loginForm.get('usuario')?.value,
           contrasena: this.loginForm.get('contrasena')?.value,
@@ -482,19 +485,70 @@ export class PruebaLoginComponent implements OnInit {
     this.router.navigate(['/cambiar-contrasena']);
   }
 
-  loginWithGoogle() {
-     const capsuleVerified= localStorage.getItem('userVerified')
-     
-     this.userVerified = Boolean(capsuleVerified);
-     if (this.userVerified) {
 
-      this.auth.loginGoogle();
-      localStorage.setItem('bool', this.bool.toString());
-     }
-     else{
-      this.router.navigate(['/login-aditional'])
-     }
-    
+  // loginWithGoogle() {
+  //   // const capsuleVerified = localStorage.getItem('userVerified')
+  //   // this.userVerified = Boolean(capsuleVerified);
+  //   // if (this.userVerified) {
+  //     this.auth.loginGoogle()
+  //     this.uid = localStorage.getItem('uid');
+  //     console.log(this.uid)
+  //   this.firebase.authState.subscribe((userState) => {
+  //     if (userState) {
+  //       //userState && this.ngZone.run(() => this.router.navigate(['menu/dashboard']))
+  //       this.auth.isUserVerified(this.uid).subscribe(
+  //         (response) => {
+  //           this.router.navigate(['menu/dashboard'])
+  //           localStorage.setItem('bool', this.bool.toString());
+  //         },
+  //         (error) => {
+  //           this.router.navigate(['/login-aditional'])
+  //           console.error(error)
+  //         }
+
+  //       )
+  //     }
+  //   })
+
+
+  //   // }
+
+
+  // }
+
+  loginWithGoogle() {
+    this.auth.loginGoogle()
+      .then(() => {
+        // La autenticación de Google se ha completado con éxito
+        // Obtenemos el uid del usuario actual
+        const uid = localStorage.getItem('uid');
+
+        // Si hay un uid almacenado, verificamos el estado de autenticación del usuario
+        this.firebase.authState.subscribe((userState) => {
+          if (userState) {
+            if (uid) {
+              // El usuario está autenticado
+              this.auth.isUserVerified(uid).subscribe(
+                (response) => {
+                  // El usuario está verificado, redirigimos a la página de dashboard
+                  this.router.navigate(['menu/dashboard']);
+                  localStorage.setItem('bool', this.bool.toString());
+                },
+                (error) => {
+                  // El usuario no está verificado, redirigimos a la página de login adicional
+                  this.router.navigate(['/login-aditional']);
+                  console.error(error);
+                }
+              );
+            }
+          }
+        });
+
+      })
+      .catch((error) => {
+        // Manejamos cualquier error que ocurra durante la autenticación
+        console.error("Error during Google login:", error);
+      });
   }
 
 }

@@ -9,7 +9,7 @@ declare var grecaptcha: any;
   providedIn: 'any'
 })
 export class CaptchaServicesService {
-  private apiUrl = 'http://localhost:5171/api/login/validationCaptcha';
+  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/login/validationCaptcha';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

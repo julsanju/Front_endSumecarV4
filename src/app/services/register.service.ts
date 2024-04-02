@@ -9,7 +9,8 @@ import { Empleado } from '../Interfaces/empleado';
 })
 export class RegisterService {
   //private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar'; 
-  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar/'; 
+  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar/';
+  private apiUrlDataGoogle = 'http://localhost:5171/api/usuarios/insertarDataGoogle/' 
   private imagenUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/guardar_imagen';
   private ApiUrlModificarEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/modificar_empleado'
   // private ApiUrlModificarEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/modificar_empleado'
@@ -22,6 +23,9 @@ export class RegisterService {
     return this.http.post(this.apiUrl + username, userData);
   }
 
+  registerUserWithDataGoogle(userData: FormData, uid:string): Observable<any> {
+    return this.http.post(this.apiUrlDataGoogle + uid, userData);
+  }
 
   agregarImagen(imagen: FormData, httpOptions: { headers: HttpHeaders }): Observable<any> {
     

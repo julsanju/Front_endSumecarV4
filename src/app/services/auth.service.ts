@@ -2,18 +2,26 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { GoogleAuthProvider } from '@firebase/auth';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'any'
 })
 export class AuthService {
 
-  userData: any;
+  //private apiUrl = 'https://sumecarventas.azurewebsites.net/api/firebase/ExistsUID/'
+  private apiUrl = 'http://localhost:5171/api/firebase/ExistsUID/'
+
+  userData:any;
+  nombre: any;
+  uid:any;
   fotoUser: any;
   correoUser: any;
   userVerified: string = '';
 
   constructor(private firebase: AngularFireAuth,
+    private http:HttpClient,
     private router: Router,
     private ngZone: NgZone) 
     { 
@@ -23,18 +31,19 @@ export class AuthService {
           const parts = user.displayName?.split(' ');
 
 
-          this.userData = `${parts![0]} ${parts![1]}`;
+          this.nombre = `${parts![0]} ${parts![1]}`;
 
-          //this.userData = user.displayName
+          this.uid = user.uid;
           this.fotoUser = user.photoURL;
           this.correoUser = user.email;
           this.userVerified = user.emailVerified.toString();
           
-          localStorage.setItem('user', this.userData)
+          localStorage.setItem('nombre', this.nombre)
+          localStorage.setItem('uid', this.uid)
           localStorage.setItem('photoURL', this.fotoUser);
           localStorage.setItem('email', this.correoUser);
           localStorage.setItem('userVerified', this.userVerified);
-          console.log(this.userVerified)
+          
         } else{
           localStorage.setItem('user', 'null');
           localStorage.setItem('photoURL', 'null');
@@ -42,6 +51,12 @@ export class AuthService {
           localStorage.setItem('userVerified', 'null');
         }
       })
+    }
+
+    //metodo para validar si el usuario esta ya registrado con su autenticacion o no
+    isUserVerified(uid:string):Observable<any>{
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      return this.http.post(this.apiUrl + uid, {headers});
     }
 
     signUp(email:string, password:string){
@@ -58,9 +73,9 @@ export class AuthService {
     // logueo con google 
     loginGoogle(){
       return this.firebase.signInWithPopup(new GoogleAuthProvider())
-      .then(() => 
-       this.observeUserState()
-      )
+      // .then(() => 
+      //  this.observeUserState()
+      // )
       .catch((error:Error) =>{
         console.log("el error es:" + error.message);
       })
@@ -76,7 +91,6 @@ export class AuthService {
       })
     }
 
-    
     //poner true si esta logueado o false si no lo esta
     get isLoggerIn() :boolean{
       const user = JSON.parse(localStorage.getItem('user')!);
@@ -85,13 +99,14 @@ export class AuthService {
 
     logOut(){
       return this.firebase.signOut().then(() => {
-        localStorage.removeItem('user');
+        localStorage.removeItem('name');
         localStorage.removeItem('photoURL');
         localStorage.removeItem('email');
+        localStorage.removeItem('uid');
         localStorage.removeItem('userData')
         console.log("te has deslogueado")
-        console.log(localStorage.getItem('userData'))
-        this.router.navigate(['/prueba-login']);
+        console.log(localStorage.getItem('uid'))
+        this.router.navigate(['/prueba-login']).then(() => window.location.reload());
       })
     }
 }
