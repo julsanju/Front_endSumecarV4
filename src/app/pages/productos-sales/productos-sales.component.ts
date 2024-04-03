@@ -85,7 +85,6 @@ export class ProductosSalesComponent implements OnInit {
         this.isLoading = false;
       },
       error => {
-        console.log("error" + error)
         this.mostrarError();
         this.isLoading = false;
       }
@@ -210,7 +209,6 @@ export class ProductosSalesComponent implements OnInit {
       },
       error => {
         console.error("Error:", error);
-        console.log(error.error)
         this.spinner = false;
 
         this.errorMessage = error.Message;

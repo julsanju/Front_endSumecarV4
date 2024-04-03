@@ -193,8 +193,7 @@ export class ViewPeticionesComponent implements OnInit {
     this.peticionSeleccionada = true;
     this.numero_orden = numeroPedido;
     this.cliente = cliente;
-    console.log('Número de pedido seleccionado:', numeroPedido);
-
+    
   }
 
   cerrarModal(){
@@ -507,7 +506,6 @@ export class ViewPeticionesComponent implements OnInit {
     });
     
     this.resultadoSearch = this.data.length === 0;
-    console.log(this.resultadoSearch)
   }
 
 }

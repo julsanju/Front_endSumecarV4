@@ -69,7 +69,6 @@ export class FinishedProductsComponent implements OnInit{
   
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
     this.validacionRol();
-    console.log(this.validacionRol())
     this.rolSubject.subscribe((esEmpleadoOesAdmin: boolean) => {
       if (esEmpleadoOesAdmin) {
 
@@ -193,8 +192,7 @@ export class FinishedProductsComponent implements OnInit{
       (response) => {
         this.data2 = response;
         const esEmpleadoOesAdmin = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
-        console.log(this.data2);
-          this.rolSubject.next(esEmpleadoOesAdmin);
+        this.rolSubject.next(esEmpleadoOesAdmin);
         
         
       },

@@ -54,10 +54,9 @@ export class MenuComponent {
   ngOnInit() {
     // Recupera la información del usuario desde localStorage
     
-    this.validateDataProfileAuth();
     this.obtenerUsuario();
+    this.validateDataProfileAuth();
     this.mapeoUserProfile();
-    console.log(this.userVerified)
     const userDataString = localStorage.getItem('userData');
     
     if (userDataString) {
@@ -186,7 +185,6 @@ export class MenuComponent {
             });
           } else {
             this.imagenUser = response;
-            console.log(this.imagenUser)
           }
         },
         (error) => {
@@ -217,6 +215,7 @@ export class MenuComponent {
   obtenerUsuario() {
     
        this.foto = localStorage.getItem('photoURL');
+       console.log(this.foto);
        this.userAuth = localStorage.getItem('nombre');
        this.email = localStorage.getItem('email');
        const capsuleVerified =  localStorage.getItem('userVerified');

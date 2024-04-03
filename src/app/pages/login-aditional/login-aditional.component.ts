@@ -71,7 +71,6 @@ export class LoginAditionalComponent implements OnInit {
       }
     );
     this.mostrarCiudad();
-    console.log(localStorage.getItem('uid'))
   }
 
   mostrarCiudad() {
@@ -90,7 +89,6 @@ export class LoginAditionalComponent implements OnInit {
 
   obtenerImagen(){
     this.foto = localStorage.getItem('photoURL');
-    console.log(this.foto)
   }
 
   //metodo para poder crear el usuario
@@ -106,7 +104,6 @@ export class LoginAditionalComponent implements OnInit {
         this.foto = localStorage.getItem('photoURL')
         this.email = localStorage.getItem('email')
 
-        console.log(this.registrationForm.value.termsCheckbox);
         formData.append('Nombre', this.nombre.toLowerCase());
         formData.append('Sexo', this.registrationForm.value.Sexo);
         formData.append('ImagenUrl', this.foto);
@@ -120,7 +117,7 @@ export class LoginAditionalComponent implements OnInit {
         formData.append('Ciudad', this.registrationForm.value.Ciudad);
         // Continuar con el proceso sin agregar imágenes al formData
         this.enviarFormulario(formData, this.uid)
-        console.log(this.uid)
+        localStorage.setItem('UserData', this.registrationForm.value.Usuario)
         //return;
       
     } catch (exception) {
@@ -140,7 +137,6 @@ export class LoginAditionalComponent implements OnInit {
       } else {
         this.registerService.registerUserWithDataGoogle(formData, uid).subscribe(
           (response) => {
-            console.log(response);
             this.mostrarAlerta();
             this.cargando = false;
             this.registrationForm.reset();
@@ -148,10 +144,8 @@ export class LoginAditionalComponent implements OnInit {
           },
           (error) => {
             console.error('Error:', error);
-            console.log(error.error);
             this.errorMessage = error.error;
             this.mostrarDanger();
-            console.log(this.errorMessage?.Message);
             this.cargando = false;
           }
         );
@@ -180,9 +174,8 @@ export class LoginAditionalComponent implements OnInit {
     }, 3000);
   }
 
-  quitar(){
+  cancelar(){
     this.auth.logOut();
-    console.log(localStorage.getItem('uid'))
     this.router.navigate(['/prueba-login']).then(() => window.location.reload());
   }
 

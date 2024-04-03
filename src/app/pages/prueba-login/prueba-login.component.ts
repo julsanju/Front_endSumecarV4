@@ -5,7 +5,6 @@ import { LoginServicesService } from '../../services/login-services.service';
 import { Login } from '../../Interfaces/login';
 import { MensajeError } from '../../Interfaces/mensaje-error';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule, FormsModule, NgForm } from '@angular/forms';
-import { SharedServicesService } from '../../services/shared-services.service';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
@@ -103,7 +102,6 @@ export class PruebaLoginComponent implements OnInit {
     private servicioUsuarios: UsuariosServicesService,
     private registerService: RegisterService,
     private app: AppComponent,
-    private data: SharedServicesService,
     private router: Router,
     private sanitizer: DomSanitizer,
     private auth: AuthService,
@@ -165,7 +163,7 @@ export class PruebaLoginComponent implements OnInit {
       );
     });
   }
-  
+
   public onFileChange(event: any) {
 
     const imagen = event.target.files[0];
@@ -189,10 +187,8 @@ export class PruebaLoginComponent implements OnInit {
 
       }
     }
-    console.log(imagen);
 
     if (imagen.type.startsWith('image/')) {
-      console.log('Sí es una imagen');
       this.files.push(imagen);
     } else {
       console.log('No es una imagen');
@@ -265,8 +261,7 @@ export class PruebaLoginComponent implements OnInit {
         formData.append('Ciudad', this.registrationForm.value.Ciudad);
         // Continuar con el proceso sin agregar imágenes al formData
         this.enviarFormulario(formData, this.registrationForm.value.Usuario)
-        console.log(this.registrationForm.value.Identificacion)
-        //return;
+        
       }
 
       // Si hay archivos, cargar imágenes y enviar el formulario
@@ -323,17 +318,13 @@ export class PruebaLoginComponent implements OnInit {
       } else {
         this.registerService.registerUser(formData, username).subscribe(
           (response) => {
-            console.log(response);
             this.mostrarAlerta();
             this.cargando = false;
             this.registrationForm.reset();
           },
           (error) => {
-            console.error('Error:', error);
-            console.log(error.error);
             this.errorMessage = error.error;
             this.mostrarDanger();
-            console.log(this.errorMessage?.Message);
             this.cargando = false;
 
           }
@@ -407,12 +398,7 @@ export class PruebaLoginComponent implements OnInit {
     }
   }
 
-  EventoEnviar() {
-    //mensaje
-    const usuario = this.loginForm.get('usuario')?.value;
-    // Enviar datos al servicio
-    this.data.enviarDatos(usuario);
-  }
+  
 
   onSubmit() {
     //activar loading
@@ -486,35 +472,6 @@ export class PruebaLoginComponent implements OnInit {
   }
 
 
-  // loginWithGoogle() {
-  //   // const capsuleVerified = localStorage.getItem('userVerified')
-  //   // this.userVerified = Boolean(capsuleVerified);
-  //   // if (this.userVerified) {
-  //     this.auth.loginGoogle()
-  //     this.uid = localStorage.getItem('uid');
-  //     console.log(this.uid)
-  //   this.firebase.authState.subscribe((userState) => {
-  //     if (userState) {
-  //       //userState && this.ngZone.run(() => this.router.navigate(['menu/dashboard']))
-  //       this.auth.isUserVerified(this.uid).subscribe(
-  //         (response) => {
-  //           this.router.navigate(['menu/dashboard'])
-  //           localStorage.setItem('bool', this.bool.toString());
-  //         },
-  //         (error) => {
-  //           this.router.navigate(['/login-aditional'])
-  //           console.error(error)
-  //         }
-
-  //       )
-  //     }
-  //   })
-
-
-  //   // }
-
-
-  // }
 
   loginWithGoogle() {
     this.auth.loginGoogle()
@@ -531,6 +488,8 @@ export class PruebaLoginComponent implements OnInit {
               this.auth.isUserVerified(uid).subscribe(
                 (response) => {
                   // El usuario está verificado, redirigimos a la página de dashboard
+                  localStorage.setItem('userData', JSON.stringify(response.usuario));
+                  
                   this.router.navigate(['menu/dashboard']);
                   localStorage.setItem('bool', this.bool.toString());
                 },

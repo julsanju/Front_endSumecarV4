@@ -91,9 +91,6 @@ export class ConfirmedProductsComponent implements OnInit {
     
     this.pedidoSeleccionado = true;
     this.numero_orden = numeroPedido;
-
-    console.log('Número de pedido seleccionado:', numeroPedido);
-
   }
 
   cerrarModal(){
@@ -213,8 +210,6 @@ export class ConfirmedProductsComponent implements OnInit {
         this.data2 = response;
         const esEmpleado = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
         this.rolSubject.next(esEmpleado);
-        console.log(this.data2);
-        console.log(esEmpleado);
       },
       (error) => {
         // Manejar errores si es necesario
@@ -233,8 +228,7 @@ export class ConfirmedProductsComponent implements OnInit {
 
         Swal.fire('La peticion ha sido finalizada correctamente!', '', 'success');
 
-        this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
-        console.log('Login exitoso');
+        this.errorMessage = null;
         this.router.navigate(['/menu/finished-products']);
       },
       (error) => {

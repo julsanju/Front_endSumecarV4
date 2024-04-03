@@ -104,8 +104,6 @@ export class AuthService {
         localStorage.removeItem('email');
         localStorage.removeItem('uid');
         localStorage.removeItem('userData')
-        console.log("te has deslogueado")
-        console.log(localStorage.getItem('uid'))
         this.router.navigate(['/prueba-login']).then(() => window.location.reload());
       })
     }

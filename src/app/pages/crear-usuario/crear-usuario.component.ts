@@ -183,10 +183,8 @@ export class CrearUsuarioComponent implements OnInit {
         
       }
     }
-    console.log(imagen);
 
     if (imagen.type.startsWith('image/')) {
-      console.log('Sí es una imagen');
       this.files.push(imagen);
     } else {
       console.log('No es una imagen');
@@ -331,17 +329,13 @@ export class CrearUsuarioComponent implements OnInit {
       } else {
         this.registerService.registerUser(formData, username).subscribe(
           (response) => {
-            console.log(response);
             this.mostrarAlerta();
             this.cargando = false;
             this.registrationForm.reset();
           },
           (error) => {
-            console.error('Error:', error);
-            console.log(error.error);
             this.errorMessage = error.error;
             this.mostrarDanger();
-            console.log(this.errorMessage?.Message);
             this.cargando = false;
 
           }
@@ -382,7 +376,6 @@ export class CrearUsuarioComponent implements OnInit {
         this.registerService.ModificarEmpleado(userData)
           .subscribe(
             response => {
-              console.log(response)
               this.mostrarEditAlerta();
               this.cargando = false
               this.UpdateForm.reset();
@@ -390,10 +383,8 @@ export class CrearUsuarioComponent implements OnInit {
             },
             error => {
               console.error("Error:", error);
-              console.log(error.error)
               this.errorMessage = error.error;
               this.mostrarDanger();
-              console.log(this.errorMessage?.Message);
               this.cargando = false;
             },
 
