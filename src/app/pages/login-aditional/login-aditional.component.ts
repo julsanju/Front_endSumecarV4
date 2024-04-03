@@ -71,6 +71,7 @@ export class LoginAditionalComponent implements OnInit {
       }
     );
     this.mostrarCiudad();
+    console.log(localStorage.getItem('uid'))
   }
 
   mostrarCiudad() {
@@ -118,7 +119,8 @@ export class LoginAditionalComponent implements OnInit {
         formData.append('Departamento', this.registrationForm.value.Departamento);
         formData.append('Ciudad', this.registrationForm.value.Ciudad);
         // Continuar con el proceso sin agregar imágenes al formData
-        this.enviarFormulario(formData, this.registrationForm.value.Usuario)
+        this.enviarFormulario(formData, this.uid)
+        console.log(this.uid)
         //return;
       
     } catch (exception) {
@@ -126,7 +128,7 @@ export class LoginAditionalComponent implements OnInit {
     }
   }
 
-  enviarFormulario(formData: FormData, username: string) {
+  enviarFormulario(formData: FormData, uid: string) {
     
     this.cargando = true;
     // Llamada al servicio para registrar al usuario
@@ -136,13 +138,13 @@ export class LoginAditionalComponent implements OnInit {
         this.mostrarDanger();
         this.cargando = false;
       } else {
-        this.registerService.registerUserWithDataGoogle(formData, username).subscribe(
+        this.registerService.registerUserWithDataGoogle(formData, uid).subscribe(
           (response) => {
             console.log(response);
             this.mostrarAlerta();
             this.cargando = false;
             this.registrationForm.reset();
-            console.log("1")
+            this.router.navigate(['/menu/dashboard']).then(() => window.location.reload());
           },
           (error) => {
             console.error('Error:', error);
@@ -151,7 +153,6 @@ export class LoginAditionalComponent implements OnInit {
             this.mostrarDanger();
             console.log(this.errorMessage?.Message);
             this.cargando = false;
-            console.log("2")
           }
         );
       }
