@@ -49,6 +49,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 })
 export class PruebaLoginComponent implements OnInit {
+  //variables para estado de existencia
+  customerExists:boolean = false;
   //variables para autenticacion
   username = '';
   uid: any = '';
@@ -163,6 +165,7 @@ export class PruebaLoginComponent implements OnInit {
       );
     });
   }
+
 
   public onFileChange(event: any) {
 
@@ -337,6 +340,20 @@ export class PruebaLoginComponent implements OnInit {
     }
   }
 
+  isCustomerExists(identificacion:string){
+    this.servicioUsuarios.isCustomerExists(identificacion).subscribe(
+      (response) =>{
+        this.customerExists = true
+      },
+      (error) => {
+        this.customerExists = false
+        this.errorMessage = { Message: 'el cliente con identificacion ' + identificacion +' '+ 'no existe en nuestra base de datos' };
+        this.mostrarDanger();
+        console.log("el cliente con identificacion: " + identificacion + "no existe en nuestra base de datos")
+      }
+    )
+  }
+
   mostrarAlerta() {
     this.showAlert = true;
 
@@ -386,6 +403,7 @@ export class PruebaLoginComponent implements OnInit {
   getDangerAlertClasses() {
     return this.objectALertClasses(!this.showAlertDanger, this.showAlertDanger, !this.showAlertDanger)
   }
+
   onPasswordChange() {
     const password = this.loginForm.get('contrasena')?.value;
 

@@ -13,14 +13,20 @@ export class UsuariosServicesService {
   private ApiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener'
   private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosUsuarios'; 
   // private ApiUrlEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_todosUsuarios'; 
-  private ApiUrlImagenUser = 'https://sumecarventas.azurewebsites.net/api/usuarios/imagen/';   
+  private ApiUrlImagenUser = 'http://localhost:5171/api/usuarios/imagen/';   
   private ApiUrlFiltroEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado_admin';
   private ApiUrlDepartamentos = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos'
   private ApiUrlCiudades = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_departamentos/';
   private ApiUrlMapeo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/'
+  private ApiUrlExistsCustomer = 'http://localhost:5171/api/usuarios/existenciaCliente/'
   //private ApiUrlMapeo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/'
   constructor(private http : HttpClient) { }
 
+  isCustomerExists(identificacion: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.ApiUrlExistsCustomer + identificacion, { headers });
+  }
+  
   obtenerUsuarios(): Observable<UsuariosView[]>{
     return this.http.get<UsuariosView[]>(this.ApiUrl);
   }

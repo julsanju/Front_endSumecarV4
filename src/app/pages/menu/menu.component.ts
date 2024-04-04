@@ -101,6 +101,7 @@ export class MenuComponent {
 
       // Extraer solo el id de usuario
       const username = userData.usuario;
+      console.log(userData.usuario )
 
       this.servicio.obtenerMapeo(username).subscribe(
         (response) => {

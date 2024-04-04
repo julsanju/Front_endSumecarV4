@@ -23,6 +23,7 @@
         d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
     </svg>
     <div class="ms-3 text-sm font-medium">
+      
       <span class="font-bold"> Carga exitosa!</span> Cliente creado con exito :)
     </div>
     <button type="button"
@@ -235,9 +236,10 @@
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Identificacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Identificacion'].valid}"
                     class="block mb-2 text-sm font-medium">Identificacion</label>
-                  <input type="text" id="subject" formControlName="Identificacion"
+                  <input  type="text" id="subject" formControlName="Identificacion"
                     [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Identificacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Identificacion'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
+                    class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" 
+                    (keydown.enter)="isCustomerExists(registrationForm.controls['Identificacion'].value)" required>
                   <p class="mt-2 text-xs text-center"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
                     <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
@@ -245,10 +247,12 @@
                       '¡Excelente! '}}</span> {{registrationForm.controls['Identificacion'].pristine ? '' :
                     registrationForm.controls['Identificacion'].invalid ? 'Identificacion incorrecta :(' :
                     'Identificación correcta :)'}}
-                  </p>
+                    </p>
                 </div>
+
+                
                 <!--nombre-->
-                <div [ngClass]="{'mb-5': registrationForm.controls['Nombre'].valid}">
+                <div [hidden]="!customerExists"  [ngClass]="{'mb-5': registrationForm.controls['Nombre'].valid}">
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Nombre'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Nombre'].valid}"
                     class="block mb-2 text-sm font-medium">Nombre</label>
@@ -266,7 +270,7 @@
                 </div>
 
                 <!--apellido-->
-                <div [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
+                <div [hidden]="!customerExists" [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Apellido'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Apellido'].valid}"
                     class="block mb-2 text-sm font-medium">Apellido</label>
@@ -286,7 +290,7 @@
                   </p>
                 </div>
                 <!--telefono-->
-                <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
+                <div class="mb-6" [hidden]="!customerExists" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Telefono'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Telefono'].valid}"
                     class="block mb-2 text-sm font-medium">Telefono</label>
@@ -303,7 +307,7 @@
                   </p>
                 </div>
                 <!--direccion-->
-                <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Ubicacion'].valid}">
+                <div class="mb-6" [hidden]="!customerExists" [ngClass]="{'mb-5': registrationForm.controls['Ubicacion'].valid}">
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ubicacion'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ubicacion'].invalid && !registrationForm.controls['Ubicacion'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ubicacion'].valid}"
                     class="block mb-2 text-sm font-medium">Ubicacion</label>
@@ -321,7 +325,7 @@
                   </p>
                 </div>
                 <!--sexo-->
-                <div>
+                <div [hidden]="!customerExists" >
                   <label for="countries"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Sexo'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Sexo'].invalid && !registrationForm.controls['Sexo'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Sexo'].valid}"
                     class="block mb-2 text-sm font-medium">Sexo</label>
@@ -335,7 +339,7 @@
                   </select>
                 </div>
                 <!--rol-->
-                <div>
+                <div [hidden]="!customerExists" >
                   <label for="countries"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
                     class="block mb-2 text-sm font-medium">Rol</label>
@@ -347,7 +351,7 @@
                   </select>
                 </div>
                 <!--departamento-->
-                <div>
+                <div [hidden]="!customerExists" >
                   <label for="countries"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
                     class="block mb-2 text-sm font-medium">Departamento</label>
@@ -361,7 +365,7 @@
                   </select>
                 </div>
                 <!--ciudad-->
-                <div>
+                <div [hidden]="!customerExists" >
                   <label for="countries"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
                     class="block mb-2 text-sm font-medium">Ciudad</label>
@@ -377,7 +381,7 @@
 
               </div>
               <!-- grid para correo y username y contraseñas -->
-              <div
+              <div [hidden]="!customerExists"
                 class="grid lg:grid-cols-2 grid-cols-1 gap-4 justify-center border border-gray-700 py-4 pl-4 rounded-lg">
 
                 <!--correo-->
@@ -471,7 +475,7 @@
 
               </div>
 
-              <div class="flex justify-center">
+              <div class="flex justify-center" [hidden]="!customerExists">
                 <!--imagen-->
                 <div class="mb-6 relative" [ngClass]="{'mb-5': registrationForm.controls['Imagen'].valid}">
                   @if (selectedImages.length === 0) {
@@ -506,11 +510,11 @@
                 </div>
 
               </div>
-
+            
 
               <div style="padding: 0 15% 0 15%;">
 
-                <button type="button" (click)="crearUsuario();" [disabled]="cargando"
+                <button type="button" (click)="crearUsuario();" [disabled]="cargando" [hidden] ="!customerExists"
                   class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
                   @if(!cargando){
                   <span>Crear usuario</span>
