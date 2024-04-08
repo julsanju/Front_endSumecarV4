@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   //private apiUrl = 'https://sumecarventas.azurewebsites.net/api/firebase/ExistsUID/'
-  private apiUrl = 'http://localhost:5171/api/firebase/ExistsUID/'
+  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/firebase/ExistsUID/'
 
   userData:any;
   nombre: any;

@@ -50,7 +50,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class PruebaLoginComponent implements OnInit {
   //variables para estado de existencia
-  customerExists:boolean = false;
+  UserExists:boolean = false;
+  UserNameSumecar: string = '';
   //variables para autenticacion
   username = '';
   uid: any = '';
@@ -118,6 +119,7 @@ export class PruebaLoginComponent implements OnInit {
     });
 
     this.registrationForm = this.formBuilder.group({
+      Nit_empresa: ['', Validators.required],
       Identificacion: ['', Validators.required],
       Rol: ['', Validators.required],
       Nombre: ['', Validators.required],
@@ -262,6 +264,7 @@ export class PruebaLoginComponent implements OnInit {
         formData.append('Contrasena', this.registrationForm.value.Contrasena);
         formData.append('Departamento', this.registrationForm.value.Departamento);
         formData.append('Ciudad', this.registrationForm.value.Ciudad);
+        formData.append('Nit_empresa', this.registrationForm.value.Nit_empresa);
         // Continuar con el proceso sin agregar imágenes al formData
         this.enviarFormulario(formData, this.registrationForm.value.Usuario)
         
@@ -343,13 +346,15 @@ export class PruebaLoginComponent implements OnInit {
   isCustomerExists(identificacion:string){
     this.servicioUsuarios.isCustomerExists(identificacion).subscribe(
       (response) =>{
-        this.customerExists = true
+        this.UserExists = true
+        this.UserNameSumecar = response.Message;
+        console.log(this.UserNameSumecar)
       },
       (error) => {
-        this.customerExists = false
+        this.UserExists = false
         this.errorMessage = { Message: 'el cliente con identificacion ' + identificacion +' '+ 'no existe en nuestra base de datos' };
         this.mostrarDanger();
-        console.log("el cliente con identificacion: " + identificacion + "no existe en nuestra base de datos")
+        this.UserNameSumecar = ''
       }
     )
   }
