@@ -49,6 +49,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 })
 export class PruebaLoginComponent implements OnInit {
+  
+  //variable booleana para el autocompletado del gmail.com
+  showPreview:boolean = false;
+  previewValue: string = '';
+  previewDomain: string = 'gmail.com';
+  previewVisible: boolean = false;
+  estadoCard: boolean = false;
   //variables para estado de existencia
   UserExists:boolean = false;
   UserNameSumecar: string = '';
@@ -92,6 +99,7 @@ export class PruebaLoginComponent implements OnInit {
   files: any = []
   //@ViewChild('recaptcha', {static: true}) recaptchaElement: any;
   @ViewChild('captchaElem') captchaElem: any;
+  
   token: string = '';
 
   mostrar_contrasena() {
@@ -153,6 +161,42 @@ export class PruebaLoginComponent implements OnInit {
 
     this.mostrarCiudad()
   }
+
+  
+  //autocompletar @gmail.com
+  onInputChange(event: any) {
+    const inputValue = event.target.value;
+    const atIndex = inputValue.lastIndexOf('@');
+  
+    if (atIndex !== -1) {
+      const username = inputValue.slice(0, atIndex);
+      const domain = inputValue.slice(atIndex + 1);
+  
+      if (domain === '') {
+        this.previewVisible = true;
+        this.previewValue = `${username}@${this.previewDomain}`;
+      } else if (domain === this.previewDomain) {
+        this.previewVisible = true;
+        this.previewValue = `${username}@${this.previewDomain}`;
+      } else {
+        this.previewVisible = false;
+        this.previewValue = '';
+      }
+    } else {
+      this.previewVisible = false;
+      this.previewValue = '';
+    }
+  }
+  
+  onKeydown(event: any) {
+  if (event.key === 'Tab') {
+    event.preventDefault();
+    event.target.value = this.previewValue;
+    event.target.selectionStart = event.target.value.length;
+    event.target.selectionEnd = event.target.value.length;
+    this.previewVisible = false;
+  }
+}
 
   mostrarCiudad() {
     this.registrationForm.get('Departamento')?.valueChanges.subscribe((codigoDepartamento) => {

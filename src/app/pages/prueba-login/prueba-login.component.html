@@ -60,7 +60,7 @@
     </button>
   </div>
 
-  <section class="bg-gray-100 min-h-screen flex items-center
+  <section class="bg-gray-100 min-h-screen flex items-center 
   justify-center">
     <!-- LOTTIE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
@@ -96,7 +96,8 @@
 
           <div class="flex items-center justify-between" style="margin-bottom: -10px;">
             <label for="password" class=" text-white">Password</label>
-            <a class="lg:text-base text-sm text-gray-500 dark:text-gray-400 hover:scale-105 duration-300">Olvido su
+            <a data-modal-target="default-modal" data-modal-toggle="default-modal"
+              class="lg:text-base text-sm text-gray-500 dark:text-gray-400 hover:scale-105 duration-300">Olvido su
               contraseña?</a>
           </div>
 
@@ -233,21 +234,23 @@
                 <div>
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Nit_empresa'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Nit_empresa'].invalid && !registrationForm.controls['Nit_empresa'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Nit_empresa'].valid}"
-                    class="block mb-2 text-lg font-bold"> 
-                    <span class="text-gray-600 flex gap-2 items-center"> 
+                    class="block mb-2 text-lg font-bold">
+                    <span class="text-gray-600 flex gap-2 items-center">
                       Nit
-                      <svg data-tooltip-target="tooltip-default" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                    </svg>
+                      <svg data-tooltip-target="tooltip-default" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                      </svg>
                     </span>
-                    </label>
+                  </label>
                   <input type="text" id="subject" formControlName="Nit_empresa"
                     [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Nit_empresa'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Nit_empresa'].invalid && !registrationForm.controls['Nit_empresa'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Nit_empresa'].valid}"
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890"
                     (keydown.enter)="isCustomerExists(registrationForm.controls['Nit_empresa'].value)" required>
                   <p class="mt-2 text-base text-center"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Nit_empresa'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Nit_empresa'].invalid && !registrationForm.controls['Nit_empresa'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Nit_empresa'].valid}">
-                    <span class="text-base font-bold">{{registrationForm.controls['Nit_empresa'].pristine ? 
+                    <span class="text-base font-bold">{{registrationForm.controls['Nit_empresa'].pristine ?
                       'Empresa asociada.' : registrationForm.controls['Nit_empresa'].invalid ? 'Oops!' :
                       '¡Excelente! '}}</span> {{registrationForm.controls['Nit_empresa'].pristine ? '' :
                     registrationForm.controls['Nit_empresa'].invalid ? 'Nit de empresa incorrecta :(' :
@@ -255,10 +258,11 @@
                   </p>
 
                   <!--fino tooltip-->
-                  <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                  <div id="tooltip-default" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Porfavor, introduce el nit de tu empresa asociada
                     <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
+                  </div>
                 </div>
                 <div class="grid-cols-1">
 
@@ -593,6 +597,216 @@
 
   </div>
 
+  <!--modal para poder cambiar contraseña-->
+  <div id="default-modal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <!-- Modal content -->
+      @if (estadoCard){
+      <div class="flex justify-center items-center ">
+        <div class="w-90 rounded-2xl bg-white mb-5" style="border: 1px solid #e1e1e1">
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <button type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="default-modal">
+              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <div class="flex flex-col gap-2 px-8 pb-6">
+            <h1 class="text-xl font-black text-gray-600 dark:text-white m-0" style="margin:0">
+              <strong>Olvido su contraseña?</strong>
+            </h1>
+            <span class="text-gray-500 text-base">No te preocupes, te enviaremos instrucciones de reinicio </span>
+            <div class="relative mt-5">
+
+              <span style="margin-top: 11px;" class="absolute items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-6 h-6 mx-3 text-gray-400 dark:text-gray-500">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+              </span>
+
+              <input type="email" placeholder="john@example.com" (input)="onInputChange($event)"
+                (keydown)="onKeydown($event)"
+                class="block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border border-gray-200 rounded-lg pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+
+              <!-- <img decoding="async" width="150" height="150" class="emoji-img" src="https://emojitool.com/img/apple/ios-13.2/postbox-2582.png" alt="📮 Emoji Buzón en Apple iOS 13.2."> -->
+              <div *ngIf="previewVisible" class="text-gray-500 text-sm mt-1">
+                presione <strong> TAB</strong> para autocompletar<strong>{{ previewValue }}</strong>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6 mt-5">
+              <button
+                class="text-gray-500 bg-gray-50 hover:bg-gray-200 hover:text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-left hover:scale-105 duration-300 text-center border border-gray-300">
+                Cancelar
+              </button>
+
+              <button
+                class="inline-block cursor-pointer rounded-md bg-[#3b5998] px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-[#2e4475] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95 hover:scale-105 duration-300">
+                Enviar
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      }
+      @if (estadoCard){
+      <div class="flex justify-center items-center">
+        <div class="w-90 rounded-2xl bg-white mb-5" style="border: 1px solid #e1e1e1">
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <button type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="default-modal">
+              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <div class="flex flex-col gap-2 px-8 pb-6">
+            <div class="grid grid-cols-1 justify-center items-center">
+              <div class="flex justify-center items-center">
+                <img decoding="async" width="150" height="150" class="emoji-img"
+                  src="https://emojitool.com/img/apple/ios-13.2/postbox-2582.png"
+                  alt="📮 Emoji Buzón en Apple iOS 13.2.">
+              </div>
+              <div class="flex justify-center items-center mt-8">
+                <h1 class="text-xl font-black text-gray-600 dark:text-white m-0" style="margin:0">
+                  <strong>Revisa tu email</strong>
+                </h1>
+              </div>
+              <div class="flex justify-center items-center">
+                <p class="text-gray-500 text-base text-center">Hemos enviado instrucciones para <br> recuperar la
+                  contraseña a <strong>julsanju204&#64;gmail.com </strong> </p>
+              </div>
+            </div>
+
+          </div>
+          <div class="px-5">
+            <a href="https://mail.google.com/mail" target="_blank">
+              <button href="https://mail.google.com/mail" type="button"
+                class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-6 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2 w-full">
+                <div class="flex justify-center items-center gap-2 w-full">
+                  <img
+                    src="https://kstatic.googleusercontent.com/files/6d2a2dbaad1a3fe4c323dd6a4688db96e47b423de4175611399a97dc5b64a4ad7490d703aa0af80f28936e842e9d2448b1d74a530a2fe479a306d92281678efa"
+                    alt="">
+                  <strong class="text-gray-600 text-lg">Abrir Gmail</strong>
+                  <svg class="w-6 h-6 text-gray-500" data-slot="icon" fill="none" stroke-width="1.5"
+                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25">
+                    </path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+          </div>
+
+
+        </div>
+      </div>
+      }
+      @if (!estadoCard){
+      <div class="flex justify-center items-center ">
+        <div class="w-90 rounded-2xl bg-white mb-5" style="border: 1px solid #e1e1e1">
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <button type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="default-modal">
+              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <div class="flex flex-col gap-2 px-8 pb-6">
+            <h1 class="text-xl font-black text-gray-600 dark:text-white m-0" style="margin:0">
+              <strong>Restablecer contraseña</strong>
+            </h1>
+
+            <div class="grid grid-cols-1 gap-6">
+
+              <div class="relative flex items-center mt-4">
+                <input formControlName="contrasena" type="text" id="password"
+                  class="block px-4 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-gray-400 peer"
+                  [type]="mostrarContrasena ? 'text' : 'password'" name="password" placeholder="* * * * *" required
+                  autocomplete="current-password" />
+                <label for="password"
+                  class="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-4 peer-focus:px-2 peer-focus:text-gray-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Contraseña</label>
+
+                <button class="absolute right-0 top-0 bottom-0 px-3 flex items-center justify-center focus:outline-none"
+                  (click)="mostrar_contrasena()">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="w-6 h-6 text-gray-400 transition-colors duration-300 hover:text-gray-500">
+                    <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                    <path fill-rule="evenodd"
+                      d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
+                      clip-rule="evenodd" />
+                  </svg>
+
+                </button>
+              </div>
+
+              <div class="relative flex items-center">
+                <input type="text" id="repeatPassword"
+                  class="block px-4 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-gray-400 peer"
+                  [type]="mostrarContrasena ? 'text' : 'password'" name="password" placeholder="* * * * *" required
+                  autocomplete="current-password" />
+                <label for="repeatPassword"
+                  class="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-4 peer-focus:px-2 peer-focus:text-gray-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Repetir contraseña</label>
+
+                <button class="absolute right-0 top-0 bottom-0 px-3 flex items-center justify-center focus:outline-none"
+                  (click)="mostrar_contrasena()">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="w-6 h-6 text-gray-400 transition-colors duration-300 hover:text-gray-500">
+                    <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                    <path fill-rule="evenodd"
+                      d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
+                      clip-rule="evenodd" />
+                  </svg>
+
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+            <svg class=" text-gray-400 w-4 h-4 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+            <span class="text-gray-500 text-sm font-semibold">Ambas contraseñas deben coincidir</span>
+          </div>
+            <div class="grid grid-cols-2 gap-6 mt-5">
+              <button
+                class="text-gray-500 bg-gray-50 hover:bg-gray-200 hover:text-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-left hover:scale-105 duration-300 text-center border border-gray-300">
+                Cancelar
+              </button>
+
+              <button
+                class="inline-block cursor-pointer rounded-md bg-[#3b5998] px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-[#2e4475] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95 hover:scale-105 duration-300">
+                Cambiar contraseña
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      }
+    </div>
+  </div>
 </body>
 
 </html>
