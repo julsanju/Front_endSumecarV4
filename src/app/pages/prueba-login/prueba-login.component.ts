@@ -49,7 +49,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 })
 export class PruebaLoginComponent implements OnInit {
-  
   //variable booleana para el autocompletado del gmail.com
   showPreview:boolean = false;
   previewValue: string = '';
@@ -91,6 +90,7 @@ export class PruebaLoginComponent implements OnInit {
   ciudades: DepartamentoCiudad[] = [];
   showAlert: boolean = false;
   showAlertDanger: boolean = false;
+  showModalUpdate:boolean = false;
   //imagenes
   //imagenes
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
@@ -420,6 +420,9 @@ export class PruebaLoginComponent implements OnInit {
     }, 3000);
   }
 
+  mostrarModalUpdatePassword(){
+    this.showModalUpdate = true;
+  }
   //modal de register
   abrirRegister() {
     this.modalRegister = true;
@@ -445,12 +448,20 @@ export class PruebaLoginComponent implements OnInit {
     this.modalRegister = false;
   }
 
+  cerrarModalUpdate() {
+    this.showModalUpdate = false;
+  }
   getSuccesAlertClasses() {
     return this.objectALertClasses(!this.showAlert, this.showAlert, !this.showAlert)
   }
   //animacion alerta danger
   getDangerAlertClasses() {
     return this.objectALertClasses(!this.showAlertDanger, this.showAlertDanger, !this.showAlertDanger)
+  }
+
+  //animacion para modal cambiar contraseña
+  getModalUpdatePassword(){
+    return this.objectALertClasses(!this.showModalUpdate, this.showModalUpdate, !this.showModalUpdate)
   }
 
   onPasswordChange() {
