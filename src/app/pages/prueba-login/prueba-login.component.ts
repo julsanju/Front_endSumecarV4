@@ -1,5 +1,5 @@
 
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 
 import { LoginServicesService } from '../../services/login-services.service';
 import { Login } from '../../Interfaces/login';
@@ -12,7 +12,7 @@ import { AppComponent } from 'src/app/app.component';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { DepartamentoCiudad } from 'src/app/Interfaces/departamento-ciudad';
 import { RegisterService } from 'src/app/services/register.service';
-import { forkJoin } from 'rxjs';
+import { Subscription, forkJoin, interval } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FirebaseModule } from 'src/app/pages/prueba-login/firebase/firebase.module';
@@ -22,6 +22,13 @@ import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSet
 import { environment } from 'src/app/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
+
+//enumeracion
+enum State {
+  sendEmail,
+  waitingRoom,
+  UpdatePassword
+}
 @Component({
   selector: 'app-prueba-login',
   standalone: true,
@@ -49,6 +56,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 })
 export class PruebaLoginComponent implements OnInit {
+  private subscription!: Subscription;
   //variable booleana para el autocompletado del gmail.com
   showPreview:boolean = false;
   previewValue: string = '';
@@ -91,6 +99,7 @@ export class PruebaLoginComponent implements OnInit {
   showAlert: boolean = false;
   showAlertDanger: boolean = false;
   showModalUpdate:boolean = false;
+  state : State = State.sendEmail
   //imagenes
   //imagenes
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
@@ -116,7 +125,8 @@ export class PruebaLoginComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private auth: AuthService,
-    private captchaService: CaptchaServicesService) {
+    private captchaService: CaptchaServicesService,
+    private cd: ChangeDetectorRef) {
 
     this.formData = new FormData()
 
@@ -158,11 +168,17 @@ export class PruebaLoginComponent implements OnInit {
         console.error('Error obteniendo departamentos', error);
       }
     );
-
+    
     this.mostrarCiudad()
+    this.subscription = interval(1000).subscribe(() => {
+      //this.validateEstadoUpdate();
+    });
   }
 
-  
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   //autocompletar @gmail.com
   onInputChange(event: any) {
     const inputValue = event.target.value;
@@ -477,7 +493,6 @@ export class PruebaLoginComponent implements OnInit {
   }
 
   
-
   onSubmit() {
     //activar loading
     this.cargando = true;
@@ -550,7 +565,6 @@ export class PruebaLoginComponent implements OnInit {
   }
 
 
-
   loginWithGoogle() {
     this.auth.loginGoogle()
       .then(() => {
@@ -588,5 +602,34 @@ export class PruebaLoginComponent implements OnInit {
       });
   }
 
+  
+
+  //cambiar contraseña
+  peticionCambioContrasena(correo:string){
+    this.loginService.peticionCorreo(correo).subscribe(
+      (response) => {
+        this.state = State.waitingRoom;
+        this.cd.detectChanges();
+        console.log("haz enviado correo")
+      },
+      (error) => {
+        console.error("el error es:" + error.message)
+      }
+    )
+  }
+
+  validateEstadoUpdate(usuario:string){
+    this.loginService.ValidarEstado(usuario).subscribe(
+      (Response) => {
+        this.state = State.waitingRoom;
+        this.cd.detectChanges();
+      }, 
+      (error) => {
+        console.error("el error es:" + error.message)
+      }
+    )
+  }
+
+  
 }
 

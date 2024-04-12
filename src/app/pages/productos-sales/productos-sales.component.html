@@ -121,8 +121,9 @@
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
-        <th scope="col" class="px-6 py-3"> CODIGO </th>
+        <th scope="col" class="px-6 py-3 "> CODIGO </th>
         <th scope="col" class="px-6 py-3"> ARTICULO </th>
+        <th scope="col" class="px-6 py-3"> CODIGO LABORATORIO </th>
         <th scope="col" class="px-6 py-3"> LABORATORIO </th>
         <th scope="col" class="px-6 py-3"> </th>
       </tr>
@@ -134,8 +135,9 @@
       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
         <td class="px-6 py-4 font-medium text-gray-600 ">{{ row.codigo }}</td>
         <td class="px-6 py-4 font-medium text-gray-600 ">{{ row.articulo }}</td>
+        <td class="px-6 py-4 font-medium text-gray-600 ">{{ row.cod_Laboratorio }}</td>
         <td class="px-6 py-4 font-medium text-gray-600 ">{{ row.laboratorio }}</td>
-        <td>
+        <td >
           <button (click)="mostrarModal();productoSeleccionado(row)"
             class="text-blue-400 hover:text-white border border-blue-400 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-500"
             type="button">
@@ -300,8 +302,9 @@
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mr-3">
 
           }
-          <span>PRODUCTO:</span> </label> {{producto.articulo}} <br>
-        <label class="text-blue-500 font-black"> <span>CANTIDAD:</span> </label> {{producto.cantidad }}
+          <span class="text-gray-700 font-black">PRODUCTO: </span> </label> {{producto.articulo}} <br>
+          <label class="text-gray-700 font-black"> <span>LABORATORIO: </span> </label> {{producto.laboratorio }} <br>
+        <label class="text-blue-500 font-black"> <span>CANTIDAD: </span> </label> <strong>{{producto.cantidad }} </strong>
         <div class=" mt-10 grid grid-cols-3 items-center text-gray-400">
           <hr class="border-gray-400 ">
           <p class="text-center">O</p>

@@ -425,11 +425,11 @@ export class ProductosSalesComponent implements OnInit {
 
 
           /**TABLA DE LA INFORMACION***/
-          const columns = ['Código', 'Artículo', 'Laboratorio', 'Cantidad'];
+          const columns = ['Código', 'Artículo', 'codigo_Labo.','Laboratorio', 'Cantidad'];
           const rows: (string | number)[][] = [];
 
           this.producto_seleccionado.forEach(item => {
-            rows.push([item.codigo, item.articulo, item.laboratorio, item.cantidad.toString()]);
+            rows.push([item.codigo, item.articulo, item.cod_Laboratorio,item.laboratorio, item.cantidad.toString()]);
           });
 
           autoTable(doc, {
@@ -461,6 +461,7 @@ export class ProductosSalesComponent implements OnInit {
       const data = this.producto_seleccionado.map(item => ({
         'Código': item.codigo,
         'Artículo': item.articulo,
+        'codigo_Labo': item.cod_Laboratorio,
         'Laboratorio': item.laboratorio,
         'Cantidad': item.cantidad
       }));

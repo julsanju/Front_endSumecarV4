@@ -11,8 +11,9 @@ import { Contrasena } from '../Interfaces/contrasena';
 export class LoginServicesService {
   private apiUrl = 'https://sumecarventas.azurewebsites.net/api/login/iniciar_sesion'
   
-  private peticionUrl = 'https://sumecarventas.azurewebsites.net/api/login/peticion_cambio_contrasena/';
-  private validarUrl = 'https://sumecarventas.azurewebsites.net/api/login/obtener_usuario/'
+  private peticionUrl = 'http://localhost:5171/api/login/peticion_cambio_contrasena/';
+  private dataUpdateEstado = 'http://localhost:5171/api/login/peticion_cambio_contrasena/';
+  private validarUrl = 'http://localhost:5107/api/login/obtener_usuario/'
   private CambiarCoUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/login/actualizar_contrasena/'
   constructor(private http: HttpClient) { }
 
@@ -37,9 +38,9 @@ export class LoginServicesService {
 
   
   //peticion para validar correo
-  peticionCorreo(usuario: string): Observable<any> {
+  peticionCorreo(correo: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.peticionUrl + usuario, { headers });
+    return this.http.post(this.peticionUrl + correo, { headers });
   }
 
   //validar estado del correo
