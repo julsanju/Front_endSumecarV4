@@ -21,6 +21,7 @@ import { CaptchaServicesService } from 'src/app/services/captcha-services.servic
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 import { environment } from 'src/app/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Contrasena } from 'src/app/Interfaces/contrasena';
 
 
 //enumeracion
@@ -79,6 +80,7 @@ export class PruebaLoginComponent implements OnInit {
     { value: 'admin', viewValue: 'Admin' }
   ];
   registrationForm: FormGroup;
+  passwordForm: FormGroup;
   errorMessage: MensajeError | null = null;
   passwordVisible: boolean = true;
   disableSelect = new FormControl(false);
@@ -93,6 +95,7 @@ export class PruebaLoginComponent implements OnInit {
   modalRegister: boolean = true;
   //loading
   cargando = false;
+  cargandoUpdatePassword:boolean = false;
   mostrarContrasena: boolean = false;
   departamentos: DepartamentoCiudad[] = [];
   ciudades: DepartamentoCiudad[] = [];
@@ -108,9 +111,10 @@ export class PruebaLoginComponent implements OnInit {
   files: any = []
   //@ViewChild('recaptcha', {static: true}) recaptchaElement: any;
   @ViewChild('captchaElem') captchaElem: any;
+  @ViewChild('inputUpdatePassword') inputUpdatePassword!: ElementRef;
   
   token: string = '';
-
+  DataCorreoUpdate:string = '';
   mostrar_contrasena() {
     this.mostrarContrasena = !this.mostrarContrasena
   }
@@ -152,6 +156,12 @@ export class PruebaLoginComponent implements OnInit {
       Ciudad: ['', Validators.required],
       Imagen: ['']
     });
+
+    this.passwordForm = this.formBuilder.group({
+      contrasena: ['', Validators.required],
+      password: ['', Validators.required]
+    })
+
     //ocultar el menu version movil para el login
     this.app.mostrarMenu = false;
 
@@ -170,8 +180,9 @@ export class PruebaLoginComponent implements OnInit {
     );
     
     this.mostrarCiudad()
-    this.subscription = interval(1000).subscribe(() => {
-      //this.validateEstadoUpdate();
+    
+    this.subscription = interval(30000).subscribe(() => {
+      this.validateEstadoUpdate();
     });
   }
 
@@ -606,30 +617,71 @@ export class PruebaLoginComponent implements OnInit {
 
   //cambiar contraseña
   peticionCambioContrasena(correo:string){
+    this.cargandoUpdatePassword = true;
+    this.DataCorreoUpdate = this.inputUpdatePassword.nativeElement.value;
     this.loginService.peticionCorreo(correo).subscribe(
       (response) => {
         this.state = State.waitingRoom;
         this.cd.detectChanges();
-        console.log("haz enviado correo")
+        this.cargandoUpdatePassword = false;
       },
       (error) => {
+        this.cargandoUpdatePassword = false;
         console.error("el error es:" + error.message)
       }
     )
   }
 
-  validateEstadoUpdate(usuario:string){
-    this.loginService.ValidarEstado(usuario).subscribe(
-      (Response) => {
-        this.state = State.waitingRoom;
+  validateEstadoUpdate() {
+    this.loginService.ValidarEstado(this.DataCorreoUpdate).subscribe(
+      (response) => {
+        console.log("ya valido");
+        this.state = State.UpdatePassword;
         this.cd.detectChanges();
-      }, 
+      },
       (error) => {
-        console.error("el error es:" + error.message)
+        console.error("El error es: " + error.message);
+      }
+    );
+  }
+
+  UpdatePassword(){
+    this.cargandoUpdatePassword = true;
+    const dataUpdatePassword: Contrasena = this.passwordForm.value;
+
+    if (dataUpdatePassword != null){
+      this.loginService.CambiarContrasena(dataUpdatePassword, this.DataCorreoUpdate ).subscribe(
+        (response) =>
+        {
+          this.cargandoUpdatePassword = false;
+          console.log(response.message);
+          this.cerrarModalUpdate();
+          this.state = State.sendEmail;
+        },
+        (error) =>
+        {
+          this.cargandoUpdatePassword = false;
+          console.error("el error es :", error)
+        }
+      )
+    }
+    else{
+      console.log("las contraseñas no coinciden")
+    }
+  }
+  
+  declineUpdatePassword(){
+    this.loginService.declineUpdate(this.DataCorreoUpdate).subscribe(
+      (response) => {
+        this.showModalUpdate = false;
+        this.state = State.sendEmail;
+        console.log("cancelado exitoso")
+      },
+      (error) => {
+        console.error("el error es: " + error.message)
       }
     )
   }
 
-  
 }
 

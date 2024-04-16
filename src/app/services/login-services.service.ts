@@ -13,8 +13,9 @@ export class LoginServicesService {
   
   private peticionUrl = 'http://localhost:5171/api/login/peticion_cambio_contrasena/';
   private dataUpdateEstado = 'http://localhost:5171/api/login/peticion_cambio_contrasena/';
-  private validarUrl = 'http://localhost:5107/api/login/obtener_usuario/'
-  private CambiarCoUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/login/actualizar_contrasena/'
+  private validarUrl = 'http://localhost:5171/api/login/obtener_usuario/'
+  private CambiarCoUrl = 'http://localhost:5171/api/login/cambio_contrasena/{correo}'
+  private declineUpdatePassword = 'http://localhost:5171/api/login/declineUpdate_password/'
   constructor(private http: HttpClient) { }
 
   LoginValidation(userData: Login): Observable<any> {
@@ -44,14 +45,19 @@ export class LoginServicesService {
   }
 
   //validar estado del correo
-  ValidarEstado(usuario:string): Observable<any>{
+  ValidarEstado(correo:string): Observable<any>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' })
-    return this.http.get(this.validarUrl + usuario, { headers });
+    return this.http.get(this.validarUrl + correo, { headers });
   }
   
-  CambiarContrasena(c:Contrasena, usuario:string): Observable<any>{
+  CambiarContrasena(c:Contrasena, correo:string): Observable<any>{
     const headers = new HttpHeaders ({'Content-Type': 'application/json'})
-    return this.http.put(this.CambiarCoUrl + usuario, c, {headers});
+    return this.http.put(this.CambiarCoUrl.replace('{correo}',correo),c, {headers});
+  }
+  //cancelar el proceso de cambio de contraseña
+  declineUpdate(correo: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(this.declineUpdatePassword + correo, { headers });
   }
 }
 
