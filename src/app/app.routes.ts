@@ -13,10 +13,11 @@ import { Page404Component } from './pages/page404/page404.component';
 import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.component';
 
 import { LoginAditionalComponent } from './pages/login-aditional/login-aditional.component';
+import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
     { path: 'menu',component: MenuComponent, outlet: 'menu' },
-    
+    { path: 'email',component: EmailConfirmationComponent},
     { path: 'prueba-login', component: PruebaLoginComponent },
     { path: 'login-aditional', component: LoginAditionalComponent },
     
