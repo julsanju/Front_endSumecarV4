@@ -430,6 +430,9 @@ export class PruebaLoginComponent implements OnInit {
     )
   }
 
+  xd(){
+    window.open("/email");
+  }
   mostrarAlerta() {
     this.showAlert = true;
 
