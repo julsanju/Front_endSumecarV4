@@ -548,7 +548,7 @@ export class PruebaLoginComponent implements OnInit {
           title: 'ERROR',
           html: `${this.errorMessage}`,
           icon: 'error',
-        });
+        }).then(() => window.location.reload());
       }
     );
 

@@ -535,4 +535,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  //tipo de usuario
+  esCliente(): boolean {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        const userData = JSON.parse(userDataString);
+        return userData.rol === 'cliente';
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
+        return false;
+      }
+    }
+    return false;
+  }
 }

@@ -35,7 +35,7 @@ export class EmailConfirmationComponent implements OnInit{
   }
 
   validateEmail() {
-    this.http.get<any>(`http://localhost:5171/api/login/validar_correo?usuario=${this.usuario}&token=${this.token}`)
+    this.http.get<any>(`https://sumecarventas.azurewebsites.net/api/login/validar_correo?usuario=${this.usuario}&token=${this.token}`)
       .subscribe(
         (response) => {
           this.state = State.SuccesEmail

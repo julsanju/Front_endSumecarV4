@@ -91,6 +91,11 @@ export class MenuComponent {
   productos() {
     this.router.navigate(['/menu/productos']).then(() => window.location.reload());
   }
+  //redireccionar crear usuario
+  redireccionarUsuario(){
+
+    this.router.navigate(['/menu/usuarios']).then(() => window.location.reload());
+  }
 
   //metodo para mapear datos en el userProfile
   mapeoUserProfile() {
