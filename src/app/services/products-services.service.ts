@@ -10,26 +10,26 @@ export class ProductsServicesService {
   private productosConfirmadosSubject = new Subject<void>();
 
   //mostrar todos los productos
-  //private apiUrl = 'http://localhost:5107/api/productos/obtener';
-  private UrlPendientes = 'http://localhost:5107/api/productos/filtrar/';
-  private UrlAccordion = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion';
-  private UrlAccordionCliente = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion/';
-  private UrlAccordionFinalizada = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion_finalizada';
-  private UrlAccordionFinalizadaCliente = 'http://localhost:5107/api/productos/filtrar_pedidos_accordion_finalizada/';
+  //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
+  private UrlPendientes = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar/';
+  private UrlAccordion = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion';
+  private UrlAccordionCliente = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion/';
+  private UrlAccordionFinalizada = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion_finalizada';
+  private UrlAccordionFinalizadaCliente = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion_finalizada/';
 
-  private UrlFinalizados = 'http://localhost:5107/api/productos/filtrar_finalizados/';
-  private UrlProductosFinalizados = 'http://localhost:5107/api/productos/insertar/';
-  private UrlPendientesEmpleado = 'http://localhost:5107/api/productos/filtrar_empleado';
-  private UrlFinalizadosEmpleado = 'http://localhost:5107/api/productos/filtrar_finalizadosEmpleado';
-  private ApiUrlFinalizarPeticionProducto = 'http://localhost:5107/api/productos/finalizar_peticion_productos/';
+  private UrlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizados/';
+  private UrlProductosFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/insertar/';
+  private UrlPendientesEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_empleado';
+  private UrlFinalizadosEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizadosEmpleado';
+  private ApiUrlFinalizarPeticionProducto = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/finalizar_peticion_productos/';
   //local
-  private apiUrl = 'http://localhost:5107/api/productos/obtener';
-  /*private UrlPendientes = 'http://localhost:5107/api/productos/filtrar/'; 
-  private UrlFinalizados = 'http://localhost:5107/api/productos/filtrar_finalizados/'; 
-  private UrlProductosFinalizados = 'http://localhost:5107/api/productos/insertar/';
-  private UrlPendientesEmpleado = 'http://localhost:5107/api/productos/filtrar_empleado';
-  private UrlFinalizadosEmpleado = 'http://localhost:5107/api/productos/filtrar_finalizadosEmpleado';
-  private ApiUrlFinalizarPeticionProducto = 'http://localhost:5107/api/productos/finalizar_peticion_productos/';*/
+  private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
+  /*private UrlPendientes = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar/'; 
+  private UrlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizados/'; 
+  private UrlProductosFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/insertar/';
+  private UrlPendientesEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_empleado';
+  private UrlFinalizadosEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizadosEmpleado';
+  private ApiUrlFinalizarPeticionProducto = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/finalizar_peticion_productos/';*/
   constructor(private http: HttpClient) { }
   //obtener todos los productos
   obtenerProductos(): Observable<Productos[]> {

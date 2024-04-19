@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
 
 import { Observable, Subscription, forkJoin, interval } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import * as ApexCharts from 'apexcharts';
 
 
@@ -80,7 +80,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   crecimientoPeticion2: boolean = false;
   dataUser = '';
 
-  constructor(private servicio: DashboardServicesService) { }
+  constructor(
+              private servicio: DashboardServicesService,
+              private router: Router, 
+      ) { }
 
   ngOnInit() {
     // pedidos montados
@@ -90,7 +93,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.renderizarBottom2();
       this.obtenerPedidoPendiente();
 
-      this.subscription = interval(1000).subscribe(() => {
+      this.subscription = interval(5000).subscribe(() => {
         this.obtenerPedidoPendiente();
       });
     });
@@ -337,9 +340,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   obtenerPedidoPendiente(){
-    this.servicio.obtenerPendientes().subscribe(data => {
-      this.generalPedidosPendientes = data[0].cantidad
-    })
+    this.obtener_usuario().subscribe(usuario => {
+      this.dataUser = usuario;
+          
+      if (this.esCliente()) {
+        const opcion = 'cliente'
+        this.servicio.obtenerPendientes(this.dataUser, opcion).subscribe(data => {
+          this.generalPedidosPendientes = data[0].cantidad
+        })
+      }
+      else{
+        const opcion = 'otro'
+        this.servicio.obtenerPendientes(this.dataUser, opcion).subscribe(data => {
+          this.generalPedidosPendientes = data[0].cantidad
+        })
+      }    
+      
+          return this.generalPedidosPendientes
+      }
+    )
   }
 
   
@@ -548,5 +567,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     }
     return false;
+  }
+  //REDIRECCIONES
+  redireccionarPedidosPendientes(){
+    this.router.navigate(['/menu/confirmed-products']).then(() => window.location.reload());
   }
 }

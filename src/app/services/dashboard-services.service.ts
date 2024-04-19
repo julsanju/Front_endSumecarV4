@@ -17,7 +17,7 @@ export class DashboardServicesService {
   //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_montados';
   //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/mostrar_graficoGeneral/{username}/{estado}/{movimiento}';
   private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/mostrar_graficoGeneral/{username}/{estado}/{movimiento}';
-  private apiUrlPendintes = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_pendientes';
+  private apiUrlPendintes = 'http://localhost:5107/api/Dashboard/Pedidos_pendientes/{usuario}/{opcion}';
   private apiurlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_finalizados';
   
   constructor(private http : HttpClient) { }
@@ -33,8 +33,8 @@ export class DashboardServicesService {
   }
 
   //obtener pedidos pendientes
-  obtenerPendientes(): Observable<Dashboard[]>{
-    return this.http.get<Dashboard[]>(this.apiUrlPendintes);
+  obtenerPendientes(usuario:string, opcion:string): Observable<Dashboard[]>{
+    return this.http.get<Dashboard[]>(this.apiUrlPendintes.replace('{usuario}', usuario).replace('{opcion}', opcion));
   }
 
   //obtener Pedidos Finalizados
