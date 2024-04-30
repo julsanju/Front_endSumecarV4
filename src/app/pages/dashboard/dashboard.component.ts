@@ -542,7 +542,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (userDataString) {
         try {
           const userData = JSON.parse(userDataString);
-          const username = userData.usuario;
+          const username = userData.Usuario;
           observer.next(username);
           observer.complete();
         } catch (error) {
@@ -560,7 +560,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (userDataString) {
       try {
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'cliente';
+        return userData.Rol[0].RolId === '3';
       } catch (error) {
         console.error('Error al aalizar JSON:', error)
         return false;

@@ -22,6 +22,7 @@ import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSet
 import { environment } from 'src/app/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Contrasena } from 'src/app/Interfaces/contrasena';
+import { DetalleRol } from 'src/app/Interfaces/detalle-rol';
 
 
 //enumeracion
@@ -75,16 +76,18 @@ export class PruebaLoginComponent implements OnInit {
   userVerified: any = '';
   sitekey = environment.recaptcha.siteKey;
   users = [
-    { value: 'cliente', viewValue: 'Cliente' },
-    { value: 'empleado', viewValue: 'Empleado' },
-    { value: 'admin', viewValue: 'Admin' }
+    { value: 1, viewValue: 'Admin' },
+    { value: 2, viewValue: 'Empleado' },
+    { value: 3, viewValue: 'Cliente' }
   ];
+  detalle: DetalleRol[] = [];
   registrationForm: FormGroup;
   passwordForm: FormGroup;
   errorMessage: MensajeError | null = null;
   passwordVisible: boolean = true;
   disableSelect = new FormControl(false);
   loginForm: FormGroup;
+  detalleRolForm: FormGroup;
   email: string = '';
   password: string = '';
   passwordStrength: string = '';
@@ -137,7 +140,12 @@ export class PruebaLoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.email]],
       contrasena: ['', Validators.required],
-      rol: ['Usuario', Validators.required],
+      rol: [''] 
+      // rol: ['Usuario', Validators.required],
+    });
+
+    this.detalleRolForm = this.formBuilder.group({
+        rol: [''] 
     });
 
     this.registrationForm = this.formBuilder.group({
@@ -506,32 +514,48 @@ export class PruebaLoginComponent implements OnInit {
     }
   }
 
-  
+  onRolSelectionChange(event: any) {
+    const selectedRoleId = event.target.value;
+    console.log('Rol seleccionado:', selectedRoleId);
+  }
+
   onSubmit() {
     //activar loading
     this.cargando = true;
     //login
-    const userData: Login = this.loginForm.value;
+    const rolesList: DetalleRol[] = [];
+    const DetalleRol = this.loginForm.get('rol')?.value;
+    rolesList.push({ RolId: DetalleRol });
+    
+    
+    const userData2: Login = {
+      Usuario: this.loginForm.get('usuario')?.value,
+      Contrasena: this.loginForm.get('contrasena')?.value,
+      Rol: rolesList
+    };
+    //const detalles: DetalleRol[] = this.detalle.filter(detalle => detalle.RolId !== 0)
+    
+    console.log("Datos de usuario antes de enviar:", JSON.stringify(userData2));
 
-    this.loginService.LoginValidation(userData).subscribe(
+    this.loginService.LoginValidation(userData2).subscribe(
       (response) => {
         this.bool = true
         localStorage.setItem('bool', this.bool.toString())
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
-
+        
         this.router.navigate(['/menu/dashboard'])
           .then(() => window.location.reload())
-        const userData2 = {
-          usuario: this.loginForm.get('usuario')?.value,
-          contrasena: this.loginForm.get('contrasena')?.value,
-          rol: this.loginForm.get('rol')?.value,
-        };
 
+          const userData2: Login = {
+            Usuario: this.loginForm.get('usuario')?.value,
+            Contrasena: this.loginForm.get('contrasena')?.value,
+            Rol: rolesList
+          };
+        // localStorage.setItem('userData', JSON.stringify(userData2));
         localStorage.setItem('userData', JSON.stringify(userData2));
+        
         this.userData = userData2;
 
-        localStorage.setItem('userData', JSON.stringify(userData2));
-        this.userData = userData2;
         const user2 = sessionStorage.setItem(
           'userData',
           this.loginForm.get('usuario')?.value

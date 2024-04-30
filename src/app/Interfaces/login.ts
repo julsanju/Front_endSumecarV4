@@ -1,5 +1,7 @@
+import { DetalleRol } from "./detalle-rol";
+
 export interface Login {
     Usuario: string;
     Contrasena: string;
-    Rol: string;
+    Rol: DetalleRol [];
 }

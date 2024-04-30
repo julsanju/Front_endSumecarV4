@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
+import { LoginServicesService } from 'src/app/services/login-services.service';
 
 enum State {
   DataConfirmation,
@@ -23,7 +24,7 @@ export class EmailConfirmationComponent implements OnInit{
   usuario: string = '';
   token: string = '';
 
-  constructor(private app: AppComponent, private route: ActivatedRoute, private http: HttpClient){
+  constructor(private app: AppComponent, private route: ActivatedRoute, private http: HttpClient, private loginService: LoginServicesService){
     this.app.mostrarMenu = false;
   }
 
@@ -48,6 +49,27 @@ export class EmailConfirmationComponent implements OnInit{
           console.error(error);
         }
       );
+  }
+
+  //metodo para cancelar la peticion de confirmar correo
+  declineEmailConfirmation(){
+    this.cargando = true
+    this.loginService.declineEmail_Confirmation(this.usuario).subscribe(
+      (response) => {
+        setTimeout(() => {
+          this.cargando = false;
+          window.close()
+        }, 1000);
+        console.log(response)
+      },
+      (error) => {
+        setTimeout(() => {
+          this.cargando = false;
+          window.close()
+        }, 1000);
+        console.error("el error es: " + error.message)
+      }
+    )
   }
   windowClose(){
     this.cargando = true

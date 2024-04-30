@@ -71,6 +71,7 @@
         <!--<x-validation-errors class="mb-4" />-->
         <h2 class="font-bold text-2xl text-blue-500">Login</h2>
         <span class="text-base text-gray-600 font-bold mt-4"> Si ya eres miembro, inicia sesión fácilmente :)</span>
+        
         <form [formGroup]="loginForm" class="flex flex-col gap-4">
           <input formControlName="usuario" class="p-2 mt-8 rounded-xl text-base  border-gray-400" type="email"
             name="email" placeholder="Usuario" required autofocus autocomplete="username">
@@ -101,13 +102,14 @@
               contraseña?</button>
           </div>
 
-          <select formControlName="rol" (click)="toggleSelect()" id="countries"
+          <select formControlName="rol" (change)="onRolSelectionChange($event)" (click)="toggleSelect()" id="countries"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             @for (users of users; track users) {
             <option [value]="users.value">{{ users.viewValue }}</option>
             }
           </select>
-          <!-- captcha -->
+
+        
           <div>
             <re-captcha #captchaElem (resolved)="verifyCaptcha($event)"
               siteKey="6LcGf6ApAAAAANYJ5m-YVw8ZOwG9gsMDAGRXPuDD" size="invisible">
@@ -145,6 +147,7 @@
           </span>
 
         </form>
+
         <div class=" mt-8 grid grid-cols-3 items-center text-gray-400">
           <hr class="border-gray-400 ">
           <p class="text-center">O</p>

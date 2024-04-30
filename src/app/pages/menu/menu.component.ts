@@ -105,8 +105,7 @@ export class MenuComponent {
       const userData = JSON.parse(userDataString);
 
       // Extraer solo el id de usuario
-      const username = userData.usuario;
-      console.log(userData.usuario )
+      const username = userData.Usuario;
 
       this.servicio.obtenerMapeo(username).subscribe(
         (response) => {
@@ -130,7 +129,7 @@ export class MenuComponent {
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'admin'; // Verifica la propiedad correcta 'rol'
+        return userData.Rol[0].RolId === '1'; // Verifica la propiedad correcta 'rol'
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
         console.error('Error al analizar JSON:', error);
@@ -145,7 +144,7 @@ export class MenuComponent {
     if (userDataString) {
       try {
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'empleado';
+        return userData.Rol[0].RolId === '2';
       } catch (error) {
         console.error('Error al aalizar JSON:', error)
         return false;
@@ -160,7 +159,7 @@ export class MenuComponent {
     if (userDataString) {
       try {
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'cliente';
+        return userData.Rol[0].RolId === '3';
       } catch (error) {
         console.error('Error al aalizar JSON:', error)
         return false;
