@@ -71,17 +71,17 @@ export class ConfirmedProductsComponent implements OnInit {
     }, 1000);
 
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
-    this.validacionRol();
+    const empleado = this.validacionRol();
 
-    this.rolSubject.subscribe((esEmpleado: boolean) => {
-      if (esEmpleado) {
+    
+      if (empleado) {
         this.handleEmpleadoCase();
       } else {
 
         this.handleClienteCase();
       }
 
-    });
+    
 
     
   }
@@ -161,7 +161,7 @@ export class ConfirmedProductsComponent implements OnInit {
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
-        username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+        username = userData.Usuario; // Actualiza la propiedad 'username' con el valor correcto
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
         console.error('Error al analizar JSON:', error);
@@ -176,7 +176,7 @@ export class ConfirmedProductsComponent implements OnInit {
       if (userDataString) {
         try {
           const userData = JSON.parse(userDataString);
-          const username = userData.usuario;
+          const username = userData.Usuario;
           observer.next(username);
           observer.complete();
         } catch (error) {
@@ -201,23 +201,48 @@ export class ConfirmedProductsComponent implements OnInit {
 
   }
 
-  validacionRol(): void {
-    var name = this.obtener_usuario(this.dataUser);
+  validacionRol(): boolean {
+    const userDataString = localStorage.getItem('userData');
+    
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        console.log(userData)
+        const esEmpleado = userData.Rol[0].RolId === '1' || userData.Rol[0].RolId === '2'
+        
+        if (esEmpleado ) {
+          this.rolSubject.next(esEmpleado);
+        }
+        else{
+          this.rolSubject.next(false);
+        }
+        return esEmpleado
+        // var name = this.obtener_usuario(this.dataUser);
 
-    this.peticion.obtenerCorreo(name).subscribe(
-
-      (response) => {
-        this.data2 = response;
-        const esEmpleado = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
-        this.rolSubject.next(esEmpleado);
-      },
-      (error) => {
-        // Manejar errores si es necesario
-        console.error(error);
-        this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
-
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+        return false;
       }
-    );
+      
+    }
+    return false;
+
+    // this.peticion.obtenerCorreo(name).subscribe(
+
+    //   (response) => {
+    //     this.data2 = response;
+    //     const esEmpleado = this.data2[0].rol === 'admin' || this.data2[0].rol === 'empleado';
+    //     this.rolSubject.next(esEmpleado);
+    //   },
+    //   (error) => {
+    //     // Manejar errores si es necesario
+    //     console.error(error);
+    //     this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
+
+    //   }
+    // );
   }
 
   finalizarPeticionProducto(id: number): void {
@@ -292,7 +317,7 @@ export class ConfirmedProductsComponent implements OnInit {
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'admin'; // Verifica la propiedad correcta 'rol'
+        return userData.Rol[0].RolId === '1'; // Verifica la propiedad correcta 'rol'
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
         console.error('Error al analizar JSON:', error);
@@ -307,7 +332,7 @@ export class ConfirmedProductsComponent implements OnInit {
     if (userDataString) {
       try {
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'empleado';
+        return userData.Rol[0].RolId === '2';
       } catch (error) {
         console.error('Error al aalizar JSON:', error)
         return false;
@@ -322,7 +347,7 @@ export class ConfirmedProductsComponent implements OnInit {
     if (userDataString) {
       try {
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'cliente';
+        return userData.Rol[0].RolId === '3';
       } catch (error) {
         console.error('Error al aalizar JSON:', error)
         return false;

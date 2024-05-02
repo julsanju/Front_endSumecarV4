@@ -68,17 +68,14 @@ export class FinishedProductsComponent implements OnInit{
     }, 2000);
   
     // Llamamos a obtenerCorreo y nos suscribimos al observable resultante
-    this.validacionRol();
-    this.rolSubject.subscribe((esEmpleadoOesAdmin: boolean) => {
-      if (esEmpleadoOesAdmin) {
+    const empleado = this.validacionRol();
 
+      if (empleado) {
         this.handleEmpleadoCase();
-
       } else {
-        
+
         this.handleClienteCase();
       }
-    });
   }
 
 
@@ -145,7 +142,7 @@ export class FinishedProductsComponent implements OnInit{
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
-        username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+        username = userData.Usuario; // Actualiza la propiedad 'username' con el valor correcto
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
         console.error('Error al analizar JSON:', error);
@@ -160,7 +157,7 @@ export class FinishedProductsComponent implements OnInit{
       if (userDataString) {
         try {
           const userData = JSON.parse(userDataString);
-          const username = userData.usuario;
+          const username = userData.Usuario;
           observer.next(username);
           observer.complete();
         } catch (error) {
@@ -185,23 +182,48 @@ export class FinishedProductsComponent implements OnInit{
       
   }
 
-  validacionRol(): void {
-    var name = this.obtener_usuario(this.dataUser);
-  
-    this.peticion.obtenerCorreo(name).subscribe(
-      (response) => {
-        this.data2 = response;
-        const esEmpleadoOesAdmin = this.data2[0].rol === 'empleado' || this.data2[0].rol === 'admin';
-        this.rolSubject.next(esEmpleadoOesAdmin);
+  validacionRol(): boolean {
+    const userDataString = localStorage.getItem('userData');
+    
+    if (userDataString) {
+      try {
+        // Intenta analizar la cadena como JSON
+        const userData = JSON.parse(userDataString);
+        console.log(userData)
+        const esEmpleado = userData.Rol[0].RolId === '1' || userData.Rol[0].RolId === '2'
         
-        
-      },
-      (error) => {
-        // Manejar errores si es necesario
-        console.error(error);
-        this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
+        if (esEmpleado ) {
+          this.rolSubject.next(esEmpleado);
+        }
+        else{
+          this.rolSubject.next(false);
+        }
+        return esEmpleado
+        // var name = this.obtener_usuario(this.dataUser);
+
+      } catch (error) {
+        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+        console.error('Error al analizar JSON:', error);
+        return false;
       }
-    );
+      
+    }
+    return false;
+
+    // this.peticion.obtenerCorreo(name).subscribe(
+
+    //   (response) => {
+    //     this.data2 = response;
+    //     const esEmpleado = this.data2[0].rol === 'admin' || this.data2[0].rol === 'empleado';
+    //     this.rolSubject.next(esEmpleado);
+    //   },
+    //   (error) => {
+    //     // Manejar errores si es necesario
+    //     console.error(error);
+    //     this.rolSubject.next(false); // En caso de error, asumimos que no es empleado
+
+    //   }
+    // );
   }
 
   finalizarPeticion(id: number): void {

@@ -132,7 +132,7 @@ export class AppComponent implements OnInit {
       const userData = JSON.parse(userDataString);
 
       // Extraer solo el id de usuario
-      const username = userData.usuario;
+      const username = userData.Usuario;
       this.servicio.obtenerImagenUser(username).subscribe(
         (response) => {
           if (!response || response === '') {

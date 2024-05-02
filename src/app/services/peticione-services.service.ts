@@ -9,7 +9,7 @@ import { Empleado } from '../Interfaces/empleado';
 export class PeticioneServicesService {
 
   //private ApiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones_pendientes/';
-  private ApiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones/{estado}/{username}';
+  private ApiUrl = 'http://localhost:5107/api/mostrar_peticiones/{estado}/{username}/{rol}';
   
   //private ApiUrlFinalizarPeticion = 'https://microservicio-sumecarventas.azurewebsites.net/api/finalizar_peticion/';
   private ApiUrlFinalizarPeticion = 'https://microservicio-sumecarventas.azurewebsites.net/api/finalizar_peticion/';
@@ -17,8 +17,8 @@ export class PeticioneServicesService {
   
   constructor(private http : HttpClient) { }
 
-  ObtenerPeticiones(estado:string,username:string): Observable<Peticiones[]>{
-    const url = this.ApiUrl.replace('{estado}', estado).replace('{username}', username);
+  ObtenerPeticiones(estado:string,username:string, rol:string): Observable<Peticiones[]>{
+    const url = this.ApiUrl.replace('{estado}', estado).replace('{username}', username).replace('{rol}', rol);
     return this.http.get<Peticiones[]>(url);
   }
 

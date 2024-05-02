@@ -57,21 +57,21 @@ export class MenuComponent {
     this.obtenerUsuario();
     this.validateDataProfileAuth();
     this.mapeoUserProfile();
-    const userDataString = localStorage.getItem('userData');
-    
-    if (userDataString) {
-      try {
-        // Intenta analizar la cadena como JSON
-        const userData = JSON.parse(userDataString);
-        this.isAdmin = userData.rol === 'admin';
-        this.isEmpleado = userData.rol === 'empleado';
-        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
-        this.rol = userData.rol;
-      } catch (error) {
-        // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
-        console.error('Error al analizar JSON:', error);
-      }
-    }
+    // const userDataString = localStorage.getItem('userData');
+    // console.log(JSON.stringify(userDataString))
+    // if (userDataString) {
+    //   try {
+    //     // Intenta analizar la cadena como JSON
+    //     const userData = JSON.parse(userDataString);
+    //     this.isAdmin = userData.Rol[0].RolId === '1';
+    //     this.isEmpleado = userData.Rol[0].RolId === '2';
+    //     this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+    //     this.rol = userData.Rol[0].RolId;
+    //   } catch (error) {
+    //     // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
+    //     console.error('Error al analizar JSON:', error);
+    //   }
+    // }
 
   }
 
@@ -174,7 +174,7 @@ export class MenuComponent {
       const userData = JSON.parse(userDataString);
 
       // Extraer solo el id de usuario
-      const username = userData.usuario;
+      const username = userData.Usuario;
       this.servicio.obtenerImagenUser(username).subscribe(
         (response) => {
           if (!response || response === '') {

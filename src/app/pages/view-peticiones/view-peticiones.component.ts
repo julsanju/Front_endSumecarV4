@@ -29,6 +29,7 @@ export class ViewPeticionesComponent implements OnInit {
   @ViewChild('vc') vc!: ViewContainerRef;
   @ViewChild('vcContainer', { read: ViewContainerRef }) container!: ViewContainerRef;
   dataUser: string = '';
+  dataRol: string = '';
   correo: string = '';
   errorMessage: MensajeError | null = null;
   spinner: boolean = false;
@@ -118,13 +119,16 @@ export class ViewPeticionesComponent implements OnInit {
   }
 
   private obtenerPeticiones() {
-    this.obtener_usuario().subscribe(
-      (usuario) => {
-        this.dataUser = usuario;
+    this.obtener_rol().subscribe(
+      (response) => {
+        this.dataUser = response.username;
+        this.dataRol = response.rol
         //definimos que el estado de esta pagina es de tipo pendiente
         const estado = "Pendiente"
-        if (this.dataUser) {
-          this.servicio.ObtenerPeticiones(estado, this.dataUser).subscribe(
+        if (this.dataUser && this.dataRol) {
+          // this.servicio.ObtenerPeticiones(estado, this.dataUser, this.dataRol)
+          this.servicio.ObtenerPeticiones(estado, this.dataUser, this.dataRol)
+          .subscribe(
             (response) => {
               this.data = response;
               this.dataOriginalData = response;
@@ -148,7 +152,7 @@ export class ViewPeticionesComponent implements OnInit {
       if (userDataString) {
         try {
           const userData = JSON.parse(userDataString);
-          const username = userData.usuario;
+          const username = userData.Usuario;
           observer.next(username);
           observer.complete();
         } catch (error) {
@@ -160,7 +164,25 @@ export class ViewPeticionesComponent implements OnInit {
     });
   }
 
-
+  private obtener_rol(): Observable<{ username: string, rol: string }> {
+    return new Observable((observer) => {
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        try {
+          const userData = JSON.parse(userDataString);
+          const username = userData.Usuario;
+          const rol = userData.Rol[0].RolId; // Suponiendo que "Rol" es una cadena en tu objeto userData
+          observer.next({ username, rol });
+          observer.complete();
+        } catch (error) {
+          observer.error('Error al analizar JSON:');
+        }
+      } else {
+        observer.error('No se encontró userData en localStorage.');
+      }
+    });
+  }
+  
   finalizarPeticion(id: number): void {
     this.cargando = true;
     this.servicio.FinalizarPeticion(id).subscribe(
@@ -232,7 +254,7 @@ export class ViewPeticionesComponent implements OnInit {
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'admin'; // Verifica la propiedad correcta 'rol'
+        return userData.Rol[0].RolId === '1'; // Verifica la propiedad correcta 'rol'
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
         console.error('Error al analizar JSON:', error);
@@ -248,7 +270,7 @@ export class ViewPeticionesComponent implements OnInit {
     if (userDataString) {
       try {
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'empleado';
+        return userData.Rol[0].RolId === '2';
       } catch (error) {
         console.error('Error al aalizar JSON:', error)
         return false;
@@ -264,7 +286,7 @@ export class ViewPeticionesComponent implements OnInit {
     if (userDataString) {
       try {
         const userData = JSON.parse(userDataString);
-        return userData.rol === 'cliente';
+        return userData.Rol[0].RolId === '3';
       } catch (error) {
         console.error('Error al aalizar JSON:', error)
         return false;
