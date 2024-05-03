@@ -412,12 +412,35 @@
 <div class="relative">
     <div class="overflow-y-auto max-h-40">
         <div class="flex flex-col">
+          <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" class="text-sm rounded-lg block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ng-pristine ng-invalid ng-touched" 
+          type="button">
+          <div class="flex justify-between items-center">
+            Seleccione roles:
+            
+            <svg _ngcontent-ng-c1194286045="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" class="w-2.5 h-2.5 ms-2.5"><path _ngcontent-ng-c1194286045="" stroke="#6b7280" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path></svg>
+              </div>
+        </button>
+            <!-- <label *ngFor="let option of roles" class="flex items-center">
+                <input type="checkbox" formControlName="Rol" [value]="option.value" [checked]="option.selected" (change)="toggleOption(option)" class="mr-2">
+                <span>{{ option.label }}</span>
+            </label> -->
+        </div>
+    </div>
+</div>
+
+<div id="dropdownSearch" class="z-10 hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700">
+  
+  <div class="relative">
+    <div class="overflow-y-auto max-h-40">
+        <div class="flex flex-col">
             <label *ngFor="let option of roles" class="flex items-center">
                 <input type="checkbox" formControlName="Rol" [value]="option.value" [checked]="option.selected" (change)="toggleOption(option)" class="mr-2">
                 <span>{{ option.label }}</span>
             </label>
         </div>
     </div>
+</div>
+  
 </div>
 
         
