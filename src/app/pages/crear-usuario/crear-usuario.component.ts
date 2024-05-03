@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DepartamentoCiudad } from 'src/app/Interfaces/departamento-ciudad';
 import { forkJoin } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Usuariosxd } from 'src/app/Interfaces/usuariosxd';
 @Component({
   selector: 'app-crear-usuario',
   standalone: true,
@@ -51,6 +52,16 @@ export class CrearUsuarioComponent implements OnInit {
   formData: FormData;
   files: any = []
 
+  //opciones derol
+  opcionesSeleccionadas: any[] = [];
+  
+  
+  roles = [
+    { label: 'Admin', value: 1, selected: false },
+    { label: 'Empleado', value: 2, selected: false },
+    { label: 'Cliente', value: 3, selected: false }
+  ];
+  
   constructor(private servicioUsuarios: UsuariosServicesService,
     private formBuilder: FormBuilder,
     private registerService: RegisterService,
@@ -61,7 +72,8 @@ export class CrearUsuarioComponent implements OnInit {
 
     this.registrationForm = this.formBuilder.group({
       Identificacion: ['', Validators.required],
-      Rol: ['', Validators.required],
+      nit_empresa: ['', Validators.required],
+      Rol: [[], Validators.required],
       Nombre: ['', Validators.required],
       Apellido: ['', Validators.required],
       Sexo: ['', Validators.required],
@@ -72,7 +84,7 @@ export class CrearUsuarioComponent implements OnInit {
       Contrasena: ['', Validators.required],
       Departamento: ['', Validators.required],
       Ciudad: ['', Validators.required],
-      Imagen: ['']
+      //Imagen: ['']
     });
 
     this.UpdateForm = this.formBuilder.group({
@@ -89,6 +101,24 @@ export class CrearUsuarioComponent implements OnInit {
     })
   }
 
+  toggleOption(option: any) {
+    option.selected = !option.selected;
+    if (option.selected) {
+        this.opcionesSeleccionadas.push({ RolId: option.value });
+    } else {
+        // Buscar el índice del objeto en this.opcionesSeleccionadas que tenga el mismo RolId
+        const index = this.opcionesSeleccionadas.findIndex((selectedOption: any) => selectedOption.RolId === option.value);
+        if (index !== -1) {
+            // Eliminar el objeto del arreglo this.opcionesSeleccionadas
+            this.opcionesSeleccionadas.splice(index, 1);
+        }
+    }
+    console.log('Opciones seleccionadas:', this.opcionesSeleccionadas);
+}
+
+  
+  
+  
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos de empleados
 
@@ -249,76 +279,85 @@ export class CrearUsuarioComponent implements OnInit {
       }
     });
 
-  crearUsuario() {
-    this.cargando = true;
-    try {
-      const formData = new FormData();
-      // Verificar si hay archivos
-      if (this.files.length === 0 || !Image) {
-        console.log('No se proporcionaron imágenes.');
-        formData.append('Nombre', this.registrationForm.value.Nombre);
-        formData.append('Apellido', this.registrationForm.value.Apellido);
-        formData.append('Sexo', this.registrationForm.value.Sexo);
-        formData.append('Contrasena', this.registrationForm.value.Contrasena);
-        formData.append('ImagenUrl', '');
-        formData.append('Identificacion', this.registrationForm.value.Identificacion);
-        formData.append('Rol', this.registrationForm.value.Rol);
-        formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-        formData.append('Telefono', this.registrationForm.value.Telefono);
-        formData.append('Correo', this.registrationForm.value.Correo);
-        formData.append('Usuario', this.registrationForm.value.Usuario);
-        formData.append('Contrasena', this.registrationForm.value.Contrasena);
-        formData.append('Departamento', this.registrationForm.value.Departamento);
-        formData.append('Ciudad', this.registrationForm.value.Ciudad);
-        // Continuar con el proceso sin agregar imágenes al formData
-        this.enviarFormulario(formData, this.registrationForm.value.Usuario)
-        
-      }
-
-      // Si hay archivos, cargar imágenes y enviar el formulario
-      const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
-
-      imagesLoaded$.subscribe(
-        (images: any) => {
-
-          formData.append('Nombre', this.registrationForm.value.Nombre);
-          formData.append('Apellido', this.registrationForm.value.Apellido);
-          formData.append('Sexo', this.registrationForm.value.Sexo);
-          formData.append('Contrasena', this.registrationForm.value.Contrasena);
-
-          images.forEach((image: any) => {
-            // Agrega las imágenes al FormData
-            if (image && image.blob) {
-              formData.append('ImagenUrl', image.blob);
-            }
-          });
-
-          formData.append('Identificacion', this.registrationForm.value.Identificacion);
-          formData.append('Rol', this.registrationForm.value.Rol);
-          formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-          formData.append('Telefono', this.registrationForm.value.Telefono);
-          formData.append('Correo', this.registrationForm.value.Correo);
-          formData.append('Usuario', this.registrationForm.value.Usuario);
-          formData.append('Contrasena', this.registrationForm.value.Contrasena);
-          formData.append('Departamento', this.registrationForm.value.Departamento);
-          formData.append('Ciudad', this.registrationForm.value.Ciudad);
-
-          this.enviarFormulario(formData, this.registrationForm.value.Usuario);
-          this.cargando = false;
-          
-        },
-        (error) => {
-          console.error('Error al cargar imágenes:', error);
-          this.mostrarDanger();
-          this.cargando = false;
-        }
-      );
-    } catch (exception) {
-      console.log(exception);
+    guardarxd() {
+      const data =  this.registrationForm.value as Usuariosxd;
+      data.Rol = this.opcionesSeleccionadas;
+      const usuario = this.registrationForm.get('Usuario')?.value
+      console.log(data )
+      console.log(usuario)
+      this.enviarFormulario(data, usuario);
     }
-  }
+  // crearUsuario() {
+  //   this.cargando = true;
+  //   try {
+      
+  //     const formData = new FormData();
+  //     // Verificar si hay archivos
+  //     if (this.files.length === 0 || !Image) {
+  //       console.log('No se proporcionaron imágenes.');
+  //       formData.append('Nombre', this.registrationForm.value.Nombre);
+  //       formData.append('Apellido', this.registrationForm.value.Apellido);
+  //       formData.append('Sexo', this.registrationForm.value.Sexo);
+  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  //       formData.append('ImagenUrl', '');
+  //       formData.append('Identificacion', this.registrationForm.value.Identificacion);
+  //       formData.append('Rol', this.registrationForm.value.Rol);
+  //       formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+  //       formData.append('Telefono', this.registrationForm.value.Telefono);
+  //       formData.append('Correo', this.registrationForm.value.Correo);
+  //       formData.append('Usuario', this.registrationForm.value.Usuario);
+  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  //       formData.append('Departamento', this.registrationForm.value.Departamento);
+  //       formData.append('Ciudad', this.registrationForm.value.Ciudad);
+  //       // Continuar con el proceso sin agregar imágenes al formData
+  //       this.enviarFormulario(formData, this.registrationForm.value.Usuario)
+        
+  //     }
 
-  enviarFormulario(formData: FormData, username: string) {
+  //     // Si hay archivos, cargar imágenes y enviar el formulario
+  //     const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
+
+  //     imagesLoaded$.subscribe(
+  //       (images: any) => {
+
+  //         formData.append('Nombre', this.registrationForm.value.Nombre);
+  //         formData.append('Apellido', this.registrationForm.value.Apellido);
+  //         formData.append('Sexo', this.registrationForm.value.Sexo);
+  //         formData.append('Contrasena', this.registrationForm.value.Contrasena);
+
+  //         images.forEach((image: any) => {
+  //           // Agrega las imágenes al FormData
+  //           if (image && image.blob) {
+  //             formData.append('ImagenUrl', image.blob);
+  //           }
+  //         });
+
+  //         formData.append('Identificacion', this.registrationForm.value.Identificacion);
+  //         formData.append('Rol', this.registrationForm.value.Rol);
+  //         formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+  //         formData.append('Telefono', this.registrationForm.value.Telefono);
+  //         formData.append('Correo', this.registrationForm.value.Correo);
+  //         formData.append('Usuario', this.registrationForm.value.Usuario);
+  //         formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  //         formData.append('Departamento', this.registrationForm.value.Departamento);
+  //         formData.append('Ciudad', this.registrationForm.value.Ciudad);
+
+  //         this.enviarFormulario(formData, this.registrationForm.value.Usuario);
+  //         this.cargando = false;
+          
+  //       },
+  //       (error) => {
+  //         console.error('Error al cargar imágenes:', error);
+  //         this.mostrarDanger();
+  //         this.cargando = false;
+  //       }
+  //     );
+  //   } catch (exception) {
+  //     console.log(exception);
+  //   }
+  // }
+
+  enviarFormulario(formData: Usuariosxd, username: string) {
     this.cargando = true;
     // Llamada al servicio para registrar al usuario
     if (this.registrationForm.valid) {
@@ -327,7 +366,7 @@ export class CrearUsuarioComponent implements OnInit {
         this.mostrarDanger();
         this.cargando = false;
       } else {
-        this.registerService.registerUser(formData, username).subscribe(
+        this.registerService.registerxd(formData, username).subscribe(
           (response) => {
             this.mostrarAlerta();
             this.cargando = false;

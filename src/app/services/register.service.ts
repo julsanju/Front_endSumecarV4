@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuarios } from '../Interfaces/usuarios'; // Asegúrate de importar correctamente la interfaz
 import { Empleado } from '../Interfaces/empleado';
+import { Usuariosxd } from '../Interfaces/usuariosxd';
 
 @Injectable({
   providedIn: 'any'
@@ -22,6 +23,9 @@ export class RegisterService {
     return this.http.post(this.apiUrl + username, userData);
   }
 
+  registerxd(userData: Usuariosxd, username:string): Observable<any> {
+    return this.http.post(this.apiUrl + username, userData);
+  }
   registerUserWithDataGoogle(userData: FormData, uid:string): Observable<any> {
     return this.http.post(this.apiUrlDataGoogle + uid, userData);
   }
