@@ -54,14 +54,14 @@ export class CrearUsuarioComponent implements OnInit {
 
   //opciones derol
   opcionesSeleccionadas: any[] = [];
-  
-  
+
+
   roles = [
     { label: 'Admin', value: 1, selected: false },
     { label: 'Empleado', value: 2, selected: false },
     { label: 'Cliente', value: 3, selected: false }
   ];
-  
+
   constructor(private servicioUsuarios: UsuariosServicesService,
     private formBuilder: FormBuilder,
     private registerService: RegisterService,
@@ -73,7 +73,7 @@ export class CrearUsuarioComponent implements OnInit {
     this.registrationForm = this.formBuilder.group({
       Identificacion: ['', Validators.required],
       nit_empresa: ['', Validators.required],
-      Rol: [[], Validators.required],
+      Rol: this.formBuilder.array([]),
       Nombre: ['', Validators.required],
       Apellido: ['', Validators.required],
       Sexo: ['', Validators.required],
@@ -116,9 +116,9 @@ export class CrearUsuarioComponent implements OnInit {
     console.log('Opciones seleccionadas:', this.opcionesSeleccionadas);
 }
 
-  
-  
-  
+
+
+
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos de empleados
 
@@ -210,7 +210,7 @@ export class CrearUsuarioComponent implements OnInit {
         reader.readAsDataURL(files[i]);
 
         this.formData.append('image', files[i], files[i].name);
-        
+
       }
     }
 
@@ -279,18 +279,20 @@ export class CrearUsuarioComponent implements OnInit {
       }
     });
 
-    guardarxd() {
-      const data =  this.registrationForm.value as Usuariosxd;
-      data.Rol = this.opcionesSeleccionadas;
-      const usuario = this.registrationForm.get('Usuario')?.value
-      console.log(data )
-      console.log(usuario)
-      this.enviarFormulario(data, usuario);
-    }
+  guardarxd() {
+    const data = this.registrationForm.value as Usuariosxd;
+    const rolesSeleccionados = this.registrationForm.get('Rol')?.value;
+
+    data.Rol = this.opcionesSeleccionadas;
+    const usuario = this.registrationForm.get('Usuario')?.value
+    console.log(data)
+    console.log(usuario)
+    this.enviarFormulario(data, usuario);
+  }
   // crearUsuario() {
   //   this.cargando = true;
   //   try {
-      
+
   //     const formData = new FormData();
   //     // Verificar si hay archivos
   //     if (this.files.length === 0 || !Image) {
@@ -311,7 +313,7 @@ export class CrearUsuarioComponent implements OnInit {
   //       formData.append('Ciudad', this.registrationForm.value.Ciudad);
   //       // Continuar con el proceso sin agregar imágenes al formData
   //       this.enviarFormulario(formData, this.registrationForm.value.Usuario)
-        
+
   //     }
 
   //     // Si hay archivos, cargar imágenes y enviar el formulario
@@ -344,7 +346,7 @@ export class CrearUsuarioComponent implements OnInit {
 
   //         this.enviarFormulario(formData, this.registrationForm.value.Usuario);
   //         this.cargando = false;
-          
+
   //       },
   //       (error) => {
   //         console.error('Error al cargar imágenes:', error);
