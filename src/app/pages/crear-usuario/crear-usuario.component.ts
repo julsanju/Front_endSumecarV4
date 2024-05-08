@@ -26,6 +26,7 @@ export class CrearUsuarioComponent implements OnInit {
   UpdateForm: FormGroup;
   dataSource: Empleado[] = [];
   originalDataSource: Empleado[] = [];
+  rolesToDisplay: string[] = ['admin', 'empleado', 'cliente'];
   currentPage: number = 1;
   pageSize: number = 4;
   //loading
@@ -43,6 +44,8 @@ export class CrearUsuarioComponent implements OnInit {
   showEditar = false;
   //loading 
   isLoading: boolean = true;
+  viewRol: boolean = false;
+  usuarioRol:string = '';
   //variables para departamentos y ciudades
   departamentos: DepartamentoCiudad[] = [];
   ciudades: DepartamentoCiudad[] = [];
@@ -389,6 +392,14 @@ export class CrearUsuarioComponent implements OnInit {
     }
   }
 
+  //metodo para abrir modal para visualizar roles
+  abrirModal( cliente: string) {
+    this.viewRol = true;
+    this.usuarioRol = cliente;
+  }
+  cerrarModal(){
+    this.viewRol = false;
+  }
   //metodo para abrir el drawer que modificara los usuarios
   abrirModificarEmpleado() {
     this.showEditar = true;

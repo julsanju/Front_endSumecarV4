@@ -3,7 +3,7 @@ export interface Empleado {
     apellido:string, 
     sexo:string,
     correo: string,
-    rol: string,
+    rol: string[],
     identificacion: string,
     usuario: string,
     ubicacion: string,
