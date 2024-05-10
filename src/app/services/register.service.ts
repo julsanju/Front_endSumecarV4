@@ -13,7 +13,7 @@ export class RegisterService {
   private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar/';
   private apiUrlDataGoogle = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertarDataGoogle/' 
   private imagenUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/guardar_imagen';
-  private ApiUrlModificarEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/modificar_empleado'
+  private ApiUrlModificarEmpleado = 'http://localhost:5171/api/usuarios/modificar_empleado'
   
   
 

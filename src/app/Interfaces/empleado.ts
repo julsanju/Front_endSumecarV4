@@ -1,4 +1,5 @@
 export interface Empleado {
+    nit_empresa: string,
     nombre: string,
     apellido:string, 
     sexo:string,

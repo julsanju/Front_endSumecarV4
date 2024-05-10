@@ -57,7 +57,9 @@ export class CrearUsuarioComponent implements OnInit {
 
   //opciones derol
   opcionesSeleccionadas: any[] = [];
-
+  xd: any[] = [];
+  rolesChecked: boolean[] = [];
+  checkedRoles: { RolId: number }[] = [];
 
   roles = [
     { label: 'Admin', value: 1, selected: false },
@@ -70,7 +72,8 @@ export class CrearUsuarioComponent implements OnInit {
     private registerService: RegisterService,
     private messageService: MessageService,
     private sanitizer: DomSanitizer) {
-
+    
+    this.rolesChecked = new Array(this.rolesToDisplay.length).fill(false);
     this.formData = new FormData()
 
     this.registrationForm = this.formBuilder.group({
@@ -92,7 +95,8 @@ export class CrearUsuarioComponent implements OnInit {
 
     this.UpdateForm = this.formBuilder.group({
       Identificacion: ['', Validators.required],
-      Rol: ['', Validators.required],
+      rol: this.formBuilder.array([]),
+      Nit_empresa: ['', Validators.required],
       Nombre: ['', Validators.required],
       Apellido: ['', Validators.required],
       Sexo: ['', Validators.required],
@@ -120,7 +124,28 @@ export class CrearUsuarioComponent implements OnInit {
 }
 
 
+  onCheckboxChange(index: number) {
+    console.log("Checkbox index:", index);
+  }
 
+  updateCheckedRoles() {
+    const numbersToCheck = [1, 2, 3]; // Numbers to check
+    
+    this.checkedRoles = [];
+    this.rolesToDisplay.forEach((role, index) => {
+        if (this.rolesChecked[index] && numbersToCheck.includes(index + 1)) {
+            this.checkedRoles.push({ RolId: index + 1 }); // Push { RolId: index + 1 } into checkedRoles
+        }
+    });
+    console.log("Checked roles:", this.checkedRoles);
+    this.xd = this.checkedRoles
+    console.log(this.xd)
+}
+
+  handleCheckboxChange(index: number) {
+    this.rolesChecked[index] = !this.rolesChecked[index];
+    this.updateCheckedRoles();
+  }
 
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos de empleados
@@ -415,7 +440,9 @@ export class CrearUsuarioComponent implements OnInit {
 
     this.cargando = true;
     const userData: Empleado = this.UpdateForm.value;
-
+    userData.rol = this.xd;
+    console.log(this.xd)
+    console.log(userData)
     // Llamada al servicio para registrar al usuario
     if (this.UpdateForm.valid) {
       if (this.UpdateForm.get('Correo')?.hasError('invalidEmail')) {
@@ -432,6 +459,7 @@ export class CrearUsuarioComponent implements OnInit {
               this.cargando = false
               this.UpdateForm.reset();
               this.cerrarModificarEmpleado();
+              window.location.reload();
             },
             error => {
               console.error("Error:", error);
@@ -460,8 +488,8 @@ export class CrearUsuarioComponent implements OnInit {
     this.empleadoSeleccionado.push(this.empleadoActual);
 
     this.UpdateForm.patchValue({
+      Nit_empresa: this.empleadoActual.nit_empresa,
       Identificacion: this.empleadoActual.identificacion,
-      Rol: this.empleadoActual.rol,
       Nombre: this.empleadoActual.nombre,
       Apellido: this.empleadoActual.apellido,
       Sexo: this.empleadoActual.sexo,

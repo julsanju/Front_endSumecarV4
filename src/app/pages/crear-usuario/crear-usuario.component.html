@@ -223,39 +223,16 @@
                         <span class="text-sm text-gray-500 font-semibold">{{row.ubicacion}}</span>
                       </div>
                     </td>
-                    <td class="px-5 py-4 text-sm whitespace-nowrap uppercase flex flex-col">
+                    <td class="px-3 py-4 text-sm whitespace-nowrap uppercase flex flex-col">
                       <ng-container *ngFor="let role of rolesToDisplay ">
-                        <div class="grid grid-cols-2">
+                        <div class="grid grid-cols-3">
                         <input type="checkbox" [checked]="row.rol.includes(role)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" disabled>
                         <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
                       </div>
                       </ng-container>
-                      <!-- <div class="flex flex-col">
-                        <span class="text-sm text-gray-600 font-medium text-center">
-
-                          {{row.rol}}
-                        </span>
-                      </div> -->
-                      <!-- <div
-                        class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800 flex flex-col items-center justify-center">
-                        <svg _ngcontent-ng-c821344522="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                          fill="currentColor"
-                          class="w-6 h-6 text-gray-400 transition-colors duration-300 hover:text-gray-500 text-center">
-                          <path _ngcontent-ng-c821344522="" d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path>
-                          <path _ngcontent-ng-c821344522="" fill-rule="evenodd"
-                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                            clip-rule="evenodd"></path>
-                        </svg>
-                        <button (click)="abrirModal(row.usuario); $event.stopPropagation()" data-modal-target="popup-modal"
-                        data-modal-toggle="popup-modal" class="text-center">
-
-                          <div>
-                            <span class="text-gray-400 text-sm">Ver roles</span>
-                          </div>
-                        </button>
-                      </div> -->
+                      
                     </td>
-                    <td class="px-4 py-4 text-sm whitespace-nowrap">
+                    <td class="py-4 text-sm whitespace-nowrap" style="padding-left:30px">
                       <div class="group relative">
                         <button (click)="EmpleadoSeleccionado(row)"
                           class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
@@ -808,6 +785,14 @@
     </button>
     <form class="mb-6" [formGroup]="UpdateForm">
       <div class="mb-6">
+        <!--nit_empresa-->
+        <div>
+          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">nit_empresa</label>
+          <input type="text" placeholder="John Doe"
+            class="block cursor-not-allowed mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+            formControlName="Nit_empresa" [disabled]="true" readonly/>
+            
+        </div>
         <!--nombre-->
         <div>
           <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Nombre</label>
@@ -870,13 +855,37 @@
       </div>
       <div class="mb-6">
         <div>
-          <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Rol</label>
+              <ng-container *ngFor="let role of rolesToDisplay;let i = index ">
+                <div class="grid grid-cols-3">
+                <input type="checkbox" 
+                formControlName = "Rol"
+                [checked]="rolesChecked[i]"
+                    (change)="handleCheckboxChange(i)"
+                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
+              </div>
+              </ng-container>
+            
+    
+          
+          <!-- <ng-container *ngFor="let role of roles; let i = index">
+            <div class="grid grid-cols-3">
+                <input type="checkbox" formControlName="Rol" 
+                    [checked]="rolesChecked[i]"
+                    (change)="handleCheckboxChange(i)"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
+            </div>
+          </ng-container> -->
+        
+          
+          <!-- <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Rol</label>
           <select id="countries" formControlName="Rol"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option selected disabled class="capitalize">{{empleado.rol}}</option>
             <option value="admin">Admin</option>
             <option value="empleado">Empleado</option>
-          </select>
+          </select> -->
         </div>
       </div>
       <button type="button" (click)="EditarEmpleado()" [disabled]="cargando"
