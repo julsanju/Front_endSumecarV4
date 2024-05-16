@@ -1,4 +1,5 @@
-<section class="overflow-x-hidden container px-4 mx-auto" style="height: 100vh !important; margin-top: 60px;">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<section class="overflow-x-hidden overflow-y-hidden container px-4 mx-auto min-h-screen" style=" margin-top: 60px;">
   <!--alert succesfull para la creacion de usuario-->
   <div [ngClass]="getSuccesAlertClasses()" id="alert-border-3"
     class="fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 rounded mr-5"
@@ -141,8 +142,7 @@
               <table class=" divide-y divide-gray-200 dark:divide-gray-700 justify-center items-center">
                 <thead class=" bg-gray-50 dark:bg-gray-800">
                   <tr class="text-lg font-bold text-gray-600">
-                    <th scope="col"
-                      class="py-3.5 px-4  text-left rtl:text-right dark:text-gray-400">
+                    <th scope="col" class="py-3.5 px-4  text-left rtl:text-right dark:text-gray-400">
                       <button class="flex items-center gap-x-3 focus:outline-none">
                         <span>Nombre</span>
                         <svg class="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,25 +158,19 @@
                         </svg>
                       </button>
                     </th>
-                    <th scope="col"
-                      class="px-12 py-3.5 text-left rtl:text-right dark:text-gray-400">
+                    <th scope="col" class="px-12 py-3.5 text-left rtl:text-right dark:text-gray-400">
                       Usuarios
                     </th>
-                    <th scope="col"
-                      class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
+                    <th scope="col" class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
                       Contraseña</th>
-                    <th scope="col"
-                      class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
+                    <th scope="col" class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
                       Identificacion
                     </th>
-                    <th scope="col"
-                      class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
+                    <th scope="col" class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
                       Telefono</th>
-                    <th scope="col"
-                      class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
+                    <th scope="col" class="px-4 py-3.5 text-left rtl:text-right  dark:text-gray-400">
                       Direccion</th>
-                    <th scope="col"
-                      class="px-4 py-3.5 text-center rtl:text-right dark:text-gray-400">
+                    <th scope="col" class="px-4 py-3.5 text-center rtl:text-right dark:text-gray-400">
                       Rol</th>
                     <th scope="col" class="relative py-3.5 px-4">
                       <span class="sr-only">Edit</span>
@@ -226,17 +220,19 @@
                     <td class="px-3 py-4 text-sm whitespace-nowrap uppercase flex flex-col">
                       <ng-container *ngFor="let role of rolesToDisplay ">
                         <div class="grid grid-cols-3">
-                        <input type="checkbox" [checked]="row.rol.includes(role)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" disabled>
-                        <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
-                      </div>
+                          <input type="checkbox" [checked]="row.rol.includes(role)"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            disabled>
+                          <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
+                        </div>
                       </ng-container>
-                      
+
                     </td>
                     <td class="py-4 text-sm whitespace-nowrap" style="padding-left:30px">
                       <div class="group relative">
                         <button (click)="EmpleadoSeleccionado(row)"
                           class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
-                          data-drawer-target="drawer-contact" data-drawer-show="drawer-contact"
+                          
                           aria-controls="drawer-contact">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="#b9bcc3" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -300,37 +296,38 @@
 
   <!--modal para ver roles disponibles-->
   @if(viewRol){
-    <div tabindex="-1" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
-      <div class="bg-white rounded-lg shadow-md p-4 max-w-md w-full">
-        <button (click)="cerrarModal()" type="button"
-          class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-          </svg>
-          <span class="sr-only">Close modal</span>
-        </button>
-        <div class="p-4 md:p-5 text-center">
-          <svg class="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-          </svg>
-    
-          <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Estas seguro de eliminar la peticion realizada por el cliente 
-            <strong class="capitalize">{{usuarioRol}}</strong>
-          </h3>
-          @for (row of getPaginatedData();track row) {
-            <h1>{{row.rol}}</h1>
-          } 
-          
-          <button (click)="cerrarModal()" data-modal-hide="popup-modal" type="button"
-            class="py-2.5 px-5 ms-3 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cerrar</button>
-        </div>
+  <div tabindex="-1" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-md p-4 max-w-md w-full">
+      <button (click)="cerrarModal()" type="button"
+        class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="p-4 md:p-5 text-center">
+        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Estas seguro de eliminar la peticion
+          realizada por el cliente
+          <strong class="capitalize">{{usuarioRol}}</strong>
+        </h3>
+        @for (row of getPaginatedData();track row) {
+        <h1>{{row.rol}}</h1>
+        }
+
+        <button (click)="cerrarModal()" data-modal-hide="popup-modal" type="button"
+          class="py-2.5 px-5 ms-3 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cerrar</button>
       </div>
     </div>
-    
-    }
+  </div>
+
+  }
 
   <!--drawner para el formulario de la creacion de usuario-->
   <div id="drawer-contact"
@@ -441,92 +438,7 @@
         <option value="M">Masculino</option>
         <option value="Otro">Otro</option>
       </select>
-      <!--rol-->
-      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900">Rol</label>
 
-      <!-- <div class="relative">
-        <div class="overflow-y-auto max-h-40">
-          <div class="flex flex-col">
-            <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
-              class="text-sm rounded-lg block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ng-pristine ng-invalid ng-touched"
-              type="button">
-              <div class="flex justify-between items-center">
-                Seleccione roles:
-
-                <svg _ngcontent-ng-c1194286045="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                  viewBox="0 0 10 6" class="w-2.5 h-2.5 ms-2.5">
-                  <path _ngcontent-ng-c1194286045="" stroke="#6b7280" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" d="m1 1 4 4 4-4"></path>
-                </svg>
-              </div>
-            </button>
-            <!-- <label *ngFor="let option of roles" class="flex items-center">
-                <input type="checkbox" formControlName="Rol" [value]="option.value" [checked]="option.selected" (change)="toggleOption(option)" class="mr-2">
-                <span>{{ option.label }}</span>
-            </label> -->
-      <!-- </div>
-        </div>
-
-      </div> -->
-
-      <div class="relative">
-        <div class="overflow-y-auto max-h-40">
-          <div class="flex flex-col">
-            <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
-              class="text-sm rounded-lg block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ng-pristine ng-invalid ng-touched"
-              type="button">
-              <div class="flex justify-between items-center">
-                Seleccione roles:
-                <svg _ngcontent-ng-c1194286045="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                  viewBox="0 0 10 6" class="w-2.5 h-2.5 ms-2.5">
-                  <path _ngcontent-ng-c1194286045="" stroke="#6b7280" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" d="m1 1 4 4 4-4"></path>
-                </svg>
-              </div>
-            </button>
-            <!-- <label *ngFor="let option of roles" class="flex items-center">
-                      <input type="checkbox" formControlName="Rol" [value]="option.value" [checked]="option.selected" (change)="toggleOption(option)" class="mr-2">
-                      <span>{{ option.label }}</span>
-                  </label> -->
-          </div>
-        </div>
-
-        <div id="dropdownSearch"
-          class="absolute top-full z-10 hidden bg-gray-50 rounded-lg w-full max-w-xs mx-auto shadow dark:bg-gray-700 -mt-10">
-          <div class="flex justify-center">
-            <div class="w-60">
-              <div class="relative">
-                <div class="overflow-y-auto max-h-40">
-                  <div class="flex flex-col">
-                    <div formArrayName="Rol">
-                      <div *ngFor="let option of roles; let i=index" [formGroupName]="i">
-                        <label>
-                          <input type="checkbox" formControlName="Rol" [value]="option.value"
-                            (change)="toggleOption(option)"
-                            class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
-                          <span class="font-semibold">{{ option.label }}</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-
-
-
-      <!-- <select multiple id="countries" formControlName="Rol"
-        [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Rol'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Rol'].valid}"
-        class="text-sm rounded-lg block w-full p-2.5">
-        <option selected disabled>Seleccionar:</option>
-        <option value="admin">Admin</option>
-        <option value="empleado">Empleado</option>
-      </select> -->
       <!--departamento-->
       <label for="countries"
         [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
@@ -550,7 +462,64 @@
         @for(c of ciudades; track c){
         <option [value]="c.idCiudad">{{c.ciudad}}</option>
         }
+
+
       </select>
+      <!--rol-->
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900">Rol</label>
+      <div class="static">
+        <div class="overflow-y-auto max-h-40">
+          <div class="flex flex-col">
+            <button id="dropdownSearchButton" data-dropdown-toggle="dropdownDelay" 
+              class="text-sm rounded-lg block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ng-pristine ng-invalid ng-touched"
+              type="button">
+              <div class="flex justify-between items-center">
+                Seleccione roles:
+                <svg _ngcontent-ng-c1194286045="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 10 6" class="w-2.5 h-2.5 ms-2.5">
+                  <path _ngcontent-ng-c1194286045="" stroke="#6b7280" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="m1 1 4 4 4-4"></path>
+                </svg>
+              </div>
+            </button>
+            <!-- @if(showDropDown){ -->
+            <div id="dropdownDelay"
+              class="hidden absolute top-full z-10  bg-gray-50 rounded-lg w-full max-w-xs shadow dark:bg-gray-700 grid grid-cols-1 origin-left"
+              style="left: 50%; transform: translateX(-50%);">
+              <div>
+            </div>
+              <div class="flex justify-center">
+                <div class="w-60">
+                  <div class="relative">
+                    <div class="overflow-y-auto max-h-40">
+                      <div class="flex flex-col">
+                        <div formArrayName="Rol">
+                          <div *ngFor="let option of roles; let i=index" [formGroupName]="i">
+                            <label>
+                              <input type="checkbox" formControlName="Rol" [value]="option.value"
+                                (change)="toggleOption(option)"
+                                class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                              <span class="font-semibold">{{ option.label }}</span>
+                              
+                            </label>
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- } -->
+          </div>
+        </div>
+
+
+      </div>
+
+      
       <!--telefono-->
       <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Telefono'].valid}">
         <label for="subject"
@@ -586,6 +555,7 @@
           :)'}}
         </p>
       </div>
+
       <!--correo-->
       <div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Correo'].valid}">
         <label for="website-admin"
@@ -673,65 +643,9 @@
             placeholder="••••••••••">
         </div>
       </div>
-      <!-- <div class="mb-6 relative" [ngClass]="{'mb-5': registrationForm.controls['Imagen'].valid}">
-        @if (selectedImages.length === 0) {
-        <!-- Mostrar el campo para subir la imagen si no hay imágenes seleccionadas -->
-      <!-- <label for="dropzone-file"
-          class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-          <div class="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-            </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
-                para subir imagen o tomar foto</span></p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)</p>
-          </div>
-          <input #fileInput id="dropzone-file" type="file" class="hidden" (change)="onFileChange($event)"
-            accept="image/*" multiple formControlName="Imagen" />
-        </label>
-        } @else {
-        <div class="selected-images top-0 left-0 w-full h-full bg-white p-4">
-          @for (image of selectedImages; track image) {
-          <div class="mb-2">
-            <img [src]="image" alt="Selected Image" class="max-w-full h-auto rounded-lg" />
-          </div>
-          }
-          <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
-            selección</button>
-        </div>
-        }
-        <!-- Mostrar las imágenes seleccionadas -->
-      <!--</div> -->
-      <!--<div class="mb-6" [ngClass]="{'mb-5': registrationForm.controls['Contrasena'].valid}">
-                                                                    <div class="flex items-center justify-center w-full">
-                                                                      <label for="dropzone-file"
-                                                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                                          <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                                              stroke-width="2"
-                                                                              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                                                                            </svg>
-                                                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
-                                                                            para subir imagen o tomar foto</span></p>
-                                                                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, o JPG (MAX. 800x400px)
-                                                                            </p>
-                                                                          </div>
-                                                                          <input #fileInput id="dropzone-file" type="file" class="hidden" accept="image/*" multiple
-                                                                            (change)="onFileChange($event)" />
-                                                                          </label>
-                                                                          <div class="selected-images  top-0 left-0 w-full h-full bg-white p-4" *ngIf="selectedImages.length > 0">
-                                                                            <div *ngFor="let image of selectedImages" class="mb-2">
-                                                                              <img [src]="image" alt="Selected Image" class="max-w-full h-auto" />
-                                                                            </div>
-                                                                            <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
-                                                                            selección</button>
-                                                                          </div>
-                                                                        </div>
-                                                                      </div>-->
+
+
+      
       <!-- En tu archivo .html -->
       <!--(click)="" -->
       <button type="button" (click)="guardarxd();" [disabled]="cargando"
@@ -790,8 +704,8 @@
           <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">nit_empresa</label>
           <input type="text" placeholder="John Doe"
             class="block cursor-not-allowed mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-            formControlName="Nit_empresa" [disabled]="true" readonly/>
-            
+            formControlName="Nit_empresa" [disabled]="true" readonly />
+
         </div>
         <!--nombre-->
         <div>
@@ -855,37 +769,15 @@
       </div>
       <div class="mb-6">
         <div>
-              <ng-container *ngFor="let role of rolesToDisplay;let i = index ">
-                <div class="grid grid-cols-3">
-                <input type="checkbox" 
-                formControlName = "Rol"
-                [checked]="rolesChecked[i]"
-                    (change)="handleCheckboxChange(i)"
-                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
-              </div>
-              </ng-container>
-            
-    
-          
-          <!-- <ng-container *ngFor="let role of roles; let i = index">
+          <div *ngFor="let role of rolesToDisplay;let i = index ">
             <div class="grid grid-cols-3">
-                <input type="checkbox" formControlName="Rol" 
-                    [checked]="rolesChecked[i]"
-                    (change)="handleCheckboxChange(i)"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
+              <input type="checkbox" formControlName="Rol" 
+                (change)="handleCheckboxChange(i)"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+              <span class="text-gray-600 text-sm font-bold">{{ role }}</span>
             </div>
-          </ng-container> -->
-        
-          
-          <!-- <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Rol</label>
-          <select id="countries" formControlName="Rol"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected disabled class="capitalize">{{empleado.rol}}</option>
-            <option value="admin">Admin</option>
-            <option value="empleado">Empleado</option>
-          </select> -->
+          </div>
+
         </div>
       </div>
       <button type="button" (click)="EditarEmpleado()" [disabled]="cargando"

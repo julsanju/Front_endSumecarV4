@@ -8,7 +8,7 @@ import { UsuariosServicesService } from 'src/app/services/usuarios-services.serv
 import { MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { DepartamentoCiudad } from 'src/app/Interfaces/departamento-ciudad';
-import { forkJoin } from 'rxjs';
+import { forkJoin, interval } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Usuariosxd } from 'src/app/Interfaces/usuariosxd';
 @Component({
@@ -22,6 +22,7 @@ import { Usuariosxd } from 'src/app/Interfaces/usuariosxd';
 })
 
 export class CrearUsuarioComponent implements OnInit {
+
   registrationForm: FormGroup;
   UpdateForm: FormGroup;
   dataSource: Empleado[] = [];
@@ -55,11 +56,13 @@ export class CrearUsuarioComponent implements OnInit {
   formData: FormData;
   files: any = []
 
-  //opciones derol
+  //opciones de rol
   opcionesSeleccionadas: any[] = [];
-  xd: any[] = [];
+  rolesEnviarBack: any[] = []; //areglo para el envio de roles dentro de la variable de tipo Empleadpo
   rolesChecked: boolean[] = [];
   checkedRoles: { RolId: number }[] = [];
+  showDropDown:boolean = false;
+  isDrawerOpen: boolean = false;
 
   roles = [
     { label: 'Admin', value: 1, selected: false },
@@ -108,6 +111,14 @@ export class CrearUsuarioComponent implements OnInit {
     })
   }
 
+
+//metodo para mostrar dropdown de los roles
+mostrarDropdownRoles(){
+  this.showDropDown = true
+}
+cerrarDropDowndRoles(){
+  this.showDropDown = false
+}
   toggleOption(option: any) {
     option.selected = !option.selected;
     if (option.selected) {
@@ -123,6 +134,9 @@ export class CrearUsuarioComponent implements OnInit {
     console.log('Opciones seleccionadas:', this.opcionesSeleccionadas);
 }
 
+toggleDrawer(open: boolean) {
+  this.isDrawerOpen = open;
+}
 
   onCheckboxChange(index: number) {
     console.log("Checkbox index:", index);
@@ -138,8 +152,7 @@ export class CrearUsuarioComponent implements OnInit {
         }
     });
     console.log("Checked roles:", this.checkedRoles);
-    this.xd = this.checkedRoles
-    console.log(this.xd)
+    this.rolesEnviarBack = this.checkedRoles
 }
 
   handleCheckboxChange(index: number) {
@@ -172,9 +185,10 @@ export class CrearUsuarioComponent implements OnInit {
     );
 
     this.mostrarCiudad()
-
-
+    
+    
   }
+
 
   getPaginatedData(): Empleado[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -440,9 +454,9 @@ export class CrearUsuarioComponent implements OnInit {
 
     this.cargando = true;
     const userData: Empleado = this.UpdateForm.value;
-    userData.rol = this.xd;
-    console.log(this.xd)
-    console.log(userData)
+    userData.rol = this.rolesEnviarBack;
+    console.log(this.rolesEnviarBack)
+    console.log("Los datos que se mostraran: " + " " + userData)
     // Llamada al servicio para registrar al usuario
     if (this.UpdateForm.valid) {
       if (this.UpdateForm.get('Correo')?.hasError('invalidEmail')) {
@@ -451,7 +465,7 @@ export class CrearUsuarioComponent implements OnInit {
         this.cargando = false
       }
       else {
-
+        console.log(userData)
         this.registerService.ModificarEmpleado(userData)
           .subscribe(
             response => {
@@ -483,24 +497,67 @@ export class CrearUsuarioComponent implements OnInit {
     this.showToast = true;
   }
 
-  EmpleadoSeleccionado(empleado: Empleado) {
-    this.empleadoActual = Object.assign({}, empleado);
-    this.empleadoSeleccionado.push(this.empleadoActual);
+  // async EmpleadoSeleccionado(empleado: Empleado) {
+  //   this.empleadoActual = Object.assign({}, empleado);
+  //   await this.empleadoSeleccionado.push(this.empleadoActual);
 
-    this.UpdateForm.patchValue({
-      Nit_empresa: this.empleadoActual.nit_empresa,
-      Identificacion: this.empleadoActual.identificacion,
-      Nombre: this.empleadoActual.nombre,
-      Apellido: this.empleadoActual.apellido,
-      Sexo: this.empleadoActual.sexo,
-      Ubicacion: this.empleadoActual.ubicacion,
-      Telefono: this.empleadoActual.telefono,
-      Correo: this.empleadoActual.correo,
-      Usuario: this.empleadoActual.usuario,
-      Contrasena: this.empleadoActual.contrasena
+  //   await this.UpdateForm.patchValue({
+  //     Nit_empresa: this.empleadoActual.nit_empresa,
+  //     Identificacion: this.empleadoActual.identificacion,
+  //     Nombre: this.empleadoActual.nombre,
+  //     Apellido: this.empleadoActual.apellido,
+  //     Sexo: this.empleadoActual.sexo,
+  //     Ubicacion: this.empleadoActual.ubicacion,
+  //     Telefono: this.empleadoActual.telefono,
+  //     Correo: this.empleadoActual.correo,
+  //     Usuario: this.empleadoActual.usuario,
+  //     Contrasena: this.empleadoActual.contrasena
+  //   });
+  //   await this.abrirModificarEmpleado();
+  // }
+
+  async EmpleadoSeleccionado(empleado: Empleado) {
+    try {
+        this.empleadoActual = Object.assign({}, empleado);
+        console.log(this.empleadoActual)
+        await this.updateEmpleadoSeleccionado(this.empleadoActual);
+        interval(100).subscribe(() => {
+          this.empleadoActual = { ...{} as Empleado };
+        });
+        
+        console.log(this.empleadoActual)
+        await this.updateFormValues();
+        await this.abrirModificarEmpleado();
+    } catch (error) {
+        console.error("An error occurred:", error);
+        // Handle the error gracefully
+    }
+}
+  async updateEmpleadoSeleccionado(empleado:Empleado) {
+    return new Promise((resolve, reject) => {
+        try {
+            this.empleadoSeleccionado.push(empleado);
+            resolve(empleado);
+        } catch (error) {
+            reject(error);
+        }
     });
-    this.abrirModificarEmpleado();
-  }
+}
+
+async updateFormValues() {
+    return this.UpdateForm.patchValue({
+        Nit_empresa: this.empleadoActual?.nit_empresa,
+        Identificacion: this.empleadoActual?.identificacion,
+        Nombre: this.empleadoActual?.nombre,
+        Apellido: this.empleadoActual?.apellido,
+        Sexo: this.empleadoActual?.sexo,
+        Ubicacion: this.empleadoActual?.ubicacion,
+        Telefono: this.empleadoActual?.telefono,
+        Correo: this.empleadoActual?.correo,
+        Usuario: this.empleadoActual?.usuario,
+        Contrasena: this.empleadoActual?.contrasena
+    });
+}
 
   //objeto para animaciones de las alertas
   objectALertClasses(opacity_0: boolean, opacity_100: boolean, translate: boolean) {

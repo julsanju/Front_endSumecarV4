@@ -1,3 +1,11 @@
 #alert-border-3 {
     z-index: 1000; 
   }
+
+  #dropdown {
+    position: absolute;
+    top: 100%; /* Posiciona el menú debajo del botón */
+    left: 0; /* Ajusta la posición horizontal según sea necesario */
+    z-index: 1; /* Asegura que el menú se muestre por encima de otros elementos */
+  }
+  

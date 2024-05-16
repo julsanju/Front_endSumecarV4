@@ -220,7 +220,6 @@ export class MenuComponent {
   obtenerUsuario() {
     
        this.foto = localStorage.getItem('photoURL');
-       console.log(this.foto);
        this.userAuth = localStorage.getItem('nombre');
        this.email = localStorage.getItem('email');
        const capsuleVerified =  localStorage.getItem('userVerified');
