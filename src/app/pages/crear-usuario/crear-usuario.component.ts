@@ -323,84 +323,26 @@ toggleDrawer(open: boolean) {
 
   guardarxd() {
     const data = this.registrationForm.value as Usuariosxd;
-    const rolesSeleccionados = this.registrationForm.get('Rol')?.value;
-
-    data.Rol = this.opcionesSeleccionadas;
-    const usuario = this.registrationForm.get('Usuario')?.value
-    console.log(data)
-    console.log(usuario)
-    this.enviarFormulario(data, usuario);
+    const contrasena = this.registrationForm.get('Contrasena')?.value
+    const contrasena2 = document.getElementById('contrasena2') as HTMLInputElement;
+    
+    if (contrasena == contrasena2.value) {
+      data.Rol = this.opcionesSeleccionadas;
+      const usuario = this.registrationForm.get('Usuario')?.value
+      this.enviarFormulario(data, usuario);
+    }
+    else{
+        this.errorMessage = { Message: 'Las contraseñas no coinciden :(' };
+            this.mostrarDanger();
+            this.cargando = false;
+    }
   }
-  // crearUsuario() {
-  //   this.cargando = true;
-  //   try {
-
-  //     const formData = new FormData();
-  //     // Verificar si hay archivos
-  //     if (this.files.length === 0 || !Image) {
-  //       console.log('No se proporcionaron imágenes.');
-  //       formData.append('Nombre', this.registrationForm.value.Nombre);
-  //       formData.append('Apellido', this.registrationForm.value.Apellido);
-  //       formData.append('Sexo', this.registrationForm.value.Sexo);
-  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
-  //       formData.append('ImagenUrl', '');
-  //       formData.append('Identificacion', this.registrationForm.value.Identificacion);
-  //       formData.append('Rol', this.registrationForm.value.Rol);
-  //       formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-  //       formData.append('Telefono', this.registrationForm.value.Telefono);
-  //       formData.append('Correo', this.registrationForm.value.Correo);
-  //       formData.append('Usuario', this.registrationForm.value.Usuario);
-  //       formData.append('Contrasena', this.registrationForm.value.Contrasena);
-  //       formData.append('Departamento', this.registrationForm.value.Departamento);
-  //       formData.append('Ciudad', this.registrationForm.value.Ciudad);
-  //       // Continuar con el proceso sin agregar imágenes al formData
-  //       this.enviarFormulario(formData, this.registrationForm.value.Usuario)
-
-  //     }
-
-  //     // Si hay archivos, cargar imágenes y enviar el formulario
-  //     const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
-
-  //     imagesLoaded$.subscribe(
-  //       (images: any) => {
-
-  //         formData.append('Nombre', this.registrationForm.value.Nombre);
-  //         formData.append('Apellido', this.registrationForm.value.Apellido);
-  //         formData.append('Sexo', this.registrationForm.value.Sexo);
-  //         formData.append('Contrasena', this.registrationForm.value.Contrasena);
-
-  //         images.forEach((image: any) => {
-  //           // Agrega las imágenes al FormData
-  //           if (image && image.blob) {
-  //             formData.append('ImagenUrl', image.blob);
-  //           }
-  //         });
-
-  //         formData.append('Identificacion', this.registrationForm.value.Identificacion);
-  //         formData.append('Rol', this.registrationForm.value.Rol);
-  //         formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-  //         formData.append('Telefono', this.registrationForm.value.Telefono);
-  //         formData.append('Correo', this.registrationForm.value.Correo);
-  //         formData.append('Usuario', this.registrationForm.value.Usuario);
-  //         formData.append('Contrasena', this.registrationForm.value.Contrasena);
-  //         formData.append('Departamento', this.registrationForm.value.Departamento);
-  //         formData.append('Ciudad', this.registrationForm.value.Ciudad);
-
-  //         this.enviarFormulario(formData, this.registrationForm.value.Usuario);
-  //         this.cargando = false;
-
-  //       },
-  //       (error) => {
-  //         console.error('Error al cargar imágenes:', error);
-  //         this.mostrarDanger();
-  //         this.cargando = false;
-  //       }
-  //     );
-  //   } catch (exception) {
-  //     console.log(exception);
-  //   }
-  // }
-
+  
+  validarxddd(){
+    const inputElement = document.getElementById('contrasena2') as HTMLInputElement;
+    const contrasena = this.registrationForm.get('Contrasena')?.value
+    console.log(inputElement.value + contrasena)
+  }
   enviarFormulario(formData: Usuariosxd, username: string) {
     this.cargando = true;
     // Llamada al servicio para registrar al usuario
@@ -496,25 +438,6 @@ toggleDrawer(open: boolean) {
   show() {
     this.showToast = true;
   }
-
-  // async EmpleadoSeleccionado(empleado: Empleado) {
-  //   this.empleadoActual = Object.assign({}, empleado);
-  //   await this.empleadoSeleccionado.push(this.empleadoActual);
-
-  //   await this.UpdateForm.patchValue({
-  //     Nit_empresa: this.empleadoActual.nit_empresa,
-  //     Identificacion: this.empleadoActual.identificacion,
-  //     Nombre: this.empleadoActual.nombre,
-  //     Apellido: this.empleadoActual.apellido,
-  //     Sexo: this.empleadoActual.sexo,
-  //     Ubicacion: this.empleadoActual.ubicacion,
-  //     Telefono: this.empleadoActual.telefono,
-  //     Correo: this.empleadoActual.correo,
-  //     Usuario: this.empleadoActual.usuario,
-  //     Contrasena: this.empleadoActual.contrasena
-  //   });
-  //   await this.abrirModificarEmpleado();
-  // }
 
   async EmpleadoSeleccionado(empleado: Empleado) {
     try {
