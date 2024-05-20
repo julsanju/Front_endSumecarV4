@@ -9,7 +9,7 @@ import { Empleado } from '../Interfaces/empleado';
 export class PeticioneServicesService {
 
   //private ApiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones_pendientes/';
-  private ApiUrl = 'http://localhost:5107/api/mostrar_peticiones/{estado}/{username}/{rol}';
+  private ApiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/mostrar_peticiones/{estado}/{username}/{rol}';
   
   //private ApiUrlFinalizarPeticion = 'https://microservicio-sumecarventas.azurewebsites.net/api/finalizar_peticion/';
   private ApiUrlFinalizarPeticion = 'https://microservicio-sumecarventas.azurewebsites.net/api/finalizar_peticion/';

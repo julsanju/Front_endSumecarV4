@@ -9,14 +9,14 @@ import { Contrasena } from '../Interfaces/contrasena';
   providedIn: 'any'
 })
 export class LoginServicesService {
-  private apiUrl = 'http://localhost:5171/api/login/iniciar_sesion'
+  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/login/iniciar_sesion'
   
   private peticionUrl = 'https://sumecarventas.azurewebsites.net/api/login/peticion_cambio_contrasena/';
   private dataUpdateEstado = 'https://sumecarventas.azurewebsites.net/api/login/peticion_cambio_contrasena/';
   private validarUrl = 'https://sumecarventas.azurewebsites.net/api/login/obtener_usuario/'
   private CambiarCoUrl = 'https://sumecarventas.azurewebsites.net/api/login/cambio_contrasena/{correo}'
   private declineUpdatePassword = 'https://sumecarventas.azurewebsites.net/api/login/declineUpdate_password/'
-  private declineEmailConfirmation = 'http://localhost:5171/api/login/declineEmailConfirmation/'
+  private declineEmailConfirmation = 'https://sumecarventas.azurewebsites.net/api/login/declineEmailConfirmation/'
   constructor(private http: HttpClient) { }
 
   LoginValidation(userData: Login): Observable<any> {
