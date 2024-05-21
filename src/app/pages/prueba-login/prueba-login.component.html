@@ -67,17 +67,17 @@
     <!--Contenido del login-->
     <div class="flex rounded-2xl shadow-lg max-w-4xl p-5" style="background-color: #fff; border: 1px solid e7e7e7;">
       <!--FORMULARIO-->
-      <div class="md:w-1/2 px-16">
+      <div class="md:w-1/2 px-16 py-10">
         <!--<x-validation-errors class="mb-4" />-->
-        <h2 class="font-bold text-2xl text-blue-500">Login</h2>
+        <h1><span class="font-sans font-semibold text-2xl uppercase text-[#3b5998]">Login</span></h1>
         <span class="text-base text-gray-600 font-bold mt-4"> Si ya eres miembro, inicia sesión fácilmente :)</span>
         
         <form [formGroup]="loginForm" class="flex flex-col gap-4">
-          <input formControlName="usuario" class="p-2 mt-8 rounded-xl text-base  border-gray-400" type="email"
+          <input formControlName="usuario" class="p-2 mt-8 rounded-xl text-lg  border-gray-400" type="email"
             name="email" placeholder="Usuario" required autofocus autocomplete="username">
 
           <div class="relative flex items-center">
-            <input formControlName="contrasena" class="p-2 pr-14 rounded-xl border-gray-400 text-base w-full"
+            <input formControlName="contrasena" class="p-2 pr-14 rounded-xl text-lg border-gray-400 w-full"
               [type]="mostrarContrasena ? 'text' : 'password'" name="password" placeholder="•••••••••••" required
               autocomplete="current-password">
 
@@ -103,7 +103,7 @@
           </div>
 
           <select formControlName="rol" (change)="onRolSelectionChange($event)" (click)="toggleSelect()" id="countries"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl text-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             @for (users of users; track users) {
             <option [value]="users.value">{{ users.viewValue }}</option>
             }
@@ -148,14 +148,15 @@
 
         </form>
 
-        <div class=" mt-8 grid grid-cols-3 items-center text-gray-400">
+        <!-- linea vertical -->
+        <!-- <div class=" mt-8 grid grid-cols-3 items-center text-gray-400">
           <hr class="border-gray-400 ">
           <p class="text-center">O</p>
           <hr class="border-gray-400">
-        </div>
+        </div> -->
 
         <!-- Registrate -->
-        <div class="grid grid-cols-3 gap-2 w-full">
+        <!-- <div class="grid grid-cols-3 gap-2 w-full">
           <div class="flex justify-center">
             <button type="button" (click)="loginWithGoogle()"
               class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center h-full">
@@ -180,7 +181,7 @@
             </button>
           </div>
 
-        </div>
+        </div> -->
 
       </div>
       <!--IMAGEN -->
@@ -188,7 +189,7 @@
 
         <div class="rounded-2xl flex justify-center items-center h-full"
           style="background-color: #3b5998; border: 1px solid #e7e7e7;">
-          <div id="image_login" class="flex-grow flex items-center justify-center" style="margin-bottom: -230px;">
+          <div id="image_login" class="flex-grow flex items-center justify-center" style="margin-bottom: -210px;">
 
             <img src="https://i.postimg.cc/ZR86JGG7/a2b02400-f213-45e7-a581-fc17fc786048.png" class="rounded-lg"
               style="height: auto;" alt="">
@@ -250,7 +251,8 @@
                   <input type="text" id="subject" formControlName="Nit_empresa"
                     [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Nit_empresa'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Nit_empresa'].invalid && !registrationForm.controls['Nit_empresa'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Nit_empresa'].valid}"
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890"
-                    (keydown.enter)="isCustomerExists(registrationForm.controls['Nit_empresa'].value)" required>
+                    (keydown.enter)="isCustomerExists(registrationForm.controls['Nit_empresa'].value)" 
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
                   <p class="mt-2 text-base text-center"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Nit_empresa'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Nit_empresa'].invalid && !registrationForm.controls['Nit_empresa'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Nit_empresa'].valid}">
                     <span class="text-base font-bold">{{registrationForm.controls['Nit_empresa'].pristine ?
@@ -292,7 +294,8 @@
                     class="block mb-2 text-sm font-medium">Identificacion</label>
                   <input type="text" id="subject" formControlName="Identificacion"
                     [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Identificacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Identificacion'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
+                    class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" 
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
                   <p class="mt-2 text-xs text-center"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
                     <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
@@ -350,7 +353,8 @@
                     class="block mb-2 text-sm font-medium">Telefono</label>
                   <input type="text" id="subject" formControlName="Telefono"
                     [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Telefono'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Telefono'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" required>
+                    class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
                   <p class="mt-2 text-xs text-center"
                     [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Telefono'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Telefono'].valid}">
                     <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce '
@@ -394,7 +398,7 @@
                   </select>
                 </div>
                 <!--rol-->
-                <div [hidden]="!UserExists">
+                <!-- <div [hidden]="!UserExists">
                   <label for="countries"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
                     class="block mb-2 text-sm font-medium">Rol</label>
@@ -404,37 +408,38 @@
                     <option selected disabled>Seleccionar:</option>
                     <option value="cliente">Cliente</option>
                   </select>
-                </div>
+                </div> -->
                 <!--departamento-->
-                <div [hidden]="!UserExists">
-                  <label for="countries"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
-                    class="block mb-2 text-sm font-medium">Departamento</label>
-                  <select id="countries" formControlName="Departamento"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Departamento'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Departamento'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5">
-                    <option selected disabled>Seleccionar:</option>
-                    @for (d of departamentos;track d) {
-                    <option [value]="d.idDepartamento">{{d.departamento}}</option>
-                    }
-                  </select>
-                </div>
-                <!--ciudad-->
-                <div [hidden]="!UserExists">
-                  <label for="countries"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
-                    class="block mb-2 text-sm font-medium">Ciudad</label>
-                  <select id="countries" formControlName="Ciudad"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ciudad'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ciudad'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5">
-                    <option selected disabled>Seleccionar:</option>
-                    @for(c of ciudades; track c){
-                    <option [value]="c.idCiudad">{{c.ciudad}}</option>
-                    }
-                  </select>
-                </div>
-
               </div>
+              <div class=" lg:pl-4 flex justify-between">
+              <div [hidden]="!UserExists" class="lg:ml-4">
+                <label for="countries"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Departamento'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Departamento'].valid}"
+                  class="block mb-2 text-sm font-medium">Departamento</label>
+                <select id="countries" formControlName="Departamento"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Departamento'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Departamento'].invalid && !registrationForm.controls['Departamento'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Departamento'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5">
+                  <option selected disabled>Seleccionar:</option>
+                  @for (d of departamentos;track d) {
+                  <option [value]="d.idDepartamento">{{d.departamento}}</option>
+                  }
+                </select>
+              </div>
+              <!--ciudad-->
+              <div [hidden]="!UserExists">
+                <label for="countries"
+                  [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Ciudad'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Ciudad'].valid}"
+                  class="block mb-2 text-sm font-medium">Ciudad</label>
+                <select id="countries" formControlName="Ciudad"
+                  [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Ciudad'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Ciudad'].invalid && !registrationForm.controls['Ciudad'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Ciudad'].valid}"
+                  class="text-sm rounded-lg block w-full p-2.5">
+                  <option selected disabled>Seleccionar:</option>
+                  @for(c of ciudades; track c){
+                  <option [value]="c.idCiudad">{{c.ciudad}}</option>
+                  }
+                </select>
+              </div>
+            </div>
               <!-- grid para correo y username y contraseñas -->
               <div [hidden]="!UserExists"
                 class="grid lg:grid-cols-2 grid-cols-1 gap-4 justify-center border border-gray-700 py-4 pl-4 rounded-lg">
@@ -521,21 +526,21 @@
                           d="M18 9H16.5V6.5C16.5 5.30653 16.0259 4.16193 15.182 3.31802C14.3381 2.47411 13.1935 2 12 2C10.8065 2 9.66193 2.47411 8.81802 3.31802C7.97411 4.16193 7.5 5.30653 7.5 6.5V9H6C5.46957 9 4.96086 9.21071 4.58579 9.58579C4.21071 9.96086 4 10.4696 4 11V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V11C20 10.4696 19.7893 9.96086 19.4142 9.58579C19.0391 9.21071 18.5304 9 18 9ZM13 17C13 17.2652 12.8946 17.5196 12.7071 17.7071C12.5196 17.8946 12.2652 18 12 18C11.7348 18 11.4804 17.8946 11.2929 17.7071C11.1054 17.5196 11 17.2652 11 17V14C11 13.7348 11.1054 13.4804 11.2929 13.2929C11.4804 13.1054 11.7348 13 12 13C12.2652 13 12.5196 13.1054 12.7071 13.2929C12.8946 13.4804 13 13.7348 13 14V17ZM14.5 9H9.5V6.5C9.5 5.83696 9.76339 5.20107 10.2322 4.73223C10.7011 4.26339 11.337 4 12 4C12.663 4 13.2989 4.26339 13.7678 4.73223C14.2366 5.20107 14.5 5.83696 14.5 6.5V9Z" />
                       </svg>
                     </span>
-                    <input type="password" id="website-admin" formControlName="Contrasena"
-                      class="text-sm rounded-r-lg block w-full p-2.5"
-                      [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Contrasena'].invalid && !registrationForm.controls['Contrasena'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Contrasena'].valid}"
+                    <input type="password" id="contrasena2" 
+                      class="text-sm rounded-r-lg block w-full p-2.5 bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+                      
                       placeholder="••••••••••">
                   </div>
                 </div>
 
               </div>
 
-              <div class="flex justify-center" [hidden]="!UserExists">
+              <!-- <div class="flex justify-center" [hidden]="!UserExists"> -->
                 <!--imagen-->
-                <div class="mb-6 relative" [ngClass]="{'mb-5': registrationForm.controls['Imagen'].valid}">
-                  @if (selectedImages.length === 0) {
+                <!-- <div class="mb-6 relative" [ngClass]="{'mb-5': registrationForm.controls['Imagen'].valid}">
+                  @if (selectedImages.length === 0) { -->
                   <!-- Mostrar el campo para subir la imagen si no hay imágenes seleccionadas -->
-                  <label for="dropzone-file"
+                  <!-- <label for="dropzone-file"
                     class="flex flex-col items-center justify-center w-full h-24 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                       <svg class="w-6 h-6 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -560,16 +565,16 @@
                     <button type="button" (click)="clearSelection()" class="text-blue-500 cursor-pointer">Limpiar
                       selección</button>
                   </div>
-                  }
+                  } -->
                   <!-- Mostrar las imágenes seleccionadas -->
-                </div>
+                <!-- </div> -->
 
-              </div>
+              <!-- </div> -->
 
 
               <div style="padding: 0 15% 0 15%;">
 
-                <button type="button" (click)="crearUsuario();" [disabled]="cargando" [hidden]="!UserExists"
+                <button type="button" (click)="crearUsuarioXd();" [disabled]="cargando" [hidden]="!UserExists"
                   class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
                   @if(!cargando){
                   <span>Crear usuario</span>
@@ -603,7 +608,7 @@
   <!--modal para poder cambiar contraseña-->
 
   <div [ngClass]="getModalUpdatePassword()" id="default-modal" tabindex="-1" aria-hidden="true"
-    class=" fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-75 backdrop-blur-xl">
+    class=" fixed top-0 left-0 z-40 flex h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-75 backdrop-blur-xl">
     <div class="relative p-4 w-full max-w-2xl max-h-full ">
       <!-- Modal content -->
       @switch (state){

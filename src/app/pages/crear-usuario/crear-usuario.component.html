@@ -365,7 +365,8 @@
           class="block mb-2 text-sm font-semibold">Nit_empresa</label>
         <input type="text" id="subject" formControlName="nit_empresa"
           [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['nit_empresa'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['nit_empresa'].invalid && !registrationForm.controls['nit_empresa'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['nit_empresa'].valid}"
-          class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" 
+          onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
         <p class="mt-2 text-sm"
           [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['nit_empresa'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['nit_empresa'].invalid && !registrationForm.controls['nit_empresa'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['nit_empresa'].valid}">
           <span class="font-medium">{{registrationForm.controls['nit_empresa'].pristine ? 'Por favor, ' +
@@ -382,7 +383,8 @@
           class="block mb-2 text-sm font-semibold">Identificacion</label>
         <input type="text" id="subject" formControlName="Identificacion"
           [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Identificacion'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Identificacion'].valid}"
-          class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" required>
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="1234567890" 
+          onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
         <p class="mt-2 text-sm"
           [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Identificacion'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Identificacion'].invalid && !registrationForm.controls['Identificacion'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Identificacion'].valid}">
           <span class="font-medium">{{registrationForm.controls['Identificacion'].pristine ? 'Por favor, ' +
@@ -473,7 +475,8 @@
           class="block mb-2 text-sm font-semibold">Telefono</label>
         <input type="text" id="subject" formControlName="Telefono"
           [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Telefono'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Telefono'].valid}"
-          class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" required>
+          class="text-sm rounded-lg block w-full p-2.5" placeholder="987-654-3210" 
+          onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
         <p class="mt-2 text-sm"
           [ngClass]="{'text-gray-600 dark:text-gray-500': registrationForm.controls['Telefono'].pristine, 'text-red-600 dark:text-red-500': registrationForm.controls['Telefono'].invalid && !registrationForm.controls['Telefono'].pristine, 'text-green-600 dark:text-green-500': registrationForm.controls['Telefono'].valid}">
           <span class="font-medium">{{registrationForm.controls['Telefono'].pristine ? 'Por favor, introduce '
@@ -734,14 +737,16 @@
         <div>
           <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Identificacion</label>
           <input type="text" placeholder="John Doe" formControlName="Identificacion"
-            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" 
+            onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
         </div>
       </div>
       <div class="mb-6">
         <div>
           <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Telefono</label>
           <input type="text" placeholder="John Doe" formControlName="Telefono"
-            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+            class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" 
+            onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
         </div>
         <div>
           <label for="username" class="block text-sm text-gray-500 dark:text-gray-300">Direccion</label>

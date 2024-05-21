@@ -23,6 +23,7 @@ import { environment } from 'src/app/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Contrasena } from 'src/app/Interfaces/contrasena';
 import { DetalleRol } from 'src/app/Interfaces/detalle-rol';
+import { Usuariosxd } from 'src/app/Interfaces/usuariosxd';
 
 
 //enumeracion
@@ -60,13 +61,13 @@ enum State {
 export class PruebaLoginComponent implements OnInit {
   private subscription!: Subscription;
   //variable booleana para el autocompletado del gmail.com
-  showPreview:boolean = false;
+  showPreview: boolean = false;
   previewValue: string = '';
   previewDomain: string = 'gmail.com';
   previewVisible: boolean = false;
   estadoCard: boolean = false;
   //variables para estado de existencia
-  UserExists:boolean = false;
+  UserExists: boolean = false;
   UserNameSumecar: string = '';
   //variables para autenticacion
   username = '';
@@ -98,14 +99,14 @@ export class PruebaLoginComponent implements OnInit {
   modalRegister: boolean = true;
   //loading
   cargando = false;
-  cargandoUpdatePassword:boolean = false;
+  cargandoUpdatePassword: boolean = false;
   mostrarContrasena: boolean = false;
   departamentos: DepartamentoCiudad[] = [];
   ciudades: DepartamentoCiudad[] = [];
   showAlert: boolean = false;
   showAlertDanger: boolean = false;
-  showModalUpdate:boolean = false;
-  state : State = State.sendEmail
+  showModalUpdate: boolean = false;
+  state: State = State.sendEmail
   //imagenes
   //imagenes
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
@@ -115,9 +116,9 @@ export class PruebaLoginComponent implements OnInit {
   //@ViewChild('recaptcha', {static: true}) recaptchaElement: any;
   @ViewChild('captchaElem') captchaElem: any;
   @ViewChild('inputUpdatePassword') inputUpdatePassword!: ElementRef;
-  
+
   token: string = '';
-  DataCorreoUpdate:string = '';
+  DataCorreoUpdate: string = '';
   mostrar_contrasena() {
     this.mostrarContrasena = !this.mostrarContrasena
   }
@@ -140,18 +141,21 @@ export class PruebaLoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.email]],
       contrasena: ['', Validators.required],
-      rol: [''] 
+      rol: ['']
       // rol: ['Usuario', Validators.required],
     });
 
     this.detalleRolForm = this.formBuilder.group({
-        rol: [''] 
+      rol: ['']
     });
 
     this.registrationForm = this.formBuilder.group({
       Nit_empresa: ['', Validators.required],
       Identificacion: ['', Validators.required],
-      Rol: ['', Validators.required],
+      Rol: this.formBuilder.group({
+        RolID: [1, Validators.required]  // Valor por defecto {RolID: 1}
+      }),
+      // Rol: ['', Validators.required],
       Nombre: ['', Validators.required],
       Apellido: ['', Validators.required],
       Sexo: ['', Validators.required],
@@ -162,7 +166,7 @@ export class PruebaLoginComponent implements OnInit {
       Contrasena: ['', Validators.required],
       Departamento: ['', Validators.required],
       Ciudad: ['', Validators.required],
-      Imagen: ['']
+      //Imagen: ['']
     });
 
     this.passwordForm = this.formBuilder.group({
@@ -186,9 +190,9 @@ export class PruebaLoginComponent implements OnInit {
         console.error('Error obteniendo departamentos', error);
       }
     );
-    
+
     this.mostrarCiudad()
-    
+
     this.subscription = interval(30000).subscribe(() => {
       this.validateEstadoUpdate();
     });
@@ -202,11 +206,11 @@ export class PruebaLoginComponent implements OnInit {
   onInputChange(event: any) {
     const inputValue = event.target.value;
     const atIndex = inputValue.lastIndexOf('@');
-  
+
     if (atIndex !== -1) {
       const username = inputValue.slice(0, atIndex);
       const domain = inputValue.slice(atIndex + 1);
-  
+
       if (domain === '') {
         this.previewVisible = true;
         this.previewValue = `${username}@${this.previewDomain}`;
@@ -222,16 +226,16 @@ export class PruebaLoginComponent implements OnInit {
       this.previewValue = '';
     }
   }
-  
+
   onKeydown(event: any) {
-  if (event.key === 'Tab') {
-    event.preventDefault();
-    event.target.value = this.previewValue;
-    event.target.selectionStart = event.target.value.length;
-    event.target.selectionEnd = event.target.value.length;
-    this.previewVisible = false;
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      event.target.value = this.previewValue;
+      event.target.selectionStart = event.target.value.length;
+      event.target.selectionEnd = event.target.value.length;
+      this.previewVisible = false;
+    }
   }
-}
 
   mostrarCiudad() {
     this.registrationForm.get('Departamento')?.valueChanges.subscribe((codigoDepartamento) => {
@@ -279,7 +283,7 @@ export class PruebaLoginComponent implements OnInit {
     }
   }
 
-  
+
   clearSelection() {
     if (this.fileInput) {
       this.fileInput.nativeElement.value = '';
@@ -322,77 +326,108 @@ export class PruebaLoginComponent implements OnInit {
       }
     });
 
-  crearUsuario() {
-    this.cargando = true;
-    try {
-      const formData = new FormData();
-      // Verificar si hay archivos
-      if (this.files.length === 0 || !Image) {
-        console.log('No se proporcionaron imágenes.');
-        formData.append('Nombre', this.registrationForm.value.Nombre);
-        formData.append('Apellido', this.registrationForm.value.Apellido);
-        formData.append('Sexo', this.registrationForm.value.Sexo);
-        formData.append('Contrasena', this.registrationForm.value.Contrasena);
-        formData.append('ImagenUrl', '');
-        formData.append('Identificacion', this.registrationForm.value.Identificacion);
-        formData.append('Rol', this.registrationForm.value.Rol);
-        formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-        formData.append('Telefono', this.registrationForm.value.Telefono);
-        formData.append('Correo', this.registrationForm.value.Correo);
-        formData.append('Usuario', this.registrationForm.value.Usuario);
-        formData.append('Contrasena', this.registrationForm.value.Contrasena);
-        formData.append('Departamento', this.registrationForm.value.Departamento);
-        formData.append('Ciudad', this.registrationForm.value.Ciudad);
-        formData.append('Nit_empresa', this.registrationForm.value.Nit_empresa);
-        // Continuar con el proceso sin agregar imágenes al formData
-        this.enviarFormulario(formData, this.registrationForm.value.Usuario)
-        
-      }
+  crearUsuarioXd() {
+    const data = this.registrationForm.value as Usuariosxd;
+    const contrasena = this.registrationForm.get('Contrasena')?.value
+    const contrasena2 = document.getElementById('contrasena2') as HTMLInputElement;
 
-      // Si hay archivos, cargar imágenes y enviar el formulario
-      const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
-
-      imagesLoaded$.subscribe(
-        (images: any) => {
-
-          formData.append('Nombre', this.registrationForm.value.Nombre);
-          formData.append('Apellido', this.registrationForm.value.Apellido);
-          formData.append('Sexo', this.registrationForm.value.Sexo);
-          formData.append('Contrasena', this.registrationForm.value.Contrasena);
-
-          images.forEach((image: any) => {
-            // Agrega las imágenes al FormData
-            if (image && image.blob) {
-              formData.append('ImagenUrl', image.blob);
-            }
-          });
-
-          formData.append('Identificacion', this.registrationForm.value.Identificacion);
-          formData.append('Rol', this.registrationForm.value.Rol);
-          formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
-          formData.append('Telefono', this.registrationForm.value.Telefono);
-          formData.append('Correo', this.registrationForm.value.Correo);
-          formData.append('Usuario', this.registrationForm.value.Usuario);
-          formData.append('Contrasena', this.registrationForm.value.Contrasena);
-          formData.append('Departamento', this.registrationForm.value.Departamento);
-          formData.append('Ciudad', this.registrationForm.value.Ciudad);
-
-          this.enviarFormulario(formData, this.registrationForm.value.Usuario);
-          this.cargando = false;
-
+    if (contrasena == contrasena2.value) {
+      const nit = this.registrationForm.get('Nit_empresa')?.value
+      this.servicioUsuarios.isCustomerExists(nit).subscribe(
+        (response) => {
+          this.UserExists = true
+          this.UserNameSumecar = response.Message;
+          // console.log(this.UserNameSumecar)
+          const usuario = this.registrationForm.get('Usuario')?.value
+          //console.log(JSON.stringify(data) + " " + usuario)
+          this.enviarFormulario(data, usuario);
         },
         (error) => {
-          console.error('Error al cargar imágenes:', error);
+          this.UserExists = false
+          this.errorMessage = { Message: 'el cliente con identificacion ' + nit + ' ' + 'no existe en nuestra base de datos' };
           this.mostrarDanger();
-          this.cargando = false;
+          this.UserNameSumecar = ''
         }
-      );
-    } catch (exception) {
-      console.log(exception);
+      )
+    }
+    else {
+      this.errorMessage = { Message: 'Las contraseñas no coinciden :(' };
+      this.mostrarDanger();
+      this.cargando = false;
     }
   }
 
-  enviarFormulario(formData: FormData, username: string) {
+
+  // crearUsuario() {
+  //   this.cargando = true;
+  //   try {
+  //     const formData = new FormData();
+  // Verificar si hay archivos
+  // if (this.files.length === 0 || !Image) {
+  //   console.log('No se proporcionaron imágenes.');
+  //   formData.append('Nombre', this.registrationForm.value.Nombre);
+  //   formData.append('Apellido', this.registrationForm.value.Apellido);
+  //   formData.append('Sexo', this.registrationForm.value.Sexo);
+  //   formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  //   formData.append('ImagenUrl', '');
+  //   formData.append('Identificacion', this.registrationForm.value.Identificacion);
+  //   formData.append('Rol', this.registrationForm.value.Rol);
+  //   formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+  //   formData.append('Telefono', this.registrationForm.value.Telefono);
+  //   formData.append('Correo', this.registrationForm.value.Correo);
+  //   formData.append('Usuario', this.registrationForm.value.Usuario);
+  //   formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  //   formData.append('Departamento', this.registrationForm.value.Departamento);
+  //   formData.append('Ciudad', this.registrationForm.value.Ciudad);
+  //   formData.append('Nit_empresa', this.registrationForm.value.Nit_empresa);
+  //   this.enviarFormulario(formData, this.registrationForm.value.Usuario)
+
+  // }
+
+  // Si hay archivos, cargar imágenes y enviar el formulario
+  // const imagesLoaded$ = forkJoin(this.files.map((item: File) => this.blobFile(item)));
+
+  // imagesLoaded$.subscribe(
+  //   (images: any) => {
+
+  //     formData.append('Nombre', this.registrationForm.value.Nombre);
+  //     formData.append('Apellido', this.registrationForm.value.Apellido);
+  //     formData.append('Sexo', this.registrationForm.value.Sexo);
+  //     formData.append('Contrasena', this.registrationForm.value.Contrasena);
+
+  //     images.forEach((image: any) => {
+  // Agrega las imágenes al FormData
+  //           if (image && image.blob) {
+  //             formData.append('ImagenUrl', image.blob);
+  //           }
+  //         });
+
+  //         formData.append('Identificacion', this.registrationForm.value.Identificacion);
+  //         formData.append('Rol', this.registrationForm.value.Rol);
+  //         formData.append('Ubicacion', this.registrationForm.value.Ubicacion);
+  //         formData.append('Telefono', this.registrationForm.value.Telefono);
+  //         formData.append('Correo', this.registrationForm.value.Correo);
+  //         formData.append('Usuario', this.registrationForm.value.Usuario);
+  //         formData.append('Contrasena', this.registrationForm.value.Contrasena);
+  //         formData.append('Departamento', this.registrationForm.value.Departamento);
+  //         formData.append('Ciudad', this.registrationForm.value.Ciudad);
+
+  //         this.enviarFormulario(formData, this.registrationForm.value.Usuario);
+  //         this.cargando = false;
+
+  //       },
+  //       (error) => {
+  //         console.error('Error al cargar imágenes:', error);
+  //         this.mostrarDanger();
+  //         this.cargando = false;
+  //       }
+  //     );
+  //   } catch (exception) {
+  //     console.log(exception);
+  //   }
+  // }
+
+  enviarFormulario(formData: Usuariosxd, username: string) {
     this.cargando = true;
     // Llamada al servicio para registrar al usuario
     if (this.registrationForm.valid) {
@@ -401,7 +436,7 @@ export class PruebaLoginComponent implements OnInit {
         this.mostrarDanger();
         this.cargando = false;
       } else {
-        this.registerService.registerUser(formData, username).subscribe(
+        this.registerService.registerxd(formData, username).subscribe(
           (response) => {
             this.mostrarAlerta();
             this.cargando = false;
@@ -422,23 +457,23 @@ export class PruebaLoginComponent implements OnInit {
     }
   }
 
-  isCustomerExists(identificacion:string){
+  isCustomerExists(identificacion: string) {
     this.servicioUsuarios.isCustomerExists(identificacion).subscribe(
-      (response) =>{
+      (response) => {
         this.UserExists = true
         this.UserNameSumecar = response.Message;
         console.log(this.UserNameSumecar)
       },
       (error) => {
         this.UserExists = false
-        this.errorMessage = { Message: 'el cliente con identificacion ' + identificacion +' '+ 'no existe en nuestra base de datos' };
+        this.errorMessage = { Message: 'el cliente con identificacion ' + identificacion + ' ' + 'no existe en nuestra base de datos' };
         this.mostrarDanger();
         this.UserNameSumecar = ''
       }
     )
   }
 
-  xd(){
+  xd() {
     window.open("/email");
   }
   mostrarAlerta() {
@@ -458,7 +493,7 @@ export class PruebaLoginComponent implements OnInit {
     }, 3000);
   }
 
-  mostrarModalUpdatePassword(){
+  mostrarModalUpdatePassword() {
     this.showModalUpdate = true;
   }
   //modal de register
@@ -498,7 +533,7 @@ export class PruebaLoginComponent implements OnInit {
   }
 
   //animacion para modal cambiar contraseña
-  getModalUpdatePassword(){
+  getModalUpdatePassword() {
     return this.objectALertClasses(!this.showModalUpdate, this.showModalUpdate, !this.showModalUpdate)
   }
 
@@ -526,15 +561,15 @@ export class PruebaLoginComponent implements OnInit {
     const rolesList: DetalleRol[] = [];
     const DetalleRol = this.loginForm.get('rol')?.value;
     rolesList.push({ RolId: DetalleRol });
-    
-    
+
+
     const userData2: Login = {
       Usuario: this.loginForm.get('usuario')?.value,
       Contrasena: this.loginForm.get('contrasena')?.value,
       Rol: rolesList
     };
     //const detalles: DetalleRol[] = this.detalle.filter(detalle => detalle.RolId !== 0)
-    
+
     console.log("Datos de usuario antes de enviar:", JSON.stringify(userData2));
 
     this.loginService.LoginValidation(userData2).subscribe(
@@ -542,18 +577,18 @@ export class PruebaLoginComponent implements OnInit {
         this.bool = true
         localStorage.setItem('bool', this.bool.toString())
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
-        
+
         this.router.navigate(['/menu/dashboard'])
           .then(() => window.location.reload())
 
-          const userData2: Login = {
-            Usuario: this.loginForm.get('usuario')?.value,
-            Contrasena: this.loginForm.get('contrasena')?.value,
-            Rol: rolesList
-          };
+        const userData2: Login = {
+          Usuario: this.loginForm.get('usuario')?.value,
+          Contrasena: this.loginForm.get('contrasena')?.value,
+          Rol: rolesList
+        };
         // localStorage.setItem('userData', JSON.stringify(userData2));
         localStorage.setItem('userData', JSON.stringify(userData2));
-        
+
         this.userData = userData2;
 
         const user2 = sessionStorage.setItem(
@@ -619,7 +654,7 @@ export class PruebaLoginComponent implements OnInit {
                 (response) => {
                   // El usuario está verificado, redirigimos a la página de dashboard
                   localStorage.setItem('userData', JSON.stringify(response.usuario));
-                  
+
                   this.router.navigate(['menu/dashboard']);
                   localStorage.setItem('bool', this.bool.toString());
                 },
@@ -640,10 +675,10 @@ export class PruebaLoginComponent implements OnInit {
       });
   }
 
-  
+
 
   //cambiar contraseña
-  peticionCambioContrasena(correo:string){
+  peticionCambioContrasena(correo: string) {
     this.cargandoUpdatePassword = true;
     this.DataCorreoUpdate = this.inputUpdatePassword.nativeElement.value;
     this.loginService.peticionCorreo(correo).subscribe(
@@ -654,6 +689,8 @@ export class PruebaLoginComponent implements OnInit {
       },
       (error) => {
         this.cargandoUpdatePassword = false;
+        this.errorMessage = error.error;
+        this.mostrarDanger();
         console.error("el error es:" + error.message)
       }
     )
@@ -672,32 +709,30 @@ export class PruebaLoginComponent implements OnInit {
     );
   }
 
-  UpdatePassword(){
+  UpdatePassword() {
     this.cargandoUpdatePassword = true;
     const dataUpdatePassword: Contrasena = this.passwordForm.value;
 
-    if (dataUpdatePassword != null){
-      this.loginService.CambiarContrasena(dataUpdatePassword, this.DataCorreoUpdate ).subscribe(
-        (response) =>
-        {
+    if (dataUpdatePassword != null) {
+      this.loginService.CambiarContrasena(dataUpdatePassword, this.DataCorreoUpdate).subscribe(
+        (response) => {
           this.cargandoUpdatePassword = false;
           console.log(response.message);
           this.cerrarModalUpdate();
           this.state = State.sendEmail;
         },
-        (error) =>
-        {
+        (error) => {
           this.cargandoUpdatePassword = false;
           console.error("el error es :", error)
         }
       )
     }
-    else{
+    else {
       console.log("las contraseñas no coinciden")
     }
   }
-  
-  declineUpdatePassword(){
+
+  declineUpdatePassword() {
     this.loginService.declineUpdate(this.DataCorreoUpdate).subscribe(
       (response) => {
         this.showModalUpdate = false;
