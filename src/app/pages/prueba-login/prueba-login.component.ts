@@ -152,9 +152,14 @@ export class PruebaLoginComponent implements OnInit {
     this.registrationForm = this.formBuilder.group({
       Nit_empresa: ['', Validators.required],
       Identificacion: ['', Validators.required],
-      Rol: this.formBuilder.group({
-        RolID: [1, Validators.required]  // Valor por defecto {RolID: 1}
-      }),
+      Rol: this.formBuilder.array([  // Utiliza formBuilder.array para listas
+      this.formBuilder.group({
+        RolID: [3, Validators.required]  // Valor por defecto {RolID: 1}
+      })
+    ]),
+      // Rol: this.formBuilder.group({
+      //   RolID: [1, Validators.required]  // Valor por defecto {RolID: 1}
+      // }),
       // Rol: ['', Validators.required],
       Nombre: ['', Validators.required],
       Apellido: ['', Validators.required],
@@ -339,7 +344,7 @@ export class PruebaLoginComponent implements OnInit {
           this.UserNameSumecar = response.Message;
           // console.log(this.UserNameSumecar)
           const usuario = this.registrationForm.get('Usuario')?.value
-          //console.log(JSON.stringify(data) + " " + usuario)
+          console.log(JSON.stringify(data) + " " + usuario)
           this.enviarFormulario(data, usuario);
         },
         (error) => {
@@ -436,6 +441,7 @@ export class PruebaLoginComponent implements OnInit {
         this.mostrarDanger();
         this.cargando = false;
       } else {
+        
         this.registerService.registerxd(formData, username).subscribe(
           (response) => {
             this.mostrarAlerta();

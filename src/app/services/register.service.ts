@@ -9,11 +9,11 @@ import { Usuariosxd } from '../Interfaces/usuariosxd';
   providedIn: 'any'
 })
 export class RegisterService {
-  
+                    
   private apiUrl = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertar/';
   private apiUrlDataGoogle = 'https://sumecarventas.azurewebsites.net/api/usuarios/insertarDataGoogle/' 
   private imagenUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/guardar_imagen';
-  private ApiUrlModificarEmpleado = 'https://sumecarventas.azurewebsites.net/api/usuarios/modificar_empleado'
+  private ApiUrlModificarEmpleado = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/usuarios/modificar_empleado'
   
   
 
@@ -24,7 +24,8 @@ export class RegisterService {
   }
 
   registerxd(userData: Usuariosxd, username:string): Observable<any> {
-    return this.http.post(this.apiUrl + username, userData);
+    const headers = new HttpHeaders ({'Content-Type': 'application/json'})
+    return this.http.post(this.apiUrl + username, userData, {headers});
   }
   registerUserWithDataGoogle(userData: FormData, uid:string): Observable<any> {
     return this.http.post(this.apiUrlDataGoogle + uid, userData);

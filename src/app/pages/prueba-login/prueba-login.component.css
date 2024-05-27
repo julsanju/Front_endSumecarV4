@@ -1,7 +1,18 @@
-.style-scroll{
+/* .style-scroll{
     scrollbar-width: none;
-}
+} */
 
+/* Oculta la barra de desplazamiento horizontal */
+.style-scroll {
+    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+    overflow-y: auto; 
+    scrollbar-width: thin;  /* Para navegadores compatibles */
+    scrollbar-color: #3b5998 #F0F0F0;
+    padding: 25px;  /* Muestra la barra de desplazamiento vertical */
+  }
+  
+  
+  
 input[disabled] {
     cursor: not-allowed;
 }

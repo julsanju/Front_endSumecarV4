@@ -176,7 +176,7 @@ export class ProductosSalesComponent implements OnInit {
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
-        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+        this.username = userData.Usuario; // Actualiza la propiedad 'username' con el valor correcto
 
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
@@ -318,7 +318,7 @@ export class ProductosSalesComponent implements OnInit {
       try {
         // Intenta analizar la cadena como JSON
         const userData = JSON.parse(userDataString);
-        this.username = userData.usuario; // Actualiza la propiedad 'username' con el valor correcto
+        this.username = userData.Usuario; // Actualiza la propiedad 'username' con el valor correcto
 
       } catch (error) {
         // En caso de un error al analizar JSON, puedes manejarlo o simplemente retornar false
