@@ -4,6 +4,7 @@ export interface Productos {
     articulo : string,
     cod_Laboratorio:string,
     laboratorio : string,
+    existencias : number,
     cantidad : number, 
     usuario : string,
     telefono :string,

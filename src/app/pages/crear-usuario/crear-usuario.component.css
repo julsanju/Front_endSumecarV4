@@ -9,3 +9,8 @@
     z-index: 1; /* Asegura que el menú se muestre por encima de otros elementos */
   }
   
+  .style-scroll {
+    overflow-y: hidden; /* Oculta la barra de desplazamiento horizontal */
+       /* Para navegadores compatibles */
+      /* Muestra la barra de desplazamiento vertical */
+  }

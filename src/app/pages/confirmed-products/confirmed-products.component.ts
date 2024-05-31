@@ -386,5 +386,32 @@ export class ConfirmedProductsComponent implements OnInit {
     this.resultadoSearch = this.dataAccordeon.length === 0;
   }
 
+  //metodo para eliminar productos
+  EliminarPedidoProducto(){
+    console.log(this.numero_orden)
+    
+    this.servicio.EliminarPedidoProducto(this.numero_orden).subscribe(
+      (response) => {
+        this.spinner = true;
+        this.spinner = false;
+
+        Swal.fire('La peticion ha sido finalizada correctamente!', '', 'success');
+
+        this.errorMessage = null;
+      },
+      (error) => {
+        this.spinner = false;
+
+        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+
+
+        Swal.fire({
+          title: 'ERROR',
+          html: `${this.errorMessage}`,
+          icon: 'error',
+        });
+      }
+    )
+  } 
 
 }

@@ -10,7 +10,6 @@ export class ProductsServicesService {
   private productosConfirmadosSubject = new Subject<void>();
 
   //mostrar todos los productos
-  //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
   private UrlPendientes = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar/';
   private UrlAccordion = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion';
   private UrlAccordionCliente = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_pedidos_accordion/';
@@ -23,13 +22,9 @@ export class ProductsServicesService {
   private UrlFinalizadosEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizadosEmpleado';
   private ApiUrlFinalizarPeticionProducto = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/finalizar_peticion_productos/';
   //local
-  private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
-  /*private UrlPendientes = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar/'; 
-  private UrlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizados/'; 
-  private UrlProductosFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/insertar/';
-  private UrlPendientesEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_empleado';
-  private UrlFinalizadosEmpleado = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/filtrar_finalizadosEmpleado';
-  private ApiUrlFinalizarPeticionProducto = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/finalizar_peticion_productos/';*/
+  private apiUrl = 'http://localhost:5107/api/productos/obtener';
+  private ApiUrlEliminarPedido = 'http://localhost:5107/api/productos/eliminar/'
+
   constructor(private http: HttpClient) { }
   //obtener todos los productos
   obtenerProductos(): Observable<Productos[]> {
@@ -95,5 +90,9 @@ export class ProductsServicesService {
   FinalizarPeticionProducto(id: number): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' })
     return this.http.put(this.ApiUrlFinalizarPeticionProducto + id, { headers });
+  }
+
+  EliminarPedidoProducto(numero_orden:number): Observable<any> {
+    return this.http.delete(this.ApiUrlEliminarPedido + numero_orden);
   }
 }
