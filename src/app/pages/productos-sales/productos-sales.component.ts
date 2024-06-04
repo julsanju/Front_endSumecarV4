@@ -365,8 +365,8 @@ export class ProductosSalesComponent implements OnInit {
           const additionalTexts = [
             'FECHA: ' + fecha.toLocaleDateString(),
             'HORA: ' + hora.toLocaleTimeString(),
-            'Cliente: ' + element.nombre.toUpperCase() + " " + element.apellido.toUpperCase(),
-            'Identificacion: ' + element.identificacion.toUpperCase(),
+            'Nit_cliente: ' + element.nit_cliente.toUpperCase() ,
+            'Cliente: ' + element.cliente.toUpperCase(),
             'Telefono: ' + element.telefono.toUpperCase(),
             'Direccion: ' + element.ubicacion.toUpperCase(),
             'Ciudad: ' + element.ciudad.toUpperCase(),
@@ -406,6 +406,7 @@ export class ProductosSalesComponent implements OnInit {
           const otherTexts = [
             '#ORDEN: ' + numero_orden,
             'Cantidad de items: ' + cantidad_items,
+            'Usuario: ' + element.usuario.toUpperCase(),
           ];
 
           const otherTextX = textXPosition + textWidth + 4; // Ajustar el valor según sea necesario
@@ -413,7 +414,7 @@ export class ProductosSalesComponent implements OnInit {
 
           // Dibujar un rectángulo alrededor de los "otros textos"
           const otherTextsWidth = 75; // Ajustar el ancho del rectángulo
-          const otherTextsHeight = otherTexts.length * 6;
+          const otherTextsHeight = otherTexts.length * 4;
           doc.rect(otherTextX - 2, otherTextY - 6, otherTextsWidth + 4, otherTextsHeight + 34);
 
           otherTexts.forEach((text, index) => {
@@ -453,7 +454,6 @@ export class ProductosSalesComponent implements OnInit {
 
 
   }
-
 
   //generar Excel
   generarExcel(numero_orden: string) {

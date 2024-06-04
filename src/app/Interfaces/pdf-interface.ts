@@ -1,11 +1,18 @@
 export interface PdfInterface {
     fecha:Date
-    nombre:string
-    apellido:string
-    identificacion:string
+    nit_cliente:string,
+    cliente:string,
     telefono:string
     ubicacion:string
-    departamento:string
+    correo:string
     ciudad:string
+    usuario:string
+    // nombre:string
+    // apellido:string
+    // identificacion:string
+    // telefono:string
+    // ubicacion:string
+    // departamento:string
+    // ciudad:string
     
 }
