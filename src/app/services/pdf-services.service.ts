@@ -9,7 +9,7 @@ import { PdfInterface } from '../Interfaces/pdf-interface';
 export class PdfServicesService {
 
   private apiUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/descargar_archivo';
-  private apiUrlPdf = 'http://localhost:5171/api/factura/datos_pdf/'
+  private apiUrlPdf = 'https://sumecarventas.azurewebsites.net/api/factura/datos_pdf/'
   constructor(private http: HttpClient) { }
 
   generatePDF(data: PdfInterface): Observable<any> {

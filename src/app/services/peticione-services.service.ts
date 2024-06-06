@@ -14,6 +14,7 @@ export class PeticioneServicesService {
   //private ApiUrlFinalizarPeticion = 'https://microservicio-sumecarventas.azurewebsites.net/api/finalizar_peticion/';
   private ApiUrlFinalizarPeticion = 'https://microservicio-sumecarventas.azurewebsites.net/api/finalizar_peticion/';
   private ApiurlObtenerCorreo = 'https://sumecarventas.azurewebsites.net/api/usuarios/obtener_empleado/';
+  private ApiUrlEliminarPeticion = 'http://localhost:5107/api/peticion/eliminar/'
   
   constructor(private http : HttpClient) { }
 
@@ -30,5 +31,9 @@ export class PeticioneServicesService {
 
   obtenerCorreo(username:string): Observable<Empleado[]>{
     return this.http.get<Empleado[]>(this.ApiurlObtenerCorreo + username);
+  }
+
+  EliminarPeticion(numero_peticion:number): Observable<any> {
+    return this.http.delete(this.ApiUrlEliminarPeticion + numero_peticion);
   }
 }

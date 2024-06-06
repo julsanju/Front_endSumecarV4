@@ -404,9 +404,12 @@ export class ProductosSalesComponent implements OnInit {
           //cantidad de items 
           const cantidad_items = this.producto_seleccionado.length;
           const otherTexts = [
+            'Correo: ' + element.correoUsuario,
+            'Telefono: ' + element.telefonoUsuario,
+            'Usuario: ' + element.usuario.toUpperCase(),
             '#ORDEN: ' + numero_orden,
             'Cantidad de items: ' + cantidad_items,
-            'Usuario: ' + element.usuario.toUpperCase(),
+
           ];
 
           const otherTextX = textXPosition + textWidth + 4; // Ajustar el valor según sea necesario
@@ -414,12 +417,12 @@ export class ProductosSalesComponent implements OnInit {
 
           // Dibujar un rectángulo alrededor de los "otros textos"
           const otherTextsWidth = 75; // Ajustar el ancho del rectángulo
-          const otherTextsHeight = otherTexts.length * 4;
+          const otherTextsHeight = otherTexts.length * 2.4;
           doc.rect(otherTextX - 2, otherTextY - 6, otherTextsWidth + 4, otherTextsHeight + 34);
 
           otherTexts.forEach((text, index) => {
-            const textYPosition = otherTextY + index * 10; // Ajustar la separación vertical según sea necesario
-            doc.setFontSize(15);
+            const textYPosition = otherTextY + index * 9; // Ajustar la separación vertical según sea necesario
+            doc.setFontSize(11.8);
             doc.text(text, otherTextX + otherTextsWidth, textYPosition, { align: 'right' });
 
           });

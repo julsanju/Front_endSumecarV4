@@ -530,6 +530,36 @@ export class ViewPeticionesComponent implements OnInit {
     this.resultadoSearch = this.data.length === 0;
   }
 
+  EliminarPeticion(){
+    console.log(this.numero_orden)
+    this.cargando = true;
+    this.servicio.EliminarPeticion(this.numero_orden).subscribe(
+      (response) => {
+        this.spinner = true;
+        this.spinner = false;
+
+        this.errorMessage = null;
+        this.peticionSeleccionada = false;
+        this.cargando = false;
+        Swal.fire('La peticion ha sido Eliminada correctamente!', '', 'success').then(() => window.location.reload());
+
+      },
+      (error) => {
+        this.spinner = false;
+
+        this.errorMessage = error.Message; // Accede al campo "Message" del JSON de error
+
+
+        Swal.fire({
+          title: 'ERROR',
+          html: `${this.errorMessage}`,
+          icon: 'error',
+        });
+        this.peticionSeleccionada = false;
+        this.cargando = false;
+      }
+    )
+  } 
 }
 
 

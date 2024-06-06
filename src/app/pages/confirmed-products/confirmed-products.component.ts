@@ -44,7 +44,8 @@ export class ConfirmedProductsComponent implements OnInit {
   // Variables de paginación
   pageSize: number = 5;
   currentPage: number = 1;
-
+  //loading
+  cargando = false;
   constructor(private formBuilder: FormBuilder, private servicio: ProductsServicesService, private router: Router, private peticion: PeticioneServicesService) {
     this.searchForm = this.formBuilder.group({
       searchInput: [''],
@@ -389,15 +390,17 @@ export class ConfirmedProductsComponent implements OnInit {
   //metodo para eliminar productos
   EliminarPedidoProducto(){
     console.log(this.numero_orden)
-    
+    this.cargando = true;
     this.servicio.EliminarPedidoProducto(this.numero_orden).subscribe(
       (response) => {
         this.spinner = true;
         this.spinner = false;
 
-        Swal.fire('La peticion ha sido finalizada correctamente!', '', 'success');
-
         this.errorMessage = null;
+        this.pedidoSeleccionado = false;
+        this.cargando = false;
+        Swal.fire('La peticion ha sido Eliminada correctamente!', '', 'success').then(() => window.location.reload());
+
       },
       (error) => {
         this.spinner = false;
@@ -410,6 +413,8 @@ export class ConfirmedProductsComponent implements OnInit {
           html: `${this.errorMessage}`,
           icon: 'error',
         });
+        this.pedidoSeleccionado = false;
+        this.cargando = false;
       }
     )
   } 

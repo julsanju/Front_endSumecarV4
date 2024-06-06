@@ -7,6 +7,8 @@ export interface PdfInterface {
     correo:string
     ciudad:string
     usuario:string
+    correoUsuario:string
+    telefonoUsuario:string
     // nombre:string
     // apellido:string
     // identificacion:string
