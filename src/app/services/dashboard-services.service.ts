@@ -16,15 +16,15 @@ export class DashboardServicesService {
   //azure
   //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_montados';
   //private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/mostrar_graficoGeneral/{username}/{estado}/{movimiento}';
-  private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/mostrar_graficoGeneral/{username}/{estado}/{movimiento}';
+  private apiUrl = 'http://localhost:5107/api/Dashboard/mostrar_graficoGeneral/{username}/{rol}/{movimiento}';
   private apiUrlPendintes = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_pendientes/{usuario}/{opcion}';
   private apiurlFinalizados = 'https://microservicio-sumecarventas.azurewebsites.net/api/Dashboard/Pedidos_finalizados';
   
   constructor(private http : HttpClient) { }
 
   //obtener Pedidos y graficos
-  obtenerDatos(username:string, estado:string, movimiento:string): Observable<Dashboard[]>{
-    const url = this.apiUrl.replace('{username}', username).replace('{estado}', estado).replace('{movimiento}', movimiento);
+  obtenerDatos(username:string, rol:string, movimiento:string): Observable<Dashboard[]>{
+    const url = this.apiUrl.replace('{username}', username).replace('{rol}', rol).replace('{movimiento}', movimiento);
     return this.http.get<Dashboard[]>(url);
   }
   //obtener pedidos confirmados

@@ -19,6 +19,9 @@ import * as ApexCharts from 'apexcharts';
 
 
 export class DashboardComponent implements OnInit, OnDestroy {
+
+  //rol
+  rol = ''
   generalPedidosPendientes = 0;
   private subscription!: Subscription;
   // Variables para pedidos
@@ -86,16 +89,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
       ) { }
 
   ngOnInit() {
+    //obtener rol
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      try {
+        const userData = JSON.parse(userDataString);
+        this.rol = userData.Rol[0].RolId;
+      } catch (error) {
+        console.error('Error al aalizar JSON:', error)
+      }
+    }
     // pedidos montados
     this.dataInitNew().subscribe(() => {
       this.renderizar();
       this.renderizarBarNegativo();
       this.renderizarBottom2();
       this.obtenerPedidoPendiente();
-
-      this.subscription = interval(5000).subscribe(() => {
-        this.obtenerPedidoPendiente();
-      });
+      
+      // this.subscription = interval(5000).subscribe(() => {
+      //   this.obtenerPedidoPendiente();
+      // });
     });
 
     // peticiones montadas
@@ -108,11 +121,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private initData(movimiento: string, estado: string): Observable<any> {
+  private initData(movimiento: string, rol: string): Observable<any> {
     return new Observable(observer => {
       this.obtener_usuario().subscribe(usuario => {
         this.dataUser = usuario;
-        const dashboardObservable = this.servicio.obtenerDatos(this.dataUser, estado, movimiento);
+        const dashboardObservable = this.servicio.obtenerDatos(this.dataUser, rol, movimiento);
         forkJoin([dashboardObservable]).subscribe(
           ([data]) => {
             if (movimiento === 'pedidos') {
@@ -206,15 +219,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   dataInitNew(): Observable<any> {
-    const estado = 'pendiente';
+    console.log(this.rol)
     const movimiento = 'pedidos';
-    return this.initData(movimiento, estado);
+    return this.initData(movimiento, this.rol);
   }
 
   dataInitNewPeticiones(): Observable<any> {
-    const estado = 'pendiente';
     const movimiento = 'peticiones';
-    return this.initData(movimiento, estado);
+    return this.initData(movimiento, this.rol);
   }
 
 
