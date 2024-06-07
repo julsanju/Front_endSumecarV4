@@ -307,7 +307,7 @@ export class ViewPeticionesComponent implements OnInit {
     const userData = userDataString ? JSON.parse(userDataString) : null; // Parsea los datos del usuario si existen
     
     if (userData) {
-      const dataClient: UsuariosView | null = await this.mapeoDatosCliente(userData.usuario)
+      const dataClient: UsuariosView | null = await this.mapeoDatosCliente(userData.Usuario)
       const detalles: DetallePeticionP[] = this.detalle.filter(detalle => detalle.articulo.trim() !== '' && detalle.cantidad !== 0);
 
       const data: DetallePeticionModel[] = [
@@ -323,7 +323,7 @@ export class ViewPeticionesComponent implements OnInit {
         }
       ];
 
-      this.peticion.addPeticion(data, userData.usuario).subscribe(
+      this.peticion.addPeticion(data, userData.Usuario).subscribe(
         response => {
           this.cargandoEnviar = false;
           this.spinner = false;
