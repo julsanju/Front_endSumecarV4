@@ -217,9 +217,9 @@
                         <span class="text-sm text-gray-500 font-semibold">{{row.ubicacion}}</span>
                       </div>
                     </td>
-                    <td class="px-3 py-4 text-sm whitespace-nowrap uppercase flex flex-col">
+                    <td class="px-2 py-4 text-sm whitespace-nowrap uppercase flex flex-col">
                       <ng-container *ngFor="let role of rolesToDisplay ">
-                        <div class="grid grid-cols-3">
+                        <div class="grid grid-cols-2 gap-6">
                           <input type="checkbox" [checked]="row.rol.includes(role)"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                             disabled>
@@ -231,7 +231,7 @@
                     <td class="py-4 text-sm whitespace-nowrap" style="padding-left:30px">
                       <div class="group relative">
                         <button (click)="EmpleadoSeleccionado(row)"
-                          class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
+                          class="px-8 py-1 mx-6 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
                           
                           aria-controls="drawer-contact">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="#b9bcc3" viewBox="0 0 24 24" stroke-width="1.5"

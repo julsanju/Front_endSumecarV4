@@ -23,7 +23,7 @@ export class ProductsServicesService {
   private ApiUrlFinalizarPeticionProducto = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/finalizar_peticion_productos/';
   //local
   private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
-  private ApiUrlEliminarPedido = 'http://localhost:5107/api/productos/eliminar/'
+  private ApiUrlEliminarPedido = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/eliminar/'
 
   constructor(private http: HttpClient) { }
   //obtener todos los productos
