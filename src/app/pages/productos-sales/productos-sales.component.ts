@@ -443,7 +443,7 @@ export class ProductosSalesComponent implements OnInit {
             margin: { top: 10, bottom: 30 }
           })
 
-          doc.save('numero de orden #' + numero_orden + '.pdf')
+          doc.save('numerodeorden' + numero_orden + '.pdf')
         });
       },
       error => {

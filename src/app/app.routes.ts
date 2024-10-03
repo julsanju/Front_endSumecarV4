@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import {MenuComponent} from './pages/menu/menu.component' ;
-import {CambiarContrasenaComponent} from './pages/cambiar-contrasena/cambiar-contrasena.component';
 import { ConfirmedProductsComponent } from './pages/confirmed-products/confirmed-products.component';
 import { FinishedProductsComponent } from './pages/finished-products/finished-products.component';
 import { ViewPeticionesComponent } from './pages/view-peticiones/view-peticiones.component';
@@ -15,6 +14,7 @@ import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.compo
 import { LoginAditionalComponent } from './pages/login-aditional/login-aditional.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { DocumentHistoryComponent } from './pages/document-history/document-history.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
     { path: 'menu',component: MenuComponent, outlet: 'menu' },
@@ -29,14 +29,14 @@ export const routes: Routes = [
         { path: '', pathMatch: 'full', redirectTo: 'dashboard' }, 
         
         { path : 'dashboard', component: DashboardComponent},
-        { path: 'cambiar-contrasena', component: CambiarContrasenaComponent },
         { path : 'confirmed-products', component : ConfirmedProductsComponent },
         { path : 'finished-products', component : FinishedProductsComponent },
         { path : 'view-peticiones',component : ViewPeticionesComponent},
         {path : 'historial-peticiones',component : HistorialPeticionesComponent},
         {path: 'productos', component: ProductosSalesComponent},
         {path: 'usuarios', component: CrearUsuarioComponent},
-        {path: 'documentos', component: DocumentHistoryComponent}
+        {path: 'documentos', component: DocumentHistoryComponent},
+        {path: 'userProfile', component: UserProfileComponent}
       ],
     },
     

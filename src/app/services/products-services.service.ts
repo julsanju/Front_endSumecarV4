@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Productos } from '../Interfaces/productos';
 import { DatosAccordeon } from '../Interfaces/datosAccordeon';
+import { DocumentosModel } from '../Interfaces/documentos-model';
 @Injectable({
   providedIn: 'any'
 })
@@ -24,6 +25,8 @@ export class ProductsServicesService {
   //local
   private apiUrl = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/obtener';
   private ApiUrlEliminarPedido = 'https://microservicio-sumecarventas.azurewebsites.net/api/productos/eliminar/'
+  //DocumentHistory
+  private apiUrlDocumentHistory = 'https://sumecarventas.azurewebsites.net/api/History/{username}/{opcion}'
 
   constructor(private http: HttpClient) { }
   //obtener todos los productos
@@ -94,5 +97,10 @@ export class ProductsServicesService {
 
   EliminarPedidoProducto(numero_orden:number): Observable<any> {
     return this.http.delete(this.ApiUrlEliminarPedido + numero_orden);
+  }
+
+  SeteoDatosHistorialDocumentos(username:string, opcion:string): Observable<DocumentosModel[]> {
+    const url = this.apiUrlDocumentHistory.replace('{username}', username).replace('{opcion}', opcion);  
+    return this.http.get<DocumentosModel[]>(url);
   }
 }

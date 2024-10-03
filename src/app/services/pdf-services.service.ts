@@ -11,7 +11,8 @@ export class PdfServicesService {
 
   private apiUrl = 'https://microservicio-sumecar-ventas.azurewebsites.net/api/descargar_archivo';
   private apiUrlPdf = 'https://sumecarventas.azurewebsites.net/api/factura/datos_pdf/';
-  private apiPdfHistorial = 'http://localhost:5107/api/pdf/obtener_historial/{username}/{rol}';
+  private apiPdfHistorial = 'https://microservicio-sumecarventas.azurewebsites.net/api/pdf/obtener_historialx/{username}/{rol}';
+  private apiPdfFile = 'https://microservicio-sumecarventas.azurewebsites.net/api/pdf/pdfUrlx/{username}/{rol}';
   constructor(private http: HttpClient) { }
 
   generatePDF(data: PdfInterface): Observable<any> {
@@ -29,4 +30,6 @@ export class PdfServicesService {
   mostrar_historial(usuario:string, rol:number): Observable<DocumentosModel[]>{
     return this.http.get<DocumentosModel[]>(this.apiPdfHistorial.replace('{username}', usuario).replace('{rol}', rol.toString()))
   }
+
+  
 }

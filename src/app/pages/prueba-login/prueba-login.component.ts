@@ -682,7 +682,6 @@ export class PruebaLoginComponent implements OnInit {
   }
 
 
-
   //cambiar contraseña
   peticionCambioContrasena(correo: string) {
     this.cargandoUpdatePassword = true;

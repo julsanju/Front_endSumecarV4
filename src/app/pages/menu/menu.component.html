@@ -73,6 +73,23 @@
               </a>
             </li>
             <!--finalizacion de dashboard-->
+            <!--invimas-->
+            <li>
+              <a routerLink="/menu/invimass"
+                class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                
+                <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3">
+                  </path>
+                </svg>
+
+                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl">Invimas</span>
+
+              </a>
+            </li>
+            <!--finalizacion de invimas-->
             <!--productos-->
             <li>
               <a (click)="toggleProductos()"
@@ -252,7 +269,7 @@
                 </li>
                 }
                 <li>
-                  <a routerLink="/menu/cambiar-contrasena"
+                  <a routerLink="/menu/userProfile"
                     class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
                       width="15" height="15" fill="#6c747f">
@@ -261,13 +278,16 @@
                     Cambiar Contraseña</a>
                 </li>
                 <li>
-                  <button class="flex items-center w-full gap-4 px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900"
-                  (click)="logout()">
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="#374151" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>
-                  </svg>
-                  <span class="text-gray-600 font-bold text-lg">Salir</span>
-                    
+                  <button
+                    class="flex items-center w-full gap-4 px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900"
+                    (click)="logout()">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="#374151" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
+                    </svg>
+                    <span class="text-gray-600 font-bold text-lg">Salir</span>
+
                   </button>
                 </li>
               </ul>

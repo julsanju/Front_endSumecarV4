@@ -80,7 +80,7 @@ export class MenuComponent {
     const data = localStorage.getItem('bool');
     this.bool = data === 'false';
     if (data === 'true') {
-      this.bool = Boolean(data);
+      this.bool = Boolean(data);  
     }
     if( data === 'false'){
       this.bool = Boolean(data?.toLowerCase() === 'true');
@@ -91,7 +91,7 @@ export class MenuComponent {
   productos() {
     this.router.navigate(['/menu/productos']).then(() => window.location.reload());
   }
-  //redireccionar crear usuario
+  //redireccionar crear usuariox
   redireccionarUsuario(){
 
     this.router.navigate(['/menu/usuarios']).then(() => window.location.reload());
