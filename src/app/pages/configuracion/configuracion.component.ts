@@ -4,15 +4,24 @@ import { Component } from '@angular/core';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
+import { Page404Component } from '../page404/page404.component';
+import { AuthService } from 'src/app/services/auth.service';
+
+//enumeracion
+enum PageConfiguration {
+  EditarPerfil,
+  ModificarContrasena,
+  Apariencia
+}
 
 @Component({
-  selector: 'app-user-profile',
+  selector: 'app-configuracion',
   standalone: true,
-  imports: [HttpClientModule, NzLayoutModule, CommonModule],
-  templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css'
+  imports: [HttpClientModule, NzLayoutModule, CommonModule, Page404Component],
+  templateUrl: './configuracion.component.html',
+  styleUrl: './configuracion.component.css'
 })
-export class UserProfileComponent {
+export class ConfiguracionComponent {
   //variables para autenticacion
   userAuth:any = '';
   foto: any = '';
@@ -26,8 +35,9 @@ export class UserProfileComponent {
   //datos para mapear
   dataMapeo: UsuariosView[] = [];
   imagenUser: string = "";
-
-  constructor(private servicio: UsuariosServicesService){}
+  //opcion del menu
+  pageConfiguration: PageConfiguration = PageConfiguration.EditarPerfil
+  constructor(private servicio: UsuariosServicesService, private auth: AuthService){}
 
   ngOnInit(){
     this.obtenerUsuario();
@@ -113,6 +123,20 @@ export class UserProfileComponent {
     return false;
   }
 
+  // cerrar sesion
+  logout() {
+    this.auth.logOut()
+  }
+  mostrarEditarPerfil(){
+    this.pageConfiguration = PageConfiguration.EditarPerfil
+  }
+  mostrarModificarContrasena() {
+    this.pageConfiguration = PageConfiguration.ModificarContrasena
+  }
+
+  mostrarApariencia(){
+    this.pageConfiguration = PageConfiguration.Apariencia
+  }
   //validacion si llamaremos los usuarios de bd o de authGoogle
   validateDataProfileAuth(){
     const data = localStorage.getItem('bool');

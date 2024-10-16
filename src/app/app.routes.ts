@@ -14,7 +14,7 @@ import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.compo
 // import { LoginAditionalComponent } from './pages/login-aditional/login-aditional.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { DocumentHistoryComponent } from './pages/document-history/document-history.component';
-import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
     { path: 'menu',component: MenuComponent, outlet: 'menu' },
@@ -26,7 +26,7 @@ export const routes: Routes = [
       path: 'menu',
       component: MenuComponent,
       children: [
-        { path: '', pathMatch: 'full', redirectTo: 'dashboard' }, 
+        { path: '', pathMatch: 'full', redirectTo: 'dashboard' },   
         
         { path : 'dashboard', component: DashboardComponent},
         { path : 'confirmed-products', component : ConfirmedProductsComponent },
@@ -36,7 +36,7 @@ export const routes: Routes = [
         {path: 'productos', component: ProductosSalesComponent},
         {path: 'usuarios', component: CrearUsuarioComponent},
         {path: 'documentos', component: DocumentHistoryComponent},
-        {path: 'userProfile', component: UserProfileComponent},
+        {path: 'configuracion', component: ConfiguracionComponent},
         
       ],
     },

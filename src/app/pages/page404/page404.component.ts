@@ -4,6 +4,7 @@ import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-page404',
+  standalone: true,
   templateUrl: './page404.component.html',
   styleUrls: ['./page404.component.css']
 })

@@ -77,7 +77,7 @@
             <li>
               <a routerLink="/menu/invimass"
                 class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
-                
+
                 <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -89,6 +89,21 @@
 
               </a>
             </li>
+            <!-- crear usuario -->
+            @if (esAdmin()) {
+            <li>
+              <button (click)="redireccionarUsuario()"
+                class="flex w-full items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px"
+                  fill="#5c6572">
+                  <path
+                    d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
+                </svg>
+                <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl">Usuarios</span>
+              </button>
+
+            </li>
+            }
             <!--finalizacion de invimas-->
             <!--productos-->
             <li>
@@ -233,9 +248,10 @@
               </ul>
             </li>
             <!--finalizacion de historial-->
+
             <!--configuracion-->
             <li>
-              <a (click)="toggleConfiguracion()"
+              <a routerLink="/menu/configuracion"
                 class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                 aria-controls="dropdown-Configuraciones" data-collapse-toggle="dropdown-Configuraciones">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,50 +264,24 @@
                 </svg>
 
                 <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl">Configuracion</span>
-                <svg
-                  [ngClass]="{'rotate-180': rotacionConfiguracion, 'transition-transform duration-400 ease-in-out': true}"
-                  data-accordion-icon class="w-3 h-3 shrink-0 ml-auto" aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 5 5 1 1 5" />
-                </svg>
-              </a>
-              <ul id="dropdown-Configuraciones" class="bg-gray-50 text-base hidden py-2 space-y-2">
-                @if (esAdmin()) {
-                <li>
-                  <a (click)="redireccionarUsuario()"
-                    class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
-                      width="15" height="15" fill="#6c747f">
-                      <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
-                    </svg>
-                    Crear usuario</a>
-                </li>
-                }
-                <li>
-                  <a routerLink="/menu/userProfile"
-                    class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
-                      width="15" height="15" fill="#6c747f">
-                      <path d="M12,19a7,7,0,1,1,7-7A7.008,7.008,0,0,1,12,19Z" />
-                    </svg>
-                    Cambiar Contraseña</a>
-                </li>
-                <li>
-                  <button
-                    class="flex items-center w-full gap-4 px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900"
-                    (click)="logout()">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="#374151" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
-                    </svg>
-                    <span class="text-gray-600 font-bold text-lg">Salir</span>
 
-                  </button>
-                </li>
-              </ul>
+              </a>
             </li>
+
+            <li>
+              <button
+                class="flex items-center w-full gap-4 px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900"
+                (click)="logout()">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="#374151" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
+                </svg>
+                <span class="text-gray-600 font-bold text-lg">Salir</span>
+
+              </button>
+            </li>
+
             <!--finalizacion de configuracion-->
           </ul>
         </nav>

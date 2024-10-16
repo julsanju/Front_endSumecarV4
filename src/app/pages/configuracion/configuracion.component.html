@@ -68,8 +68,9 @@
 
             <div class="list-none">
                 <li>
-                    <a routerLink="/menu/invimass"
-                        class="flex items-center px-4 py-2 mt-8 mb-5 text-gray-600 bg-gray-300 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+
+                    <button
+                        class="flex w-full items-center px-4 py-2 mt-8 mb-5 text-gray-600 bg-gray-200 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
 
                         <svg aria-label="" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img"
                             viewBox="0 0 24 24" width="24">
@@ -87,10 +88,9 @@
                         <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl">Editar
                             Perfil</span>
 
-                    </a>
-
-                    <a routerLink="/menu/invimass"
-                        class="flex items-center px-4 py-2 mb-5 text-gray-600 bg-gray-200 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                    </button>
+                    <button
+                        class="flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-gray-200 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
 
                         <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px"
                             fill="#4e5866">
@@ -101,10 +101,9 @@
                             class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl capitalize">modificar
                             contraseña</span>
 
-                    </a>
-
-                    <a routerLink="/menu/invimass"
-                        class="flex items-center px-4 py-2 mb-5 text-gray-600 bg-gray-200 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                    </button>
+                    <button
+                        class="flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-gray-200 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
 
                         <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px"
                             fill="#4e5866">
@@ -114,13 +113,30 @@
                         <span
                             class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl capitalize">Apariencia</span>
 
-                    </a>
+                    </button>
+                    <button (click)="logout()"
+                        class="flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-gray-200 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-red-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-800">
+
+
+                        <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="28px" height="28px">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2">
+                            </path>
+                        </svg>
+                        <span
+                            class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl capitalize">Salir</span>
+
+                    </button>
                 </li>
             </div>
         </div>
 
         <!-- segunda seccion -->
         <div class="col-span-2 max-h-screen flex justify-center items-center">
+            @switch(pageConfiguration){
+            @case (0){
+            <!-- editar perfil -->
             <div class="md:mx-12 md:w-full mb-3 flex flex-col justify-center gap-6 px-12">
 
                 <!--titulo de editar el perfil-->
@@ -145,24 +161,6 @@
                         @else{
                         <img class="object-cover w-10 h-10 mb-3 mx-2 rounded-3xl" [src]="foto" alt="avatar">
                         }
-                        <!-- @for(data of dataMapeo; track dataMapeo){
-            <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200 uppercase">
-              @if(bool){
-              {{data.nombre}} {{data.apellido}} {{data.estado}}
-              }
-              @else{
-              {{userAuth}}
-              }
-            </h4>
-            <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
-              @if(bool){
-              {{data.correo}}
-              }
-              @if(!bool){
-              {{email}}
-              }
-            </p>
-            } -->
                         }
 
                         <div class="flex justify-center md:justify-between w-full pr-5 items-center">
@@ -256,8 +254,25 @@
                     </div>
                 </div>
             </div>
+            }
+            @case (1){
+            <app-page404></app-page404>
+            }
+            @case (2){
+
+            }
+            }
 
 
+            <!-- Modificar Contraseña -->
+            <!-- @if (true) {
+            @defer {
+            <H1>xdd</H1>
+            <app-page404></app-page404>
+            }
+            } -->
+
+            <!-- Apariencia -->
         </div>
     </div>
 
