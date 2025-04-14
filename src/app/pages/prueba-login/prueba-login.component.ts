@@ -40,7 +40,6 @@ enum State {
     RouterModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
     RouterOutlet,
     FirebaseModule,
     RecaptchaModule,
@@ -157,10 +156,6 @@ export class PruebaLoginComponent implements OnInit {
         RolID: [3, Validators.required]  // Valor por defecto {RolID: 1}
       })
     ]),
-      // Rol: this.formBuilder.group({
-      //   RolID: [1, Validators.required]  // Valor por defecto {RolID: 1}
-      // }),
-      // Rol: ['', Validators.required],
       Nombre: ['', Validators.required],
       Apellido: ['', Validators.required],
       Sexo: ['', Validators.required],

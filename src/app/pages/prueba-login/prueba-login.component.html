@@ -399,17 +399,6 @@
                   </select>
                 </div>
                 <!--rol-->
-                <!-- <div [hidden]="!UserExists">
-                  <label for="countries"
-                    [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Rol'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Rol'].valid}"
-                    class="block mb-2 text-sm font-medium">Rol</label>
-                  <select id="countries" formControlName="Rol"
-                    [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Rol'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Rol'].invalid && !registrationForm.controls['Rol'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Rol'].valid}"
-                    class="text-sm rounded-lg block w-full p-2.5">
-                    <option selected disabled>Seleccionar:</option>
-                    <option value="cliente">Cliente</option>
-                  </select>
-                </div> -->
                 <!--departamento-->
               </div>
               <div class=" lg:pl-4 flex justify-between">
@@ -576,7 +565,7 @@
     <div class="relative p-4 w-full max-w-2xl max-h-full ">
       <!-- Modal content -->
       @switch (state){
-      @case (0){
+      @case (2){
       <div class="flex justify-center items-center ">
         <div class="w-90 rounded-2xl bg-white mb-5" style="border: 1px solid #e1e1e1">
           <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
@@ -607,7 +596,7 @@
 
               <input type="email" placeholder="john@example.com" (input)="onInputChange($event)" #inputUpdatePassword
                 (keydown)="onKeydown($event)" (keydown.enter)="peticionCambioContrasena(inputUpdatePassword.value)"
-                class="block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-white border border-gray-200 rounded-lg pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                class="block w-full py-2.5 text-gray-700 placeholder-gray-400/70 bg-gray-100 border border-gray-200 rounded-lg pl-11 pr-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
 
               <div *ngIf="previewVisible" class="text-gray-500 text-sm mt-1">
                 presione <strong> TAB</strong> para autocompletar<strong>{{ previewValue }}</strong>
@@ -713,7 +702,7 @@
         </div>
       </div>
       }
-      @case (2){
+      @case (0){
       <div class="flex justify-center items-center ">
         <div class="w-90 rounded-2xl bg-white mb-5" style="border: 1px solid #e1e1e1">
           <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">

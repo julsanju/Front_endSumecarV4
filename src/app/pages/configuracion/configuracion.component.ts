@@ -6,6 +6,9 @@ import { UsuariosView } from 'src/app/Interfaces/usuarios-view';
 import { UsuariosServicesService } from 'src/app/services/usuarios-services.service';
 import { Page404Component } from '../page404/page404.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { ChangeAppareanceComponent } from '../change-appareance/change-appareance.component';
+import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { ModifyPasswordComponent } from '../modify-password/modify-password.component';
 
 //enumeracion
 enum PageConfiguration {
@@ -17,7 +20,13 @@ enum PageConfiguration {
 @Component({
   selector: 'app-configuracion',
   standalone: true,
-  imports: [HttpClientModule, NzLayoutModule, CommonModule, Page404Component],
+  imports: [HttpClientModule,
+            NzLayoutModule,
+            CommonModule,
+            Page404Component,
+            ChangeAppareanceComponent,
+            EditProfileComponent,
+            ModifyPasswordComponent],
   templateUrl: './configuracion.component.html',
   styleUrl: './configuracion.component.css'
 })

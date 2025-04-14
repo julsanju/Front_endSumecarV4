@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "/dist/pharma-sales.pa",
     "ignore": [
       "firebase.json",
       "**/.*",

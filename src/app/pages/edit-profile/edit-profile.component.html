@@ -1,1 +1,119 @@
-<p>edit-profile works!</p>
+<div class="md:mx-12 md:w-full mb-3 flex flex-col justify-center gap-6 px-12">
+
+    <!--titulo de editar el perfil-->
+    <label class="block mb-2  text-2xl font-bold text-gray-500 capitalize">Editar perfil</label>
+    <!-- Imagen foto perfil, nombre, correo, cambiar foto -->
+    <div class=" rounded-3xl bg-gray-300 p-3 w-full">
+
+        <div class="flex items-center gap-4 -mx-2">
+            @if(cargando){
+            <div class="flex flex-col items-center  animate-pulse">
+                <p
+                    class=" animate-pulse w-32 h-32 bg-gray-300 rounded-full dark:bg-gray-700 ring-4 ring-gray-400 dark:ring-gray-600">
+                </p>
+                <div class="mt-2 bg-gray-300 h-3 w-24"></div>
+                <div class="mt-2 bg-gray-300 h-3 w-20"></div>
+            </div>
+            }
+            @if(!cargando){
+            @if(bool){
+            <img class="object-cover w-20 h-20 mx-4 rounded-3xl" [src]="imagenUser" alt="avatar">
+            }
+            @else{
+            <img class="object-cover w-10 h-10 mb-3 mx-2 rounded-3xl" [src]="foto" alt="avatar">
+            }
+            }
+
+            <div class="flex justify-center md:justify-between w-full pr-5 items-center">
+                <div class="flex flex-col">
+                    @for(data of dataMapeo; track dataMapeo){
+                    <h4 class="hidden md:block md:mt-2 md:font-bold md:text-gray-600 uppercase">
+                        @if(bool){
+                        {{data.nombre}} {{data.apellido}} {{data.estado}}
+                        }
+                        @else{
+                        {{userAuth}}
+                        }
+                    </h4>
+                    <p class="hidden md:block md:mt-1 md:text-sm md:font-medium md:text-gray-500">
+                        @if(bool){
+                        {{data.correo}}
+                        }
+                        @if(!bool){
+                        {{email}}
+                        }
+                    </p>
+                    }
+                </div>
+                <div>
+                    <button type="button"
+                        class="text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                        Cambiar Foto
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    @for(data of dataMapeo; track dataMapeo){
+    <div class="grid grid-cols-2 gap-4">
+
+
+        <!-- Nit Empresa -->
+        <div class="mt-5 mb-1">
+            <label for="nit_empresa"
+                class="block mb-2 text-lg font-semibold text-gray-500 uppercase">nit</label>
+            <input type="text" id="nit_empresa" aria-label="disabled input 2"
+                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value="{{data.identificacion}}" disabled readonly>
+        </div>
+
+        <!-- Telefono -->
+        <div class="mt-5 mb-1">
+            <label for="telefono"
+                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Telefono</label>
+            <input type="text" id="nombre_completo" aria-label="disabled input 2"
+                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value="{{data.telefono}}" disabled readonly>
+        </div>
+
+        <!-- Nombre completo -->
+        <div class="mb-1">
+            <label for="nombre_completo"
+                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">nombre completo</label>
+            <input type="text" id="nombre_completo" aria-label="disabled input 2"
+                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value="{{data.nombre}}" disabled readonly>
+        </div>
+
+        <!-- Correo -->
+        <div class="mb-1">
+            <label for="correo" class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Correo
+                Electronico</label>
+            <input type="text" id="correo" aria-label="disabled input 2"
+                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value="{{data.correo}}" disabled readonly>
+        </div>
+
+        <!-- Usuario -->
+        <div class="mb-1">
+            <label for="usuario"
+                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Usuario</label>
+            <input type="text" id="usuario" aria-label="disabled input 2"
+                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value="{{data.usuario}}" disabled readonly>
+        </div>
+
+        <!-- Correo -->
+        <div class="mb-1">
+            <label for="contrasena"
+                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Contraseña</label>
+            <input type="text" id="contrasena" aria-label="disabled input 2"
+                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value="••••••••••" disabled readonly>
+        </div>
+    </div>
+}
+</div>
