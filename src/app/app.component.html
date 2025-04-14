@@ -59,21 +59,38 @@
                 d="m1 9 4-4-4-4" />
             </svg>
           </button>
+
           <!--contenido configuraciones-->
           <div id="dropdownConfiguraciones"
             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
-              @if (esAdmin()) {
               <li>
-                <a (click)="crearUsuario()"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Crear usuario</a>
+                <a (click)="editarPerfil()"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Editar
+                  Perfil</a>
               </li>
-              }
+
               <li>
-                <a (click)="cambiarContrasena()"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cambiar
-                  contraseña</a>
+                <a (click)="modificarContrasena()"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Modificar
+                  Contraseña</a>
+              </li>
+
+              <li>
+                <a (click)="integracionExterna()"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Integracion
+                  Externa</a>
+              </li>
+
+              <li>
+                <a (click)="cambiarApariencia()"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Apariencia</a>
+              </li>
+
+              <li>
+                <a (click)="preferenciaIdioma()"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Preferencia De
+                  Idioma</a>
               </li>
             </ul>
           </div>
@@ -100,9 +117,30 @@
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
             </svg>
-            Dashboard</a>
+            Home</a>
         </li>
-
+        <!--invimas-->
+        <li>
+          <a (click)="home()" class="flex block px-4 py-2 text-gray-500 hover:text-gray-700">
+            <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3">
+              </path>
+            </svg>
+            Invimas</a>
+        </li>
+        <!--usuarios-->
+        @if (esAdmin()) {
+        <li>
+          <a (click)="crearUsuario()" class="flex block px-4 py-2 text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#5c6572">
+              <path
+                d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
+            </svg>
+            Usuarios</a>
+        </li>
+        }
         <!--productos-->
         <li>
           <button (click)="toggleProductos()" id="doubleDropdownButton" data-dropdown-toggle="dropdownProductos"
@@ -171,7 +209,7 @@
           <div id="dropdownPeticiones"
             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="doubleDropdownButton">
-              
+
               <li>
                 <a (click)="peticionesRealizadas()"
                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Peticiones
@@ -217,6 +255,7 @@
             </ul>
           </div>
         </li>
+
 
       </ul>
     </div>

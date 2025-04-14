@@ -5,3 +5,13 @@
 .borderColor2{
     border: 2px groove #8aabe6
 }
+
+
+
+.style-scroll {
+    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+    overflow-y: auto; 
+    scrollbar-width: thin;  /* Para navegadores compatibles */
+    scrollbar-color: #667faa #e3e3e3;
+    padding: 20px;  /* Muestra la barra de desplazamiento vertical */
+  }

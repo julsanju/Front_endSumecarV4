@@ -45,6 +45,7 @@ export class MenuComponent {
   dataMapeo: UsuariosView[] = [];
   //loading
   cargando:boolean = false;
+  sidebarCollapsed = false;
 
   constructor(private login: LoginServicesService, 
     private router: Router, 
@@ -75,6 +76,9 @@ export class MenuComponent {
 
   }
 
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
   //validacion si llamaremos los usuarios de bd o de authGoogle
   validateDataProfileAuth(){
     const data = localStorage.getItem('bool');

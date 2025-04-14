@@ -71,8 +71,8 @@ export class HistorialPeticionesComponent {
       (response) => {
         this.dataUser = response.username;
         this.dataRol = response.rol
-        //definimos que el estado de esta pagina es de tipo pendiente
-        const estado = "Pendiente"
+        //definimos que el estado de esta pagina es de tipo finalizada
+        const estado = "finalizada"
         if (this.dataUser && this.dataRol) {
           // this.servicio.ObtenerPeticiones(estado, this.dataUser, this.dataRol)
           this.servicio.ObtenerPeticiones(estado, this.dataUser, this.dataRol)

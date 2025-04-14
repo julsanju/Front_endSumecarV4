@@ -1,12 +1,12 @@
-<section class="overflow-x-hidden overflow-y-hidden container px-4 mx-auto min-h-screen">
+<section class="overflow-x-hidden overflow-y-hidden container px-4 mx-auto min-h-screen bg-gray-50/50">
 
-    <div class="grid grid-cols-3 mt-10">
+    <div class="md:grid md:grid-cols-3 md:mt-10">
         <!-- primera seccion -->
-        <div class="col-span-1 pl-5">
+        <div class="hidden md:block md:col-span-1 md:ml-4 md:pl-5 md:md:max-md:h-screen md:overflow-y-auto md:style-scroll ">
             <label class="block mb-2 pl-1 text-3xl font-bold text-[#667faa] capitalize">Configuracion</label>
 
             <!-- <div class="border border-blue-500"> -->
-            <div class="borderColor rounded-3xl bg-gray-100 mt-8 p-8 w-full">
+            <div class="borderColor rounded-3xl bg-white mt-8 p-8 w-full">
                 <div class="flex flex-col gap-2">
                     <label class="block my-3 mb-2 text-lg font-bold text-[#667faa] capitalize">Centro de
                         Configuraciones</label>
@@ -65,34 +65,35 @@
                         </div>
                     </li>
                 </div>
-            <!-- </div> -->
-        </div>
+                <!-- </div> -->
+            </div>
             <div class="list-none">
                 <li>
                     <!-- editar perfil -->
                     <button (click)="mostrarEditarPerfil()"
-                        class="borderColor2 flex w-full items-center px-4 py-2 mt-8 mb-5 text-gray-600 bg-gray-100 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                        class="borderColor2 flex w-full items-center px-4 py-2 mt-8 mb-5 text-gray-600 bg-white rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
 
                         <svg aria-label="" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img"
                             viewBox="0 0 24 24" width="24">
                             <title></title>
-                            <circle cx="12.004" cy="12.004" fill="none" r="10.5" stroke="#667faa"
-                                stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"></circle>
+                            <circle cx="12.004" cy="12.004" fill="none" r="10.5" stroke="#667faa" stroke-linecap="round"
+                                stroke-miterlimit="10" stroke-width="2"></circle>
                             <path
                                 d="M18.793 20.014a6.08 6.08 0 0 0-1.778-2.447 3.991 3.991 0 0 0-2.386-.791H9.38a3.994 3.994 0 0 0-2.386.791 6.09 6.09 0 0 0-1.779 2.447"
                                 fill="none" stroke="#667faa" stroke-linecap="round" stroke-miterlimit="10"
                                 stroke-width="2"></path>
-                            <circle cx="12.006" cy="9.718" fill="none" r="4.109" stroke="#667faa"
-                                stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"></circle>
+                            <circle cx="12.006" cy="9.718" fill="none" r="4.109" stroke="#667faa" stroke-linecap="round"
+                                stroke-miterlimit="10" stroke-width="2"></circle>
                         </svg>
 
-                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-semibold text-gray-500 text-xl">Editar
+                        <span
+                            class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-semibold text-gray-500 text-xl">Editar
                             Perfil</span>
 
                     </button>
                     <!-- modificar contraseña -->
                     <button (click)="mostrarModificarContrasena()"
-                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-gray-100 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-white rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
 
                         <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px"
                             fill="#667faa">
@@ -104,9 +105,23 @@
                             contraseña</span>
 
                     </button>
+                    <!-- integracion externas -->
+                    <button (click)="mostrarApariencia()"
+                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-white rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#667faa">
+                            <path
+                                d="M760-600q-57 0-99-34t-56-86H354q-11 42-41.5 72.5T240-606v251q52 14 86 56t34 99q0 66-47 113T200-40q-66 0-113-47T40-200q0-57 34-99t86-56v-251q-52-14-86-56t-34-98q0-66 47-113t113-47q56 0 98 34t56 86h251q14-52 56-86t99-34q66 0 113 47t47 113q0 66-47 113t-113 47ZM200-120q33 0 56.5-24t23.5-56q0-33-23.5-56.5T200-280q-32 0-56 23.5T120-200q0 32 24 56t56 24Zm0-560q33 0 56.5-23.5T280-760q0-33-23.5-56.5T200-840q-32 0-56 23.5T120-760q0 33 24 56.5t56 23.5ZM760-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113T760-40Zm0-80q33 0 56.5-24t23.5-56q0-33-23.5-56.5T760-280q-33 0-56.5 23.5T680-200q0 32 23.5 56t56.5 24Zm0-560q33 0 56.5-23.5T840-760q0-33-23.5-56.5T760-840q-33 0-56.5 23.5T680-760q0 33 23.5 56.5T760-680ZM200-200Zm0-560Zm560 560Zm0-560Z" />
+                        </svg>
+                        <span
+                            class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl font-semibold text-gray-500 capitalize">Integracion
+                            externa</span>
+
+                    </button>
                     <!-- apariencia -->
                     <button (click)="mostrarApariencia()"
-                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-gray-100 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-white rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
 
                         <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px"
                             fill="#667faa">
@@ -117,9 +132,24 @@
                             class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl font-semibold text-gray-500 capitalize">Apariencia</span>
 
                     </button>
+                    <!-- preferencia de idiomas -->
+                    <button (click)="mostrarApariencia()"
+                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-white rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-900">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#667faa">
+                            <path
+                                d="m480-80-40-120H160q-33 0-56.5-23.5T80-280v-520q0-33 23.5-56.5T160-880h240l35 120h365q35 0 57.5 22.5T880-680v520q0 33-22.5 56.5T800-80H480ZM286-376q69 0 113.5-44.5T444-536q0-8-.5-14.5T441-564H283v62h89q-8 28-30.5 43.5T287-443q-39 0-67-28t-28-69q0-41 28-69t67-28q18 0 34 6.5t29 19.5l49-47q-21-22-50.5-34T286-704q-67 0-114.5 47.5T124-540q0 69 47.5 116.5T286-376Zm268 20 22-21q-14-17-25.5-33T528-444l26 88Zm50-51q28-33 42.5-63t19.5-47H507l12 42h40q8 15 19 32.5t26 35.5Zm-84 287h280q18 0 29-11.5t11-28.5v-520q0-18-11-29t-29-11H447l47 162h79v-42h41v42h146v41h-51q-10 38-30 74t-47 67l109 107-29 29-108-108-36 37 32 111-80 80Z" />
+                        </svg>
+                        <span
+                            class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-xl font-semibold text-gray-500 capitalize">Preferencia
+                            de idioma</span>
+
+                    </button>
+
                     <!-- salir -->
                     <button (click)="logout()"
-                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-gray-100 rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-red-300 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-800">
+                        class="borderColor2 flex w-full items-center px-4 py-2 mb-5 text-gray-600 bg-white rtransition-colors duration-300 transform rounded-xl dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-800">
 
 
                         <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="#667faa" viewBox="0 0 24 24"
@@ -137,7 +167,7 @@
         </div>
 
         <!-- segunda seccion -->
-        <div class="col-span-2 h-full flex justify-center items-center">
+        <div class="col-span-2 max-h-screen flex justify-center w-full md:justify-start items-start pt-4 md:mt-6">
             @switch(pageConfiguration){
             @case (0){
             <!-- editar perfil -->

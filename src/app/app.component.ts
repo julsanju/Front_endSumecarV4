@@ -191,6 +191,10 @@ export class AppComponent implements OnInit {
   direccionLogin() { this.router.navigate(['/prueba-login']).then(() => window.location.reload()); }
   //Home
   home() { this.router.navigate(['/menu/dashboard']).then(() => window.location.reload()); }
+  //Invimas
+  invimas() { this.router.navigate(['/menu/invimass']).then(() => window.location.reload()); }
+  //usuarios
+  crearUsuario() { this.router.navigate(['/menu/usuarios']).then(() => window.location.reload()); }
   //Productos
   montarPedido() { this.router.navigate(['/menu/productos']).then(() => window.location.reload()); } //montar pedido
   confirmedProducts() { this.router.navigate(['/menu/confirmed-products']).then(() => window.location.reload()); }//pedidos confirmados
@@ -202,6 +206,9 @@ export class AppComponent implements OnInit {
   //Historial
   historialDocumentos() { this.router.navigate(['**']).then(() => window.location.reload()); }//historial de documentos excel y pdf
   //Configuraciones
-  crearUsuario() { this.router.navigate(['/menu/usuarios']).then(() => window.location.reload()); }//crear usuario
-  cambiarContrasena() { this.router.navigate(['**']).then(() => window.location.reload()); }//cambiar contraseña
+  editarPerfil() { this.router.navigate(['/menu/editProfile']) }//editar perfil
+  cambiarApariencia() { this.router.navigate(['/menu/ChangeAppareance']) }//cambiar apariencia
+  modificarContrasena() { this.router.navigate(['/menu/modifyPassword']) }//modificar contraseña
+  preferenciaIdioma() { this.router.navigate(['**']) }//preferencia de idioma
+  integracionExterna() { this.router.navigate(['**']) }//integracion externa
 }

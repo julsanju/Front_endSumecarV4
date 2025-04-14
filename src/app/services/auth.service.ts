@@ -2,16 +2,24 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { GoogleAuthProvider } from '@firebase/auth';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+export interface ApiError {
+  Message: string;
+  StatusCode?: number;
+}
 
 @Injectable({
   providedIn: 'any'
 })
 export class AuthService {
 
-  //private apiUrl = 'https://sumecarventas.azurewebsites.net/api/firebase/ExistsUID/'
-  private apiUrl = 'https://sumecarventas.azurewebsites.net/api/firebase/ExistsUID/'
+  private localIP = '192.168.0.51';
+  private externalIP = '181.129.199.174';
+  private baseUrl: string = `http://${this.localIP}:5000/api/firebase`;
+  private apiUrl: string = '';
 
   userData:any;
   nombre: any;
@@ -25,6 +33,24 @@ export class AuthService {
     private router: Router,
     private ngZone: NgZone) 
     { 
+      // Initialize with default values (local IP)
+      this.initializeUrls();
+      
+      // Detect network and update URLs if needed
+      this.detectNetwork().then(isLocal => {
+        if (!isLocal) {
+          // Only change to external if local network is not available
+          this.baseUrl = `http://${this.externalIP}:5000/api/firebase`;
+          this.initializeUrls();
+          console.log('Local network not available, using external IP configuration');
+        } else {
+          console.log('Using local network configuration');
+        }
+      }).catch((error) => {
+        // If detection fails, stay with local IP as default
+        console.log('Network detection failed, staying with local IP', error);
+      });
+
       this.firebase.authState.subscribe((user) =>{
         if (user) {
           
@@ -53,10 +79,52 @@ export class AuthService {
       })
     }
 
+    // Initialize URLs based on the determined base URL
+    private initializeUrls(): void {
+      this.apiUrl = `${this.baseUrl}/ExistsUID/`;
+    }
+
+    // Function to detect if we're on the local network
+    private async detectNetwork(): Promise<boolean> {
+      try {
+        console.log('Attempting to connect to local network...');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        
+        const response = await fetch(`http://${this.localIP}:5000/api/health`, { 
+          method: 'HEAD',
+          mode: 'no-cors',
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        console.log('Successfully connected to local network');
+        return true; // If we get here, local network is available
+      } catch (error) {
+        console.log('Failed to connect to local network, will use external IP');
+        return false; // If error, we're not on local network
+      }
+    }
+
+    // Helper method for error handling
+    private handleError(error: HttpErrorResponse) {
+      let errorMessage = 'An unknown error occurred';
+      if (error.error instanceof ErrorEvent) {
+        // Client-side error
+        errorMessage = `Error: ${error.error.message}`;
+      } else {
+        // Server-side error
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
+      console.error('Error in auth service:', errorMessage);
+      return throwError(() => ({ Message: errorMessage }));
+    }
+
     //metodo para validar si el usuario esta ya registrado con su autenticacion o no
     isUserVerified(uid:string):Observable<any>{
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      return this.http.post(this.apiUrl + uid, {headers});
+      return this.http.post(this.apiUrl + uid, {}, { headers })
+        .pipe(catchError(this.handleError));
     }
 
     signUp(email:string, password:string){

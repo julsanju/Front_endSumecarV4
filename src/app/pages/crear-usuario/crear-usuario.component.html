@@ -71,7 +71,7 @@
     </div>
     <div class="flex items-center mt-4 gap-x-3">
       <button
-        class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+        class="sr-only flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_3098_154395)">
             <path
@@ -137,8 +137,8 @@
           </section>
           }
           @if(!isLoading){
-          <div class="flex justify-center overflow-x-auto ">
-            <div class="max-w-full overflow-x-auto">
+          <div class="flex justify-center overflow-x-hidden ">
+            <div class="max-w-full overflow-x-hidden">
               <table class=" divide-y divide-gray-200 dark:divide-gray-700 justify-center items-center">
                 <thead class=" bg-gray-50 dark:bg-gray-800">
                   <tr class="text-lg font-bold text-gray-600">

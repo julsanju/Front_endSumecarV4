@@ -15,6 +15,9 @@ import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.compo
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { DocumentHistoryComponent } from './pages/document-history/document-history.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { ChangeAppareanceComponent } from './pages/change-appareance/change-appareance.component';
+import { ModifyPasswordComponent } from './pages/modify-password/modify-password.component';
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/prueba-login' },
     { path: 'menu',component: MenuComponent, outlet: 'menu' },
@@ -37,6 +40,9 @@ export const routes: Routes = [
         {path: 'usuarios', component: CrearUsuarioComponent},
         {path: 'documentos', component: DocumentHistoryComponent},
         {path: 'configuracion', component: ConfiguracionComponent},
+        {path: 'editProfile', component:EditProfileComponent },
+        {path: 'ChangeAppareance', component: ChangeAppareanceComponent},  
+        {path: 'modifyPassword', component: ModifyPasswordComponent},
         
       ],
     },

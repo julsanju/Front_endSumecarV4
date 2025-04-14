@@ -115,10 +115,10 @@
             <re-captcha #captchaElem (resolved)="verifyCaptcha($event)"
               siteKey="6LcGf6ApAAAAANYJ5m-YVw8ZOwG9gsMDAGRXPuDD" size="invisible">
             </re-captcha>
-            <!-- <button  (click)="captchaElem.execute()">Verificar</button> -->
           </div>
 
-          <button (click)="captchaElem.execute()" [disabled]="cargando"
+          <!-- <button (click)="captchaElem.execute()" [disabled]="cargando"  -->
+             <button (click)="onSubmit()" [disabled]="cargando" 
             class="bg-[#3b5998] rounded-xl text-white py-2 hover:scale-105 duration-300">
             @if(!cargando){
             <span class="text-lg font-bold">Entrar</span>
@@ -380,9 +380,8 @@
                       +
                       'tu ubicacion.' : registrationForm.controls['Ubicacion'].invalid ? 'Oops!' :
                       '¡Excelente!'}}</span> {{registrationForm.controls['Ubicacion'].pristine ? '' :
-                    registrationForm.controls['Ubicacion'].invalid ? 'Ubicacion incorrecta :(' : 'Ubicacion correcta
-                    :)'}}
-                  </p>
+                    registrationForm.controls['Ubicacion'].invalid ? 'Ubicacion incorrecta :(' : 'Ubicacion correcta :)'}} 
+                    </p>
                 </div>
                 <!--sexo-->
                 <div [hidden]="!UserExists">
@@ -565,7 +564,7 @@
     <div class="relative p-4 w-full max-w-2xl max-h-full ">
       <!-- Modal content -->
       @switch (state){
-      @case (2){
+      @case (0){
       <div class="flex justify-center items-center ">
         <div class="w-90 rounded-2xl bg-white mb-5" style="border: 1px solid #e1e1e1">
           <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
@@ -702,7 +701,7 @@
         </div>
       </div>
       }
-      @case (0){
+      @case (2){
       <div class="flex justify-center items-center ">
         <div class="w-90 rounded-2xl bg-white mb-5" style="border: 1px solid #e1e1e1">
           <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">

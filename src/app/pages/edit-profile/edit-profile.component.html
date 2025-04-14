@@ -1,9 +1,9 @@
-<div class="md:mx-12 md:w-full mb-3 flex flex-col justify-center gap-6 px-12">
+<div class="responsive-height md:mx-14 md:h-full md:w-full mb-3 flex flex-col justify-center items-start gap-6 px-4 md:px-12">
 
     <!--titulo de editar el perfil-->
-    <label class="block mb-2  text-2xl font-bold text-gray-500 capitalize">Editar perfil</label>
+    <label class="block 16-2  text-2xl font-bold text-[#667faa] capitalize">Editar perfil</label>
     <!-- Imagen foto perfil, nombre, correo, cambiar foto -->
-    <div class=" rounded-3xl bg-gray-300 p-3 w-full">
+    <div class=" rounded-3xl bg-white borderColor p-3 w-full">
 
         <div class="flex items-center gap-4 -mx-2">
             @if(cargando){
@@ -17,7 +17,7 @@
             }
             @if(!cargando){
             @if(bool){
-            <img class="object-cover w-20 h-20 mx-4 rounded-3xl" [src]="imagenUser" alt="avatar">
+            <img class="object-cover w-24 h-20 mx-4 rounded-full" [src]="imagenUser" alt="avatar">
             }
             @else{
             <img class="object-cover w-10 h-10 mb-3 mx-2 rounded-3xl" [src]="foto" alt="avatar">
@@ -28,14 +28,16 @@
                 <div class="flex flex-col">
                     @for(data of dataMapeo; track dataMapeo){
                     <h4 class="hidden md:block md:mt-2 md:font-bold md:text-gray-600 uppercase">
+                        <span class="text-gray-500 font-medium">
                         @if(bool){
                         {{data.nombre}} {{data.apellido}} {{data.estado}}
                         }
                         @else{
                         {{userAuth}}
                         }
+                    </span>
                     </h4>
-                    <p class="hidden md:block md:mt-1 md:text-sm md:font-medium md:text-gray-500">
+                    <p class="hidden md:block md:mt-1 md:text-sm md:font-semibold md:text-gray-400">
                         @if(bool){
                         {{data.correo}}
                         }
@@ -47,7 +49,7 @@
                 </div>
                 <div>
                     <button type="button"
-                        class="text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                        class="text-white bg-[#667faa] hover:bg-[#55698c] focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                         Cambiar Foto
                     </button>
                 </div>
@@ -64,54 +66,54 @@
         <!-- Nit Empresa -->
         <div class="mt-5 mb-1">
             <label for="nit_empresa"
-                class="block mb-2 text-lg font-semibold text-gray-500 uppercase">nit</label>
+                class="block mb-2 text-lg font-bold text-[#667faa] uppercase">Identificacion</label>
             <input type="text" id="nit_empresa" aria-label="disabled input 2"
-                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-white border-gray-300 text-gray-400 font-semibold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value="{{data.identificacion}}" disabled readonly>
         </div>
 
         <!-- Telefono -->
         <div class="mt-5 mb-1">
             <label for="telefono"
-                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Telefono</label>
+                class="block mb-2 text-lg font-bold text-[#667faa] capitalize">Telefono</label>
             <input type="text" id="nombre_completo" aria-label="disabled input 2"
-                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-white border border-gray-300 text-gray-400 font-semibold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value="{{data.telefono}}" disabled readonly>
         </div>
 
         <!-- Nombre completo -->
         <div class="mb-1">
             <label for="nombre_completo"
-                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">nombre completo</label>
+                class="block mb-2 text-lg font-bold text-[#667faa] capitalize">nombre completo</label>
             <input type="text" id="nombre_completo" aria-label="disabled input 2"
-                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-white border border-gray-300 text-gray-400 font-semibold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value="{{data.nombre}}" disabled readonly>
         </div>
 
         <!-- Correo -->
         <div class="mb-1">
-            <label for="correo" class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Correo
+            <label for="correo" class="block mb-2 text-lg font-bold text-[#667faa] capitalize">Correo
                 Electronico</label>
             <input type="text" id="correo" aria-label="disabled input 2"
-                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-white border border-gray-300 text-gray-400 font-semibold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value="{{data.correo}}" disabled readonly>
         </div>
 
         <!-- Usuario -->
         <div class="mb-1">
             <label for="usuario"
-                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Usuario</label>
+                class="block mb-2 text-lg font-bold text-[#667faa] capitalize">Usuario</label>
             <input type="text" id="usuario" aria-label="disabled input 2"
-                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-white border border-gray-300 text-gray-400 font-semibold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value="{{data.usuario}}" disabled readonly>
         </div>
 
         <!-- Correo -->
         <div class="mb-1">
             <label for="contrasena"
-                class="block mb-2 text-lg font-semibold text-gray-500 capitalize">Contraseña</label>
+                class="block mb-2 text-lg font-bold text-[#667faa] capitalize">Contraseña</label>
             <input type="text" id="contrasena" aria-label="disabled input 2"
-                class="bg-gray-200 border border-gray-300 text-gray-400 font-bold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-white border border-gray-300 text-gray-400 font-semibold text-md capitalize rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value="••••••••••" disabled readonly>
         </div>
     </div>
