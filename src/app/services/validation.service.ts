@@ -1,63 +1,65 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError  } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError, from } from 'rxjs'; // Import 'from'
+import { catchError, switchMap } from 'rxjs/operators'; // Import 'switchMap'
 import { Login } from '../Interfaces/login';
 import { MensajeError } from '../Interfaces/mensaje-error';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class ValidationService {
-  
+
   private localIP = '192.168.0.51';
   private externalIP = '181.129.199.174';
-  // Change to use local IP by default
-  private apiUrl: string = `http://${this.localIP}:5000/api/login/iniciar_sesion`;
-  
+  private baseUrl: string = ''; // Will be updated dynamically
+  private urls = { // Object to store URLs
+    validateCaptcha: ''
+    // Add other specific endpoints for this service here
+  };
+
   constructor(private http: HttpClient) {
-    // Detect network and update URLs if needed - only switch to external if local fails
-    this.detectNetwork().then(isLocal => {
-      if (!isLocal) {
-        // Only change to external if local network is not available
-        this.apiUrl = `http://${this.externalIP}:5000/api/login/iniciar_sesion`;
-        console.log('Local network not available, using external IP configuration');
-      } else {
-        console.log('Using local network configuration');
-      }
-    }).catch((error) => {
-      // If detection fails, stay with local IP as default
-      console.log('Network detection failed, staying with local IP', error);
-    });
+    // Network detection is now done before each request
   }
 
-  // Improved network detection function
-  private async detectNetwork(): Promise<boolean> {
+  // Function to detect if we are on the local network
+  private async detectNetwork(): Promise<void> {
     try {
-      console.log('Attempting to connect to local network...');
+      console.log('Attempting to connect to local network (Validation Service)...');
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
-      
-      const response = await fetch(`http://${this.localIP}:5000/api/health`, { 
+
+      // *** IMPORTANT: Replace XXXX with the correct port for the Validation API health check ***
+      await fetch(`http://${this.localIP}:XXXX/api/health`, {
         method: 'HEAD',
-        mode: 'no-cors',
         signal: controller.signal
       });
-      
+
       clearTimeout(timeoutId);
-      console.log('Successfully connected to local network');
-      return true; // If we get here, local network is available
+      // *** IMPORTANT: Replace XXXX with the correct port for the Validation API ***
+      this.baseUrl = `http://${this.localIP}:XXXX/api/validation`; // Adjust base path if needed
+      console.log('Successfully connected to local network (Validation Service)');
     } catch (error) {
-      console.log('Failed to connect to local network, will use external IP');
-      return false; // If error, we're not on local network
+      // *** IMPORTANT: Replace XXXX with the correct port for the Validation API ***
+      this.baseUrl = `http://${this.externalIP}:XXXX/api/validation`; // Adjust base path if needed
+      console.log('Failed to connect to local network, using external IP (Validation Service)');
     }
+    // Update URLs after determining baseUrl
+    this.initializeUrls();
   }
 
-  LoginValidation(userData: Login): Observable<any> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'})
-    return this.http.post(this.apiUrl, userData, { headers }).pipe(catchError(this.handleError));
+  // Initialize URLs based on the determined baseUrl
+  private initializeUrls(): void {
+    this.urls.validateCaptcha = `${this.baseUrl}/captcha`; // Example endpoint, adjust as needed
+    // Define other URLs based on the baseUrl
   }
 
+  // Prepare the request ensuring network detection completes first
+  private prepareRequest<T>(callback: () => Observable<T>): Observable<T> {
+    return from(this.detectNetwork()).pipe(switchMap(() => callback()));
+  }
+
+  // Helper method for error handling
   private handleError(error: HttpErrorResponse) {
     let errorMessage: MensajeError = { Message: 'An error occurred' };
     if (error.error instanceof ErrorEvent) {
@@ -68,5 +70,15 @@ export class ValidationService {
       return throwError(error.error); // Devuelve solo el JSON de la respuesta del backend
     }
     return throwError(errorMessage);
+    console.error('Error in validation service:', errorMessage);
+  }
+
+  validateCaptcha(token: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // Wrap the HTTP call with prepareRequest
+    return this.prepareRequest(() =>
+      this.http.post(this.urls.validateCaptcha, { token }, { headers }) // Assuming body { "token": "..." }
+        .pipe(catchError(this.handleError))
+    );
   }
 }

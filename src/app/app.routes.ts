@@ -29,7 +29,7 @@ export const routes: Routes = [
       path: 'menu',
       component: MenuComponent,
       children: [
-        { path: '', pathMatch: 'full', redirectTo: 'dashboard' },   
+         
         
         { path : 'dashboard', component: DashboardComponent},
         { path : 'confirmed-products', component : ConfirmedProductsComponent },

@@ -11,31 +11,38 @@
 
 <body>
 
-
-  <!-- Modal para succesful o failed -->
-  <!--alert succesfull para la creacion de usuario-->
-  <div [ngClass]="getSuccesAlertClasses()" id="alert-border-3"
-    class="fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 rounded mr-5"
-    role="alert">
-    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-      viewBox="0 0 20 20">
-      <path
-        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-    </svg>
-    <div class="ms-3 text-sm font-medium">
-
-      <span class="font-bold"> Carga exitosa!</span> Cliente creado con exito :)
+   <!-- Modal de registro exitoso -->
+  <div [ngClass]="getSuccessModalClasses()" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-full p-4 overflow-x-hidden overflow-y-auto bg-gray-900 bg-opacity-50">
+    <div class="relative w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#3b5998]">
+          <h3 class="text-xl font-semibold text-white dark:text-white">
+            Registro Exitoso
+          </h3>
+          <button (click)="cerrarModalExito()" type="button" class="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Cerrar modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="p-4 md:p-5 text-center">
+          <svg class="mx-auto mb-4 text-green-500 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¡Usuario creado exitosamente!</h3>
+          <p class="mb-5 text-sm text-gray-500 dark:text-gray-400">Hemos enviado un correo de verificación a su dirección de email. Por favor, revise su bandeja de entrada y siga las instrucciones para activar su cuenta.</p>
+          <button (click)="cerrarModalExito()" type="button" class="text-white bg-[#3b5998] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+            Entendido
+          </button>
+        </div>
+      </div>
     </div>
-    <button type="button"
-      class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
-      data-dismiss-target="#alert-border-3" aria-label="Close">
-      <span class="sr-only">Dismiss</span>
-      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-      </svg>
-    </button>
   </div>
+
   <!--danger alert para la creacion de usuario-->
   <div [ngClass]="getDangerAlertClasses()" id="danger-alert"
     class=" fixed bottom-0 right-0 w-1/3 z-50 flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg mr-9 bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -60,145 +67,263 @@
     </button>
   </div>
 
-  <section class="bg-gray-100 min-h-screen flex items-center 
-  justify-center">
-    <!-- LOTTIE -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
-    <!--Contenido del login-->
-    <div class="flex rounded-2xl shadow-lg max-w-4xl p-5" style="background-color: #fff; border: 1px solid e7e7e7;">
-      <!--FORMULARIO-->
-      <div class="md:w-1/2 px-16 py-10">
-        <!--<x-validation-errors class="mb-4" />-->
-        <h1><span class="font-sans font-semibold text-2xl uppercase text-[#3b5998]">Login</span></h1>
-        <span class="text-base text-gray-600 font-bold mt-4"> Si ya eres miembro, inicia sesión fácilmente :)</span>
-        
-        <form [formGroup]="loginForm" class="flex flex-col gap-4">
-          <input formControlName="usuario" class="p-2 mt-8 rounded-xl text-lg  border-gray-400" type="email"
-            name="email" placeholder="Usuario" required autofocus autocomplete="username">
+  <!-- Contenedor principal con diseño split-screen -->
+  <div class="min-h-screen flex">
+    <!-- Lado izquierdo - Información de marketing -->
+    <div class="hidden lg:flex lg:w-2/3 bg-blue-800 relative overflow-hidden">
+      <!-- Elementos flotantes -->
+      <div class="absolute top-20 left-20 w-16 h-16 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
+      </div>
+      <div class="absolute top-40 right-32 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+      </div>
+      <div class="absolute bottom-40 left-32 w-16 h-16 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </div>
+      
+      <!-- Contenido principal del lado izquierdo -->
+      <div class="flex flex-col justify-center items-start p-16 text-white relative z-10">
+        <div class="mb-8">
+          <div class="flex items-center gap-8 mb-6">
+            <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-10 h-10 text-blue-800">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg></div>
+                <div>
+                  <span  class="font-black text-white text-3xl">SUMECAR S.A</span>
+                  <p  class="text-blue-100 text-lg">Suministradora de Medicamentos del Caribe S.A</p></div></div>
+        </div>
 
-          <div class="relative flex items-center">
-            <input formControlName="contrasena" class="p-2 pr-14 rounded-xl text-lg border-gray-400 w-full"
-              [type]="mostrarContrasena ? 'text' : 'password'" name="password" placeholder="•••••••••••" required
-              autocomplete="current-password">
-
-            <button class="absolute right-0 top-0 bottom-0 px-3 flex items-center justify-center focus:outline-none"
-              (click)="mostrar_contrasena()">
-
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="w-6 h-6 text-gray-400 transition-colors duration-300 hover:text-gray-500">
-                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                <path fill-rule="evenodd"
-                  d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                  clip-rule="evenodd" />
-              </svg>
-
-            </button>
-          </div>
-
-          <div class="flex items-center justify-between" style="margin-bottom: -10px;">
-            <label for="password" class=" text-white">Password</label>
-            <button (click)="mostrarModalUpdatePassword()"
-              class="lg:text-base text-sm text-gray-500 dark:text-gray-400 hover:scale-105 duration-300">Olvido su
-              contraseña?</button>
-          </div>
-
-          <select formControlName="rol" (change)="onRolSelectionChange($event)" (click)="toggleSelect()" id="countries"
-            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl text-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            
-            @for (users of users; track users) {
-            <option [value]="users.value">{{ users.viewValue }}</option>
-            }
-          </select>
-
-        
-          <div>
-            <re-captcha #captchaElem (resolved)="verifyCaptcha($event)"
-              siteKey="6LcGf6ApAAAAANYJ5m-YVw8ZOwG9gsMDAGRXPuDD" size="invisible">
-            </re-captcha>
-          </div>
-
-          <!-- <button (click)="captchaElem.execute()" [disabled]="cargando"  -->
-             <button (click)="onSubmit()" [disabled]="cargando" 
-            class="bg-[#3b5998] rounded-xl text-white py-2 hover:scale-105 duration-300">
-            @if(!cargando){
-            <span class="text-lg font-bold">Entrar</span>
-            }
-            @if(cargando){
-            <span class="inline-flex items-center">
-              <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
-                viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                  fill="#E5E7EB" />
-                <path
-                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                  fill="currentColor" />
-              </svg>
-              Loading...
-            </span>
-            }
-          </button>
-
-          <!--link para registrar nuevo cliente-->
-          <span class="text-base text-gray-500 dark:text-gray-400 hover:scale-105 duration-300 ml-2">¿No tienes una
-            cuenta?
-            <a data-drawer-target="drawer-bottom-example" data-drawer-show="drawer-bottom-example"
-              data-drawer-placement="bottom" aria-controls="drawer-bottom-example" class="text-blue-500"> Registrate
-            </a>
+        <div class="space-y-6">
+          <span class="text-3xl font-black leading-tight text-white">
+            Conectando la salud con
+            <span class="block text-blue-200">tecnología avanzada</span>
           </span>
 
-        </form>
-
-        <!-- linea vertical -->
-        <!-- <div class=" mt-8 grid grid-cols-3 items-center text-gray-400">
-          <hr class="border-gray-400 ">
-          <p class="text-center">O</p>
-          <hr class="border-gray-400">
-        </div> -->
-
-        <!-- Registrate -->
-        <!-- <div class="grid grid-cols-3 gap-2 w-full">
-          <div class="flex justify-center">
-            <button type="button" (click)="loginWithGoogle()"
-              class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center h-full">
-              <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#3b5998"
-                viewBox="0 0 8 19">
-                <path fill-rule="evenodd"
-                  d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
-                  clip-rule="evenodd" />
-              </svg>
+          <!-- Botón Descargar Manual -->
+          <div class="pt-8">
+            <button 
+              type="button"
+              (click)="descargarManualUsuario()"
+              class="group relative overflow-hidden bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 hover:from-purple-700 hover:via-purple-800 hover:to-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 flex items-center gap-4 border border-purple-500/20 hover:border-purple-400/40">
+              
+              <!-- Efecto de brillo principal -->
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
+              
+              <!-- Efecto de partículas brillantes -->
+              <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="absolute top-2 left-4 w-1 h-1 bg-white/60 rounded-full animate-pulse"></div>
+                <div class="absolute top-4 right-6 w-0.5 h-0.5 bg-white/40 rounded-full animate-pulse delay-100"></div>
+                <div class="absolute bottom-3 left-8 w-0.5 h-0.5 bg-white/50 rounded-full animate-pulse delay-200"></div>
+              </div>
+              
+              <!-- Icono de descarga con animación -->
+              <div class="relative z-10 group-hover:animate-bounce">
+                <svg class="w-7 h-7 text-white drop-shadow-lg group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              
+              <!-- Texto con efecto de resplandor -->
+              <span class="relative z-10 text-white font-bold drop-shadow-lg group-hover:text-purple-100 transition-colors duration-300 text-lg">
+                Descargar Manual de Usuario
+              </span>
+              
+              <!-- Icono de flecha con animación -->
+              <div class="relative z-10 ml-auto group-hover:translate-x-1 transition-transform duration-300">
+                <svg class="w-6 h-6 text-white/90 group-hover:text-white group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </div>
+              
+              <!-- Efecto de borde brillante -->
+              <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400/0 via-purple-400/20 to-purple-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </button>
-          </div>
-          <div class="flex justify-center">
-            <button type="button" (click)="loginWithGoogle()"
-              class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center rounded-lg h-full">
-              <img src="https://i.postimg.cc/fTz2VCTq/microsoft.png" class="w-6 h-6">
-            </button>
-          </div>
-          <div class="flex justify-center">
-            <button type="button" (click)="loginWithGoogle()"
-              class="text-gray-900 bg-[#fefefe] hover:bg-gray-100 border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:scale-105 duration-300 me-2 mb-2 justify-center rounded-lg h-full">
-              <img src="https://i.postimg.cc/qMZMnStM/buscar-1.png" class="w-6 h-6">
-            </button>
-          </div>
-
-        </div> -->
-
-      </div>
-      <!--IMAGEN -->
-      <div class="w-1/2 px-5 radius md:block hidden max-h-full">
-
-        <div class="rounded-2xl flex justify-center items-center h-full"
-          style="background-color: #3b5998; border: 1px solid #e7e7e7;">
-          <div id="image_login" class="flex-grow flex items-center justify-center" style="margin-bottom: -210px;">
-
-            <img src="https://i.postimg.cc/ZR86JGG7/a2b02400-f213-45e7-a581-fc17fc786048.png" class="rounded-lg"
-              style="height: auto;" alt="">
           </div>
         </div>
       </div>
     </div>
-  </section>
+
+    <!-- Lado derecho - Formulario de login -->
+    <div class="w-full lg:w-2/3 flex items-center justify-center bg-white p-8">
+      <div class="w-full max-w-md">
+        <!-- Logo móvil -->
+        <div class="lg:hidden flex items-center justify-center gap-3 mb-8">
+          <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">SUMECAR</h1>
+            <p class="text-sm text-gray-600">Suministradora de Medicamentos</p>
+          </div>
+        </div>
+
+        <!-- Tarjeta del formulario -->
+        <div class="bg-white border-0 shadow-xl rounded-lg">
+          <!-- Header de la tarjeta -->
+          <div class="p-6 pb-6">
+            <div class="space-y-1 text-center">
+              <span class="text-2xl font-bold text-gray-900">Iniciar Sesión</span>
+              <p class="text-gray-500 text-md mt-2">Accede a tu cuenta para gestionar medicamentos</p>
+            </div>
+          </div>
+          
+          <!-- Contenido del formulario -->
+          <div class="px-6 pb-6">
+            <form [formGroup]="loginForm" class="space-y-4">
+              <!-- Campo Usuario -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700">Usuario</label>
+                <div class="relative">
+                  <svg class="absolute left-3 top-3 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  <input 
+                    formControlName="usuario" 
+                    type="email"
+                    class="block w-full pl-10 pr-3 h-12 border border-blue-300 rounded-lg focus:border-blue-500 focus:ring-blue-500 transition-colors bg-yellow-50"
+                    placeholder="Ingresa tu usuario"
+                    required 
+                    autofocus 
+                    autocomplete="username">
+                </div>
+              </div>
+
+              <!-- Campo Contraseña -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700">Contraseña</label>
+                <div class="relative">
+                  <svg class="absolute left-3 top-3 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                  <input 
+                    formControlName="contrasena" 
+                    [type]="mostrarContrasena ? 'text' : 'password'"
+                    class="block w-full pl-10 pr-10 h-12 border border-blue-300 rounded-lg focus:border-blue-500 focus:ring-blue-500 transition-colors bg-yellow-50"
+                    placeholder="Ingresa tu contraseña"
+                    required
+                    autocomplete="current-password">
+                  <button 
+                    type="button"
+                    class="absolute right-0 top-0 h-12 px-3 hover:bg-transparent"
+                    (click)="mostrar_contrasena()">
+                    @if(mostrarContrasena){
+                      <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                      </svg>
+                    }
+                    @if(!mostrarContrasena){
+                      <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                    }
+                  </button>
+                </div>
+              </div>
+
+              <!-- Campo Tipo de Usuario -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700">Tipo de Usuario</label>
+                <div class="relative">
+                  <select 
+                    formControlName="rol" 
+                    (change)="onRolSelectionChange($event)" 
+                    (click)="toggleSelect()"
+                    class="block w-full px-3 h-12 border border-blue-300 rounded-lg focus:border-blue-500 focus:ring-blue-500 transition-colors appearance-none bg-white">
+                    <option value="" disabled selected>Selecciona tu rol</option>
+                    @for (users of users; track users) {
+                      <option [value]="users.value">{{ users.viewValue }}</option>
+                    }
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Link olvidé contraseña -->
+              <div class="flex items-center justify-between pt-2">
+                                  <button 
+                    type="button"
+                    (click)="mostrarModalUpdatePassword()"
+                    class="text-sm text-blue-500 hover:text-blue-600 hover:underline">
+                    ¿Olvidaste tu contraseña?
+                  </button>
+              </div>
+
+              <!-- reCAPTCHA invisible -->
+              <div>
+                <re-captcha #captchaElem (resolved)="verifyCaptcha($event)"
+                  siteKey="6LcGf6ApAAAAANYJ5m-YVw8ZOwG9gsMDAGRXPuDD" size="invisible">
+                </re-captcha>
+              </div>
+
+              <!-- Botón de login -->
+                              <button 
+                  type="button"
+                  (click)="onSubmit()" 
+                  [disabled]="cargando"
+                  class="w-full h-12 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center">
+                @if(!cargando){
+                  <span>Iniciar Sesión</span>
+                }
+                @if(cargando){
+                  <span class="inline-flex items-center">
+                    <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin"
+                      viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="#E5E7EB" />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentColor" />
+                    </svg>
+                    Iniciando sesión...
+                  </span>
+                }
+              </button>
+
+              <!-- Separador -->
+              <div class="my-6 border-t border-gray-200"></div>
+
+              <!-- Link de registro -->
+              <div class="text-center">
+                <p class="text-sm text-gray-600">
+                  ¿No tienes una cuenta? 
+                                      <button 
+                      type="button"
+                      data-drawer-target="drawer-bottom-example" 
+                      data-drawer-show="drawer-bottom-example"
+                      data-drawer-placement="bottom" 
+                      aria-controls="drawer-bottom-example" 
+                      class="text-blue-500 hover:text-blue-600 font-medium hover:underline">
+                      Regístrate aquí
+                    </button>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-xs text-gray-400">
+          <p>© 2024 SUMECAR. Todos los derechos reservados.</p>
+          <p class="mt-1">Plataforma segura para profesionales de la salud</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal para registrarse -->
   <div [ngClass]="getRegister()" id="drawer-bottom-example"
@@ -313,7 +438,7 @@
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Nombre'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Nombre'].valid}"
                     class="block mb-2 text-sm font-medium">Nombre</label>
-                  <input type="text" id="subject" formControlName="Nombre"
+                  <input type="text" id="subject" formControlName="Nombre" style="text-transform: capitalize;"
                     [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Nombre'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Nombre'].invalid && !registrationForm.controls['Nombre'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Nombre'].valid}"
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
                   <p class="mt-2 text-xs text-center"
@@ -325,13 +450,13 @@
                     'Nombre incorrecto :(' : 'Nombre correcto :)'}}
                   </p>
                 </div>
-
+                
                 <!--apellido-->
                 <div [hidden]="!UserExists" [ngClass]="{'mb-5': registrationForm.controls['Apellido'].valid}">
                   <label for="subject"
                     [ngClass]="{'text-gray-900 dark:text-white': registrationForm.controls['Apellido'].pristine, 'text-red-700 dark:text-red-500': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'text-green-700 dark:text-green-500': registrationForm.controls['Apellido'].valid}"
                     class="block mb-2 text-sm font-medium">Apellido</label>
-                  <input type="text" id="subject" formControlName="Apellido"
+                  <input type="text" id="subject" formControlName="Apellido" style="text-transform: capitalize;"
                     [ngClass]="{'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Apellido'].pristine, 'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Apellido'].invalid && !registrationForm.controls['Apellido'].pristine, 'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Apellido'].valid}"
                     class="text-sm rounded-lg block w-full p-2.5" placeholder="Example Name" required>
                   <p class="mt-2 text-xs text-center"
@@ -472,10 +597,10 @@
                           d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
                       </svg>
                     </span>
-                    <input type="text" id="website-admin" formControlName="Usuario"
+                    <input type="text" id="website-admin" formControlName="Usuario" style="text-transform: lowercase;"
                       class="text-sm rounded-r-lg block w-full p-2.5"
                       [ngClass]="{'rounded-none rounded-e-lg bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500': registrationForm.controls['Usuario'].pristine, 'rounded-none rounded-e-lg bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-red-100 dark:border-red-400': registrationForm.controls['Usuario'].invalid && !registrationForm.controls['Usuario'].pristine, 'rounded-none rounded-e-lg bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-green-100 dark:border-green-400': registrationForm.controls['Usuario'].valid}"
-                      placeholder="Bonnie Green">
+                      placeholder="bonnie green">
                   </div>
                 </div>
 

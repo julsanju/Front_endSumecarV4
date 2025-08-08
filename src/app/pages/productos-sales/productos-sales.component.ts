@@ -197,7 +197,6 @@ export class ProductosSalesComponent implements OnInit {
         this.errorMessage = null; // Limpiar el mensaje de error si hubo éxito
 
         this.generatePDF(numero_orden);
-        this.generarExcel(numero_orden)
 
         setTimeout(() => {
           // borrar los productos después del tiempo de espera
@@ -458,24 +457,7 @@ export class ProductosSalesComponent implements OnInit {
 
   }
 
-  //generar Excel
-  generarExcel(numero_orden: string) {
-    import('xlsx').then((xlsx) => {
-      const data = this.producto_seleccionado.map(item => ({
-        'Código': item.codigo,
-        'Artículo': item.articulo,
-        'codigo_Labo': item.cod_Laboratorio,
-        'Laboratorio': item.laboratorio,
-        'Cantidad': item.cantidad
-      }));
-
-      const worksheet = xlsx.utils.json_to_sheet(data);
-      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, 'numero', numero_orden);
-    });
-
-  }
+  
 
 
   saveAsExcelFile(buffer: any, fileName: string, numero_orden: string): void {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError  } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, throwError, from } from 'rxjs'; // Importar 'from'
+import { catchError, switchMap } from 'rxjs/operators'; // Importar 'switchMap'
 import { Login } from '../Interfaces/login';
 import { MensajeError } from '../Interfaces/mensaje-error';
 import { Contrasena } from '../Interfaces/contrasena';
@@ -12,113 +12,128 @@ import { Contrasena } from '../Interfaces/contrasena';
 export class LoginServicesService {
   private localIP = '192.168.0.51';
   private externalIP = '181.129.199.174';
-  // Change to use local IP by default
-  private baseUrl: string = `http://${this.localIP}:5000/api/login`;
-  
-  private apiUrl: string = '';
-  private peticionUrl: string = '';
-  private dataUpdateEstado: string = '';
-  private validarUrl: string = '';
-  private CambiarCoUrl: string = '';
-  private declineUpdatePassword: string = '';
-  private declineEmailConfirmation: string = '';
-  
+  private baseUrl: string = ''; // Se asignará dinámicamente
+
+  // Objeto para almacenar las URLs
+  private urls = {
+    login: '',
+    peticionCambio: '',
+    obtenerUsuario: '',
+    cambioContrasena: '',
+    declineUpdatePassword: '',
+    declineEmailConfirmation: ''
+  };
+
   constructor(private http: HttpClient) {
-    // Initialize URLs with default values
-    this.initializeUrls();
-    
-    // Detect network and update URLs if needed - only switch to external if local fails
-    this.detectNetwork().then(isLocal => {
-      if (!isLocal) {
-        // Only change to external if local network is not available
-        this.baseUrl = `http://${this.externalIP}:5000/api/login`;
-        this.initializeUrls();
-        console.log('Local network not available, using external IP configuration');
-      } else {
-        console.log('Using local network configuration');
-      }
-    }).catch((error) => {
-      // If detection fails, stay with local IP as default
-      console.log('Network detection failed, staying with local IP', error);
-    });
+    // La detección de red y la inicialización de URLs se harán antes de cada petición
   }
 
-  // Initialize all URLs based on the determined base URL
+  // Inicializa las URLs basadas en la baseUrl determinada
   private initializeUrls(): void {
-    this.apiUrl = `${this.baseUrl}/iniciar_sesion`;
-    this.peticionUrl = `${this.baseUrl}/peticion_cambio_contrasena/`;
-    this.dataUpdateEstado = `${this.baseUrl}/peticion_cambio_contrasena/`;
-    this.validarUrl = `${this.baseUrl}/obtener_usuario/`;
-    this.CambiarCoUrl = `${this.baseUrl}/cambio_contrasena/{correo}`;
-    this.declineUpdatePassword = `${this.baseUrl}/declineUpdate_password/`;
-    this.declineEmailConfirmation = `${this.baseUrl}/declineEmailConfirmation/`;
+    this.urls.login = `${this.baseUrl}/iniciar_sesion`;
+    this.urls.peticionCambio = `${this.baseUrl}/peticion_cambio_contrasena/`;
+    // dataUpdateEstado usaba la misma URL que peticionCambio, así que no se necesita una entrada separada
+    this.urls.obtenerUsuario = `${this.baseUrl}/obtener_usuario/`;
+    this.urls.cambioContrasena = `${this.baseUrl}/cambio_contrasena/{correo}`; // Mantener el placeholder
+    this.urls.declineUpdatePassword = `${this.baseUrl}/declineUpdate_password/`;
+    this.urls.declineEmailConfirmation = `${this.baseUrl}/declineEmailConfirmation/`;
   }
 
-  // Function to detect if we're on the local network
-  private async detectNetwork(): Promise<boolean> {
+  // Función para detectar si estamos en la red local
+  private async detectNetwork(): Promise<void> {
     try {
-      console.log('Attempting to connect to local network...');
+      console.log('Intentando conectar a la red local (Login)...');
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
-      
-      const response = await fetch(`http://${this.localIP}:5000/api/health`, { 
+
+      await fetch(`http://${this.localIP}:5000/api/health`, { // Puerto 5000 para login
         method: 'HEAD',
-        mode: 'no-cors',
+        // mode: 'no-cors', // Puede ser necesario
         signal: controller.signal
       });
-      
+
       clearTimeout(timeoutId);
-      console.log('Successfully connected to local network');
-      return true; // If we get here, local network is available
+      this.baseUrl = `http://${this.localIP}:5000/api/login`;
+      console.log('Conectado exitosamente a la red local (Login)');
     } catch (error) {
-      console.log('Failed to connect to local network, will use external IP');
-      return false; // If error, we're not on local network
+      this.baseUrl = `http://${this.externalIP}:5000/api/login`;
+      console.log('Fallo al conectar a la red local (Login), se usará IP externa');
     }
+    // Actualizar URLs después de determinar baseUrl
+    this.initializeUrls();
+  }
+
+  // Prepara la petición asegurando que la detección de red se complete primero
+  private prepareRequest<T>(callback: () => Observable<T>): Observable<T> {
+    return from(this.detectNetwork()).pipe(switchMap(() => callback()));
   }
 
   LoginValidation(userData: Login): Observable<any> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'})
-    return this.http.post(this.apiUrl, userData, { headers }).pipe(catchError(this.handleError));
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.prepareRequest(() =>
+      this.http.post(this.urls.login, userData, { headers }).pipe(catchError(this.handleError))
+    );
   }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage: MensajeError = { Message: 'An error occurred' };
     if (error.error instanceof ErrorEvent) {
       // Client-side errors
-      errorMessage.Message = JSON.parse(error.error.message);
+      errorMessage.Message = JSON.parse(error.error.message); // Asumiendo que el mensaje es un JSON string
     } else {
       // Server-side errors
-      return throwError(error.error); // Devuelve solo el JSON de la respuesta del backend
+      // Si el backend devuelve un objeto con la propiedad Message
+      if (error.error && typeof error.error === 'object' && 'Message' in error.error) {
+         return throwError(() => error.error); // Devuelve el objeto de error del backend
+      }
+      // Si no, crea un objeto MensajeError genérico
+      errorMessage.Message = `Error del servidor: ${error.status}, ${error.statusText}`;
     }
-    return throwError(errorMessage);
+    return throwError(() => errorMessage); // Devuelve un objeto MensajeError
   }
-  
+
   //peticion para validar correo
   peticionCorreo(correo: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.peticionUrl + correo, { headers });
+    return this.prepareRequest(() =>
+      this.http.post(this.urls.peticionCambio + correo, {}, { headers }) // Añadir cuerpo vacío si es POST
+        .pipe(catchError(this.handleError))
+    );
   }
 
   //validar estado del correo
   ValidarEstado(correo:string): Observable<any>{
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' })
-    return this.http.get(this.validarUrl + correo, { headers });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.prepareRequest(() =>
+      this.http.get(this.urls.obtenerUsuario + correo, { headers })
+        .pipe(catchError(this.handleError))
+    );
   }
-  
+
   CambiarContrasena(c:Contrasena, correo:string): Observable<any>{
-    const headers = new HttpHeaders ({'Content-Type': 'application/json'})
-    return this.http.put(this.CambiarCoUrl.replace('{correo}',correo),c, {headers});
+    const headers = new HttpHeaders ({'Content-Type': 'application/json'});
+    const url = this.urls.cambioContrasena.replace('{correo}', correo);
+    return this.prepareRequest(() =>
+      this.http.put(url, c, {headers})
+        .pipe(catchError(this.handleError))
+    );
   }
-  
+
   //cancelar el proceso de cambio de contraseña
   declineUpdate(correo: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put(this.declineUpdatePassword + correo, { headers });
+    return this.prepareRequest(() =>
+      this.http.put(this.urls.declineUpdatePassword + correo, {}, { headers }) // Añadir cuerpo vacío si es PUT
+        .pipe(catchError(this.handleError))
+    );
   }
-  
+
   declineEmail_Confirmation(usuario: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put(this.declineEmailConfirmation + usuario, { headers });
+    return this.prepareRequest(() =>
+      this.http.put(this.urls.declineEmailConfirmation + usuario, {}, { headers }) // Añadir cuerpo vacío si es PUT
+        .pipe(catchError(this.handleError))
+    );
   }
 }
 

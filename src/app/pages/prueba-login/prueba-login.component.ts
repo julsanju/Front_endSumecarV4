@@ -327,6 +327,25 @@ export class PruebaLoginComponent implements OnInit {
     });
 
   crearUsuarioXd() {
+    // Aplicar capitalize a los campos de nombre y apellido antes de crear el objeto data
+    const nombreValue = this.registrationForm.get('Nombre')?.value;
+    const apellidoValue = this.registrationForm.get('Apellido')?.value;
+    
+    // Función para capitalizar la primera letra de cada palabra
+    const capitalize = (text: string) => {
+      if (!text) return text;
+      return text.split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+    };
+    
+    // Actualizar los valores en el formulario
+    this.registrationForm.patchValue({
+      Nombre: capitalize(nombreValue),
+      Apellido: capitalize(apellidoValue)
+    });
+    
+    // Continuar con el código existente
     const data = this.registrationForm.value as Usuariosxd;
     const contrasena = this.registrationForm.get('Contrasena')?.value
     const contrasena2 = document.getElementById('contrasena2') as HTMLInputElement;
@@ -341,6 +360,7 @@ export class PruebaLoginComponent implements OnInit {
           const usuario = this.registrationForm.get('Usuario')?.value
           console.log(JSON.stringify(data) + " " + usuario)
           this.enviarFormulario(data, usuario);
+          this.cerrarRegister();
         },
         (error) => {
           this.UserExists = false
@@ -427,6 +447,34 @@ export class PruebaLoginComponent implements OnInit {
   //   }
   // }
 
+  // Variable para controlar la visibilidad del modal de éxito
+  showSuccessModal: boolean = false;
+
+  // Función para mostrar el modal de éxito
+  mostrarModalExito() {
+    this.showSuccessModal = true;
+    // Cerrar automáticamente después de 5 segundos
+    setTimeout(() => {
+      this.cerrarModalExito();
+    }, 5000) ;
+  }
+
+  // Función para cerrar el modal de éxito
+  cerrarModalExito() {
+    this.showSuccessModal = false;
+    this.cerrarRegister()
+window.location.reload();
+  }
+
+  // Función para obtener las clases del modal de éxito
+  getSuccessModalClasses() {
+    return {
+      'hidden': !this.showSuccessModal,
+      'block': this.showSuccessModal
+    };
+  }
+
+  // Modificar la función enviarFormulario para usar el nuevo modal
   enviarFormulario(formData: Usuariosxd, username: string) {
     this.cargando = true;
     // Llamada al servicio para registrar al usuario
@@ -439,15 +487,16 @@ export class PruebaLoginComponent implements OnInit {
         
         this.registerService.registerxd(formData, username).subscribe(
           (response) => {
-            this.mostrarAlerta();
+            // Mostrar el nuevo modal en lugar de la alerta
+            this.mostrarModalExito();
             this.cargando = false;
             this.registrationForm.reset();
+            
           },
           (error) => {
             this.errorMessage = error.error;
             this.mostrarDanger();
             this.cargando = false;
-
           }
         );
       }
@@ -737,13 +786,46 @@ export class PruebaLoginComponent implements OnInit {
       (response) => {
         this.showModalUpdate = false;
         this.state = State.sendEmail;
-        console.log("cancelado exitoso")
+        console.log("cancelado exitoso");
       },
       (error) => {
-        console.error("el error es: " + error.message)
+        console.error("el error es: " + error.message);
       }
-    )
+    );
   }
 
+  // Función para descargar el manual de usuario
+  descargarManualUsuario() {
+    // URL del manual (puedes cambiar esto por la URL real del manual)
+    const manualUrl = '/assets/manual-usuario.pdf';
+    
+    // Crear un enlace temporal para la descarga
+    const link = document.createElement('a');
+    link.href = manualUrl;
+    link.download = 'Manual_Usuario_SUMECAR.pdf';
+    link.target = '_blank';
+    
+    // Agregar el enlace al DOM, hacer clic y removerlo
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Mostrar notificación de descarga exitosa
+    this.mostrarNotificacionDescarga();
+  }
+
+  // Función para mostrar notificación de descarga
+  mostrarNotificacionDescarga() {
+    // Puedes usar SweetAlert2 o cualquier otra librería de notificaciones
+    Swal.fire({
+      title: '¡Descarga iniciada!',
+      text: 'El manual de usuario se está descargando...',
+      icon: 'success',
+      timer: 3000,
+      showConfirmButton: false,
+      toast: true,
+      position: 'top-end'
+    });
+  }
 }
 

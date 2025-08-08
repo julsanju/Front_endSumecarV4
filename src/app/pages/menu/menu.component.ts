@@ -92,14 +92,23 @@ export class MenuComponent {
 
   }
 
-  productos() {
-    this.router.navigate(['/menu/productos']).then(() => window.location.reload());
+  home() {
+    this.router.navigate(['/menu/dashboard']);
   }
+  
+  productos() {
+    this.router.navigate(['/menu/productos']).then(() => {window.location.reload();});
+  }
+  
   //redireccionar crear usuariox
   redireccionarUsuario(){
-
-    this.router.navigate(['/menu/usuarios']).then(() => window.location.reload());
+    this.router.navigate(['/menu/usuarios']).then(() => {window.location.reload();});
   }
+
+  redireccionarDashboard(){
+    this.router.navigate(['/menu/dashboard']);
+  }
+  
 
   //metodo para mapear datos en el userProfile
   mapeoUserProfile() {

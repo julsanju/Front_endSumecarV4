@@ -53,17 +53,14 @@
       data-drawer-placement="right" aria-controls="drawer-right-example"
       class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600 "
       [hidden]="!hayProductosSeleccionados">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-        class="w-5 h-5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
+      
       <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true">
+        aria-hidden="true" class="w-10 h-10">
         <path stroke-linecap="round" stroke-linejoin="round"
           d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z">
         </path>
       </svg>
-      <span>visualizar</span>
+      <span>Visualizar Productos</span>
     </button>
   </div>
   <!--tabla-->
@@ -266,7 +263,7 @@
         viewBox="0 0 20 20">
         <path
           d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-      </svg> <strong>Productos Seleccionados</strong></h4>
+      </svg> <strong>{{ producto_seleccionado.length }} Productos Seleccionados</strong></h4>
 
     <button type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example"
       class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">

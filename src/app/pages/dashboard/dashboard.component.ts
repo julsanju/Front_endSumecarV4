@@ -88,37 +88,45 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private router: Router, 
       ) { }
 
-  ngOnInit() {
-    //obtener rol
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      try {
-        const userData = JSON.parse(userDataString);
-        this.rol = userData.Rol[0].RolId;
-      } catch (error) {
-        console.error('Error al aalizar JSON:', error)
-      }
-    }
-    // pedidos montados
-    this.dataInitNew().subscribe(() => {
-      this.renderizar();
-      this.renderizarBarNegativo();
-      this.renderizarBottom2();
-      this.obtenerPedidoPendiente();
-      
-      // this.subscription = interval(5000).subscribe(() => {
-      //   this.obtenerPedidoPendiente();
-      // });
-    });
+      ngOnInit() {
+        
+        const userDataString = localStorage.getItem('userData');
 
-    // peticiones montadas
-    this.dataInitNewPeticiones().subscribe(() => {
-      this.renderizarPeticiones();
-    });
-  }
+        if (userDataString) {
+          try {
+            const userData = JSON.parse(userDataString);
+            this.rol = userData.Rol[0].RolId;
+      
+            // Solo después de tener el rol cargado hacemos las llamadas
+            forkJoin([
+              this.dataInitNew(),
+              this.dataInitNewPeticiones()
+            ]).subscribe(() => {
+              this.renderizar();
+              this.renderizarBarNegativo();
+              this.renderizarBottom2();
+              this.obtenerPedidoPendiente();
+      
+              this.subscription = interval(5000).subscribe(() => {
+                this.obtenerPedidoPendiente();
+              });
+              this.renderizarPeticiones();
+            });
+      
+          } catch (error) {
+            console.error('Error al analizar JSON:', error);
+          }
+          this.subscription = interval(5000).subscribe(() => {
+            this.obtenerPedidoPendiente();
+          });
+        }
+      }
+      
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   private initData(movimiento: string, rol: string): Observable<any> {
